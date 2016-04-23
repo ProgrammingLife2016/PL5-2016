@@ -6,6 +6,7 @@
 .project
 Project Docs/
 
+/.idea
 
 bin/
 tmp/
