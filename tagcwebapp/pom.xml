@@ -12,13 +12,13 @@
             <artifactId>jersey-grizzly2</artifactId>
             <version>${jersey-version}</version>
         </dependency>
-        <!-- uncomment this to get JSON support:
+       
          <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-json</artifactId>
             <version>${jersey-version}</version>
         </dependency>
-        -->
+        
         <!-- uncomment this to get Fastinfoset support:
          <dependency>
             <groupId>com.sun.jersey</groupId>
