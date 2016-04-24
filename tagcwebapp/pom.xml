@@ -2,11 +2,44 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.pl.tagc</groupId>
-    <artifactId>PL5-2016</artifactId>
+    <artifactId>tagcwebapp</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>PL5-2016</name>
+    <name>tagcwebapp</name>
     <dependencies>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-grizzly2</artifactId>
+            <version>${jersey-version}</version>
+        </dependency>
+        <!-- uncomment this to get JSON support:
+         <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>${jersey-version}</version>
+        </dependency>
+        -->
+        <!-- uncomment this to get Fastinfoset support:
+         <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-fastinfoset</artifactId>
+            <version>${jersey-version}</version>
+        </dependency>
+        -->
+        <!-- uncomment this to get ATOM support:
+         <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-atom</artifactId>
+            <version>${jersey-version}</version>
+        </dependency>
+        -->
+        <!-- uncomment this to get multipart MIME types support:
+         <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-multipart</artifactId>
+            <version>${jersey-version}</version>
+        </dependency>
+        -->        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
