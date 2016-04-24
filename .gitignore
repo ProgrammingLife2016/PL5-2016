@@ -5,7 +5,6 @@
 .classpath
 .project
 Project Docs/
-*/target/*
 .class
 /.idea
 
@@ -41,5 +40,4 @@ application.log
 
 # TeXlipse plugin
 .texlipse
-
-/target/
+target/
