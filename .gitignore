@@ -6,6 +6,7 @@
 .project
 Project Docs/
 */target/*
+.class
 /.idea
 
 bin/
