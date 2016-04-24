@@ -3,8 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.pl.tagc</groupId>
     <artifactId>PL5-2016</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>backEnd</module>
+    </modules>
     <name>PL5-2016</name>
     <dependencies>
         <dependency>
@@ -42,9 +45,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <mainClass>com.pl.tagc.tagcwebapp.Main</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>
