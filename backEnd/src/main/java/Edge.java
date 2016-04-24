@@ -6,7 +6,6 @@
  * data container class that stores the start and end of an edge, as well as its weight.
  */
 
-//TODO test and commment better
 public class Edge {
     private Node start;
     private Node end;
