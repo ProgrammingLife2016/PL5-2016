@@ -1,29 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>PL5-2016</artifactId>
+        <groupId>com.pl.tagc</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.pl.tagc</groupId>
-    <artifactId>PL5-2016</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>tagcwebapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <modules>
-        <module>backEnd</module>
-        <module>tagcwebapp</module>
-    </modules>
-    <name>PL5-2016</name>
+    <name>tagcwebapp</name>
     <dependencies>
         <dependency>
-<<<<<<< HEAD
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-grizzly2</artifactId>
             <version>${jersey-version}</version>
         </dependency>
-       
+        <!-- uncomment this to get JSON support:
          <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-json</artifactId>
             <version>${jersey-version}</version>
         </dependency>
-        
+        -->
         <!-- uncomment this to get Fastinfoset support:
          <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -44,21 +42,8 @@
             <artifactId>jersey-multipart</artifactId>
             <version>${jersey-version}</version>
         </dependency>
-        -->        
-        <dependency>
-=======
->>>>>>> master
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>${jersey-version}</version>
-            <scope>test</scope>
-        </dependency>
+        -->
+
     </dependencies>
     <build>
         <plugins>
@@ -82,7 +67,9 @@
                         </goals>
                     </execution>
                 </executions>
-
+                <configuration>
+                    <mainClass>com.pl.tagc.tagcwebapp.Main</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
