@@ -18,12 +18,12 @@ public class Node {
     private String sequence; //dna in node
     private double xCoordinate;
     private double yCoordinate;
-    private ArrayList<Genome> genomes; //genomes that contain this node
-    private Genome referenceGenome; // the refrence genome of this node
+    private String[] genomes; //genomes that contain this node
+    private String referenceGenome; // the refrence genome of this node
     private int referenceCoordinate; //coordinate of this node in the refr genome
     private int weight; // amount of genomes that contain this node
 
-    public Node(int id, String sequence, ArrayList<Genome> genomes, Genome referenceGenome, int referenceCoordinate) {
+    public Node(int id, String sequence, String[] genomes, String referenceGenome, int referenceCoordinate) {
         this.id = id;
         this.sequence = sequence;
         this.genomes = genomes;
@@ -33,7 +33,7 @@ public class Node {
         xCoordinate=0.;
         yCoordinate=0.;
 
-        this.weight=genomes.size();
+        this.weight=genomes.length;
     }
 
     public void setxCoordinate(double xCoordinate) {
@@ -60,11 +60,11 @@ public class Node {
         return yCoordinate;
     }
 
-    public ArrayList<Genome> getGenomes() {
+    public String[] getGenomes() {
         return genomes;
     }
 
-    public Genome getRefrenceGenome() {
+    public String getRefrenceGenome() {
         return referenceGenome;
     }
 
