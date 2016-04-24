@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * Datacontainer that stores the edges and nodes of a particular genome.
  */
+//TODO test and commment better
 
 public class Genome {
     private ArrayList<Node> nodes;

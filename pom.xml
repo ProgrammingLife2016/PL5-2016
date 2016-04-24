@@ -7,6 +7,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>backEnd</module>
+        <module>tagcwebapp</module>
     </modules>
     <name>PL5-2016</name>
     <dependencies>
@@ -45,6 +46,7 @@
                         </goals>
                     </execution>
                 </executions>
+
             </plugin>
         </plugins>
     </build>
