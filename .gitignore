@@ -6,11 +6,13 @@
 .project
 Project Docs/
 
+/.idea
 
 bin/
 tmp/
 *.tmp
 *.bak
+/tagcwebapp/tagcwebapp.iml
 *.swp
 *~.nib
 
