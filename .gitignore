@@ -5,7 +5,7 @@
 .classpath
 .project
 Project Docs/
-
+*/target/*
 /.idea
 
 bin/
