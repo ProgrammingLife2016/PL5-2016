@@ -20,7 +20,7 @@ public class NodeService {
 	// The Java method will produce content identified by the MIME Media
 	// type "application/json"
 	@Produces("application/json")
-	public ResultObject smooth(@DefaultValue("0") @QueryParam("xleft") double xleft,
+	public ResultObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
 			@DefaultValue("0") @QueryParam("ytop") double ytop, @DefaultValue("100") @QueryParam("xright") double xright,
 			@DefaultValue("100") @QueryParam("ybtm") double ybtm) {
 		ResultObject r = getNodes(xleft, ytop, xright, ybtm);
