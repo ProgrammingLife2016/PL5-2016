@@ -1,6 +1,5 @@
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 
@@ -14,7 +13,6 @@ public class Parser {
 		BufferedReader reader;
 		String line;
 		Genome result = new Genome();
-		int n = 0;
 		
 		try {
 			reader = new BufferedReader(new FileReader(file));
@@ -22,22 +20,8 @@ public class Parser {
 			reader.readLine();
 			line = reader.readLine();
 			
-//			System.out.println(line);
-//			String[] splittedLine = line.split("\t");
-//			System.out.println(splittedLine[0]);
-//			System.out.println(splittedLine[1]);
-//			System.out.println(splittedLine[2]);
-//			System.out.println(splittedLine[3]);
-//			System.out.println(splittedLine[4]);
-//			System.out.println(splittedLine[5]);
-//			System.out.println(splittedLine[6]);
-//			System.out.println(splittedLine[7]);
-//			System.out.println(splittedLine[8]);
 			while (line != null) {
-				System.out.println(n);
-				n++;
 				String[] splittedLine = line.split("\t");
-				System.out.println(splittedLine[0]);
 				String temp = splittedLine[0];
 				if (temp.equals("S")) {
 					result.addNode(createNode(splittedLine));
@@ -46,6 +30,7 @@ public class Parser {
 				}
 				line = reader.readLine();
 			}
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -56,14 +41,12 @@ public class Parser {
 	}
 
 	private static Edge createEdge(String[] splittedLine) {
-		System.out.println("edge");
 		int startId = Integer.parseInt(splittedLine[1]);
 		int endId = Integer.parseInt(splittedLine[3]);
 		return new Edge(startId, endId);
 	}
 
 	private static Node createNode(String[] splittedLine) {
-		System.out.println("node");
 		int nodeId = Integer.parseInt(splittedLine[1]);
 		String sequence = splittedLine[2];
 		String[] genomes = splittedLine[4].split(";");
