@@ -1,15 +1,22 @@
-
 package com.pl.tagc.tagcwebapp;
-
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 import org.glassfish.grizzly.http.server.HttpServer;
-
+import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
 
+/*
+ * Instructions:
+ * 
+ * To use this application http://localhost:9998/getnodes?xleft=10&xright=70&ytop=30&ybtm=80 
+ * can be used to get a json list of nodes that are in the viewport defined by the four 
+ * values: xleft xright ytop and ybtm. http://localhost:9998/app/index.html can be used 
+ * to access the static file index.html.
+ * 
+ * */
 
 public class Main {
 
@@ -41,6 +48,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // Grizzly 2 initialization
         HttpServer httpServer = startServer();
+        httpServer.getServerConfiguration().addHttpHandler(
+                new StaticHttpHandler("static/"), "/app");
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...",
                 BASE_URI));
