@@ -55,8 +55,9 @@ public class Parser {
 	private static Node createNode(String[] splittedLine) {
 		int nodeId = Integer.parseInt(splittedLine[1]);
 		String sequence = splittedLine[2];
+		splittedLine[4] = splittedLine[4].substring(6, splittedLine[4].length());
 		String[] genomes = splittedLine[4].split(";");
-		String referenceGenome = splittedLine[5].substring(4, splittedLine[5].length());
+		String referenceGenome = splittedLine[5].substring(6, splittedLine[5].length());
 		String ref = splittedLine[8].substring(8, splittedLine[8].length());
 		int referenceCoordinate = Integer.parseInt(ref);
 		return new Node(nodeId, sequence, genomes, referenceGenome, referenceCoordinate);
