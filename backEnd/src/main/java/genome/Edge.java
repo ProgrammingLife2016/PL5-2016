@@ -10,18 +10,10 @@ package genome;
 
 //TODO test and commment better
 public class Edge {
-    private Node start;
-    private Node end;
     private int startId;
     private int endId;
     private int weight;
 
-
-    public Edge(Node start, Node end) {
-        this.start = start;
-        this.end = end;
-        weight=0;
-    }
     
     public Edge(int startId, int endId) {
     	this.startId = startId;
@@ -32,12 +24,12 @@ public class Edge {
         this.weight = weight;
     }
 
-    public Node getStart() {
-        return start;
+    public int getStart() {
+        return startId;
     }
 
-    public Node getEnd() {
-        return end;
+    public int getEnd() {
+        return endId;
     }
 
     public int getWeight() {
