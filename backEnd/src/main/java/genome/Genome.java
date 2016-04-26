@@ -1,3 +1,4 @@
+package genome;
 import java.util.ArrayList;
 
 /**

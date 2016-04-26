@@ -1,5 +1,11 @@
+package parser;
 import java.io.FileReader;
 import java.io.IOException;
+
+import genome.Edge;
+import genome.Genome;
+import genome.Node;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 
