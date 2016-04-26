@@ -15,6 +15,11 @@ import java.io.FileNotFoundException;
 
 public class Parser {
 
+	/**
+	 * Reads the file as a graph in to an Genome.
+	 * @param file The file that is read.
+	 * @return The graph in the file.
+	 */
 	public static Genome parse(String file) {
 		BufferedReader reader;
 		String line;
@@ -46,12 +51,22 @@ public class Parser {
 		return result;
 	}
 
+	/**
+	 * Creates an Edge from input data.
+	 * @param splittedLine A line that contains an edge read from the file.
+	 * @return An Edge.
+	 */
 	private static Edge createEdge(String[] splittedLine) {
 		int startId = Integer.parseInt(splittedLine[1]);
 		int endId = Integer.parseInt(splittedLine[3]);
 		return new Edge(startId, endId);
 	}
 
+	/**
+	 * Creates a Node from the input data.
+	 * @param splittedLine A line that contains a node read from the file.
+	 * @return A Node.
+	 */
 	private static Node createNode(String[] splittedLine) {
 		int nodeId = Integer.parseInt(splittedLine[1]);
 		String sequence = splittedLine[2];

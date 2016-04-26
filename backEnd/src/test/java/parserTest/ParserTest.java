@@ -9,6 +9,9 @@ import genome.Genome;
 
 public class ParserTest {
 	
+	/**
+	 * Reads the data and checks if the id's do match.
+	 */
 	@Test
 	public void test() {
 		Genome genome = Parser.parse("../data/TB10.gfa");
