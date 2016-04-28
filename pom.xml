@@ -53,4 +53,13 @@
     <properties>
         <jersey-version>1.19.1</jersey-version>
     </properties>
+      <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.6</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
