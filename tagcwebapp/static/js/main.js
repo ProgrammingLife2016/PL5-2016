@@ -54,36 +54,40 @@ function splashScreen(callback)
         });
 }
 
+function pxToInt(css) {
+    return parseFloat(css.replace('px', ''));
+}
+
 var drawZoom = function(nodes) {
-    draw(nodes, $('#zoomedGenome canvas')[0]);
+    draw(nodes, $('#zoomedGenome canvas')[0], function(x, y) {
+        var slider = $('#genome .slider');
+        var sliderRatio = $('#zoomedGenome').width() / slider.width();
+        return {
+            x: (x / ratio - pxToInt(slider.css('left'))) * sliderRatio,
+            y: (y / ratio - pxToInt(slider.css('top'))) * sliderRatio
+        }
+    });
 };
 
 var drawGenome = function(nodes) {
-    draw(nodes, $('#genome canvas')[0]);
+    draw(nodes, $('#genome canvas')[0], function(x, y) {
+        return {
+            x: x / ratio,
+            y: y / ratio
+        }
+    });
 };
 
-function draw(data, c) {
+function draw(data, c, translate) {
     var points = data.cList;
     var ctx = c.getContext("2d");
     ctx.clearRect(0, 0, c.width, c.height);
     $.each(points, function(id, value) {
-        console.log(id);
-        console.log(value);
-
         ctx.beginPath();
         var coor = translate(value.x, value.y);
         ctx.arc(coor.x, coor.y, 5, 0, 2 * Math.PI);
         ctx.stroke();
     });
-    ctx.rect(translateX(0), translateY(0), translatewidth(100),
-        translateheight(100));
-    ctx.stroke();
-}
-
-function translate(x, y) {
-    var result = {'x': x, 'y': y};
-    
-
 }
 
 function zoom(direction) {
@@ -122,7 +126,7 @@ function zoom(direction) {
     slider.width(parseInt(newWidth) +'px');
     slider.height(parseInt(newHeight) +'px');
     clearTimeout(zoomTimeout);
-    //zoomTimeout = setTimeout(function() { updateZoomedGenome() }, 500);
+    zoomTimeout = setTimeout(function() { updateZoomedGenome() }, 500);
 }
 
 function updateZoomedGenome()
@@ -132,30 +136,28 @@ function updateZoomedGenome()
     var y = Math.floor(slider.position().top - slider.parent().position().top);
     var width = slider.width();
     var height = slider.height();
-    getNodes(x, y, width, height, drawZoom)
-    console.log(x);
-    console.log(y);
+    getNodes(x, y, width, height, drawZoom);
 }
 
 function getNodes(x, y, width, height, callback) {
-
     $.ajax({
         url: url + '../getnodes',
         dataType: 'JSON',
         type: 'GET',
         data: {
-            'xleft': x,
-            'xright': x + width,
-            'ytop': y,
-            'ybtm': y + height
+            'xleft': x * ratio,
+            'xright': (x + width) * ratio,
+            'ytop': y / yZoom * ratio,
+            'ybtm': (y + height) / yZoom * ratio
         }
-    }, function(data) {
+    }).done(function(data) {
         callback(data);
     });
 }
 
 function initialize() {
     initializeBasicGenome();
+    initializeZoomGenome();
 }
 
 function initializeBasicGenome() {
@@ -164,9 +166,8 @@ function initializeBasicGenome() {
         dataType: 'JSON',
         type: 'GET'
     }).done(function(data) {
-        ratio = data.height / data.width;
         var genome = $('#genome');
-        var height = genome.width() * ratio;
+        var height = genome.width() * (data.height / data.width);
         if (height < minHeight) {
             yZoom = Math.floor(minHeight / height);
             height *= yZoom;
@@ -176,9 +177,20 @@ function initializeBasicGenome() {
 
         var slider = genome.find('.slider');
 
-        getNodes(0, 0, slider.width(), slider.height(), function(nodes) {
-            drawGenome(nodes);
-            drawZoom(nodes);
-        });
+        ratio = data.width / genome.width();
+
+        genome.prepend(
+            $('<canvas/>', {'class':'genomeCanvas', Width: genome.width(), Height: genome.height() })
+        );
+
+        getNodes(0, 0, genome.width(), genome.height(), drawGenome);
+        zoom(-1);
     });
+}
+
+function initializeZoomGenome() {
+    var genome = $('#zoomedGenome');
+    genome.prepend(
+        $('<canvas/>', {'class':'zoomedCanvas', Width: genome.width(), Height: genome.height() })
+    );
 }
