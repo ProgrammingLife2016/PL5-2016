@@ -49,6 +49,11 @@ div, body, html {
     cursor: pointer;
 }
 
-#container #zoomedGenome {
+#container #zoomedGenome, #container #zoomedGenome canvas {
+    width: 100%;
     height: 300px;
+}
+
+#genome canvas {
+    position: absolute;
 }
