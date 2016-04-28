@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Matthijs on 24-4-2016.
  */
-public class GenomeTest {
+public class DataContainerTest {
 
     @Before
     public void setUp() throws Exception {

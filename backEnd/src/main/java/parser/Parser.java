@@ -2,8 +2,8 @@ package parser;
 import java.io.FileReader;
 import java.io.IOException;
 
+import genome.DataContainer;
 import genome.Edge;
-import genome.Genome;
 import genome.Node;
 
 import java.io.BufferedReader;
@@ -14,16 +14,17 @@ import java.io.FileNotFoundException;
  */
 
 public class Parser {
+	static DataContainer result;
 
 	/**
-	 * Reads the file as a graph in to an Genome.
+	 * Reads the file as a graph in to an DataContainer.
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-	public static Genome parse(String file) {
+	public static DataContainer parse(String file) {
 		BufferedReader reader;
 		String line;
-		Genome result = new Genome();
+		result = new DataContainer();
 		
 		try {
 			reader = new BufferedReader(new FileReader(file));
@@ -35,9 +36,9 @@ public class Parser {
 				String[] splittedLine = line.split("\t");
 				String temp = splittedLine[0];
 				if (temp.equals("S")) {
-					result.addNode(createNode(splittedLine));
+					createNode(splittedLine);
 				} else if (temp.equals("L")) {
-					result.addEdge(createEdge(splittedLine));
+					createEdge(splittedLine);
 				}
 				line = reader.readLine();
 			}
@@ -56,10 +57,10 @@ public class Parser {
 	 * @param splittedLine A line that contains an edge read from the file.
 	 * @return An Edge.
 	 */
-	private static Edge createEdge(String[] splittedLine) {
+	private static void createEdge(String[] splittedLine) {
 		int startId = Integer.parseInt(splittedLine[1]);
 		int endId = Integer.parseInt(splittedLine[3]);
-		return new Edge(startId, endId);
+		result.addEdge(new Edge(startId, endId));
 	}
 
 	/**
@@ -67,7 +68,7 @@ public class Parser {
 	 * @param splittedLine A line that contains a node read from the file.
 	 * @return A Node.
 	 */
-	private static Node createNode(String[] splittedLine) {
+	private static void createNode(String[] splittedLine) {
 		int nodeId = Integer.parseInt(splittedLine[1]);
 		String sequence = splittedLine[2];
 		splittedLine[4] = splittedLine[4].substring(6, splittedLine[4].length());
@@ -75,6 +76,7 @@ public class Parser {
 		String referenceGenome = splittedLine[5].substring(6, splittedLine[5].length());
 		String ref = splittedLine[8].substring(8, splittedLine[8].length());
 		int referenceCoordinate = Integer.parseInt(ref);
-		return new Node(nodeId, sequence, genomes, referenceGenome, referenceCoordinate);
+
+		result.addNode(nodeId, new Node(nodeId, sequence, genomes, referenceGenome, referenceCoordinate));
 	}
 }

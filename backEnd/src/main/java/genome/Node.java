@@ -74,4 +74,8 @@ public class Node {
     public int getWeight() {
         return weight;
     }
+
+    public void updatexCoordinate(int i){
+        xCoordinate = Math.max(i, xCoordinate);
+    }
 }
