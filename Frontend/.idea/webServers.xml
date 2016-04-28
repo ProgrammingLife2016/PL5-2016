@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="00f2e8bc-8d51-4827-bdca-40626570faa3" name="Tagc.nl" url="http://tagc.nl/">
+        <fileTransfer host="icety.nl" port="21" password="dfc2df9edfcfdfdadfcfdfd3df9fdf98dfc7dfd9dfdddf9e" username="faaltk1a">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
