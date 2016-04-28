@@ -32,6 +32,7 @@ public class Database {
 				statement.execute(sql);
 				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tagc", "postgres", "TagC");
 				statement = connection.createStatement();
+				CreateTables();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -39,7 +40,28 @@ public class Database {
 		
 	}
 	
-	
-	
+	public void CreateTables() {
+		try {
+			String edge = 	"CREATE TABLE edge " +
+							"(startid INTEGER not NULL, " +
+							"endid INTEGER not NULL)";
+			statement.executeUpdate(edge);
+			System.out.println("table created");
+			String sql = "INSERT INTO edge values(1, 2)";
+			statement.execute(sql);
+			
+			String node = 	"CREATE TABLE node " +
+							"(id INTEGER not NULL, " +
+							"sequence TEXT not NULL, " +
+							"weight INTEGER not NULL, " +
+							"referenceGenome TEXT not NULL, " +
+							"referenceCoordinate INTEGER not NULL)";
+			statement.executeUpdate(node);
+							
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}	
 	
 }
