@@ -4,8 +4,6 @@ package genome;
  *
  */
 
-import java.util.ArrayList;
-
 /**
  * Class that contains the graph nodes
  */
