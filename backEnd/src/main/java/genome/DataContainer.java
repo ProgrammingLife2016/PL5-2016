@@ -18,8 +18,7 @@ public class DataContainer {
     private HashMap<Integer, Node> nodes;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
-    private static Parser parser = new Parser();
-	public static DataContainer DC = parser.parse("../data/TB10.gfa");
+	public static DataContainer DC = Parser.parse("../data/TB10.gfa");
 	
     public DataContainer() {
         nodes= new HashMap<>();

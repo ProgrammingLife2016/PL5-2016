@@ -21,7 +21,7 @@ public class Parser {
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-	public DataContainer parse(String file) {
+	public static DataContainer parse(String file) {
 		BufferedReader reader;
 		String line;
 		result = new DataContainer();
