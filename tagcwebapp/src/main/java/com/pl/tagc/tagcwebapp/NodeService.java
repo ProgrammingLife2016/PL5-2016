@@ -39,6 +39,7 @@ public class NodeService {
 	private ResultObject getNodes(double xleft, double ytop, double xright, double ybtm) {
 		CopyOnWriteArrayList<Node> res= new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
+		System.out.println(cList.size());
 		for(Node n: cList.values())
 
 		{
@@ -47,6 +48,7 @@ public class NodeService {
 				correctNodes.add(n);
 			}
 		}
+		System.out.println(correctNodes.size());
 		Collections.sort(correctNodes,
 
 				(n1, n2) -> n2.getWeight() - n1.getWeight());

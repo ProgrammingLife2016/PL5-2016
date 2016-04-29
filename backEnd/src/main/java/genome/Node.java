@@ -15,8 +15,8 @@ public class Node {
 
     private int id; //node id
     private String sequence; //dna in node
-    private double xCoordinate;
-    private double yCoordinate;
+    private double x;
+    private double y;
     private String[] genomes; //genomes that contain this node
     private String referenceGenome; // the refrence genome of this node
     private int referenceCoordinate; //coordinate of this node in the refr genome
@@ -32,18 +32,18 @@ public class Node {
         this.referenceGenome = referenceGenome;
         this.referenceCoordinate = referenceCoordinate;
 
-        xCoordinate=0.;
-        yCoordinate=0.;
+        x=0.;
+        y=0.;
 
         this.weight=genomes.length;
     }
 
-    public void setxCoordinate(double xCoordinate) {
-        this.xCoordinate = xCoordinate;
+    public void setx(double x) {
+        this.x = x;
     }
 
-    public void setyCoordinate(double yCoordinate) {
-        this.yCoordinate = yCoordinate;
+    public void sety(double y) {
+        this.y = y;
     }
 
     public int getId() {
@@ -54,12 +54,12 @@ public class Node {
         return sequence;
     }
 
-    public double getxCoordinate() {
-        return xCoordinate;
+    public double getx() {
+        return x;
     }
 
-    public double getyCoordinate() {
-        return yCoordinate;
+    public double gety() {
+        return y;
     }
 
     public String[] getGenomes() {
@@ -78,7 +78,18 @@ public class Node {
         return weight;
     }
 
-    public void updatexCoordinate(int i){
-        xCoordinate = Math.max(i, xCoordinate);
+    public void updatex(int i){
+        x = Math.max(i, x);
+    }
+    
+    public String toString(){                                          
+    	return  "id                  " + id                  + "\n" +
+		    	"sequence            " + sequence            + "\n" +
+		    	"x                   " + x                   + "\n" +
+		    	"y                   " + y                   + "\n" +
+		    	"genomes             " + genomes             + "\n" +
+		    	"referenceGenome     " + referenceGenome     + "\n" +
+		    	"referenceCoordinate " + referenceCoordinate + "\n" +
+		    	"weight              " + weight              + "\n";
     }
 }
