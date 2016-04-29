@@ -50,13 +50,11 @@ public class Main {
     }
     
     public static void main(String[] args) throws IOException {
-        //data parsing
-        Parser parser= new Parser();
-        DataContainer container= parser.parse("../data/TB10.gfa");
 
         // Grizzly 2 initialization
         HttpServer httpServer = startServer();
-        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("tagcwebapp/static/");
+        //StaticHttpHandler staticHttpHandler = new StaticHttpHandler("tagcwebapp/static/");
+        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("static/");
         staticHttpHandler.setFileCacheEnabled(false);
         httpServer.getServerConfiguration().addHttpHandler(staticHttpHandler, "/app");
 

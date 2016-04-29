@@ -96,5 +96,32 @@ public class DataContainer {
 
         return nodesByxCoordinate;
     }
+    
+    public void computeCoordinates(){
+    	
+        for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
+            ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
+
+            currentGenomeNodes.get(0).updateX(0);
+            Node prevNode = currentGenomeNodes.get(0);
+            for(int i = 1; i < currentGenomeNodes.size(); i++){
+                Node currentNode = currentGenomeNodes.get(i);
+                currentGenomeNodes.get(i).updateX(i); //update the nodes x-coordinate
+
+                Edge currentEdge = edges.get(prevNode.getId() + "|" + currentNode.getId());
+                currentEdge.setWeight(currentEdge.getWeight()+1);
+                prevNode = currentNode;
+            }
+        }
+        int y = 1;
+        for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
+            ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
+            for(int i = 0; i < currentGenomeNodes.size(); i++){
+                currentGenomeNodes.get(i).setY(y); //update the nodes x-coordinate
+            }
+            y++;
+        }
+    }
+    
 
 }

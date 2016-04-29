@@ -40,6 +40,8 @@ public class NodeService {
 		CopyOnWriteArrayList<Node> res= new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
 		System.out.println(cList.size());
+		double sum = 0;
+		int nn = 0;
 		for(Node n: cList.values())
 
 		{
@@ -47,10 +49,13 @@ public class NodeService {
 			{
 				correctNodes.add(n);
 			}else if(n.getX() != 0.0 || n.getY() != 0.0){
-				System.out.println(n.toString());
+				//System.out.println(n.toString());
+				sum = sum + n.getY();
+				nn++;
 			}
 		
 		}
+		System.out.println(sum/nn);
 		System.out.println(correctNodes.size());
 		Collections.sort(correctNodes,
 

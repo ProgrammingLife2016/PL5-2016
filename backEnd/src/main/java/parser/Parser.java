@@ -49,7 +49,8 @@ public class Parser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		result.calculateCoordinates();
+		result.computeCoordinates();
+		//result.calculateCoordinates();
 		return result;
 	}
 
