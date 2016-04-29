@@ -43,11 +43,13 @@ public class NodeService {
 		for(Node n: cList.values())
 
 		{
-			if(n.getxCoordinate() < xright && n.getxCoordinate() > xleft && n.getyCoordinate() > ytop && n.getyCoordinate() < ybtm)
+			if(n.getx() < xright && n.getx() > xleft && n.gety() > ytop && n.gety() < ybtm)
 			{
 				correctNodes.add(n);
+			}else if(n.getx() != 0.0 || n.gety() != 0.0){
+				System.out.println(n.toString());
 			}
-			//System.out.println(n.getxCoordinate() + " " + );
+		
 		}
 		System.out.println(correctNodes.size());
 		Collections.sort(correctNodes,
