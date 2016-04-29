@@ -43,10 +43,10 @@ public class NodeService {
 		for(Node n: cList.values())
 
 		{
-			if(n.getx() < xright && n.getx() > xleft && n.gety() > ytop && n.gety() < ybtm)
+			if(n.getX() < xright && n.getX() > xleft && n.getY() > ytop && n.getY() < ybtm)
 			{
 				correctNodes.add(n);
-			}else if(n.getx() != 0.0 || n.gety() != 0.0){
+			}else if(n.getX() != 0.0 || n.getY() != 0.0){
 				System.out.println(n.toString());
 			}
 		
