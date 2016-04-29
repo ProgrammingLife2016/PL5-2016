@@ -54,10 +54,12 @@ public class NodeService {
         for (Node n: nodes) {
             for (Iterator<Edge> iterator = n.getEdges().iterator(); iterator.hasNext();) {
                 Edge edge = iterator.next();
-                if (!nodes.contains(edge.target)) {
-                    edge.nodeId = -1;
+                if (!nodes.contains(edge.target) && edge.target.weight < n.weight) {
+                    edge.targetX = -1;
+                    edge.targetY = -1;
                 } else {
-                    edge.nodeId = nodes.indexOf(edge.target);
+                    edge.targetX = edge.target.x;
+                    edge.targetY = edge.target.y;
                 }
             }
         }

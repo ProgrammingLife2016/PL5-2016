@@ -89,11 +89,10 @@ function draw(data, c, translate) {
         ctx.arc(coor.x, coor.y, value.weight / 10, 0, 2 * Math.PI);
         ctx.stroke();
         $.each(value.edges, function(key, edge) {
-            if (edge.nodeId > -1) {
+            if (edge.targetX != -1 && edge.targetY != -1) {
                 ctx.beginPath();
                 ctx.moveTo(coor.x, coor.y);
-                var target = points[edge.nodeId];
-                var targetCoor = translate(target.x, target.y);
+                var targetCoor = translate(edge.targetX, edge.targetY);
                 ctx.lineTo(targetCoor.x, targetCoor.y);
                 ctx.lineWidth = edge.weight;
                 ctx.stroke();
