@@ -6,7 +6,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Edge {
     @XmlTransient public Node target;
     public int weight;
-    public int nodeId;
+    public int targetX;
+    public int targetY;
 
     public Edge() {} // JAXB needs this
 
