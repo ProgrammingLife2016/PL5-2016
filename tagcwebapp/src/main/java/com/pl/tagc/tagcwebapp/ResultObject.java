@@ -23,5 +23,5 @@ public class ResultObject {
 
 	public List<Node> getcList() {
 		return cList;
-	};
+	}
 }

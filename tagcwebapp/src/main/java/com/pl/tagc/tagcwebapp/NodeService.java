@@ -1,5 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.ws.rs.DefaultValue;
@@ -28,21 +31,38 @@ public class NodeService {
 	}
 
 	private ResultObject getNodes(double xleft, double ytop, double xright, double ybtm) {
-		System.out.println(ytop);
-		System.out.println(xleft);
-		System.out.println(xright);
-		System.out.println(ybtm);
-		CopyOnWriteArrayList<Node> res= new CopyOnWriteArrayList<Node>();
+        CopyOnWriteArrayList<Node> nodes = new CopyOnWriteArrayList<Node>();
+		ArrayList<Node> correctNodes = new ArrayList<>();
 		for(Node n: cList)
 		{
 			if(n.x < xright && n.x > xleft && n.y > ytop && n.y < ybtm)
 			{
-				res.add(n);
+				correctNodes.add(n);
 			}
 		}
-		
-		ResultObject reso = new ResultObject(res);
-		System.out.println(reso.getcList().size());
+		Collections.sort(correctNodes,
+				(n1, n2) -> n2.weight - n1.weight);
+
+		int count = 0;
+		for (Node n: correctNodes) {
+            nodes.add(n);
+			if (count++ > 20) {
+				break;
+			}
+		}
+
+        for (Node n: nodes) {
+            for (Iterator<Edge> iterator = n.getEdges().iterator(); iterator.hasNext();) {
+                Edge edge = iterator.next();
+                if (!nodes.contains(edge.target)) {
+                    edge.nodeId = -1;
+                } else {
+                    edge.nodeId = nodes.indexOf(edge.target);
+                }
+            }
+        }
+
+		ResultObject reso = new ResultObject(nodes);
 		return reso;
 
 	}
