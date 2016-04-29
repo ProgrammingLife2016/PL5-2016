@@ -78,7 +78,11 @@ public class Node {
         return weight;
     }
 
-    public void updateX(int i){
+    public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public void updateX(int i){
         x = Math.max(i, x);
     }
     
