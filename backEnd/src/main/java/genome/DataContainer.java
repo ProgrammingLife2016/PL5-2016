@@ -66,11 +66,11 @@ public class DataContainer {
         for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
             ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
 
-            currentGenomeNodes.get(0).updatex(0);
+            currentGenomeNodes.get(0).updateX(0);
             Node prevNode = currentGenomeNodes.get(0);
             for(int i = 1; i < currentGenomeNodes.size(); i++){
                 Node currentNode = currentGenomeNodes.get(i);
-                currentGenomeNodes.get(i).updatex(i); //update the nodes x-coordinate
+                currentGenomeNodes.get(i).updateX(i); //update the nodes x-coordinate
 
                 Edge currentEdge = edges.get(prevNode.getId() + "|" + currentNode.getId());
                 currentEdge.setWeight(currentEdge.getWeight()+1);
@@ -78,23 +78,23 @@ public class DataContainer {
             }
         }
 
-        HashMap<Integer, HashSet<Node>> nodesByx = new HashMap<>();
+        HashMap<Integer, HashSet<Node>> nodesByxCoordinate = new HashMap<>();
         for(HashMap.Entry<Integer, Node> entry : nodes.entrySet()){
-            if(!nodesByx.containsKey((int) entry.getValue().getx())){
-                nodesByx.put((int) entry.getValue().getx(), new HashSet<>());
+            if(!nodesByxCoordinate.containsKey((int) entry.getValue().getX())){
+                nodesByxCoordinate.put((int) entry.getValue().getX(), new HashSet<>());
             }
-            nodesByx.get((int) entry.getValue().getx()).add(entry.getValue());
+            nodesByxCoordinate.get((int) entry.getValue().getX()).add(entry.getValue());
         }
 
-        for(HashMap.Entry<Integer, HashSet<Node>> c : nodesByx.entrySet()){
+        for(HashMap.Entry<Integer, HashSet<Node>> c : nodesByxCoordinate.entrySet()){
             int y = 0;
             for(Node node : c.getValue()){
-                node.sety(y);
+                node.setY(y);
                 y++;
             }
         }
 
-        return nodesByx;
+        return nodesByxCoordinate;
     }
 
 }

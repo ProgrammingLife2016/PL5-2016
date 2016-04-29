@@ -38,11 +38,11 @@ public class Node {
         this.weight=genomes.length;
     }
 
-    public void setx(double x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void sety(double y) {
+    public void setY(double y) {
         this.y = y;
     }
 
@@ -54,11 +54,11 @@ public class Node {
         return sequence;
     }
 
-    public double getx() {
+    public double getX() {
         return x;
     }
 
-    public double gety() {
+    public double getY() {
         return y;
     }
 
@@ -66,11 +66,11 @@ public class Node {
         return genomes;
     }
 
-    public String getRefrenceGenome() {
+    public String getReferenceGenome() {
         return referenceGenome;
     }
 
-    public int getRefrenceCoordinate() {
+    public int getReferenceCoordinate() {
         return referenceCoordinate;
     }
 
@@ -78,7 +78,7 @@ public class Node {
         return weight;
     }
 
-    public void updatex(int i){
+    public void updateX(int i){
         x = Math.max(i, x);
     }
     
