@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 
+import genome.DataContainer;
 import genome.Edge;
 import genome.Node;
 
@@ -19,6 +21,7 @@ public class Database {
   private Connection connection;
   private Statement statement;
   private String name;
+  private DataContainer dataContainer;
 
   private static final String username = "postgres";
   private static final String password = "TagC";
@@ -26,9 +29,10 @@ public class Database {
 	/**
 	 * Create a Database with its connection.
 	 */
-	public Database(String databaseName) {
+	public Database(String databaseName, DataContainer data) {
+		name = databaseName.toLowerCase();
+		dataContainer = data;
 		createDatabaseConnection(databaseName);
-		name = databaseName;
 	}
 	
 	/**
@@ -44,17 +48,19 @@ public class Database {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			try {
+				System.out.println("new connection");
 				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/", username, password);
 				statement = connection.createStatement();
 				String sql = "CREATE DATABASE " + databaseName;
 				statement.execute(sql);
+				statement.close();
 				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + databaseName, username, password);
 				createTables();
+				insertNodes(dataContainer.getNodes().values());
+				insertEdges(dataContainer.getEdges().values());
 			} catch (SQLException e1) {
 				e1.printStackTrace();
-			} finally {
-				try { statement.close(); } catch (SQLException e2) { } ;
-			}
+			} 
 		}
 		
 	}
@@ -83,9 +89,7 @@ public class Database {
 							
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try { statement.close(); } catch (SQLException e2) { } ;
-		}
+		} 
 		
 	}	
 	
@@ -93,7 +97,7 @@ public class Database {
 	 * Inserts the nodes into the database.
 	 * @param nodes The nodes to be inserted.
 	 */
-	public void insertNodes(ArrayList<Node> nodes) {
+	private void insertNodes(Collection<Node> nodes) {
 		System.out.println("inserting nodes");
 		for (Node node : nodes) {
 			String sql = "INSERT INTO node(id, sequence, weight, referenceGenome, referenceCoordinate) VALUES(" + node.getId() + ", '" 
@@ -106,9 +110,7 @@ public class Database {
 				statement.executeUpdate(sql);
 			} catch (SQLException e) {
 				e.printStackTrace();
-			} finally {
-				try { statement.close(); } catch (SQLException e2) { } ;
-			}
+			} 
 		}
 	}
 	
@@ -116,7 +118,7 @@ public class Database {
 	 * Inserts the edges into the database.
 	 * @param edges The edges to be inserted.
 	 */
-	public void insertEdge(ArrayList<Edge> edges) {
+	private void insertEdges(Collection<Edge> edges) {
 		System.out.println("inserting edges");
 		for (Edge edge : edges) {
 			String sql = "INSERT INTO edge values(" + edge.getStart() + ", " + edge.getEnd() + ")";
@@ -125,8 +127,6 @@ public class Database {
 				statement.executeUpdate(sql);
 			} catch (SQLException e) {
 				e.printStackTrace();
-			} finally {
-				try { statement.close(); } catch (SQLException e2) { } ;
 			}
 		}
 	}
@@ -152,11 +152,7 @@ public class Database {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try { statement.close(); } catch (SQLException e2) { } ;
-			try { rs.close(); } catch (SQLException e3) { } ;
-		}
-		
+		}		
 		return result;
 	}
 	
@@ -169,6 +165,7 @@ public class Database {
 		ArrayList<Node> result = new ArrayList<Node>();
 		ResultSet rs = null;
 		try {
+			statement = connection.createStatement();
 			rs = statement.executeQuery(sql);
 			
 			while(rs.next()) {
@@ -176,18 +173,14 @@ public class Database {
 				String sequence = rs.getString("sequence");
 				int weight = rs.getInt("weight");
 				String referenceGenome = rs.getString("referenceGenome");
-				int referenceCoordinate = rs.getInt("referenceCoordinat");
+				int referenceCoordinate = rs.getInt("referenceCoordinate");
 	
 				result.add(new Node(id, sequence, new String[weight], referenceGenome, referenceCoordinate));
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try { statement.close(); } catch (SQLException e2) { } ;
-			try { rs.close(); } catch (SQLException e3) { } ;
-		}
-		
+		} 		
 		return result;
 	}
 	
@@ -196,8 +189,6 @@ public class Database {
 	 */
 	public void closeConnection() {
 		try {
-			connection.close();
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + name, username, password);
 			statement = connection.createStatement();
 			String sql = "DROP DATABASE " + name;
 			statement.executeUpdate(sql);
