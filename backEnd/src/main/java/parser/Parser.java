@@ -2,8 +2,8 @@ package parser;
 import java.io.FileReader;
 import java.io.IOException;
 
+import genome.DataContainer;
 import genome.Edge;
-import genome.Genome;
 import genome.Node;
 
 import java.io.BufferedReader;
@@ -12,18 +12,17 @@ import java.io.FileNotFoundException;
 /**
  * Created by Jeffrey on 24-4-2016.
  */
-
 public class Parser {
 
 	/**
-	 * Reads the file as a graph in to an Genome.
+	 * Reads the file as a graph in to an DataContainer.
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-	public static Genome parse(String file) {
+	public static DataContainer parse(String file) {
 		BufferedReader reader;
 		String line;
-		Genome result = new Genome();
+		DataContainer result = new DataContainer();
 		
 		try {
 			reader = new BufferedReader(new FileReader(file));
@@ -35,7 +34,8 @@ public class Parser {
 				String[] splittedLine = line.split("\t");
 				String temp = splittedLine[0];
 				if (temp.equals("S")) {
-					result.addNode(createNode(splittedLine));
+					Node node = createNode(splittedLine);
+					result.addNode(node);
 				} else if (temp.equals("L")) {
 					result.addEdge(createEdge(splittedLine));
 				}
@@ -75,6 +75,7 @@ public class Parser {
 		String referenceGenome = splittedLine[5].substring(6, splittedLine[5].length());
 		String ref = splittedLine[8].substring(8, splittedLine[8].length());
 		int referenceCoordinate = Integer.parseInt(ref);
+
 		return new Node(nodeId, sequence, genomes, referenceGenome, referenceCoordinate);
 	}
 }

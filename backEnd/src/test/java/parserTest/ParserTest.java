@@ -5,8 +5,13 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import parser.Parser;
-import genome.Genome;
+import genome.DataContainer;
 
+/**
+ *
+ * @author Jeffrey Helgers.
+ * 
+ */
 public class ParserTest {
 	
 	/**
@@ -14,12 +19,9 @@ public class ParserTest {
 	 */
 	@Test
 	public void test() {
-		Genome genome = Parser.parse("../data/TB10.gfa");
-		assertEquals(genome.getNodes().get(0).getId(), 1);
-		assertEquals(genome.getEdges().get(0).getStart(), 1);
-		assertEquals(genome.getEdges().get(0).getEnd(), 2);
+		DataContainer dataContainer = Parser.parse("../data/TB10.gfa");
+		assertEquals(dataContainer.getNodes().get(1).getId(), 1);
+		assertEquals(dataContainer.getEdges().get("1|2").getStart(), 1);
+		assertEquals(dataContainer.getEdges().get("1|2").getEnd(), 2);
 	}
-	
-	
-
 }
