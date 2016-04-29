@@ -33,8 +33,8 @@ public class DataContainerTest {
     	genome = new Genome();
     	edge = new Edge(1,2);
     	
-    	data.addNode(node1.getId(), node1);
-    	data.addNode(node2.getId(), node2);
+    	data.addNode(node1);
+    	data.addNode(node2);
     	data.addEdge(edge);
     }
     
