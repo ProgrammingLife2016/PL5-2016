@@ -24,19 +24,19 @@ public class Database {
 	/**
 	 * Create a Database with its connection.
 	 */
-	public Database() {
-		createDatabaseConnection();
+	public Database(String databaseName) {
+		createDatabaseConnection(databaseName);
 	}
 	
 	/**
 	 * Set up the database connection.
 	 * If there isn't a database yet create it.
 	 */
-	public void createDatabaseConnection() {
+	public void createDatabaseConnection(String databaseName) {
 		System.out.println("setting up connection");
 		try {
 			Class.forName("org.postgresql.Driver");
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tagc", username, password);
+			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + databaseName, username, password);
 			statement = connection.createStatement();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -44,9 +44,9 @@ public class Database {
 			try {
 				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/", username, password);
 				statement = connection.createStatement();
-				String sql = "CREATE DATABASE tagc";
+				String sql = "CREATE DATABASE " + databaseName;
 				statement.execute(sql);
-				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tagc", username, password);
+				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + databaseName, username, password);
 				statement = connection.createStatement();
 				createTables();
 			} catch (SQLException e1) {
