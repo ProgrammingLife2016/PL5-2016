@@ -7,6 +7,11 @@ import org.junit.Test;
 import parser.Parser;
 import genome.DataContainer;
 
+/**
+ *
+ * @author Jeffrey Helgers.
+ * 
+ */
 public class ParserTest {
 	
 	/**
@@ -19,7 +24,4 @@ public class ParserTest {
 		assertEquals(dataContainer.getEdges().get("1|2").getStart(), 1);
 		assertEquals(dataContainer.getEdges().get("1|2").getEnd(), 2);
 	}
-	
-	
-
 }

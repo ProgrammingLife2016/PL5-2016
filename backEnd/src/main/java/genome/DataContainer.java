@@ -25,7 +25,7 @@ public class DataContainer {
 
     public void addNode(int id, Node node){
         nodes.put(id, node);
-
+        
         for(String genomeID : node.getGenomes()){
             if(!genomes.containsKey(genomeID)){
                 genomes.put(genomeID, new Genome());
@@ -42,20 +42,8 @@ public class DataContainer {
         return nodes;
     }
 
-    public void setNodes(HashMap<Integer, Node> nodes) {
-        this.nodes = nodes;
-    }
-
     public HashMap<String, Edge> getEdges() {
         return edges;
-    }
-
-    public void setEdges(HashMap<String, Edge> edges) {
-        this.edges = edges;
-    }
-
-    public HashMap<String, Genome> getGenomes() {
-        return genomes;
     }
 
     public HashMap<Integer, HashSet<Node>> calculateCoordinates(){
