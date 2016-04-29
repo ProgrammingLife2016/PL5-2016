@@ -2,6 +2,7 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Database {
 
   private Connection connection;
   private Statement statement;
+  private String name;
 
   private static final String username = "postgres";
   private static final String password = "TagC";
@@ -26,18 +28,18 @@ public class Database {
 	 */
 	public Database(String databaseName) {
 		createDatabaseConnection(databaseName);
+		name = databaseName;
 	}
 	
 	/**
 	 * Set up the database connection.
 	 * If there isn't a database yet create it.
 	 */
-	public void createDatabaseConnection(String databaseName) {
+	private void createDatabaseConnection(String databaseName) {
 		System.out.println("setting up connection");
 		try {
 			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + databaseName, username, password);
-			statement = connection.createStatement();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -47,10 +49,11 @@ public class Database {
 				String sql = "CREATE DATABASE " + databaseName;
 				statement.execute(sql);
 				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + databaseName, username, password);
-				statement = connection.createStatement();
 				createTables();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+			} finally {
+				try { statement.close(); } catch (SQLException e2) { } ;
 			}
 		}
 		
@@ -59,9 +62,11 @@ public class Database {
 	/**
 	 * Create the tables for the database.
 	 */
-	public void createTables() {
+	private void createTables() {
 		System.out.println("creating tables");
+		
 		try {
+			statement = connection.createStatement();
 			String edge = 	"CREATE TABLE edge " +
 							"(startid INTEGER not NULL, " +
 							"endid INTEGER not NULL)";
@@ -72,11 +77,14 @@ public class Database {
 							"sequence TEXT not NULL, " +
 							"weight INTEGER not NULL, " +
 							"referenceGenome TEXT not NULL, " +
-							"referenceCoordinate INTEGER not NULL)";
+							"referenceCoordinate INTEGER not NULL, " +
+							"PRIMARY KEY ( id ))";
 			statement.executeUpdate(node);
 							
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try { statement.close(); } catch (SQLException e2) { } ;
 		}
 		
 	}	
@@ -94,9 +102,12 @@ public class Database {
 													+ node.getRefrenceGenome() + "', "
 													+ node.getRefrenceCoordinate() + ")";
 			try {
+				statement = connection.createStatement();
 				statement.executeUpdate(sql);
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} finally {
+				try { statement.close(); } catch (SQLException e2) { } ;
 			}
 		}
 	}
@@ -110,11 +121,93 @@ public class Database {
 		for (Edge edge : edges) {
 			String sql = "INSERT INTO edge values(" + edge.getStart() + ", " + edge.getEnd() + ")";
 			try {
+				statement = connection.createStatement();
 				statement.executeUpdate(sql);
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} finally {
+				try { statement.close(); } catch (SQLException e2) { } ;
 			}
 		}
 	}
 	
+	/**
+	 * Retrieving data from the edge table.
+	 * @param sql The executed query.
+	 * @return The edges that satisfy the query.
+	 */
+	public ArrayList<Edge> getEdges(String sql) {
+		ArrayList<Edge> result = new ArrayList<Edge>();
+		ResultSet rs = null;
+		try {
+			statement = connection.createStatement();
+			rs = statement.executeQuery(sql);
+			
+			while(rs.next()) {
+				int start = rs.getInt("startid");
+				int end = rs.getInt("endid");
+				
+				result.add(new Edge(start, end));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try { statement.close(); } catch (SQLException e2) { } ;
+			try { rs.close(); } catch (SQLException e3) { } ;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Retrieving data from the node table.
+	 * @param sql The executed query.
+	 * @return The nodes that satisfy the query.
+	 */
+	public ArrayList<Node> getNodes(String sql) {
+		ArrayList<Node> result = new ArrayList<Node>();
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery(sql);
+			
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String sequence = rs.getString("sequence");
+				int weight = rs.getInt("weight");
+				String referenceGenome = rs.getString("referenceGenome");
+				int referenceCoordinate = rs.getInt("referenceCoordinat");
+	
+				result.add(new Node(id, sequence, new String[weight], referenceGenome, referenceCoordinate));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try { statement.close(); } catch (SQLException e2) { } ;
+			try { rs.close(); } catch (SQLException e3) { } ;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Ends the connection with the database.
+	 */
+	public void closeConnection() {
+		try {
+			connection.close();
+			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + name, username, password);
+			statement = connection.createStatement();
+			String sql = "DROP DATABASE " + name;
+			statement.executeUpdate(sql);
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try { statement.close(); } catch (SQLException e2) { } ;
+			try { connection.close(); } catch (SQLException e3) { } ;
+		}
+		
+	}	
 }
