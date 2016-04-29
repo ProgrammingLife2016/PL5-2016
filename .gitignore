@@ -39,6 +39,7 @@ application.log
 
 # sbteclipse plugin
 /tagcwebapp/static/.idea
+/Frontend/.idea
 .target
 
 # TeXlipse plugin

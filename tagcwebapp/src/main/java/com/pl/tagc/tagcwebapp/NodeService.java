@@ -5,11 +5,10 @@ import genome.DataContainer;
 import genome.Node;
 import parser.Parser;
 
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -42,6 +41,7 @@ public class NodeService {
 		CopyOnWriteArrayList<Node> res= new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
 		for(Node n: cList.values())
+
 		{
 			if(n.getxCoordinate() < xright && n.getxCoordinate() > xleft && n.getyCoordinate() > ytop && n.getyCoordinate() < ybtm)
 			{
@@ -49,7 +49,9 @@ public class NodeService {
 			}
 		}
 		Collections.sort(correctNodes,
+
 				(n1, n2) -> n2.getWeight() - n1.getWeight());
+
 
 		int count = 0;
 		for (Node n: correctNodes) {
