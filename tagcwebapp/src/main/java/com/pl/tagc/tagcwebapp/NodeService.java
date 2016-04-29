@@ -1,7 +1,14 @@
 package com.pl.tagc.tagcwebapp;
 
+import com.sun.jersey.spi.resource.Singleton;
+import genome.DataContainer;
+import genome.Node;
+import parser.Parser;
+
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.ws.rs.DefaultValue;
@@ -13,9 +20,11 @@ import javax.ws.rs.QueryParam;
 
 // The Java class will be hosted at the URI path "/getnodes"
 @Path("/getnodes")
+@Singleton
 public class NodeService {
-
-	private final List<Node> cList = NodeList.getInstance();
+	Parser parser= new Parser();
+	DataContainer container= parser.parse("../data/TB10.gfa");
+	private final HashMap<Integer, Node> cList = container.getNodes();
 
 	// The Java method will process HTTP GET requests
 	@GET
@@ -32,15 +41,15 @@ public class NodeService {
 	private ResultObject getNodes(double xleft, double ytop, double xright, double ybtm) {
 		CopyOnWriteArrayList<Node> res= new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
-		for(Node n: cList)
+		for(Node n: cList.values())
 		{
-			if(n.x < xright && n.x > xleft && n.y > ytop && n.y < ybtm)
+			if(n.getxCoordinate() < xright && n.getxCoordinate() > xleft && n.getyCoordinate() > ytop && n.getyCoordinate() < ybtm)
 			{
 				correctNodes.add(n);
 			}
 		}
 		Collections.sort(correctNodes,
-				(n1, n2) -> n2.weight - n1.weight);
+				(n1, n2) -> n2.getWeight() - n1.getWeight());
 
 		int count = 0;
 		for (Node n: correctNodes) {

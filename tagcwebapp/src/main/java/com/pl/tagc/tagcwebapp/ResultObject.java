@@ -1,5 +1,7 @@
 package com.pl.tagc.tagcwebapp;
 
+import genome.Node;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

@@ -2,8 +2,11 @@ package com.pl.tagc.tagcwebapp;
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
+import genome.DataContainer;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
+import parser.Parser;
+
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
@@ -47,6 +50,10 @@ public class Main {
     }
     
     public static void main(String[] args) throws IOException {
+        //data parsing
+        Parser parser= new Parser();
+        DataContainer container= parser.parse("../data/TB10.gfa");
+
         // Grizzly 2 initialization
         HttpServer httpServer = startServer();
         StaticHttpHandler staticHttpHandler = new StaticHttpHandler("tagcwebapp/static/");

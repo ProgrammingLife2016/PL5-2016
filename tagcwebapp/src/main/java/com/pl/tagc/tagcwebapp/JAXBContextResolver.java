@@ -6,6 +6,7 @@ import javax.xml.bind.JAXBContext;
 
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.api.json.JSONJAXBContext;
+import genome.Node;
 
 @Provider
 public class JAXBContextResolver implements ContextResolver<JAXBContext> {
