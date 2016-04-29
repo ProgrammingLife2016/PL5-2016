@@ -21,9 +21,8 @@ import javax.ws.rs.QueryParam;
 @Path("/getnodes")
 @Singleton
 public class NodeService {
-	Parser parser= new Parser();
-	DataContainer container= parser.parse("../data/TB10.gfa");
-	private final HashMap<Integer, Node> cList = container.getNodes();
+	
+	private final HashMap<Integer, Node> cList = DataContainer.DC.getNodes();
 
 	// The Java method will process HTTP GET requests
 	@GET

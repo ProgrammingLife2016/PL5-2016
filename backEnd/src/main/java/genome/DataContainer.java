@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import parser.Parser;
+
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -16,7 +18,9 @@ public class DataContainer {
     private HashMap<Integer, Node> nodes;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
-
+    private static Parser parser = new Parser();
+	public static DataContainer DC = parser.parse("../data/TB10.gfa");
+	
     public DataContainer() {
         nodes= new HashMap<>();
         edges= new HashMap<>();
