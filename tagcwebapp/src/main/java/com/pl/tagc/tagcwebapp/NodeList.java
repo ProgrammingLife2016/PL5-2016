@@ -9,25 +9,25 @@ public class NodeList {
     static {
         for (int i=0; i<=10; i++) {
             nList.add(
-                new Node("HugeNode", i * 50, (int) (25 + Math.random() * 50), 100)
+                new Node("HugeNode", (int) (i * 50 * (1 + (0.5 - 1 * Math.random()) / 10)), (int) (25 + Math.random() * 50), 100)
             );
         }
 
         for (int i=0; i<=20; i++) {
             nList.add(
-                new Node("BigNode", i * 25, (int) (25 + Math.random() * 60), 80)
+                new Node("BigNode", (int) (i * 25 * (1 + (0.5 - 1 * Math.random()) / 10)), (int) (25 + Math.random() * 60), 80)
             );
         }
 
         for (int i=0; i<=50; i++) {
             nList.add(
-                new Node("MediumNode", i * 10, (int) (25 + Math.random() * 70), 60)
+                new Node("MediumNode", (int) (i * 10 * (1 + (0.5 - 1 * Math.random()) / 10)), (int) (25 + Math.random() * 70), 60)
             );
         }
 
         for (int i=0; i<=100; i++) {
             nList.add(
-                new Node("SmallNode", i * 5, (int) (25 + Math.random() * 80), 40)
+                new Node("SmallNode", (int) (i * 5 * (1 + (0.5 - 1 * Math.random()) / 10)), (int) (25 + Math.random() * 80), 40)
             );
         }
 
