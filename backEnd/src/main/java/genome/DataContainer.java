@@ -66,11 +66,11 @@ public class DataContainer {
         for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
             ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
 
-            currentGenomeNodes.get(0).updatexCoordinate(0);
+            currentGenomeNodes.get(0).updatex(0);
             Node prevNode = currentGenomeNodes.get(0);
             for(int i = 1; i < currentGenomeNodes.size(); i++){
                 Node currentNode = currentGenomeNodes.get(i);
-                currentGenomeNodes.get(i).updatexCoordinate(i); //update the nodes x-coordinate
+                currentGenomeNodes.get(i).updatex(i); //update the nodes x-coordinate
 
                 Edge currentEdge = edges.get(prevNode.getId() + "|" + currentNode.getId());
                 currentEdge.setWeight(currentEdge.getWeight()+1);
@@ -78,23 +78,23 @@ public class DataContainer {
             }
         }
 
-        HashMap<Integer, HashSet<Node>> nodesByxCoordinate = new HashMap<>();
+        HashMap<Integer, HashSet<Node>> nodesByx = new HashMap<>();
         for(HashMap.Entry<Integer, Node> entry : nodes.entrySet()){
-            if(!nodesByxCoordinate.containsKey((int) entry.getValue().getxCoordinate())){
-                nodesByxCoordinate.put((int) entry.getValue().getxCoordinate(), new HashSet<>());
+            if(!nodesByx.containsKey((int) entry.getValue().getx())){
+                nodesByx.put((int) entry.getValue().getx(), new HashSet<>());
             }
-            nodesByxCoordinate.get((int) entry.getValue().getxCoordinate()).add(entry.getValue());
+            nodesByx.get((int) entry.getValue().getx()).add(entry.getValue());
         }
 
-        for(HashMap.Entry<Integer, HashSet<Node>> c : nodesByxCoordinate.entrySet()){
+        for(HashMap.Entry<Integer, HashSet<Node>> c : nodesByx.entrySet()){
             int y = 0;
             for(Node node : c.getValue()){
-                node.setyCoordinate(y);
+                node.sety(y);
                 y++;
             }
         }
 
-        return nodesByxCoordinate;
+        return nodesByx;
     }
 
 }

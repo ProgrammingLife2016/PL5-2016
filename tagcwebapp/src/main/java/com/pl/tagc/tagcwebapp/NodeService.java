@@ -47,6 +47,7 @@ public class NodeService {
 			{
 				correctNodes.add(n);
 			}
+			//System.out.println(n.getxCoordinate() + " " + );
 		}
 		System.out.println(correctNodes.size());
 		Collections.sort(correctNodes,
