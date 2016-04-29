@@ -65,10 +65,10 @@ public class NodeService {
 		int count = 0;
 		for (Node n: correctNodes) {
 			res.add(n);
-			System.out.println(n.toString());
-			if (count++ > 20) {
-				break;
-			}
+			//System.out.println(n.toString());
+//			if (count++ > 20) {
+//				break;
+//			}
 		}
 		
 		ResultObject reso = new ResultObject(res);

@@ -86,7 +86,27 @@ public class Node {
         x = Math.max(i, x);
     }
     
-    public String toString(){                                          
+    public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
+	}
+
+	public void setGenomes(String[] genomes) {
+		this.genomes = genomes;
+	}
+
+	public void setReferenceGenome(String referenceGenome) {
+		this.referenceGenome = referenceGenome;
+	}
+
+	public void setReferenceCoordinate(int referenceCoordinate) {
+		this.referenceCoordinate = referenceCoordinate;
+	}
+
+	public String toString(){                                          
     	return  "id                  " + id                  + "\n" +
 		    	"sequence            " + sequence            + "\n" +
 		    	"x                   " + x                   + "\n" +
