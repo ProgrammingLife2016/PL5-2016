@@ -1,5 +1,5 @@
 
-var animationSpeed = 0;
+var animationSpeed = 1000;
 var currentHover = null;
 var zoomTimeout = null;
 var url = 'http://localhost:9998/app/';
@@ -85,8 +85,20 @@ function draw(data, c, translate) {
     $.each(points, function(id, value) {
         ctx.beginPath();
         var coor = translate(value.x, value.y);
+        ctx.lineWidth = value.weight / 20;
         ctx.arc(coor.x, coor.y, value.weight / 10, 0, 2 * Math.PI);
         ctx.stroke();
+        $.each(value.edges, function(key, edge) {
+            if (edge.nodeId > -1) {
+                ctx.beginPath();
+                ctx.moveTo(coor.x, coor.y);
+                var target = points[edge.nodeId];
+                var targetCoor = translate(target.x, target.y);
+                ctx.lineTo(targetCoor.x, targetCoor.y);
+                ctx.lineWidth = edge.weight;
+                ctx.stroke();
+            }
+        });
     });
 }
 
