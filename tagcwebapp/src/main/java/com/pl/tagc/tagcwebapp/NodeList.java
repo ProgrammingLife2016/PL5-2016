@@ -36,7 +36,31 @@ public class NodeList {
 //        );
         for (int i=0; i<=10; i++) {
             nList.add(
-                new Node("dummyText", i * 50, 50)
+                new Node("HugeNode", i * 50, (int) (25 + Math.random() * 50), 100)
+            );
+        }
+
+        for (int i=0; i<=20; i++) {
+            nList.add(
+                new Node("BigNode", i * 25, (int) (25 + Math.random() * 60), 80)
+            );
+        }
+
+        for (int i=0; i<=50; i++) {
+            nList.add(
+                new Node("MediumNode", i * 10, (int) (25 + Math.random() * 70), 60)
+            );
+        }
+
+        for (int i=0; i<=100; i++) {
+            nList.add(
+                new Node("SmallNode", i * 5, (int) (25 + Math.random() * 80), 40)
+            );
+        }
+
+        for (int i=0; i<=250; i++) {
+            nList.add(
+                new Node("TinyNode", i * 2, (int) (25 + Math.random() * 90), 20)
             );
         }
 

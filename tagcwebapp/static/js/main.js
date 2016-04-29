@@ -85,7 +85,7 @@ function draw(data, c, translate) {
     $.each(points, function(id, value) {
         ctx.beginPath();
         var coor = translate(value.x, value.y);
-        ctx.arc(coor.x, coor.y, 5, 0, 2 * Math.PI);
+        ctx.arc(coor.x, coor.y, value.weight / 10, 0, 2 * Math.PI);
         ctx.stroke();
     });
 }
