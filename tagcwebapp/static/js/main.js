@@ -86,7 +86,7 @@ function draw(data, c, translate) {
         ctx.beginPath();
         var coor = translate(value.x, value.y);
         ctx.lineWidth = value.weight / 20;
-        ctx.arc(coor.x, coor.y, value.weight / 10, 0, 2 * Math.PI);
+        ctx.arc(coor.x, coor.y, value.weight / 3, 0, 2 * Math.PI);
         ctx.stroke();
         $.each(value.edges, function(key, edge) {
             if (edge.targetX != -1 && edge.targetY != -1) {
