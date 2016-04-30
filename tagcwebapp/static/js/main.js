@@ -2,7 +2,7 @@
 var animationSpeed = 0;
 var currentHover = null;
 var zoomTimeout = null;
-var url = 'http://localhost:9998/app/';
+var url = 'http://localhost:9998/api/';
 var ratio = 0;
 var minHeight = 300;
 var yZoom = 1;
@@ -143,7 +143,7 @@ function updateZoomedGenome()
 
 function getNodes(x, y, width, height, callback) {
     $.ajax({
-        url: url + '../getnodes',
+        url: url + 'getnodes',
         dataType: 'JSON',
         type: 'GET',
         data: {
