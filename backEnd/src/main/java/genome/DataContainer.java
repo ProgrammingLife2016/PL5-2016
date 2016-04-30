@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import parser.Parser;
-
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -16,17 +14,10 @@ public class DataContainer {
     private HashMap<Integer, Node> nodes;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
-<<<<<<< HEAD
-    private double dataWidth;
-    private double dataHeight;
-	public static DataContainer DC = Parser.parse("../data/TB10.gfa");
-	
-=======
 
     /**
      * Constructer for the datacontainer, starts with empty hashmaps.
      */
->>>>>>> master
     public DataContainer() {
         nodes= new HashMap<>();
         edges= new HashMap<>();
@@ -81,11 +72,11 @@ public class DataContainer {
         for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
             ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
 
-            currentGenomeNodes.get(0).updateX(0);
+            currentGenomeNodes.get(0).updatexCoordinate(0);
             Node prevNode = currentGenomeNodes.get(0);
             for(int i = 1; i < currentGenomeNodes.size(); i++){
                 Node currentNode = currentGenomeNodes.get(i);
-                currentGenomeNodes.get(i).updateX(i); //update the nodes x-coordinate
+                currentGenomeNodes.get(i).updatexCoordinate(i); //update the nodes x-coordinate
 
                 Edge currentEdge = edges.get(prevNode.getId() + "|" + currentNode.getId());
                 currentEdge.setWeight(currentEdge.getWeight()+1);
@@ -95,68 +86,21 @@ public class DataContainer {
 
         HashMap<Integer, HashSet<Node>> nodesByxCoordinate = new HashMap<>();
         for(HashMap.Entry<Integer, Node> entry : nodes.entrySet()){
-            if(!nodesByxCoordinate.containsKey((int) entry.getValue().getX())){
-                nodesByxCoordinate.put((int) entry.getValue().getX(), new HashSet<>());
+            if(!nodesByxCoordinate.containsKey((int) entry.getValue().getxCoordinate())){
+                nodesByxCoordinate.put((int) entry.getValue().getxCoordinate(), new HashSet<>());
             }
-            nodesByxCoordinate.get((int) entry.getValue().getX()).add(entry.getValue());
+            nodesByxCoordinate.get((int) entry.getValue().getxCoordinate()).add(entry.getValue());
         }
 
         for(HashMap.Entry<Integer, HashSet<Node>> c : nodesByxCoordinate.entrySet()){
             int y = 0;
             for(Node node : c.getValue()){
-                node.setY(y);
+                node.setyCoordinate(y);
                 y++;
             }
         }
 
         return nodesByxCoordinate;
     }
-    
-    public void computeCoordinates(){
-    	double maxYvalue = 0.0;
-    	double maxXvalue = 0.0;
-        for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
-            ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
-
-            currentGenomeNodes.get(0).updateX(0);
-            Node prevNode = currentGenomeNodes.get(0);
-            for(int i = 1; i < currentGenomeNodes.size(); i++){
-                Node currentNode = currentGenomeNodes.get(i);
-                currentGenomeNodes.get(i).updateX(i); //update the nodes x-coordinate
-                maxXvalue = Math.max(maxXvalue, currentGenomeNodes.get(i).getX());
-                Edge currentEdge = edges.get(prevNode.getId() + "|" + currentNode.getId());
-                currentEdge.setWeight(currentEdge.getWeight()+1);
-                prevNode = currentNode;
-            }
-        }
-        int y = 1;
-        for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
-        	maxYvalue = Math.max(maxYvalue, y);
-        	ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
-            for(int i = 0; i < currentGenomeNodes.size(); i++){
-                currentGenomeNodes.get(i).setY(y); //update the nodes x-coordinate
-            }
-            y++;
-        }
-        setDataHeight(maxYvalue);
-        setDataWidth(maxXvalue);
-    }
-
-	public double getDataWidth() {
-		return this.dataWidth;
-	}
-
-	public double getDataHeight() {
-		return this.dataHeight;
-	}
-
-	public void setDataWidth(double dataWidth) {
-		this.dataWidth = dataWidth;
-	}
-
-	public void setDataHeight(double dataHeight) {
-		this.dataHeight = dataHeight;
-	}
-    
 
 }

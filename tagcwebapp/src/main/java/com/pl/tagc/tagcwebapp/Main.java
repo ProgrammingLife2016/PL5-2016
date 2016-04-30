@@ -4,7 +4,6 @@ import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
-
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
@@ -48,16 +47,12 @@ public class Main {
     }
     
     public static void main(String[] args) throws IOException {
-
         // Grizzly 2 initialization
         HttpServer httpServer = startServer();
-        //StaticHttpHandler staticHttpHandler = new StaticHttpHandler("tagcwebapp/static/");
-        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("static/");
-        staticHttpHandler.setFileCacheEnabled(false);
-        httpServer.getServerConfiguration().addHttpHandler(staticHttpHandler, "/app");
-
+        httpServer.getServerConfiguration().addHttpHandler(
+                new StaticHttpHandler("static/"), "/app");
         System.out.println(String.format("Jersey app started with WADL available at "
-                        + "%sapplication.wadl\nHit enter to stop it...",
+                + "%sapplication.wadl\nHit enter to stop it...",
                 BASE_URI));
         System.in.read();
         httpServer.stop();
