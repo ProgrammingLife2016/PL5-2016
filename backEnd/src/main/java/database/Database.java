@@ -91,8 +91,8 @@ public class Database {
 			String sql = "INSERT INTO node(id, sequence, weight, referenceGenome, referenceCoordinate) VALUES(" + node.getId() + ", '" 
 													+ node.getSequence() + "', "
 													+ node.getWeight() + ", '"
-													+ node.getReferenceGenome() + "', "
-													+ node.getReferenceCoordinate() + ")";
+													+ node.getRefrenceGenome() + "', "
+													+ node.getRefrenceCoordinate() + ")";
 			try {
 				statement.executeUpdate(sql);
 			} catch (SQLException e) {

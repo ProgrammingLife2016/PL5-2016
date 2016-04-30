@@ -48,8 +48,6 @@ public class Parser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		result.computeCoordinates();
-		//result.calculateCoordinates();
 		return result;
 	}
 
