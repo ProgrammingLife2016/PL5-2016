@@ -27,8 +27,8 @@ public class NodeTest {
      */
     @Test
     public void testGetXCoordinate() {
-    	node.setxCoordinate(10.0);
-    	assertEquals(node.getxCoordinate(), 10.0, 0.001);
+    	node.setX(10.0);
+    	assertEquals(node.getX(), 10.0, 0.001);
     }
 
     /**
@@ -36,8 +36,8 @@ public class NodeTest {
      */
     @Test
     public void testGetYCoordinate() {
-    	node.setyCoordinate(10.0);
-    	assertEquals(node.getyCoordinate(), 10.0, 0.001);
+    	node.setY(10.0);
+    	assertEquals(node.getY(), 10.0, 0.001);
     }
     
     /**
@@ -70,7 +70,7 @@ public class NodeTest {
      */
     @Test
     public void testGetReferenceGenome() {
-    	assertEquals(node.getRefrenceGenome(), "ref1");
+    	assertEquals(node.getReferenceGenome(), "ref1");
     }
     
     /**
@@ -78,7 +78,7 @@ public class NodeTest {
      */
     @Test
     public void testGetReferenceCoordinate() {
-    	assertEquals(node.getRefrenceCoordinate(), 0);
+    	assertEquals(node.getReferenceCoordinate(), 0);
     }
     
     /**
@@ -96,7 +96,7 @@ public class NodeTest {
     public void testUpdateXCoordinate() {
     	String[] genomes = {"ref1", "ref2"};
     	node = new Node(1, "AA", genomes, "ref1", 0);
-    	node.updatexCoordinate(2);
-    	assertEquals(node.getxCoordinate(), 2, 0.001);
+    	node.updateX(2);
+    	assertEquals(node.getX(), 2, 0.001);
     }
 }
