@@ -16,17 +16,13 @@ public class DataContainer {
     private HashMap<Integer, Node> nodes;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
-<<<<<<< HEAD
     private double dataWidth;
     private double dataHeight;
 	public static DataContainer DC = Parser.parse("../data/TB10.gfa");
 	
-=======
-
     /**
      * Constructer for the datacontainer, starts with empty hashmaps.
      */
->>>>>>> master
     public DataContainer() {
         nodes= new HashMap<>();
         edges= new HashMap<>();
