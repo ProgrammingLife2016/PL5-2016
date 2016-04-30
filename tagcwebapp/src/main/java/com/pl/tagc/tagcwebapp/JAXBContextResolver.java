@@ -6,12 +6,13 @@ import javax.xml.bind.JAXBContext;
 
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.api.json.JSONJAXBContext;
+import genome.Node;
 
 @Provider
 public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
     private JAXBContext context;
-    private Class[] types = { Node.class, ResultObject.class, NodeService.class };
+    private Class[] types = { Node.class, NodeListObject.class, DimensionsObject.class,  NodeService.class };
 
     public JAXBContextResolver() throws Exception {
         this.context = new JSONJAXBContext(JSONConfiguration.natural().build(), types);
