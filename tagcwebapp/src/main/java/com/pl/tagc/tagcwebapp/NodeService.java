@@ -18,7 +18,7 @@ import javax.ws.rs.QueryParam;
 
 
 // The Java class will be hosted at the URI path "/getnodes"
-@Path("/getnodes")
+@Path("/api")
 @Singleton
 public class NodeService {
 	
@@ -28,15 +28,25 @@ public class NodeService {
 	@GET
 	// The Java method will produce content identified by the MIME Media
 	// type "application/json"
+	@Path("/getnodes")
 	@Produces("application/json")
-	public ResultObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
+	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
 			@DefaultValue("0") @QueryParam("ytop") double ytop, @DefaultValue("100") @QueryParam("xright") double xright,
 			@DefaultValue("100") @QueryParam("ybtm") double ybtm) {
-		ResultObject r = getNodes(xleft, ytop, xright, ybtm);
+		NodeListObject r = getNodes(xleft, ytop, xright, ybtm);
 		return r;
 	}
-
-	private ResultObject getNodes(double xleft, double ytop, double xright, double ybtm) {
+	// The Java method will process HTTP GET requests
+	@GET
+	// The Java method will produce content identified by the MIME Media
+	// type "application/json"
+	@Path("/getdimensions")
+	@Produces("application/json")
+	public DimensionsObject requestDimensions() {
+     return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
+	}
+	
+	private NodeListObject getNodes(double xleft, double ytop, double xright, double ybtm) {
 		CopyOnWriteArrayList<Node> res= new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
 		System.out.println(cList.size());
@@ -71,7 +81,7 @@ public class NodeService {
 //			}
 		}
 		
-		ResultObject reso = new ResultObject(res);
+		NodeListObject reso = new NodeListObject(res);
 		return reso;
 
 	}

@@ -18,6 +18,8 @@ public class DataContainer {
     private HashMap<Integer, Node> nodes;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
+    private double dataWidth;
+    private double dataHeight;
 	public static DataContainer DC = Parser.parse("../data/TB10.gfa");
 	
     public DataContainer() {
@@ -98,7 +100,8 @@ public class DataContainer {
     }
     
     public void computeCoordinates(){
-    	
+    	double maxYvalue = 0.0;
+    	double maxXvalue = 0.0;
         for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
             ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
 
@@ -107,7 +110,7 @@ public class DataContainer {
             for(int i = 1; i < currentGenomeNodes.size(); i++){
                 Node currentNode = currentGenomeNodes.get(i);
                 currentGenomeNodes.get(i).updateX(i); //update the nodes x-coordinate
-
+                maxXvalue = Math.max(maxXvalue, currentGenomeNodes.get(i).getX());
                 Edge currentEdge = edges.get(prevNode.getId() + "|" + currentNode.getId());
                 currentEdge.setWeight(currentEdge.getWeight()+1);
                 prevNode = currentNode;
@@ -115,13 +118,32 @@ public class DataContainer {
         }
         int y = 1;
         for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
-            ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
+        	maxYvalue = Math.max(maxYvalue, y);
+        	ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
             for(int i = 0; i < currentGenomeNodes.size(); i++){
                 currentGenomeNodes.get(i).setY(y); //update the nodes x-coordinate
             }
             y++;
         }
+        setDataHeight(maxYvalue);
+        setDataWidth(maxXvalue);
     }
+
+	public double getDataWidth() {
+		return this.dataWidth;
+	}
+
+	public double getDataHeight() {
+		return this.dataHeight;
+	}
+
+	public void setDataWidth(double dataWidth) {
+		this.dataWidth = dataWidth;
+	}
+
+	public void setDataHeight(double dataHeight) {
+		this.dataHeight = dataHeight;
+	}
     
 
 }
