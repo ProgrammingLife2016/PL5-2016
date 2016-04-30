@@ -12,25 +12,34 @@ import parser.Parser;
 /**
  * Datacontainer that stores the edges and nodes of a particular genome.
  */
-//TODO test and commment better
-
 public class DataContainer {
     private HashMap<Integer, Node> nodes;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
+<<<<<<< HEAD
     private double dataWidth;
     private double dataHeight;
 	public static DataContainer DC = Parser.parse("../data/TB10.gfa");
 	
+=======
+
+    /**
+     * Constructer for the datacontainer, starts with empty hashmaps.
+     */
+>>>>>>> master
     public DataContainer() {
         nodes= new HashMap<>();
         edges= new HashMap<>();
         genomes = new HashMap<>();
     }
 
-    public void addNode(int id, Node node){
-        nodes.put(id, node);
-
+    /**
+     * Adding a node to the data.
+     * @param node The added node.
+     */
+    public void addNode(Node node){
+        nodes.put(node.getId(), node);
+        
         for(String genomeID : node.getGenomes()){
             if(!genomes.containsKey(genomeID)){
                 genomes.put(genomeID, new Genome());
@@ -39,30 +48,34 @@ public class DataContainer {
         }
     }
 
+    /**
+     * Adding an edge to the data.
+     * @param edge The added edge.
+     */
     public void addEdge (Edge edge){
         edges.put(edge.getStart() + "|" + edge.getEnd(), edge);
     }
 
+    /**
+     * Get all the node in the data.
+     * @return Nodes.
+     */
     public HashMap<Integer, Node> getNodes() {
         return nodes;
     }
 
-    public void setNodes(HashMap<Integer, Node> nodes) {
-        this.nodes = nodes;
-    }
-
+    /**
+     * Get all the edges in the data.
+     * @return Edges.
+     */
     public HashMap<String, Edge> getEdges() {
         return edges;
     }
 
-    public void setEdges(HashMap<String, Edge> edges) {
-        this.edges = edges;
-    }
-
-    public HashMap<String, Genome> getGenomes() {
-        return genomes;
-    }
-
+    /**
+     * Compute and order all the nodes according to their x and y coordinate.
+     * @return The ordered set.
+     */
     public HashMap<Integer, HashSet<Node>> calculateCoordinates(){
         //calculate the x-coordinates
         for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
