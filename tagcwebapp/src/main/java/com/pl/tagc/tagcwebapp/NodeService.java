@@ -27,6 +27,16 @@ public class NodeService {
 		return getNodes(xLeft, yTop, xRight, yBottom);
 	}
 
+	// The Java method will process HTTP GET requests
+	@GET
+	// The Java method will produce content identified by the MIME Media
+	// type "application/json"
+	@Path("/getdimensions")
+	@Produces("application/json")
+	public DimensionsObject requestDimensions() {
+		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
+	}
+
 	private NodeListObject getNodes(double xLeft, double yTop, double xRight, double yBottom) {
 		CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
