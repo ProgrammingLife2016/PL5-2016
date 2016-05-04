@@ -10,7 +10,7 @@ import javax.ws.rs.QueryParam;
 import genome.DataContainer;
 import genome.Node;
 
-//The Java class will be hosted at the URI path "/getnodes"
+//The Java class will be hosted at the URI path "/api"
 @Path("/api")
 public class NodeService {
 	
