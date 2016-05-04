@@ -1,6 +1,8 @@
 package parser;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import genome.DataContainer;
 import genome.Edge;
@@ -25,7 +27,11 @@ public class Parser {
 		DataContainer result = new DataContainer();
 		
 		try {
-			reader = new BufferedReader(new FileReader(file));
+			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+			//reader = new BufferedReader(new FileReader(file));
+			System.out.println(in);
+			reader = new BufferedReader(new InputStreamReader(in));
+			System.out.println("bb");
 			reader.readLine();
 			reader.readLine();
 			line = reader.readLine();
