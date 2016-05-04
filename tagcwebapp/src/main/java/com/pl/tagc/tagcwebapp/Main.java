@@ -49,16 +49,11 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // Grizzly 2 initialization
         HttpServer httpServer = startServer();
-<<<<<<< HEAD
-        httpServer.getServerConfiguration().addHttpHandler(
-                new StaticHttpHandler("static/"), "/app");
-=======
         StaticHttpHandler staticHttpHandler = new StaticHttpHandler("tagcwebapp/static/");
 //        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("static/");
         staticHttpHandler.setFileCacheEnabled(false);
         httpServer.getServerConfiguration().addHttpHandler(staticHttpHandler, "/app");
 
->>>>>>> Minor style changes
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...",
                 BASE_URI));

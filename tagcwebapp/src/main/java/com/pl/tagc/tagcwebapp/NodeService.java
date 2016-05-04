@@ -1,6 +1,7 @@
 package com.pl.tagc.tagcwebapp;
 
 import genome.DataContainer;
+import genome.Node;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -34,11 +35,11 @@ public class NodeService {
         ArrayList<Node> correctNodes = new ArrayList<>();
         double sum = 0;
         int nn = 0;
-        for (genome.Node n: cList.values()) {
-            if (n.getX() < xRight && n.getX() > xLeft && n.getY() > yTop && n.getY() < yBottom) {
+        for (Node n: cList.values()) {
+            if (n.getxCoordinate() < xRight && n.getxCoordinate() > xLeft && n.getyCoordinate() > yTop && n.getyCoordinate() < yBottom) {
                 correctNodes.add(n);
-            } else if (n.getX() != 0.0 || n.getY() != 0.0) {
-                sum += n.getY();
+            } else if (n.getxCoordinate() != 0.0 || n.getyCoordinate() != 0.0) {
+                sum += n.getyCoordinate();
                 nn++;
             }
         }
