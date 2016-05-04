@@ -1,25 +1,24 @@
-package PhylogenicTree;
+package phylogeneticTree;
 
 
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Matthijs on 4-5-2016.
  *
- * A node in the phylogenic tree. Stores a name if the node is a leaf.
+ * A node in the phylogenetic tree. Stores a name if the node is a leaf.
  *
  */
-public class PhylogenicNode {
+public class PhylogeneticNode {
 
-    private ArrayList<PhylogenicNode> children;
+    private ArrayList<PhylogeneticNode> children;
     private String nameLabel;
     private double distance;
 
 
-    public PhylogenicNode() {
+    public PhylogeneticNode() {
         nameLabel="";
         distance=0.;
         children= new ArrayList<>();
@@ -29,17 +28,17 @@ public class PhylogenicNode {
      * initalize this node from tree node
      * @param node
      */
-    public PhylogenicNode(TreeNode node, double _distance){
+    public PhylogeneticNode(TreeNode node, double _distance){
         nameLabel=node.getName();
         distance=_distance;
         children= new ArrayList<>();
         for(int i=0;i<node.numberChildren();i++){
-            addChild(new PhylogenicNode(node.getChild(i),node.getChild(i).getWeight()));
+            addChild(new PhylogeneticNode(node.getChild(i),node.getChild(i).getWeight()));
         }
 
     }
 
-    public ArrayList<PhylogenicNode> getChildren() {
+    public ArrayList<PhylogeneticNode> getChildren() {
         return children;
     }
 
@@ -47,7 +46,7 @@ public class PhylogenicNode {
      * Adds child node and stores the distance to that node
      * @param node the node
      */
-    public void addChild(PhylogenicNode node) {
+    public void addChild(PhylogeneticNode node) {
         children.add(node);
     }
 

@@ -1,7 +1,8 @@
 package NewickTest;
 
-import PhylogenicTree.*;
 import org.junit.*;
+
+import phylogeneticTree.*;
 
 
 /**
@@ -10,11 +11,11 @@ import org.junit.*;
  */
 public class TreeParserTest {
 
-    private PhylogenicTree tree;
+    private PhylogeneticTree tree;
 
     @Before
     public void setUp() throws Exception {
-        tree= new PhylogenicTree();
+        tree= new PhylogeneticTree();
         tree.parseTree("src/testFile");
     }
 
