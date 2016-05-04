@@ -11,5 +11,12 @@
 
     <artifactId>backend</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.qurben</groupId>
+            <artifactId>libnewicktree</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 
 </project>
