@@ -10,24 +10,36 @@ import javax.ws.rs.QueryParam;
 import genome.DataContainer;
 import genome.Node;
 
-// The Java class will be hosted at the URI path "/getnodes"
-@Path("/getnodes")
+//The Java class will be hosted at the URI path "/api"
+@Path("/api")
 public class NodeService {
-
+	
 	private final HashMap<Integer, Node> cList = DataContainer.DC.getNodes();
 
 	// The Java method will process HTTP GET requests
 	@GET
 	// The Java method will produce content identified by the MIME Media
 	// type "application/json"
+	@Path("/getnodes")
 	@Produces("application/json")
-	public ResultObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xLeft,
-			@DefaultValue("0") @QueryParam("ytop") double yTop, @DefaultValue("100") @QueryParam("xright") double xRight,
-			@DefaultValue("100") @QueryParam("ybtm") double yBottom) {
-		return getNodes(xLeft, yTop, xRight, yBottom);
+	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
+			@DefaultValue("0") @QueryParam("ytop") double ytop, @DefaultValue("100") @QueryParam("xright") double xright,
+			@DefaultValue("100") @QueryParam("ybtm") double ybtm) {
+		NodeListObject r = getNodes(xleft, ytop, xright, ybtm);
+		return r;
 	}
 
-	private ResultObject getNodes(double xLeft, double yTop, double xRight, double yBottom) {
+	// The Java method will process HTTP GET requests
+	@GET
+	// The Java method will produce content identified by the MIME Media
+	// type "application/json"
+	@Path("/getdimensions")
+	@Produces("application/json")
+	public DimensionsObject requestDimensions() {
+		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
+	}
+
+	private NodeListObject getNodes(double xLeft, double yTop, double xRight, double yBottom) {
 		CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
 		for (Node n : cList.values()) {
@@ -43,7 +55,7 @@ public class NodeService {
 			res.add(n);
 		}
 
-		ResultObject reso = new ResultObject(res);
+		NodeListObject reso = new NodeListObject(res);
 		return reso;
 
 	}

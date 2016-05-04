@@ -2,7 +2,7 @@
 var animationSpeed = 1000;
 var currentHover = null;
 var zoomTimeout = null;
-var url = 'http://localhost:9998/app/';
+var url = 'http://localhost:9998/';
 var ratio = 0;
 var minHeight = 300;
 var yZoom = 1;
@@ -166,7 +166,7 @@ function computeBoundingBox(x, y, width, height)
 
 function getNodes(boundingBox, callback) {
     $.ajax({
-        url: url + '../getnodes',
+        url: url + 'api/getnodes',
         dataType: 'JSON',
         type: 'GET',
         data: boundingBox
@@ -182,7 +182,7 @@ function initialize() {
 
 function initializeMinimap() {
     $.ajax({
-        url: url + 'getdimensions',
+        url: url + 'api/getdimensions',
         dataType: 'JSON',
         type: 'GET'
     }).done(function(data) {
