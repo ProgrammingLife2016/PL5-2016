@@ -1,6 +1,9 @@
 package PhylogenicTree;
 
 
+import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -11,29 +14,43 @@ import java.util.HashMap;
  */
 public class PhylogenicNode {
 
-    private HashMap<PhylogenicNode,Double> children;
+    private ArrayList<PhylogenicNode> children;
     private String nameLabel;
+    private double distance;
 
 
     public PhylogenicNode() {
         nameLabel="";
+        distance=0.;
+        children= new ArrayList<>();
     }
 
-    public HashMap<PhylogenicNode, Double> getChildren() {
+    /**
+     * initalize this node from tree node
+     * @param node
+     */
+    public PhylogenicNode(TreeNode node, double _distance){
+        nameLabel=node.getName();
+        distance=_distance;
+        children= new ArrayList<>();
+        for(int i=0;i<node.numberChildren();i++){
+            addChild(new PhylogenicNode(node.getChild(i),node.getChild(i).getWeight()));
+        }
+
+    }
+
+    public ArrayList<PhylogenicNode> getChildren() {
         return children;
     }
 
     /**
      * Adds child node and stores the distance to that node
      * @param node the node
-     * @param dist the distance
      */
-    public void addChild(PhylogenicNode node, double dist) {
-        if(children == null)
-            children= new HashMap<>();
-
-        children.put(node,dist);
+    public void addChild(PhylogenicNode node) {
+        children.add(node);
     }
+
 
 
     /**
@@ -44,7 +61,10 @@ public class PhylogenicNode {
         return nameLabel;
     }
 
-    public void setNameLabel(String nameLabel) {
-        this.nameLabel = nameLabel;
+    public double getDistance() {
+        return distance;
     }
+
+
+
 }
