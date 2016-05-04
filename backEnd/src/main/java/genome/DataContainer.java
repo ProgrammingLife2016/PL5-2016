@@ -1,4 +1,6 @@
 package genome;
+import parser.Parser;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,6 +20,8 @@ public class DataContainer {
     /**
      * Constructer for the datacontainer, starts with empty hashmaps.
      */
+	public static DataContainer DC = Parser.parse("./data/TB10.gfa");
+
     public DataContainer() {
         nodes= new HashMap<>();
         edges= new HashMap<>();

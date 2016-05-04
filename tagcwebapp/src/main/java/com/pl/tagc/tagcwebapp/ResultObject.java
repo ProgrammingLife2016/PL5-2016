@@ -1,5 +1,6 @@
 package com.pl.tagc.tagcwebapp;
 
+import genome.Node;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -23,5 +24,5 @@ public class ResultObject {
 
 	public List<Node> getcList() {
 		return cList;
-	};
+	}
 }

@@ -15,11 +15,20 @@
             <artifactId>jersey-grizzly2</artifactId>
             <version>${jersey-version}</version>
         </dependency>
-        
+        <dependency>
+ 			<groupId>com.pl.tagc</groupId>
+ 			<artifactId>backend</artifactId>
+ 			<version>0.0.1-SNAPSHOT</version>
+ 		</dependency>
          <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-json</artifactId>
             <version>${jersey-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>2.1.4</version>
         </dependency>
         
         <!-- uncomment this to get Fastinfoset support:
