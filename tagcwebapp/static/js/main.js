@@ -14,20 +14,20 @@ $('document').ready(function() {
     //Update splashscreen
     splashScreen(function() {
         $('body').bind('mousewheel DOMMouseScroll', function(e) {
-            if ($(currentHover).hasClass('mainGenome')) {
+            if ($(currentHover).hasClass('minimap')) {
                 e.preventDefault();
                 zoom(e.originalEvent.wheelDelta);
             }
         });
 
         //Add the slider
-        var genomeSlider = $('#genome').find('.slider');
-        $(genomeSlider)
+        var slider = $('#minimap').find('.slider');
+        $(slider)
             .draggable({
                 containment: "parent",
                 stop: function() {
                     clearTimeout(zoomTimeout);
-                    zoomTimeout = setTimeout(function() { updateZoomedGenome() }, 500);
+                    zoomTimeout = setTimeout(function() { updatezoomWindow() }, 500);
                 }
             });
 
@@ -59,9 +59,9 @@ function pxToInt(css) {
 }
 
 var drawZoom = function(nodes) {
-    draw(nodes, $('#zoomedGenome canvas')[0], function(x, y) {
-        var slider = $('#genome .slider');
-        var sliderRatio = $('#zoomedGenome').width() / slider.width();
+    draw(nodes, $('#zoomWindow canvas')[0], function(x, y) {
+        var slider = $('#minimap .slider');
+        var sliderRatio = $('#zoomWindow').width() / slider.width();
         return {
             x: (x / ratio - pxToInt(slider.css('left'))) * sliderRatio,
             y: (y / ratio - pxToInt(slider.css('top'))) * sliderRatio
@@ -70,7 +70,7 @@ var drawZoom = function(nodes) {
 };
 
 var drawGenome = function(nodes) {
-    draw(nodes, $('#genome canvas')[0], function(x, y) {
+    draw(nodes, $('#minimap canvas')[0], function(x, y) {
         return {
             x: x / ratio,
             y: y / ratio
@@ -103,13 +103,13 @@ function draw(data, c, translate) {
 
 function zoom(direction) {
     var slider = $('.slider', currentHover);
-    var genome = $('#genome');
-    var zoomedGenome = $('#zoomedGenome');
+    var minimap = $('#minimap');
+    var zoomWindow = $('#zoomWindow');
     var currentWidth = slider.width();
     var currentHeight = slider.height();
-    var maxWidth = genome.width();
-    var maxHeight = genome.height();
-    var zoomRatio = zoomedGenome.height() / zoomedGenome.width();
+    var maxWidth = minimap.width();
+    var maxHeight = minimap.height();
+    var zoomRatio = zoomWindow.height() / zoomWindow.width();
     var newWidth = 0;
     if (direction > 0) {
         newWidth = Math.max(Math.min(currentWidth * 0.95, currentWidth - 2), 1);
@@ -137,12 +137,12 @@ function zoom(direction) {
     slider.width(parseInt(newWidth) +'px');
     slider.height(parseInt(newHeight) +'px');
     clearTimeout(zoomTimeout);
-    zoomTimeout = setTimeout(function() { updateZoomedGenome() }, 500);
+    zoomTimeout = setTimeout(function() { updatezoomWindow() }, 500);
 }
 
-function updateZoomedGenome()
+function updatezoomWindow()
 {
-    var slider = $('#genome .slider');
+    var slider = $('#minimap .slider');
     var x = Math.floor(slider.position().left - slider.parent().position().left);
     var y = Math.floor(slider.position().top - slider.parent().position().top);
     var width = slider.width();
@@ -177,31 +177,31 @@ function initializeBasicGenome() {
         dataType: 'JSON',
         type: 'GET'
     }).done(function(data) {
-        var genome = $('#genome');
-        var height = genome.width() * (data.height / data.width);
+        var minimap = $('#minimap');
+        var height = minimap.width() * (data.height / data.width);
         if (height < minHeight) {
             yZoom = Math.floor(minHeight / height);
             height *= yZoom;
         }
 
-        genome.height(height);
+        minimap.height(height);
 
-        var slider = genome.find('.slider');
+        var slider = minimap.find('.slider');
 
-        ratio = data.width / genome.width();
+        ratio = data.width / minimap.width();
 
-        genome.prepend(
-            $('<canvas/>', {'class':'genomeCanvas', Width: genome.width(), Height: genome.height() })
+        minimap.prepend(
+            $('<canvas/>', {'class':'genomeCanvas', Width: minimap.width(), Height: minimap.height() })
         );
 
-        getNodes(0, 0, genome.width(), genome.height(), drawGenome);
+        getNodes(0, 0, minimap.width(), minimap.height(), drawGenome);
         zoom(-1);
     });
 }
 
 function initializeZoomGenome() {
-    var genome = $('#zoomedGenome');
-    genome.prepend(
-        $('<canvas/>', {'class':'zoomedCanvas', Width: genome.width(), Height: genome.height() })
+    var zoomWindow = $('#zoomWindow');
+    zoomWindow.prepend(
+        $('<canvas/>', {'class':'zoomedCanvas', Width: zoomWindow.width(), Height: zoomWindow.height() })
     );
 }
