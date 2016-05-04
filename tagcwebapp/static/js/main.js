@@ -167,11 +167,11 @@ function getNodes(x, y, width, height, callback) {
 }
 
 function initialize() {
-    initializeBasicGenome();
-    initializeZoomGenome();
+    initializeMinimap();
+    initializeZoomWindow();
 }
 
-function initializeBasicGenome() {
+function initializeMinimap() {
     $.ajax({
         url: url + 'getdimensions',
         dataType: 'JSON',
@@ -199,7 +199,7 @@ function initializeBasicGenome() {
     });
 }
 
-function initializeZoomGenome() {
+function initializeZoomWindow() {
     var zoomWindow = $('#zoomWindow');
     zoomWindow.prepend(
         $('<canvas/>', {'class':'zoomedCanvas', Width: zoomWindow.width(), Height: zoomWindow.height() })
