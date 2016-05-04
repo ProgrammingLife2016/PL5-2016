@@ -21,13 +21,13 @@ public class NodeService {
 	// The Java method will produce content identified by the MIME Media
 	// type "application/json"
 	@Produces("application/json")
-	public ResultObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xLeft,
+	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xLeft,
 			@DefaultValue("0") @QueryParam("ytop") double yTop, @DefaultValue("100") @QueryParam("xright") double xRight,
 			@DefaultValue("100") @QueryParam("ybtm") double yBottom) {
 		return getNodes(xLeft, yTop, xRight, yBottom);
 	}
 
-	private ResultObject getNodes(double xLeft, double yTop, double xRight, double yBottom) {
+	private NodeListObject getNodes(double xLeft, double yTop, double xRight, double yBottom) {
 		CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
 		for (Node n : cList.values()) {
@@ -43,7 +43,7 @@ public class NodeService {
 			res.add(n);
 		}
 
-		ResultObject reso = new ResultObject(res);
+		NodeListObject reso = new NodeListObject(res);
 		return reso;
 
 	}
