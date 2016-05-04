@@ -22,6 +22,8 @@ public class Node {
     private int referenceCoordinate; //coordinate of this node in the refr genome
     private int weight; // amount of genomes that contain this node
 
+    public Node(){};
+    
     public Node(int id, String sequence, String[] genomes, String referenceGenome, int referenceCoordinate) {
         this.id = id;
         this.sequence = sequence;

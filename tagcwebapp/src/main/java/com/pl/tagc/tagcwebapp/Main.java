@@ -49,8 +49,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // Grizzly 2 initialization
         HttpServer httpServer = startServer();
-        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("tagcwebapp/static/");
-//        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("static/");
+        //StaticHttpHandler staticHttpHandler = new StaticHttpHandler("tagcwebapp/static/");
+        StaticHttpHandler staticHttpHandler = new StaticHttpHandler("static/");
         staticHttpHandler.setFileCacheEnabled(false);
         httpServer.getServerConfiguration().addHttpHandler(staticHttpHandler, "/app");
 
