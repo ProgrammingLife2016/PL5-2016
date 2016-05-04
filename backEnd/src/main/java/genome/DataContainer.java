@@ -14,10 +14,15 @@ public class DataContainer {
     private HashMap<Integer, Node> nodes;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
+<<<<<<< HEAD
 
     /**
      * Constructer for the datacontainer, starts with empty hashmaps.
      */
+=======
+	public static DataContainer DC = Parser.parse("./data/TB10.gfa");
+	
+>>>>>>> Minor style changes
     public DataContainer() {
         nodes= new HashMap<>();
         edges= new HashMap<>();

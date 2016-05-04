@@ -1,9 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import genome.DataContainer;
+
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -16,56 +15,43 @@ import javax.ws.rs.QueryParam;
 @Path("/getnodes")
 public class NodeService {
 
-	private final List<Node> cList = NodeList.getInstance();
+    private final HashMap<Integer, genome.Node> cList = DataContainer.DC.getNodes();
 
-	// The Java method will process HTTP GET requests
-	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "application/json"
-	@Produces("application/json")
-	public ResultObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
-			@DefaultValue("0") @QueryParam("ytop") double ytop, @DefaultValue("100") @QueryParam("xright") double xright,
-			@DefaultValue("100") @QueryParam("ybtm") double ybtm) {
-		ResultObject r = getNodes(xleft, ytop, xright, ybtm);
-		return r;
-	}
+    // The Java method will process HTTP GET requests
+    @GET
+    // The Java method will produce content identified by the MIME Media
+    // type "application/json"
+    @Produces("application/json")
+    public ResultObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xLeft,
+                                     @DefaultValue("0") @QueryParam("ytop") double yTop,
+                                     @DefaultValue("100") @QueryParam("xright") double xRight,
+                                     @DefaultValue("100") @QueryParam("ybtm") double yBottom) {
+        return getNodes(xLeft, yTop, xRight, yBottom);
+    }
 
-	private ResultObject getNodes(double xleft, double ytop, double xright, double ybtm) {
-        CopyOnWriteArrayList<Node> nodes = new CopyOnWriteArrayList<Node>();
-		ArrayList<Node> correctNodes = new ArrayList<>();
-		for(Node n: cList)
-		{
-			if(n.x < xright && n.x > xleft && n.y > ytop && n.y < ybtm)
-			{
-				correctNodes.add(n);
-			}
-		}
-		Collections.sort(correctNodes,
-				(n1, n2) -> n2.weight - n1.weight);
-
-		int count = 0;
-		for (Node n: correctNodes) {
-            nodes.add(n);
-			if (count++ > 20) {
-				break;
-			}
-		}
-
-        for (Node n: nodes) {
-            for (Iterator<Edge> iterator = n.getEdges().iterator(); iterator.hasNext();) {
-                Edge edge = iterator.next();
-                if (!nodes.contains(edge.target) && edge.target.weight < n.weight) {
-                    edge.targetX = -1;
-                    edge.targetY = -1;
-                } else {
-                    edge.targetX = edge.target.x;
-                    edge.targetY = edge.target.y;
-                }
+    private ResultObject getNodes(double xLeft, double yTop, double xRight, double yBottom) {
+        CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
+        ArrayList<Node> correctNodes = new ArrayList<>();
+        double sum = 0;
+        int nn = 0;
+        for (genome.Node n: cList.values()) {
+            if (n.getX() < xRight && n.getX() > xLeft && n.getY() > yTop && n.getY() < yBottom) {
+                correctNodes.add(n);
+            } else if (n.getX() != 0.0 || n.getY() != 0.0) {
+                sum += n.getY();
+                nn++;
             }
         }
 
-		ResultObject reso = new ResultObject(nodes);
-		return reso;
+        Collections.sort(correctNodes, (n1, n2) -> n2.getWeight() - n1.getWeight());
 
-	}
+        int count = 0;
+        for (Node n: correctNodes) {
+            res.add(n);
+        }
+
+        ResultObject reso = new ResultObject(res);
+        return reso;
+
+    }
 }
