@@ -16,6 +16,8 @@ public class DataContainer {
     private HashMap<Integer, Node> nodes;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
+    private double dataWidth;
+    private double dataHeight;
 
     /**
      * Constructer for the datacontainer, starts with empty hashmaps.
@@ -108,4 +110,20 @@ public class DataContainer {
         return nodesByxCoordinate;
     }
 
+	public double getDataWidth() {
+		return this.dataWidth;
+	}
+
+	public double getDataHeight() {
+		return this.dataHeight;
+	}
+
+	public void setDataWidth(double dataWidth) {
+		this.dataWidth = dataWidth;
+	}
+
+	public void setDataHeight(double dataHeight) {
+		this.dataHeight = dataHeight;
+	}
+    
 }
