@@ -147,20 +147,29 @@ function updatezoomWindow()
     var y = Math.floor(slider.position().top - slider.parent().position().top);
     var width = slider.width();
     var height = slider.height();
-    getNodes(x, y, width, height, drawZoom);
+    var boundingBox = computeBoundingBox(x, y, width, height)
+    getNodes(boundingBox, drawZoom);
 }
 
-function getNodes(x, y, width, height, callback) {
-    $.ajax({
-        url: url + '../getnodes',
-        dataType: 'JSON',
-        type: 'GET',
-        data: {
+// This function translates from one representation of a bounding box in gui coordinates to
+// coordinates expected by the REST api. It takes x, y, width and height arguments and returns 
+// an object with left right top and bottom properties.  
+function computeBoundingBox(x, y, width, height)
+{
+	return {
             'xleft': x * ratio,
             'xright': (x + width) * ratio,
             'ytop': y / yZoom * ratio,
             'ybtm': (y + height) / yZoom * ratio
         }
+}
+
+function getNodes(boundingBox, callback) {
+    $.ajax({
+        url: url + '../getnodes',
+        dataType: 'JSON',
+        type: 'GET',
+        data: boundingBox
     }).done(function(data) {
         callback(data);
     });
@@ -193,8 +202,8 @@ function initializeMinimap() {
         minimap.prepend(
             $('<canvas/>', {'class':'genomeCanvas', Width: minimap.width(), Height: minimap.height() })
         );
-
-        getNodes(0, 0, minimap.width(), minimap.height(), drawGenome);
+        var boundingBox = computeBoundingBox(0, 0, minimap.width(), minimap.height());
+        getNodes(boundingBox, drawGenome);
         zoom(-1);
     });
 }
