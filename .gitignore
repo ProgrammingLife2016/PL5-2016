@@ -8,7 +8,7 @@ Project Docs/
 .class
 /.idea
 */.idea
-
+.idea/
 bin/
 tmp/
 *.tmp
