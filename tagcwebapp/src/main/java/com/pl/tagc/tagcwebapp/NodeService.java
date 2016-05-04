@@ -1,24 +1,19 @@
 package com.pl.tagc.tagcwebapp;
 
-import com.sun.jersey.spi.resource.Singleton;
-import genome.DataContainer;
-import genome.Node;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-
+import genome.DataContainer;
+import genome.Node;
 
 // The Java class will be hosted at the URI path "/getnodes"
 @Path("/getnodes")
-@Singleton
 public class NodeService {
-	
+
 	private final HashMap<Integer, Node> cList = DataContainer.DC.getNodes();
 
 	// The Java method will process HTTP GET requests
@@ -26,49 +21,28 @@ public class NodeService {
 	// The Java method will produce content identified by the MIME Media
 	// type "application/json"
 	@Produces("application/json")
-	public ResultObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
-			@DefaultValue("0") @QueryParam("ytop") double ytop, @DefaultValue("100") @QueryParam("xright") double xright,
-			@DefaultValue("100") @QueryParam("ybtm") double ybtm) {
-		ResultObject r = getNodes(xleft, ytop, xright, ybtm);
-		return r;
+	public ResultObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xLeft,
+			@DefaultValue("0") @QueryParam("ytop") double yTop, @DefaultValue("100") @QueryParam("xright") double xRight,
+			@DefaultValue("100") @QueryParam("ybtm") double yBottom) {
+		return getNodes(xLeft, yTop, xRight, yBottom);
 	}
 
-	private ResultObject getNodes(double xleft, double ytop, double xright, double ybtm) {
-        CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
+	private ResultObject getNodes(double xLeft, double yTop, double xRight, double yBottom) {
+		CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
-		System.out.println(cList.size());
-		double sum = 0;
-		int nn = 0;
-		for(Node n: cList.values())
-
-		{
-			if(n.getX() < xright && n.getX() > xleft && n.getY() > ytop && n.getY() < ybtm)
-			{
+		for (Node n : cList.values()) {
+			if (n.getxCoordinate() < xRight && n.getxCoordinate() > xLeft && n.getyCoordinate() > yTop
+					&& n.getyCoordinate() < yBottom) {
 				correctNodes.add(n);
-			}else if(n.getX() != 0.0 || n.getY() != 0.0){
-				//System.out.println(n.toString());
-				sum = sum + n.getY();
-				nn++;
 			}
-		
 		}
-		System.out.println(sum/nn);
-		System.out.println(correctNodes.size());
-		Collections.sort(correctNodes,
 
-				(n1, n2) -> n2.getWeight() - n1.getWeight());
+		Collections.sort(correctNodes, (n1, n2) -> n2.getWeight() - n1.getWeight());
 
-
-		int count = 0;
-		for (Node n: correctNodes) {
+		for (Node n : correctNodes) {
 			res.add(n);
-			//System.out.println(n.toString());
-//			if (count++ > 20) {
-//				break;
-//			}
 		}
 
-		
 		ResultObject reso = new ResultObject(res);
 		return reso;
 

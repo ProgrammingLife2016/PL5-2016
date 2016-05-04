@@ -8,7 +8,6 @@ Project Docs/
 .class
 /.idea
 */.idea
-*/.idea/*
 
 bin/
 tmp/
@@ -38,11 +37,8 @@ application.log
 .buildpath
 
 # sbteclipse plugin
-/tagcwebapp/static/.idea
-/Frontend/.idea
 .target
 
 # TeXlipse plugin
 .texlipse
-/tagcwebapp/static/.idea/workspace.xml
 target/
