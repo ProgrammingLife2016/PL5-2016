@@ -11,10 +11,10 @@ import java.net.URI;
 /*
  * Instructions:
  * 
- * To use this application http://localhost:9998/getnodes?xleft=10&xright=70&ytop=30&ybtm=80 
+ * To use this application http://localhost:9998/api/getnodes?xleft=10&xright=70&ytop=30&ybtm=80 
  * can be used to get a json list of nodes that are in the viewport defined by the four 
- * values: xleft xright ytop and ybtm. http://localhost:9998/app/index.html can be used 
- * to access the static file index.html.
+ * values: xleft xright ytop and ybtm. http://localhost:9998/app/index.htm can be used 
+ * to access the static file index.htm.
  * 
  * */
 
