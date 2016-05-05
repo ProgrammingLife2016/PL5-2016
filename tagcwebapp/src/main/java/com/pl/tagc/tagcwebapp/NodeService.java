@@ -43,8 +43,8 @@ public class NodeService {
 		CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
 		for (Node n : cList.values()) {
-			if (n.getxCoordinate() < xRight && n.getxCoordinate() > xLeft && n.getyCoordinate() > yTop
-					&& n.getyCoordinate() < yBottom) {
+			if (n.getxCoordinate() <= xRight && n.getxCoordinate() >= xLeft && n.getyCoordinate() >= yTop
+					&& n.getyCoordinate() <= yBottom) {
 				correctNodes.add(n);
 			}
 		}

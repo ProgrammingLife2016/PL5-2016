@@ -80,4 +80,36 @@ public class Node {
     public void updatexCoordinate(int i){
         xCoordinate = Math.max(i, xCoordinate);
     }
+
+	public String getReferenceGenome() {
+		return referenceGenome;
+	}
+
+	public void setReferenceGenome(String referenceGenome) {
+		this.referenceGenome = referenceGenome;
+	}
+
+	public int getReferenceCoordinate() {
+		return referenceCoordinate;
+	}
+
+	public void setReferenceCoordinate(int referenceCoordinate) {
+		this.referenceCoordinate = referenceCoordinate;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
+	}
+
+	public void setGenomes(String[] genomes) {
+		this.genomes = genomes;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
 }
