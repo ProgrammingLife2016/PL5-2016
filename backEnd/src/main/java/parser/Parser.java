@@ -15,6 +15,14 @@ import java.io.FileNotFoundException;
 public class Parser {
 
 	/**
+	 * Constructor to create an Parser.
+	 * This throws an exception because it should not be possible.
+	 */
+	protected Parser() {
+        throw new UnsupportedOperationException();
+    }
+	
+	/**
 	 * Reads the file as a graph in to an DataContainer.
 	 * @param file The file that is read.
 	 * @return The graph in the file.
@@ -23,13 +31,11 @@ public class Parser {
 		BufferedReader reader;
 		String line;
 		DataContainer result = new DataContainer();
-		
 		try {
 			reader = new BufferedReader(new FileReader(file));
 			reader.readLine();
 			reader.readLine();
 			line = reader.readLine();
-			
 			while (line != null) {
 				String[] splittedLine = line.split("\t");
 				String temp = splittedLine[0];
@@ -42,7 +48,6 @@ public class Parser {
 				line = reader.readLine();
 			}
 			reader.close();
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

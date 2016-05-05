@@ -1,14 +1,9 @@
-package genomeTest;
+package genome;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import genome.Edge;
-import genome.Genome;
-import genome.Node;
-import genome.DataContainer;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -25,13 +20,13 @@ public class DataContainerTest {
 	 * Setting up the DataContainer.
 	 */
     @Before
-    public void setUp(){
+    public void setUp() {
     	data = new DataContainer();
     	String[] genomes = {"ref1", "ref2"};
     	node1 = new Node(1, "AA", genomes, "ref1", 0);
     	node2 = new Node(2, "TG", genomes, "ref1", 3);
     	genome = new Genome();
-    	edge = new Edge(1,2);
+    	edge = new Edge(1, 2);
     	
     	data.addNode(node1);
     	data.addNode(node2);
@@ -55,6 +50,9 @@ public class DataContainerTest {
     	assertEquals(data.getEdges().get(edge.getStart() + "|" + edge.getEnd()), edge);
     }
     
+    /**
+     * Tests giving the nodes coordinates.
+     */
     @Test
     public void test() {
     	assertTrue(data.calculateCoordinates().get(0).contains(node1));

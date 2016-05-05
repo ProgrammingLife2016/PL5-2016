@@ -23,11 +23,13 @@ public class Database {
   private String name;
   private DataContainer dataContainer;
 
-  private static final String username = "postgres";
-  private static final String password = "TagC";
+  private static String username = "postgres";
+  private static String password = "TagC";
 
 	/**
 	 * Create a Database with its connection.
+	 * @param databaseName Name of the database.
+	 * @param data Input for the database.
 	 */
 	public Database(String databaseName, DataContainer data) {
 		name = databaseName.toLowerCase();
@@ -43,18 +45,21 @@ public class Database {
 		System.out.println("setting up connection");
 		try {
 			Class.forName("org.postgresql.Driver");
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + databaseName, username, password);
+			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"
+					+ databaseName, username, password);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			try {
 				System.out.println("new connection");
-				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/", username, password);
+				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/",
+						username, password);
 				statement = connection.createStatement();
 				String sql = "CREATE DATABASE " + databaseName;
 				statement.execute(sql);
 				statement.close();
-				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + databaseName, username, password);
+				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"
+						+ databaseName, username, password);
 				createTables();
 				insertNodes(dataContainer.getNodes().values());
 				insertEdges(dataContainer.getEdges().values());
@@ -73,18 +78,18 @@ public class Database {
 		
 		try {
 			statement = connection.createStatement();
-			String edge = 	"CREATE TABLE edge " +
-							"(startid INTEGER not NULL, " +
-							"endid INTEGER not NULL)";
+			String edge = 	"CREATE TABLE edge "
+							+ "(startid INTEGER not NULL, "
+							+ "endid INTEGER not NULL)";
 			statement.executeUpdate(edge);
 			
-			String node = 	"CREATE TABLE node " +
-							"(id INTEGER not NULL, " +
-							"sequence TEXT not NULL, " +
-							"weight INTEGER not NULL, " +
-							"referenceGenome TEXT not NULL, " +
-							"referenceCoordinate INTEGER not NULL, " +
-							"PRIMARY KEY ( id ))";
+			String node = 	"CREATE TABLE node "
+							+ "(id INTEGER not NULL, "
+							+ "sequence TEXT not NULL, "
+							+ "weight INTEGER not NULL, "
+							+ "referenceGenome TEXT not NULL, "
+							+ "referenceCoordinate INTEGER not NULL, "
+							+ "PRIMARY KEY ( id ))";
 			statement.executeUpdate(node);
 							
 		} catch (SQLException e) {
@@ -100,11 +105,12 @@ public class Database {
 	private void insertNodes(Collection<Node> nodes) {
 		System.out.println("inserting nodes");
 		for (Node node : nodes) {
-			String sql = "INSERT INTO node(id, sequence, weight, referenceGenome, referenceCoordinate) VALUES(" + node.getId() + ", '" 
+			String sql = "INSERT INTO node(id, sequence, weight, referenceGenome,"
+					+ "referenceCoordinate) VALUES(" + node.getId() + ", '" 
 													+ node.getSequence() + "', "
 													+ node.getWeight() + ", '"
-													+ node.getRefrenceGenome() + "', "
-													+ node.getRefrenceCoordinate() + ")";
+													+ node.getReferenceGenome() + "', "
+													+ node.getReferenceCoordinate() + ")";
 			try {
 				statement = connection.createStatement();
 				statement.executeUpdate(sql);
@@ -143,7 +149,7 @@ public class Database {
 			statement = connection.createStatement();
 			rs = statement.executeQuery(sql);
 			
-			while(rs.next()) {
+			while (rs.next()) {
 				int start = rs.getInt("startid");
 				int end = rs.getInt("endid");
 				
@@ -168,14 +174,15 @@ public class Database {
 			statement = connection.createStatement();
 			rs = statement.executeQuery(sql);
 			
-			while(rs.next()) {
+			while (rs.next()) {
 				int id = rs.getInt("id");
 				String sequence = rs.getString("sequence");
 				int weight = rs.getInt("weight");
 				String referenceGenome = rs.getString("referenceGenome");
 				int referenceCoordinate = rs.getInt("referenceCoordinate");
 	
-				result.add(new Node(id, sequence, new String[weight], referenceGenome, referenceCoordinate));
+				result.add(new Node(id, sequence, new String[weight], 
+						referenceGenome, referenceCoordinate));
 			}
 			
 		} catch (SQLException e) {
@@ -196,8 +203,16 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try { statement.close(); } catch (SQLException e2) { } ;
-			try { connection.close(); } catch (SQLException e3) { } ;
+			try {
+				statement.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+			try {
+				connection.close();
+			} catch (SQLException e3) {
+				e3.printStackTrace();
+			}
 		}
 		
 	}	

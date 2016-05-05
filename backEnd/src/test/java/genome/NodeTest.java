@@ -1,8 +1,6 @@
-package genomeTest;
+package genome;
 import org.junit.Before;
 import org.junit.Test;
-
-import genome.Node;
 
 import static org.junit.Assert.assertEquals;;
 
@@ -70,7 +68,7 @@ public class NodeTest {
      */
     @Test
     public void testGetReferenceGenome() {
-    	assertEquals(node.getRefrenceGenome(), "ref1");
+    	assertEquals(node.getReferenceGenome(), "ref1");
     }
     
     /**
@@ -78,7 +76,7 @@ public class NodeTest {
      */
     @Test
     public void testGetReferenceCoordinate() {
-    	assertEquals(node.getRefrenceCoordinate(), 0);
+    	assertEquals(node.getReferenceCoordinate(), 0);
     }
     
     /**

@@ -1,10 +1,9 @@
-package parserTest;
+package parser;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import parser.Parser;
 import genome.DataContainer;
 
 /**
