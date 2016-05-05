@@ -2,6 +2,7 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -104,19 +105,18 @@ public class Database {
 	 */
 	private void insertNodes(Collection<Node> nodes) {
 		System.out.println("inserting nodes");
-		for (Node node : nodes) {
-			String sql = "INSERT INTO node(id, sequence, weight, referenceGenome,"
-					+ "referenceCoordinate) VALUES(" + node.getId() + ", '" 
-													+ node.getSequence() + "', "
-													+ node.getWeight() + ", '"
-													+ node.getReferenceGenome() + "', "
-													+ node.getReferenceCoordinate() + ")";
-			try {
-				statement = connection.createStatement();
-				statement.executeUpdate(sql);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} 
+		String sql = "INSERT INTO node VALUES(?,?,?,?,?)";
+		try {
+			PreparedStatement ps = connection.prepareStatement(sql);
+			for (Node node : nodes) {
+				ps.setInt(1, node.getId());
+				ps.setString(2, node.getSequence());
+				ps.setInt(3, node.getWeight());
+				ps.setString(4, node.getReferenceGenome());
+				ps.setInt(5, node.getReferenceCoordinate());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -158,7 +158,16 @@ public class Database {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				statement.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
 		return result;
 	}
 	
@@ -187,7 +196,16 @@ public class Database {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 		
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				statement.close();
+			} catch (SQLException e2){
+				e2.printStackTrace();				
+			}
+		}
 		return result;
 	}
 	
@@ -205,13 +223,9 @@ public class Database {
 		} finally {
 			try {
 				statement.close();
+				connection.close();
 			} catch (SQLException e2) {
 				e2.printStackTrace();
-			}
-			try {
-				connection.close();
-			} catch (SQLException e3) {
-				e3.printStackTrace();
 			}
 		}
 		

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import parser.Parser;
+
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -18,6 +20,11 @@ public class DataContainer {
     private double dataWidth;
     private double dataHeight;
 
+    /**
+     * Constructer for the datacontainer, starts with empty hashmaps.
+     */
+	public static DataContainer dc = Parser.parse("../data/TB10.gfa");
+    
 	/**
 	 * Create an empty data container.
 	 */

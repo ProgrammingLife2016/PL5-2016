@@ -13,7 +13,6 @@ public class DataContainerTest {
 	private DataContainer data;
 	private Node node1;
 	private Node node2;
-	private Genome genome;
 	private Edge edge;
 	
 	/**
@@ -25,7 +24,6 @@ public class DataContainerTest {
     	String[] genomes = {"ref1", "ref2"};
     	node1 = new Node(1, "AA", genomes, "ref1", 0);
     	node2 = new Node(2, "TG", genomes, "ref1", 3);
-    	genome = new Genome();
     	edge = new Edge(1, 2);
     	
     	data.addNode(node1);

@@ -14,7 +14,7 @@ import genome.Node;
 @Path("/api")
 public class NodeService {
 	
-	private final HashMap<Integer, Node> cList = DataContainer.DC.getNodes();
+	private final HashMap<Integer, Node> cList = DataContainer.dc.getNodes();
 
 	// The Java method will process HTTP GET requests
 	@GET
@@ -36,7 +36,7 @@ public class NodeService {
 	@Path("/getdimensions")
 	@Produces("application/json")
 	public DimensionsObject requestDimensions() {
-		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
+		return new DimensionsObject(DataContainer.dc.getDataWidth(), DataContainer.dc.getDataHeight());
 	}
 
 	private NodeListObject getNodes(double xLeft, double yTop, double xRight, double yBottom) {
