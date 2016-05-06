@@ -60,4 +60,22 @@ public class DataContainerTest {
     	assertTrue(data.calculateCoordinates().get(0).contains(node1));
     	assertTrue(data.calculateCoordinates().get(1).contains(node2));
     }
+    
+    /**
+     * Test data height.
+     */
+    @Test
+    public void testDataHeight() {
+    	data.setDataHeight(10.0);
+    	assertEquals(data.getDataHeight(), 10.0, 0.001);
+    }
+    
+    /**
+     * Test data width.
+     */
+    @Test
+    public void testDataWidth() {
+    	data.setDataWidth(5.0);
+    	assertEquals(data.getDataWidth(), 5.0, 0.001);
+    }
 }
