@@ -22,7 +22,7 @@ public class Node {
      * Constructor to create a node.
      * @param id The node id.
      * @param sequence The sequence of the node.
-     * @param genomes The genomes id's passing through.
+     * @param newGenomes The genomes id's passing through.
      * @param referenceGenome The reference genome id.
      * @param referenceCoordinate the reference coordinate.
      */
@@ -169,7 +169,7 @@ public class Node {
 
 	/**
 	 * Set the genomes id's passing through.
-	 * @param genomes The genomes id's.
+	 * @param newGenomes The genomes id's.
 	 */
 	public void setGenomes(String[] newGenomes) {
 		genomes = new String[newGenomes.length];

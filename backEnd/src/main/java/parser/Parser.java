@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 
 import genome.DataContainer;
 import genome.Edge;
@@ -36,7 +37,7 @@ public class Parser {
 		DataContainer result = new DataContainer();
 		try {
 			InputStream in = new FileInputStream(file);
-			Reader r = new InputStreamReader(in, "UTF_8");
+			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
 			reader = new BufferedReader(r);
 			reader.readLine();
 			reader.readLine();

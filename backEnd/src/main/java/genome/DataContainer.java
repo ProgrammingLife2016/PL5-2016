@@ -23,7 +23,7 @@ public class DataContainer {
     /**
      * Constructer for the datacontainer, starts with empty hashmaps.
      */
-	public static DataContainer dc = Parser.parse("../data/TB10.gfa");
+	private static DataContainer dc = Parser.parse("../data/TB10.gfa");
     
 	/**
 	 * Create an empty data container.
@@ -137,6 +137,14 @@ public class DataContainer {
 	 */
 	public void setDataHeight(double dataHeight) {
 		this.dataHeight = dataHeight;
+	}
+	
+	/**
+	 * Get the standard data container.
+	 * @return The data container.
+	 */
+	public static DataContainer getDc() {
+		return dc;
 	}
     
 }

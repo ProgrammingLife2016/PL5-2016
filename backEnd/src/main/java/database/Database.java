@@ -193,7 +193,6 @@ public class Database {
 		try {
 			statement = connection.createStatement();
 			rs = statement.executeQuery(sql);
-			
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String sequence = rs.getString("sequence");
@@ -204,7 +203,6 @@ public class Database {
 				result.add(new Node(id, sequence, new String[weight], 
 						referenceGenome, referenceCoordinate));
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -213,7 +211,7 @@ public class Database {
 					rs.close();
 				}
 				statement.close();
-			} catch (SQLException e2){
+			} catch (SQLException e2) {
 				e2.printStackTrace();				
 			}
 		}

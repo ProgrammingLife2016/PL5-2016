@@ -6,12 +6,11 @@ import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by Matthijs on 4-5-2016.
@@ -43,7 +42,7 @@ public class PhylogeneticTree {
         BufferedReader reader;
         try {
         	InputStream in = new FileInputStream(fileName);
-			Reader r = new InputStreamReader(in, "UTF_8");
+			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
 			reader = new BufferedReader(r);
             TreeParser tp = new TreeParser(reader);
             tree = tp.tokenize("");
