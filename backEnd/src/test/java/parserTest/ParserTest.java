@@ -2,6 +2,8 @@ package parserTest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileNotFoundException;
+
 import org.junit.Test;
 
 import parser.Parser;
