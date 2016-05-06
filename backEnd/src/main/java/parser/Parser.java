@@ -1,12 +1,15 @@
 package parser;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import genome.DataContainer;
 import genome.Edge;
 import genome.Node;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
@@ -32,7 +35,9 @@ public class Parser {
 		String line;
 		DataContainer result = new DataContainer();
 		try {
-			reader = new BufferedReader(new FileReader(file));
+			InputStream in = new FileInputStream(file);
+			Reader r = new InputStreamReader(in, "UTF_8");
+			reader = new BufferedReader(r);
 			reader.readLine();
 			reader.readLine();
 			line = reader.readLine();

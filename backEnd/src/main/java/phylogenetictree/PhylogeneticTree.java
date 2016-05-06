@@ -4,8 +4,14 @@ import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by Matthijs on 4-5-2016.
@@ -32,12 +38,14 @@ public class PhylogeneticTree {
      * Method that parses a newick tree from a file and stores it in this tree.
      * @param fileName the file to parse
      */
-
     public void parseTree(String fileName) {
-        Tree tree = new Tree();
+        Tree tree;
+        BufferedReader reader;
         try {
-            BufferedReader r = new BufferedReader(new FileReader("src/testFile"));
-            TreeParser tp = new TreeParser(r);
+        	InputStream in = new FileInputStream(fileName);
+			Reader r = new InputStreamReader(in, "UTF_8");
+			reader = new BufferedReader(r);
+            TreeParser tp = new TreeParser(reader);
             tree = tp.tokenize("");
             this.setRoot(new PhylogeneticNode(tree.getRoot(), 0.));
 
@@ -45,7 +53,9 @@ public class PhylogeneticTree {
         }
         catch (FileNotFoundException e) {
             System.out.println("tree file not found");
-        }
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     /**

@@ -106,17 +106,28 @@ public class Database {
 	private void insertNodes(Collection<Node> nodes) {
 		System.out.println("inserting nodes");
 		String sql = "INSERT INTO node VALUES(?,?,?,?,?)";
+		PreparedStatement ps = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 			for (Node node : nodes) {
 				ps.setInt(1, node.getId());
 				ps.setString(2, node.getSequence());
 				ps.setInt(3, node.getWeight());
 				ps.setString(4, node.getReferenceGenome());
 				ps.setInt(5, node.getReferenceCoordinate());
+				ps.addBatch();
 			}
+			ps.executeBatch();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 	

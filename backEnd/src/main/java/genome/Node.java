@@ -26,11 +26,14 @@ public class Node {
      * @param referenceGenome The reference genome id.
      * @param referenceCoordinate the reference coordinate.
      */
-    public Node(int id, String sequence, String[] genomes, String referenceGenome,
+    public Node(int id, String sequence, String[] newGenomes, String referenceGenome,
     		int referenceCoordinate) {
         this.id = id;
         this.sequence = sequence;
-        this.genomes = genomes;
+        genomes = new String[newGenomes.length];
+		for (int i = 0; i < newGenomes.length; i++) {
+			genomes[i] = newGenomes[i];
+		}
         this.referenceGenome = referenceGenome;
         this.referenceCoordinate = referenceCoordinate;
 
@@ -93,7 +96,11 @@ public class Node {
      * @return The genomes id's.
      */
     public String[] getGenomes() {
-        return genomes;
+    	String[] res = new String[genomes.length];
+    	for (int i = 0; i < genomes.length; i++) {
+    		res[i] = genomes[i];
+    	}
+        return res;
     }
 
     /**
@@ -164,8 +171,11 @@ public class Node {
 	 * Set the genomes id's passing through.
 	 * @param genomes The genomes id's.
 	 */
-	public void setGenomes(String[] genomes) {
-		this.genomes = genomes;
+	public void setGenomes(String[] newGenomes) {
+		genomes = new String[newGenomes.length];
+		for (int i = 0; i < newGenomes.length; i++) {
+			genomes[i] = newGenomes[i];
+		}
 	}
 
 	/**
