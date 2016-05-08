@@ -38,7 +38,7 @@ public class Parser {
 		DataContainer result = new DataContainer();
 		try {
 
-			InputStream in = new FileInputStream(file);
+			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
 			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
 			reader = new BufferedReader(r);
 
