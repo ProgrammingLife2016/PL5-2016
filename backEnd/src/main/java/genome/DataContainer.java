@@ -1,9 +1,12 @@
 package genome;
+
 import parser.Parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -13,102 +16,111 @@ import java.util.HashSet;
  * Datacontainer that stores the edges and nodes of a particular genome.
  */
 public class DataContainer {
-    private HashMap<Integer, Node> nodes;
-    private HashMap<String, Edge> edges;
-    private HashMap<String, Genome> genomes;
-    private double dataWidth;
-    private double dataHeight;
+	private HashMap<Integer, Node> nodes;
+	private HashMap<String, Edge> edges;
+	private HashMap<String, Genome> genomes;
+	private double dataWidth;
+	private double dataHeight;
 
-    /**
-     * Constructer for the datacontainer, starts with empty hashmaps.
-     */
-	//public static DataContainer DC = Parser.parse("./data/TB10.gfa");
+	/**
+	 * Constructer for the datacontainer, starts with empty hashmaps.
+	 */
+	// public static DataContainer DC = Parser.parse("./data/TB10.gfa");
 	public static DataContainer DC = Parser.parse("data/TB10.gfa");
 
-    public DataContainer() {
-        nodes= new HashMap<>();
-        edges= new HashMap<>();
-        genomes = new HashMap<>();
-    }
+	public DataContainer() {
+		nodes = new HashMap<>();
+		edges = new HashMap<>();
+		genomes = new HashMap<>();
+	}
 
-    /**
-     * Adding a node to the data.
-     * @param node The added node.
-     */
-    public void addNode(Node node){
-        nodes.put(node.getId(), node);
-        
-        for(String genomeID : node.getGenomes()){
-            if(!genomes.containsKey(genomeID)){
-                genomes.put(genomeID, new Genome());
-            }
-            genomes.get(genomeID).addNode(node);
-        }
-    }
+	/**
+	 * Adding a node to the data.
+	 * 
+	 * @param node
+	 *            The added node.
+	 */
+	public void addNode(Node node) {
+		nodes.put(node.getId(), node);
 
-    /**
-     * Adding an edge to the data.
-     * @param edge The added edge.
-     */
-    public void addEdge (Edge edge){
-        edges.put(edge.getStart() + "|" + edge.getEnd(), edge);
-    }
+		for (String genomeID : node.getGenomes()) {
+			if (!genomes.containsKey(genomeID)) {
+				genomes.put(genomeID, new Genome());
+			}
+			genomes.get(genomeID).addNode(node);
+		}
+	}
 
-    /**
-     * Get all the node in the data.
-     * @return Nodes.
-     */
-    public HashMap<Integer, Node> getNodes() {
-        return nodes;
-    }
+	/**
+	 * Adding an edge to the data.
+	 * 
+	 * @param edge
+	 *            The added edge.
+	 */
+	public void addEdge(Edge edge) {
+		edges.put(edge.getStart() + "|" + edge.getEnd(), edge);
+	}
 
-    /**
-     * Get all the edges in the data.
-     * @return Edges.
-     */
-    public HashMap<String, Edge> getEdges() {
-        return edges;
-    }
+	/**
+	 * Get all the node in the data.
+	 * 
+	 * @return Nodes.
+	 */
+	public HashMap<Integer, Node> getNodes() {
+		return nodes;
+	}
 
-    /**
-     * Compute and order all the nodes according to their x and y coordinate.
-     * @return The ordered set.
-     */
-    public HashMap<Integer, HashSet<Node>> calculateCoordinates(){
-        //calculate the x-coordinates
-        for(HashMap.Entry<String, Genome> entry : genomes.entrySet()){
-            ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
+	/**
+	 * Get all the edges in the data.
+	 * 
+	 * @return Edges.
+	 */
+	public HashMap<String, Edge> getEdges() {
+		return edges;
+	}
 
-            currentGenomeNodes.get(0).updatexCoordinate(0);
-            Node prevNode = currentGenomeNodes.get(0);
-            for(int i = 1; i < currentGenomeNodes.size(); i++){
-                Node currentNode = currentGenomeNodes.get(i);
-                currentGenomeNodes.get(i).updatexCoordinate(i); //update the nodes x-coordinate
+	/**
+	 * Compute and order all the nodes according to their x and y coordinate.
+	 * 
+	 * @return The ordered set.
+	 */
+	public HashMap<Integer, HashSet<Node>> calculateCoordinates() {
+		// calculate the x-coordinates
+		for (HashMap.Entry<String, Genome> entry : genomes.entrySet()) {
+			ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
 
-                Edge currentEdge = edges.get(prevNode.getId() + "|" + currentNode.getId());
-                currentEdge.setWeight(currentEdge.getWeight()+1);
-                prevNode = currentNode;
-            }
-        }
+			currentGenomeNodes.get(0).updatexCoordinate(0);
+			Node prevNode = currentGenomeNodes.get(0);
+			for (int i = 1; i < currentGenomeNodes.size(); i++) {
+				Node currentNode = currentGenomeNodes.get(i);
+				currentGenomeNodes.get(i).updatexCoordinate(i); // update the
+																// nodes
+																// x-coordinate
 
-        HashMap<Integer, HashSet<Node>> nodesByxCoordinate = new HashMap<>();
-        for(HashMap.Entry<Integer, Node> entry : nodes.entrySet()){
-            if(!nodesByxCoordinate.containsKey((int) entry.getValue().getxCoordinate())){
-                nodesByxCoordinate.put((int) entry.getValue().getxCoordinate(), new HashSet<>());
-            }
-            nodesByxCoordinate.get((int) entry.getValue().getxCoordinate()).add(entry.getValue());
-        }
+				Edge currentEdge = edges.get(prevNode.getId() + "|" + currentNode.getId());
+				currentEdge.setWeight(currentEdge.getWeight() + 1);
+				prevNode = currentNode;
+			}
+		}
 
-        for(HashMap.Entry<Integer, HashSet<Node>> c : nodesByxCoordinate.entrySet()){
-            int y = 0;
-            for(Node node : c.getValue()){
-                node.setyCoordinate(y);
-                y++;
-            }
-        }
+		HashMap<Integer, HashSet<Node>> nodesByxCoordinate = new HashMap<>();
+		for (HashMap.Entry<Integer, Node> entry : nodes.entrySet()) {
+			if (!nodesByxCoordinate.containsKey((int) entry.getValue().getxCoordinate())) {
+				nodesByxCoordinate.put((int) entry.getValue().getxCoordinate(), new HashSet<>());
+			}
+			nodesByxCoordinate.get((int) entry.getValue().getxCoordinate()).add(entry.getValue());
+		}
 
-        return nodesByxCoordinate;
-    }
+		for (HashMap.Entry<Integer, HashSet<Node>> c : nodesByxCoordinate.entrySet()) {
+			int y = 0;
+			for (Node node : c.getValue()) {
+				node.setyCoordinate(y);
+				y++;
+			}
+		}
+
+		return nodesByxCoordinate;
+	}
 
 	public double getDataWidth() {
 		return this.dataWidth;
@@ -125,5 +137,35 @@ public class DataContainer {
 	public void setDataHeight(double dataHeight) {
 		this.dataHeight = dataHeight;
 	}
-    
+
+	public CopyOnWriteArrayList<Node> getNodes(double xleft, double ytop, double xright, double ybtm) {
+
+		calculateCoordinates();
+
+		CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
+		ArrayList<Node> correctNodes = new ArrayList<>();
+		for (Node n : nodes.values()) {
+			if (n.getxCoordinate() < xright && n.getxCoordinate() > xleft && n.getyCoordinate() > ytop
+					&& n.getyCoordinate() < ybtm) {
+				correctNodes.add(n);
+			}
+		}
+
+		Collections.sort(correctNodes, (n1, n2) -> n2.getWeight() - n1.getWeight());
+
+		int count = 0;
+		for (Node n : correctNodes) {
+
+			res.add(n);
+			count++;
+
+			if (count == 20) {
+				break;
+			}
+
+		}
+
+		return res;
+	}
+
 }
