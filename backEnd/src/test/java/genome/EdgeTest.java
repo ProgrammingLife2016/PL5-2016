@@ -1,7 +1,6 @@
-package genomeTest;
+package genome;
 import org.junit.Before;
 import org.junit.Test;
-import genome.Edge;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,7 +15,7 @@ public class EdgeTest {
 	 * Setting up the Edge with whom we test.
 	 */
     @Before
-    public void setUp(){
+    public void setUp() {
     	edge = new Edge(1, 2);
     }
     

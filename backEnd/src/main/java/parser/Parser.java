@@ -1,12 +1,17 @@
 package parser;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+
 
 import genome.DataContainer;
 import genome.Edge;
 import genome.Node;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
@@ -14,6 +19,14 @@ import java.io.FileNotFoundException;
  */
 public class Parser {
 
+	/**
+	 * Constructor to create an Parser.
+	 * This throws an exception because it should not be possible.
+	 */
+	protected Parser() {
+        throw new UnsupportedOperationException();
+    }
+	
 	/**
 	 * Reads the file as a graph in to an DataContainer.
 	 * @param file The file that is read.
@@ -23,13 +36,17 @@ public class Parser {
 		BufferedReader reader;
 		String line;
 		DataContainer result = new DataContainer();
-		
 		try {
-			reader = new BufferedReader(new FileReader(file));
+
+			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
+			reader = new BufferedReader(r);
+
+			System.out.println("bb");
+
 			reader.readLine();
 			reader.readLine();
 			line = reader.readLine();
-			
 			while (line != null) {
 				String[] splittedLine = line.split("\t");
 				String temp = splittedLine[0];
@@ -42,7 +59,6 @@ public class Parser {
 				line = reader.readLine();
 			}
 			reader.close();
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

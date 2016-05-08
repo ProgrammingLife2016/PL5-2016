@@ -14,8 +14,8 @@ import genome.Node;
 @Path("/api")
 public class NodeService {
 	
-	private final HashMap<Integer, Node> cList = DataContainer.DC.getNodes();
-
+	private final HashMap<Integer, Node> cList = DataContainer.getDc().getNodes();
+	
 	// The Java method will process HTTP GET requests
 	@GET
 	// The Java method will produce content identified by the MIME Media
@@ -36,7 +36,8 @@ public class NodeService {
 	@Path("/getdimensions")
 	@Produces("application/json")
 	public DimensionsObject requestDimensions() {
-		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
+		return new DimensionsObject(DataContainer.getDc().getDataWidth(),
+				DataContainer.getDc().getDataHeight());
 	}
 
 	private NodeListObject getNodes(double xLeft, double yTop, double xRight, double yBottom) {
