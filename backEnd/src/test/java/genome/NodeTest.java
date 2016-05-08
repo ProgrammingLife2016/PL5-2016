@@ -44,6 +44,8 @@ public class NodeTest {
     @Test
     public void testGetId() {
     	assertEquals(node.getId(), 1);
+    	node.setId(2);
+    	assertEquals(node.getId(), 2);
     }
     
     /**
@@ -52,6 +54,8 @@ public class NodeTest {
     @Test
     public void testGetSequence() {
     	assertEquals(node.getSequence(), "AA");
+    	node.setSequence("AC");
+    	assertEquals(node.getSequence(), "AC");
     }
     
     /**
@@ -61,6 +65,10 @@ public class NodeTest {
     public void testGetGenomes() {
     	assertEquals(node.getGenomes()[0], "ref1");
     	assertEquals(node.getGenomes()[1], "ref2");
+    	String[] temp = {"ref3", "ref4" };
+    	node.setGenomes(temp);
+    	assertEquals(node.getGenomes()[0], "ref3");
+    	assertEquals(node.getGenomes()[1], "ref4");
     }
     
     /**
@@ -68,7 +76,13 @@ public class NodeTest {
      */
     @Test
     public void testGetReferenceGenome() {
+<<<<<<< HEAD:backEnd/src/test/java/genomeTest/NodeTest.java
+    	assertEquals(node.getRefrenceGenome(), "ref1");
+    	node.setReferenceGenome("ref2");
+    	assertEquals(node.getReferenceGenome(), "ref2");
+=======
     	assertEquals(node.getReferenceGenome(), "ref1");
+>>>>>>> master:backEnd/src/test/java/genome/NodeTest.java
     }
     
     /**
@@ -76,7 +90,13 @@ public class NodeTest {
      */
     @Test
     public void testGetReferenceCoordinate() {
+<<<<<<< HEAD:backEnd/src/test/java/genomeTest/NodeTest.java
+    	assertEquals(node.getRefrenceCoordinate(), 0);
+    	node.setReferenceCoordinate(10);
+    	assertEquals(node.getReferenceCoordinate(), 10);
+=======
     	assertEquals(node.getReferenceCoordinate(), 0);
+>>>>>>> master:backEnd/src/test/java/genome/NodeTest.java
     }
     
     /**
@@ -85,6 +105,8 @@ public class NodeTest {
     @Test
     public void testGetWeight() {
     	assertEquals(node.getWeight(), 2);
+    	node.setWeight(4);
+    	assertEquals(node.getWeight(), 4);
     }
     
     /**
@@ -96,5 +118,14 @@ public class NodeTest {
     	node = new Node(1, "AA", genomes, "ref1", 0);
     	node.updatexCoordinate(2);
     	assertEquals(node.getxCoordinate(), 2, 0.001);
+    }
+    
+    /**
+     * Test empty node.
+     */
+    @Test
+    public void testEmptyNode() {
+    	Node n = new Node();
+    	assertEquals(n.getSequence(), null);    	
     }
 }
