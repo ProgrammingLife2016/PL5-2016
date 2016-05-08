@@ -1,4 +1,4 @@
-package phylogeneticTree;
+package phylogenetictree;
 
 
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
