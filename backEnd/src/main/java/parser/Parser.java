@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
+
 import genome.DataContainer;
 import genome.Edge;
 import genome.Node;
@@ -36,9 +37,13 @@ public class Parser {
 		String line;
 		DataContainer result = new DataContainer();
 		try {
+
 			InputStream in = new FileInputStream(file);
 			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
 			reader = new BufferedReader(r);
+
+			System.out.println("bb");
+
 			reader.readLine();
 			reader.readLine();
 			line = reader.readLine();

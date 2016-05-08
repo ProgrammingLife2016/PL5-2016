@@ -20,14 +20,13 @@ public class DataContainer {
     private double dataWidth;
     private double dataHeight;
 
-    /**
-     * Constructer for the datacontainer, starts with empty hashmaps.
-     */
-	private static DataContainer dc = Parser.parse("../data/TB10.gfa");
-    
+ 
 	/**
 	 * Create an empty data container.
 	 */
+	private static DataContainer dc = Parser.parse("data/TB10.gfa");
+
+
     public DataContainer() {
         nodes = new HashMap<>();
         edges = new HashMap<>();

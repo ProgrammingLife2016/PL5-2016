@@ -18,7 +18,7 @@ public class ParserTest {
 	 */
 	@Test
 	public void test() {
-		DataContainer dataContainer = Parser.parse("../data/TB10.gfa");
+		DataContainer dataContainer = Parser.parse("data/TB10.gfa");
 		assertEquals(dataContainer.getNodes().get(1).getId(), 1);
 		assertEquals(dataContainer.getEdges().get("1|2").getStart(), 1);
 		assertEquals(dataContainer.getEdges().get("1|2").getEnd(), 2);
