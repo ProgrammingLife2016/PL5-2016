@@ -84,7 +84,7 @@ function draw(data, c, translate) {
     ctx.clearRect(0, 0, c.width, c.height);
     $.each(points, function(id, value) {
         ctx.beginPath();
-        var coor = translate(value.x, value.y);
+        var coor = translate(value.xCoordinate, value.yCoordinate);
 
         ctx.arc(coor.x, coor.y, value.weight / 10, 0, 2 * Math.PI);
         ctx.stroke();
