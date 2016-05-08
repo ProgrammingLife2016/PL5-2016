@@ -1,4 +1,4 @@
-package phylogeneticTree;
+package phylogenetictree;
 
 
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
@@ -17,40 +17,45 @@ public class PhylogeneticNode {
     private String nameLabel;
     private double distance;
 
-
+    /**
+     * Initialize an empty node.
+     */
     public PhylogeneticNode() {
-        nameLabel="";
-        distance=0.;
-        children= new ArrayList<>();
+        nameLabel = "";
+        distance = 0.;
+        children = new ArrayList<>();
     }
 
     /**
-     * initalize this node from tree node
-     * @param node
+     * Initialize this node from tree node.
+     * @param node The node.
+     * @param distance The distance.
      */
-    public PhylogeneticNode(TreeNode node, double _distance){
-        nameLabel=node.getName();
-        distance=_distance;
-        children= new ArrayList<>();
-        for(int i=0;i<node.numberChildren();i++){
-            addChild(new PhylogeneticNode(node.getChild(i),node.getChild(i).getWeight()));
+    public PhylogeneticNode(TreeNode node, double distance) {
+        nameLabel = node.getName();
+        this.distance = distance;
+        children = new ArrayList<>();
+        for (int i = 0; i < node.numberChildren(); i++) {
+            addChild(new PhylogeneticNode(node.getChild(i), node.getChild(i).getWeight()));
         }
 
     }
 
+    /**
+     * Get the children of a node.
+     * @return The children as ArryList.
+     */
     public ArrayList<PhylogeneticNode> getChildren() {
         return children;
     }
 
     /**
-     * Adds child node and stores the distance to that node
+     * Adds child node and stores the distance to that node.
      * @param node the node
      */
     public void addChild(PhylogeneticNode node) {
         children.add(node);
     }
-
-
 
     /**
      * returns a string of lenght 0 if the node is not a leaf.
@@ -60,6 +65,10 @@ public class PhylogeneticNode {
         return nameLabel;
     }
 
+    /**
+     * Get the distance.
+     * @return The distance.
+     */
     public double getDistance() {
         return distance;
     }

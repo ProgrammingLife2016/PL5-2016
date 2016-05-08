@@ -1,4 +1,4 @@
-package genomeTest;
+package genome;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -6,8 +6,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import genome.Genome;
-import genome.Node;
 
 /**
  * @author Jeffrey Helgers.

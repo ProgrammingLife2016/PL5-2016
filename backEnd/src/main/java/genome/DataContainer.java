@@ -1,12 +1,17 @@
 package genome;
+<<<<<<< HEAD
 
 import parser.Parser;
+=======
+>>>>>>> master
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import parser.Parser;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -16,6 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Datacontainer that stores the edges and nodes of a particular genome.
  */
 public class DataContainer {
+
 	private HashMap<Integer, Node> nodes;
 	private HashMap<String, Edge> edges;
 	private HashMap<String, Genome> genomes;
@@ -130,18 +136,35 @@ public class DataContainer {
 		return nodesByxCoordinate;
 	}
 
+
+    /**
+     * Get the data width.
+     * @return The data width.
+     */
 	public double getDataWidth() {
 		return this.dataWidth;
 	}
 
+	/**
+	 * Get the data height.
+	 * @return The data height.
+	 */
 	public double getDataHeight() {
 		return this.dataHeight;
 	}
 
+	/**
+	 * Set the data width.
+	 * @param dataWidth New data width.
+	 */
 	public void setDataWidth(double dataWidth) {
 		this.dataWidth = dataWidth;
 	}
 
+	/**
+	 * Set the data height.
+	 * @param dataHeight New data height.
+	 */
 	public void setDataHeight(double dataHeight) {
 		this.dataHeight = dataHeight;
 	}

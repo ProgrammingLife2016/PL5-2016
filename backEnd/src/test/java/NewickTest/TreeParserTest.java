@@ -1,5 +1,9 @@
 package NewickTest;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.FileNotFoundException;
+
 import org.junit.*;
 
 import phylogeneticTree.*;
@@ -32,5 +36,15 @@ public class TreeParserTest {
     @Test
     public void testPathMiddle() throws Exception{
         Assert.assertEquals(tree.getNode("").getDistance(),0.0,0.001);
+    }
+    
+    /**
+     * Tests an empty node.
+     */
+    @Test
+    public void testEmptyNode() {
+    	PhylogeneticNode node = new PhylogeneticNode();
+    	assertEquals(node.getDistance(), 0, 0.001);
+    	assertEquals(node.getNameLabel(), "");
     }
 }
