@@ -1,9 +1,5 @@
 package genome;
-<<<<<<< HEAD
-
 import parser.Parser;
-=======
->>>>>>> master
 
 import java.util.ArrayList;
 import java.util.Collections;

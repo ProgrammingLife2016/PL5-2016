@@ -34,8 +34,8 @@ public class NodeService {
 	@Path("/getdimensions")
 	@Produces("application/json")
 	public DimensionsObject requestDimensions() {
-		return new DimensionsObject(DataContainer.getDc().getDataWidth(),
-				DataContainer.getDc().getDataHeight());
+		return new DimensionsObject(DataContainer.DC.getDataWidth(),
+				DataContainer.DC.getDataHeight());
 	}
 
 }

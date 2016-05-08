@@ -76,13 +76,9 @@ public class NodeTest {
      */
     @Test
     public void testGetReferenceGenome() {
-<<<<<<< HEAD:backEnd/src/test/java/genomeTest/NodeTest.java
-    	assertEquals(node.getRefrenceGenome(), "ref1");
+    	assertEquals(node.getReferenceGenome(), "ref1");
     	node.setReferenceGenome("ref2");
     	assertEquals(node.getReferenceGenome(), "ref2");
-=======
-    	assertEquals(node.getReferenceGenome(), "ref1");
->>>>>>> master:backEnd/src/test/java/genome/NodeTest.java
     }
     
     /**
@@ -90,13 +86,9 @@ public class NodeTest {
      */
     @Test
     public void testGetReferenceCoordinate() {
-<<<<<<< HEAD:backEnd/src/test/java/genomeTest/NodeTest.java
-    	assertEquals(node.getRefrenceCoordinate(), 0);
+    	assertEquals(node.getReferenceCoordinate(), 0);
     	node.setReferenceCoordinate(10);
     	assertEquals(node.getReferenceCoordinate(), 10);
-=======
-    	assertEquals(node.getReferenceCoordinate(), 0);
->>>>>>> master:backEnd/src/test/java/genome/NodeTest.java
     }
     
     /**
@@ -120,12 +112,4 @@ public class NodeTest {
     	assertEquals(node.getxCoordinate(), 2, 0.001);
     }
     
-    /**
-     * Test empty node.
-     */
-    @Test
-    public void testEmptyNode() {
-    	Node n = new Node();
-    	assertEquals(n.getSequence(), null);    	
-    }
 }
