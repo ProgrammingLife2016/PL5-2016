@@ -148,8 +148,6 @@ public class DataContainer {
 
 	public CopyOnWriteArrayList<Node> getNodes(double xleft, double ytop, double xright, double ybtm) {
 
-		calculateCoordinates();
-
 		CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
 		ArrayList<Node> correctNodes = new ArrayList<>();
 		for (Node n : nodes.values()) {

@@ -54,6 +54,7 @@ public class Parser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		result.calculateCoordinates();
 		return result;
 	}
 
