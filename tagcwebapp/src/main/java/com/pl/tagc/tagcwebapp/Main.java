@@ -20,7 +20,10 @@ public class Main {
 	public static final String APP_PATH = "/app/";
 	public static final int PORT = 9998;
 
-	public static HttpServer startServer(String webRootPath) {
+	/**
+	 * Instantiates and configures a HttpServer
+	 */
+	public static HttpServer startServer() {
 		final HttpServer server = new HttpServer();
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			@Override
@@ -54,7 +57,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		try {
-			final HttpServer server = startServer(args.length >= 1 ? args[0] : null);
+			final HttpServer server = startServer();
 			System.out.println(String.format(
 					"Application started.\n" + "Access it at %s\n" + "Stop the application using CTRL+C", getAppUri()));
 
@@ -64,6 +67,11 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Gets the app uri.
+	 *
+	 * @return the app uri
+	 */
 	public static String getAppUri() {
 		return String.format("http://localhost:%s%s", PORT, APP_PATH);
 	}
