@@ -85,6 +85,9 @@ public class DataContainer {
 	 * @return The ordered set.
 	 */
 	public HashMap<Integer, HashSet<Node>> calculateCoordinates() {
+		double maxWidth = 0;
+		double maxHeight = 0;
+		
 		// calculate the x-coordinates
 		for (HashMap.Entry<String, Genome> entry : genomes.entrySet()) {
 			ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
@@ -115,10 +118,15 @@ public class DataContainer {
 			int y = 0;
 			for (Node node : c.getValue()) {
 				node.setyCoordinate(y);
+				maxHeight = Math.max(maxHeight,y);
+				maxWidth = Math.max(maxWidth,node.getxCoordinate());
 				y++;
 			}
 		}
-
+		
+		dataWidth = maxWidth;
+		dataHeight = maxHeight;
+		
 		return nodesByxCoordinate;
 	}
 
