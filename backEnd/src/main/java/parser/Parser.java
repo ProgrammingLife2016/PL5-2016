@@ -61,6 +61,7 @@ public class Parser {
 			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			System.out.println("No datafile has been found!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

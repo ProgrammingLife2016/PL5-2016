@@ -14,7 +14,7 @@ $('document').ready(function() {
     //Update splashscreen
     splashScreen(function() {
         $('body').bind('mousewheel DOMMouseScroll', function(e) {
-            if ($(currentHover).hasClass('minimap')) {
+            if ($(currentHover).hasClass('mainGenome genome')) {
                 e.preventDefault();
                 zoom(e.originalEvent.wheelDelta);
             }
