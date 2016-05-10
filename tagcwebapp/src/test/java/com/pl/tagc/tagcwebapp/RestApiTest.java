@@ -14,19 +14,19 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Kasper Grabarz
  */
-public class NodeServiceTest extends JerseyTest {
+public class RestApiTest extends JerseyTest {
 
     @Override
     protected ResourceConfig configure() {
         enable(TestProperties.LOG_TRAFFIC);
-        return new ResourceConfig(NodeService.class);
+        return new ResourceConfig(RestApi.class);
     }
 
     /**
      * Test, that the resource response is in JSON format
      */
     @Test
-    public void testNodeServiceResource() {
+    public void testRestApiResource() {
         final Response response = target().path("api/getdimensions").request().get(Response.class);
         assertEquals("application", response.getMediaType().getType());
         assertEquals("json", response.getMediaType().getSubtype());
