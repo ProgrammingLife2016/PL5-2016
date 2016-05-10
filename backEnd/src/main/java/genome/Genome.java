@@ -37,6 +37,10 @@ public class Genome {
         return nodes;
     }
     
+    public void setNodes(ArrayList<Node> nodes) {
+    	this.nodes = nodes;
+    }
+    
     public String getId() {
     	return id;
     }
