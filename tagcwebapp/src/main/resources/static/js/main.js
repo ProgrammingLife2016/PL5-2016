@@ -9,12 +9,17 @@ var yZoom = 1;
 
 $('document').ready(function() {
 
-
+		$('#zoomoutbtn').on('click', function() {
+		 		zoom(-100);
+		 	});
+		 	$('#zoominbtn').on('click', function() {
+		 		zoom(100);
+		 	});
 
     //Update splashscreen
     splashScreen(function() {
         $('body').bind('mousewheel DOMMouseScroll', function(e) {
-            if ($(currentHover).hasClass('minimap')) {
+            if ($(currentHover).hasClass('mainGenome genome')) {
                 e.preventDefault();
                 zoom(e.originalEvent.wheelDelta);
             }
