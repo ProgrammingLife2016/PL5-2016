@@ -33,5 +33,15 @@ public class RestApi {
 	public DimensionsObject requestDimensions() {
 		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
 	}
+	
+	// The Java method will process HTTP GET requests
+	@GET
+	// The Java method will produce content identified by the MIME Media
+	// type "application/json"
+	@Path("/getphylogenetictree")
+	@Produces("application/json")
+	public PhylogeneticTreeObject requestPhylogeneticTree() {
+		return new PhylogeneticTreeObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
+	}
 
 }
