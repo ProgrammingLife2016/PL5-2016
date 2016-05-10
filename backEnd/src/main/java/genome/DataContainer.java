@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import parser.Parser;
+import phylogenetictree.PhylogeneticTree;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -23,6 +24,9 @@ public class DataContainer {
 	private HashMap<String, Genome> genomes;
 	private double dataWidth;
 	private double dataHeight;
+	private PhylogeneticTree phylogeneticTree;
+	
+	
 
 	/**
 	 * Constructer for the datacontainer, starts with empty hashmaps.
@@ -34,6 +38,8 @@ public class DataContainer {
 		nodes = new HashMap<>();
 		edges = new HashMap<>();
 		genomes = new HashMap<>();
+		phylogeneticTree = new PhylogeneticTree();
+		phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
 	}
 
 	/**
@@ -191,6 +197,14 @@ public class DataContainer {
 		}
 
 		return res;
+	}
+
+	public PhylogeneticTree getPhylogeneticTree() {
+		return phylogeneticTree;
+	}
+
+	public void setPhylogeneticTree(PhylogeneticTree phylogeneticTree) {
+		this.phylogeneticTree = phylogeneticTree;
 	}
 
 }

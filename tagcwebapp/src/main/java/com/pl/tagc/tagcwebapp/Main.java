@@ -14,6 +14,23 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.ServerConfiguration;
 
+/*
+ * Instructions:
+ * 
+ * http://localhost:9998/app/index.htm 	
+ * 		can be used to access the static file index.htm.
+ * 
+ * http://localhost:9998/api/getnodes?xleft=10&xright=70&ytop=30&ybtm=80 
+ * 		can be used to get a json list of nodes that are in the viewport defined by the four 
+ * 		values: xleft xright ytop and ybtm.
+ * http://localhost:9998/api/getdimensions 
+ * 		can be used to get a the width and height of the genome graph data.  
+ * http://localhost:9998/api/getphylogenetictree 
+ * 		responds with a phylogenetic tree in JSON format 
+ *  
+ * */
+
+
 public class Main {
 
 	public static final String WEB_ROOT = "/static/";
@@ -82,6 +99,6 @@ public class Main {
 	 * @return Jersey server-side application configuration.
 	 */
 	public static ResourceConfig createResourceConfig() {
-		return new ResourceConfig().registerClasses(NodeService.class);
+		return new ResourceConfig().registerClasses(RestApi.class);
 	}
 }
