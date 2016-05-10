@@ -1,6 +1,9 @@
-package genome;
+package mutation;
 
 import java.util.ArrayList;
+
+import genome.Genome;
+import genome.Node;
 
 /**
  * 
@@ -9,20 +12,26 @@ import java.util.ArrayList;
  */
 public class ComputeMutation {
 
+	private Genome base;
+	private Genome other;
 	private ArrayList<Node> baseNodes;
 	private ArrayList<Node> otherNodes;
 	private ArrayList<Node> common;
+	private AllMutations mutations;
 	
 	/**
 	 * Constructor to create mutations.
 	 * @param base Reference genome.
 	 * @param other Compared genome.
 	 */
-	public ComputeMutation(Genome base, Genome other) {
+	public ComputeMutation(Genome base, Genome other, AllMutations mutations) {
+		this.base = base;
+		this.other = other;
 		baseNodes = base.getNodes();
 		otherNodes = other.getNodes();
 		common = new ArrayList<Node>(baseNodes);
 		common.retainAll(otherNodes);
+		this.mutations = mutations;
 	}
 	
 	/**
@@ -65,6 +74,9 @@ public class ComputeMutation {
 		if (common.contains(baseNodes.get(basePlace + 1))) {
 			System.out.println("insertion");
 			baseNodes.get(basePlace).setInsertion(true);
+			Insertion in = new Insertion(base, other, 
+					baseNodes.get(basePlace), baseNodes.get(basePlace + 1));
+			mutations.addMutation(base.getId(), in);
 			return true;
 		}
 		return false;
@@ -79,11 +91,14 @@ public class ComputeMutation {
 	public boolean testDeletion(int basePlace, int otherPlace) {
 		if (common.contains(otherNodes.get(otherPlace + 1))) {
 			basePlace++;
+			ArrayList<Node> deleted = new ArrayList<>();
 			while (!baseNodes.get(basePlace).equals(otherNodes.get(otherPlace + 1))) {
 				System.out.println("deletion");
-				baseNodes.get(basePlace).setDeletion(true);
+				deleted.add(baseNodes.get(basePlace));
 				basePlace++;
 			}
+			Deletion de = new Deletion(base, other, deleted);
+			mutations.addMutation(base.getId(), de);
 			return true;
 		}
 		return false;
