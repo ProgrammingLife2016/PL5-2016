@@ -17,6 +17,8 @@ public class Node {
     private String referenceGenome; // the refrence genome of this node
     private int referenceCoordinate; //coordinate of this node in the refr genome
     private int weight; // amount of genomes that contain this node
+    private boolean insertion;
+    private boolean deletion;
     
     /**
      * Constructor to create a node.
@@ -184,5 +186,37 @@ public class Node {
 	 */
 	public void setWeight(int weight) {
 		this.weight = weight;
+	}
+	
+	/**
+	 * Set the insertion mutation.
+	 * @param insertion The mutation.
+	 */
+	public void setInsertion(boolean insertion) {
+		this.insertion = insertion;
+	}
+	
+	/**
+	 * Set the deletion mutation.
+	 * @param deletion The mutation.
+	 */
+	public void setDeletion(boolean deletion) {
+		this.deletion = deletion;
+	}
+	
+	/**
+	 * Get the insertion, true if there is a insertion on the next edge.
+	 * @return The mutation.
+	 */
+	public boolean getInsertion() {
+		return insertion;
+	}
+	
+	/**
+	 * Get the deletion, true is there is a deletion.
+	 * @return The mutation.
+	 */
+	public boolean getDeletion() {
+		return deletion;
 	}
 }

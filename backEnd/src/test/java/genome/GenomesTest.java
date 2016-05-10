@@ -19,7 +19,7 @@ public class GenomesTest {
 	 */
 	@Before
 	public void setUp() {
-		genome = new Genome();
+		genome = new Genome("test");
 	}
 	
 	/**

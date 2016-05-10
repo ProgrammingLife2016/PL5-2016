@@ -47,7 +47,7 @@ public class DataContainer {
 
 		for (String genomeID : node.getGenomes()) {
 			if (!genomes.containsKey(genomeID)) {
-				genomes.put(genomeID, new Genome());
+				genomes.put(genomeID, new Genome(genomeID));
 			}
 			genomes.get(genomeID).addNode(node);
 		}
@@ -79,6 +79,14 @@ public class DataContainer {
 	 */
 	public HashMap<String, Edge> getEdges() {
 		return edges;
+	}
+	
+	/**
+	 * Get all the genomes in the data.
+	 * @return Genomes.
+	 */
+	public HashMap<String, Genome> getGenomes() {
+		return genomes;
 	}
 
 	/**
