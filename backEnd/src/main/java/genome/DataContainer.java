@@ -39,7 +39,7 @@ public class DataContainer {
 		edges = new HashMap<>();
 		genomes = new HashMap<>();
 		phylogeneticTree = new PhylogeneticTree();
-		phylogeneticTree.parseTree("src/testFile");
+		phylogeneticTree.parseTree("testFile");
 	}
 
 	/**
