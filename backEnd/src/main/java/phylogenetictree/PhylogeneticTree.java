@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 import parser.Parser;
 
@@ -51,17 +52,15 @@ public class PhylogeneticTree {
 		reader = new BufferedReader(r);
 		TreeParser tp = new TreeParser(reader);
 		tree = tp.tokenize("");
-		this.setRoot(new PhylogeneticNode(tree.getRoot(), 0.));
+		this.setRoot(new PhylogeneticNode(tree.getRoot(),null, 0.,0));
 	}
 
 	/**
-	 * Get node with nameLabel name throught -first search.
-	 * 
-	 * @param name
-	 *            name of node
-	 * @return The node, null if it is not contained in this graph
+	 * Get node with nameLabel name through depth first search.
+	 * @param name The name of the node.
+	 * @return The node, null if it is not contained in this graph.
 	 */
-	public PhylogeneticNode getNode(String name) {
+	public PhylogeneticNode getNodeWithLabel(String name) {
 
 		if (root.getNameLabel().equals(name)) {
 			return root;
@@ -71,7 +70,7 @@ public class PhylogeneticTree {
 					return child;
 				}
 				PhylogeneticTree subTree = new PhylogeneticTree(child);
-				PhylogeneticNode node = subTree.getNode(name);
+				PhylogeneticNode node = subTree.getNodeWithLabel(name);
 				if (node != null) {
 					return node;
 				}
@@ -79,6 +78,30 @@ public class PhylogeneticTree {
 		}
 		return null;
 	}
+
+    /**
+     * Get node with id through depth first search.
+     * @param id The id of the node.
+     * @return The node, null if it is not contained in this graph.
+     */
+    public PhylogeneticNode getNode(int id) {
+
+        if (root.getId()==id) {
+            return root;
+        } else if (root.getChildren().size() != 0) {
+            for (PhylogeneticNode child : root.getChildren()) {
+                if (child.getId()==id) {
+                    return child;
+                }
+                PhylogeneticTree subTree = new PhylogeneticTree(child);
+                PhylogeneticNode node = subTree.getNode(id);
+                if (node != null) {
+                    return node;
+                }
+            }
+        }
+        return null;
+    }
 
 	/**
 	 * Set the root.

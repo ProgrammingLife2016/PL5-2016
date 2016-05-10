@@ -13,9 +13,15 @@ import java.util.ArrayList;
  */
 public class PhylogeneticNode {
 
+    /**
+     * The child nodes of this node.
+     */
     private ArrayList<PhylogeneticNode> children;
+    private ArrayList<String> genomes;
+    private PhylogeneticNode parent;
     private String nameLabel;
     private double distance;
+    private int id;
 
     /**
      * Initialize an empty node.
@@ -24,21 +30,41 @@ public class PhylogeneticNode {
         nameLabel = "";
         distance = 0.;
         children = new ArrayList<>();
+        genomes= new ArrayList<>();
     }
 
     /**
-     * Initialize this node from tree node.
+     * Initialize this node from tree node, recursively.
      * @param node The node.
+     * @param parent The parentNode of this node, null if root.
      * @param distance The distance.
+     * @param id The id of this node, root being 0. Incrementing breath first.
      */
-    public PhylogeneticNode(TreeNode node, double distance) {
+    public PhylogeneticNode(TreeNode node, PhylogeneticNode parent, double distance, int id) {
         nameLabel = node.getName();
         this.distance = distance;
         children = new ArrayList<>();
+        genomes= new ArrayList<>();
+        this.parent=parent;
+        this.id=id;
+
         for (int i = 0; i < node.numberChildren(); i++) {
-            addChild(new PhylogeneticNode(node.getChild(i), node.getChild(i).getWeight()));
+            addChild(new PhylogeneticNode(node.getChild(i), this, node.getChild(i).getWeight(),id+1+i));
         }
 
+        checkLeaf();
+
+    }
+
+    /**
+     * If this node is a leaf, add the genome it contains to all its parents.
+     */
+    private void checkLeaf(){
+       if(!nameLabel.equals("")){
+           if(this.parent!=null){
+               parent.addGenome(nameLabel);
+           }
+       }
     }
 
     /**
@@ -73,6 +99,39 @@ public class PhylogeneticNode {
         return distance;
     }
 
+    /**
+     * Get the genomes that are children of this node.
+     * @return a list of genome labels
+     */
+    public ArrayList<String> getGenomes() {
+        return genomes;
+    }
+
+    /**
+     * Add a genome to this node and its parents, if its parent is not the root.
+     * @param genome The genome to add.
+     */
+    public void addGenome(String genome) {
+        genomes.add(genome);
+        if(parent!=null)
+            parent.addGenome(genome);
+    }
+
+    /**
+     * Get the id of this node.
+     * @return The id.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Get the parent of this node.
+     * @return The parent, null if root.
+     */
+    public PhylogeneticNode getParent() {
+        return parent;
+    }
 
 
 }
