@@ -9,7 +9,12 @@ var yZoom = 1;
 
 $('document').ready(function() {
 
-
+		$('#zoomoutbtn').on('click', function() {
+		 		zoom(-100);
+		 	});
+		 	$('#zoominbtn').on('click', function() {
+		 		zoom(100);
+		 	});
 
     //Update splashscreen
     splashScreen(function() {
