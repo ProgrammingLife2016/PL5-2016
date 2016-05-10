@@ -12,7 +12,7 @@ import com.sun.jersey.api.json.JSONJAXBContext;
 public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
 	private JAXBContext context;
-	private Class[] types = { Node.class, NodeListObject.class, NodeService.class };
+	private Class[] types = { Node.class, NodeListObject.class, RestApi.class };
 
 	public JAXBContextResolver() throws Exception {
 		this.context = new JSONJAXBContext(JSONConfiguration.natural().build(), types);

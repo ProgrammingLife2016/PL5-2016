@@ -25,7 +25,7 @@ public class TreeParserTest {
     @Before
     public void setUp() {
         tree = new PhylogeneticTree();
-        tree.parseTree("src/testFile");
+        tree.parseTree("testFile");
     }
 
     /**
