@@ -46,7 +46,7 @@ public class PhylogeneticTree {
 	public void parseTree(String fileName) {
 		Tree tree;
 		BufferedReader reader;
-		InputStream in = Parser.class.getClassLoader().getResourceAsStream(fileName);
+		InputStream in = PhylogeneticTree.class.getClassLoader().getResourceAsStream(fileName);
 		Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
 		reader = new BufferedReader(r);
 		TreeParser tp = new TreeParser(reader);
