@@ -42,8 +42,6 @@ public class Parser {
 			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
 			reader = new BufferedReader(r);
 
-			System.out.println("bb");
-
 			reader.readLine();
 			reader.readLine();
 			line = reader.readLine();
