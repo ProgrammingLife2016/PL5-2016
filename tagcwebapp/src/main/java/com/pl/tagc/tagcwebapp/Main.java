@@ -82,6 +82,6 @@ public class Main {
 	 * @return Jersey server-side application configuration.
 	 */
 	public static ResourceConfig createResourceConfig() {
-		return new ResourceConfig().registerClasses(NodeService.class);
+		return new ResourceConfig().registerClasses(RestApi.class);
 	}
 }

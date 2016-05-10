@@ -12,7 +12,7 @@ import genome.Node;
 
 //The Java class will be hosted at the URI path "/api"
 @Path("/api")
-public class NodeService {
+public class RestApi {
 	
 	// The Java method will process HTTP GET requests
 	@GET
