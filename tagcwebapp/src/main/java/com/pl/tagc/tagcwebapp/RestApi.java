@@ -71,7 +71,7 @@ public class RestApi {
 	@Path("/getnewickstring")
 	@Produces("application/json")
 	public NewickStringObject getNewickString() {
-		return new NewickStringObject("test");
+		return new NewickStringObject(DataContainer.DC.getNewickString());
 	}
 
 }

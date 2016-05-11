@@ -245,7 +245,7 @@ public class DataContainer {
 		this.phylogeneticTree = phylogeneticTree;
 	}
 
-	public String getNewickString(String fileName) {
+	public String getNewickString() {
 		return newickString;
 	}
 
@@ -261,6 +261,7 @@ public class DataContainer {
 			String line = reader.readLine();
 			while (line != null) {
 				rawFileData = rawFileData + line;
+				line = reader.readLine();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
