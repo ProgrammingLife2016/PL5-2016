@@ -53,7 +53,7 @@ public class DataContainer {
 
         for (String genomeID : node.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
-                genomes.put(genomeID, new Genome());
+                genomes.put(genomeID, new Genome(genomeID));
             }
             genomes.get(genomeID).addNode(node);
         }
@@ -85,12 +85,12 @@ public class DataContainer {
     public HashMap<String, Edge> getEdges() {
         return edges;
     }
-
+    
     /**
      * Compute and order all the nodes according to their x and y coordinate.
-     *
      * @return The ordered set.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     public HashMap<Integer, HashSet<Node>> calculateCoordinates() {
         double maxWidth = 0;
         double maxHeight = 0;
@@ -136,7 +136,6 @@ public class DataContainer {
 
         return nodesByxCoordinate;
     }
-
 
     /**
      * Get the data width.
@@ -232,5 +231,13 @@ public class DataContainer {
     public void setPhylogeneticTree(PhylogeneticTree phylogeneticTree) {
         this.phylogeneticTree = phylogeneticTree;
     }
+    
+    /**
+	 * Get all the genomes in the data.
+	 * @return Genomes.
+	 */
+	public HashMap<String, Genome> getGenomes() {
+		return genomes;
+	}
 
 }
