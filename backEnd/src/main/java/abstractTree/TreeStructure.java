@@ -1,15 +1,5 @@
 package abstractTree;
 
-import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
-import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
-import phylogenetictree.PhylogeneticNode;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-
 
 /**
  * Created by Matthijs on 4-5-2016.
