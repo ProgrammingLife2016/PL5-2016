@@ -19,6 +19,7 @@ public abstract class Mutation {
 	 */
 	public Mutation(Genome reference, Genome other) {
 		this.reference = reference;
+		this.other = other;
 	}
 	
 	/**

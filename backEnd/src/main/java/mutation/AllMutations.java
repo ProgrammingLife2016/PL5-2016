@@ -17,7 +17,7 @@ public class AllMutations {
 	private HashMap<String, ArrayList<Mutation>> mutations;
 		
 	/**
-	 * Constructor to create 
+	 * Constructor to create.
 	 * @param dc The given data container.
 	 */
 	public AllMutations(DataContainer dc) {
@@ -45,14 +45,20 @@ public class AllMutations {
 		}
 	}
 	
+	/**
+	 * Add a mutation.
+	 * @param key The key from the reference genome.
+	 * @param mutation The mutation.
+	 */
 	public void addMutation(String key, Mutation mutation) {
 		mutations.get(key).add(mutation);
 	}
 	
-	public HashMap<String, ArrayList<Mutation>> getMutations() {
-		return mutations;
-	}
-	
+	/**
+	 * Get the mutations with a genome as compared to.
+	 * @param genome The compared genome.
+	 * @return The mutations.
+	 */
 	public ArrayList<Mutation> getGenomeMutations(String genome) {
 		return mutations.get(genome);
 	}

@@ -10,7 +10,7 @@ import genome.Node;
  * @author Jeffrey Helgers
  * This class computes the mutations between two genomes.
  */
-public class ComputeMutation {
+public final class ComputeMutation {
 
 	private static Genome base;
 	private static Genome other;
@@ -28,9 +28,9 @@ public class ComputeMutation {
 	
 	/**
 	 * Compute all the mutations betwee two genomes.
-	 * @param Base1 Reference genome.
-	 * @param Other1 Compared genome.
-	 * @param Object1 that stores the mutations.
+	 * @param base1 Reference genome.
+	 * @param other1 Compared genome.
+	 * @param mutations1 That stores the mutations.
 	 */
 	public static void compute(Genome base1, Genome other1, AllMutations mutations1) {
 		base = base1;
