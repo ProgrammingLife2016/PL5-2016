@@ -1,6 +1,7 @@
 package phylogenetictree;
 
 
+import abstractTree.AbstractTreeNode;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.util.ArrayList;
@@ -9,42 +10,23 @@ import java.util.ArrayList;
  * Created by Matthijs on 4-5-2016.
  * A node in the phylogenetic tree. Stores a name if the node is a leaf.
  */
-public class PhylogeneticNode {
+public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
 
-    /**
-     * The child nodes of this node.
-     */
-    private ArrayList<PhylogeneticNode> children;
+
     /**
      * The Genomes contained in this nodes children.
      */
     private ArrayList<String> genomes;
+
     /**
-     * This nodes' parent.
-     */
-    private PhylogeneticNode parent;
-    /**
-     * This nodes' genome name ("" if not a leaf).
+     * The name of this genome, "" if not a leaf.
      */
     private String nameLabel;
     /**
      * The distance to its parent.
      */
     private double distance;
-    /**
-     * The Id of the node.
-     */
-    private int id;
 
-    /**
-     * Initialize an empty node.
-     */
-    public PhylogeneticNode() {
-        nameLabel = "";
-        distance = 0.;
-        children = new ArrayList<>();
-        genomes = new ArrayList<>();
-    }
 
     /**
      * Initialize this node from tree node, recursively.
@@ -55,21 +37,25 @@ public class PhylogeneticNode {
      * @param id       The id of this node, root being 0. Incrementing breath first.
      */
     public PhylogeneticNode(final TreeNode node, final PhylogeneticNode parent,
-    		final double distance, final int id) {
+                            final double distance, final int id) {
+
+        super(id, parent);
         nameLabel = node.getName();
         this.distance = distance;
-        children = new ArrayList<>();
         genomes = new ArrayList<>();
-        this.parent = parent;
-        this.id = id;
+
+        addChildren(node);
+        checkLeaf();
+
+    }
+
+    @Override
+    public void addChildren(TreeNode node) {
 
         for (int i = 0; i < node.numberChildren(); i++) {
             TreeNode child = node.getChild(i);
             addChild(new PhylogeneticNode(child, this, child.getWeight(), id + 1 + i));
         }
-
-        checkLeaf();
-
     }
 
     /**
@@ -83,23 +69,6 @@ public class PhylogeneticNode {
         }
     }
 
-    /**
-     * Get the children of a node.
-     *
-     * @return The children as ArryList.
-     */
-    public ArrayList<PhylogeneticNode> getChildren() {
-        return children;
-    }
-
-    /**
-     * Adds child node and stores the distance to that node.
-     *
-     * @param node the node
-     */
-    public void addChild(final PhylogeneticNode node) {
-        children.add(node);
-    }
 
     /**
      * returns a string of lenght 0 if the node is not a leaf.
@@ -139,24 +108,5 @@ public class PhylogeneticNode {
             parent.addGenome(genome);
         }
     }
-
-    /**
-     * Get the id of this node.
-     *
-     * @return The id.
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Get the parent of this node.
-     *
-     * @return The parent, null if root.
-     */
-    public PhylogeneticNode getParent() {
-        return parent;
-    }
-
 
 }
