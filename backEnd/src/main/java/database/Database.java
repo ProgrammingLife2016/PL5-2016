@@ -44,31 +44,15 @@ public class Database {
 	 */
 	private void createDatabaseConnection(String databaseName) {
 		System.out.println("setting up connection");
+		connection = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"
-					+ databaseName, username, password);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			try {
-				System.out.println("new connection");
-				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/",
-						username, password);
-				statement = connection.createStatement();
-				String sql = "CREATE DATABASE " + databaseName;
-				statement.execute(sql);
-				statement.close();
-				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"
-						+ databaseName, username, password);
-				createTables();
-				insertNodes(dataContainer.getNodes().values());
-				insertEdges(dataContainer.getEdges().values());
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} 
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:test.db");
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
 		}
-		
+		System.out.println("Opened database successfully");
 	}
 	
 	/**
