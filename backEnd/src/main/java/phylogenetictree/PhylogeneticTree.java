@@ -1,5 +1,7 @@
 package phylogenetictree;
 
+import abstractTree.AbstractTreeNode;
+import abstractTree.TreeStructure;
 import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 
@@ -13,12 +15,9 @@ import java.nio.charset.StandardCharsets;
 /**
  * Created by Matthijs on 4-5-2016.
  */
-public class PhylogeneticTree {
+public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
 
-    /**
-     * The root Strand of the Tree.
-     */
-    private PhylogeneticNode root;
+
 
     /**
      * Initialize an empty tree.
@@ -32,7 +31,7 @@ public class PhylogeneticTree {
      * @param root The root of the tree.
      */
     public PhylogeneticTree(final PhylogeneticNode root) {
-        this.root = root;
+        super(root);
     }
 
     /**
@@ -73,51 +72,16 @@ public class PhylogeneticTree {
                 }
             }
         }
+
         return null;
     }
 
-    /**
-     * Get node with id through depth first search.
-     *
-     * @param id The id of the node.
-     * @return The node, null if it is not contained in this graph.
-     */
-    public PhylogeneticNode getNode(final int id) {
-
-        if (root.getId() == id) {
-            return root;
-        } else if (root.getChildren().size() != 0) {
-            for (PhylogeneticNode child : root.getChildren()) {
-                if (child.getId() == id) {
-                    return child;
-                }
-                PhylogeneticTree subTree = new PhylogeneticTree(child);
-                PhylogeneticNode node = subTree.getNode(id);
-                if (node != null) {
-                    return node;
-                }
-            }
-        }
-        return null;
+    @Override
+    public PhylogeneticNode getNode(int id) {
+        return (PhylogeneticNode) super.getNode(id);
     }
 
-    /**
-     * Set the root.
-     *
-     * @param node The new root.
-     */
-    public void setRoot(final PhylogeneticNode node) {
-        root = node;
-    }
 
-    /**
-     * Get the root of the tree.
-     *
-     * @return The root.
-     */
-    public PhylogeneticNode getRoot() {
-        return root;
-    }
 
 
 
