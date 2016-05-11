@@ -11,7 +11,6 @@ import genome.Edge;
 import genome.Node;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
@@ -37,13 +36,8 @@ public class Parser {
 		String line;
 		DataContainer result = new DataContainer();
 		try {
-
 			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
-			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
-			reader = new BufferedReader(r);
-
-			System.out.println("bb");
-
+			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 			reader.readLine();
 			reader.readLine();
 			line = reader.readLine();

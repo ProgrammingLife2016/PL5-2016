@@ -6,11 +6,20 @@ import java.util.Set;
 
 import genome.DataContainer;
 
+/**
+ * 
+ * @author Jeffrey Helgers.
+ * This class computes all the mutations in the given dataset. 
+ */
 public class AllMutations {
 
 	private DataContainer dc;
 	private HashMap<String, ArrayList<Mutation>> mutations;
 		
+	/**
+	 * Constructor to create 
+	 * @param dc The given data container.
+	 */
 	public AllMutations(DataContainer dc) {
 		this.dc = dc;
 		mutations = new HashMap<>();
@@ -29,9 +38,8 @@ public class AllMutations {
 		for (String base : keys) {
 			for (String other : keys) {
 				if (!base.equals(other)) {
-					ComputeMutation cm = new ComputeMutation(dc.getGenomes().get(base), 
+					ComputeMutation.compute(dc.getGenomes().get(base), 
 							dc.getGenomes().get(other), this);
-					cm.allMutations();
 				}
 			}
 		}

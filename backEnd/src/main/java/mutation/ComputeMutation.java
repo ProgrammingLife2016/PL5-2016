@@ -12,32 +12,41 @@ import genome.Node;
  */
 public class ComputeMutation {
 
-	private Genome base;
-	private Genome other;
-	private ArrayList<Node> baseNodes;
-	private ArrayList<Node> otherNodes;
-	private ArrayList<Node> common;
-	private AllMutations mutations;
+	private static Genome base;
+	private static Genome other;
+	private static ArrayList<Node> baseNodes;
+	private static ArrayList<Node> otherNodes;
+	private static ArrayList<Node> common;
+	private static AllMutations mutations;
 	
 	/**
-	 * Constructor to create mutations.
-	 * @param base Reference genome.
-	 * @param other Compared genome.
+	 * Not used constructor.
 	 */
-	public ComputeMutation(Genome base, Genome other, AllMutations mutations) {
-		this.base = base;
-		this.other = other;
+	private ComputeMutation() {
+		
+	}
+	
+	/**
+	 * Compute all the mutations betwee two genomes.
+	 * @param Base1 Reference genome.
+	 * @param Other1 Compared genome.
+	 * @param Object1 that stores the mutations.
+	 */
+	public static void compute(Genome base1, Genome other1, AllMutations mutations1) {
+		base = base1;
+		other = other1;
 		baseNodes = base.getNodes();
 		otherNodes = other.getNodes();
 		common = new ArrayList<Node>(baseNodes);
 		common.retainAll(otherNodes);
-		this.mutations = mutations;
+		mutations = mutations1;
+		allMutations();
 	}
 	
 	/**
 	 * Computes all the mutations between the two genomes.
 	 */
-	public void allMutations() {
+	private static void allMutations() {
 		for (int i = 0; i < common.size(); i++) {
 			Node current = common.get(i);
 			int basePlace = baseNodes.indexOf(current);
@@ -53,7 +62,7 @@ public class ComputeMutation {
 	 * @param otherPlace Starting position at the other genome.
 	 * @return
 	 */
-	public boolean getMutation(int basePlace, int otherPlace) {
+	private static boolean getMutation(int basePlace, int otherPlace) {
 		if (basePlace < (baseNodes.size() - 1) && otherPlace < (otherNodes.size() - 1)) {
 			if (baseNodes.get(basePlace + 1).equals(otherNodes.get(otherPlace + 1))) {
 				return false;
@@ -70,7 +79,7 @@ public class ComputeMutation {
 	 * @param basePlace Starting position at the base genome.
 	 * @return
 	 */
-	public boolean testInsertion(int basePlace) {
+	private static boolean testInsertion(int basePlace) {
 		if (common.contains(baseNodes.get(basePlace + 1))) {
 			System.out.println("insertion");
 			Insertion in = new Insertion(base, other, 
@@ -87,7 +96,7 @@ public class ComputeMutation {
 	 * @param otherPlace Starting position at the other genome.
 	 * @return
 	 */
-	public boolean testDeletion(int basePlace, int otherPlace) {
+	private static boolean testDeletion(int basePlace, int otherPlace) {
 		if (common.contains(otherNodes.get(otherPlace + 1))) {
 			basePlace++;
 			ArrayList<Node> deleted = new ArrayList<>();
