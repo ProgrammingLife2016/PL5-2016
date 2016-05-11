@@ -33,8 +33,7 @@ public class RestApi {
 	// type "application/json"
 	@Path("/getdimensions")
 	@Produces("application/json")
-	public DimensionsObject requestDimensions(@QueryParam("names") List<String> names) {
-		System.out.println(names);
+	public DimensionsObject requestDimensions() {
 		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
 	}
 	
@@ -54,8 +53,9 @@ public class RestApi {
 	// type "application/json"
 	@Path("/getribbongraph")
 	@Produces("application/json")
-	public PhylogeneticTreeObject requestRibbonGraph() {
-		//dummy data for now should return a Ribbon type Object instead of the phylogenetic tree
+	public PhylogeneticTreeObject requestRibbonGraph(@QueryParam("names") List<String> names) {
+		System.out.println(names);
+		//dummy data for now should return a Ribbon type Object instead of the phylogenetic tree 
 		return new PhylogeneticTreeObject(DataContainer.DC.getPhylogeneticTree());
 	}
 
