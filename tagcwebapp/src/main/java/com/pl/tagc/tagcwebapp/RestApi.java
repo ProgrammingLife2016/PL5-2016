@@ -1,19 +1,16 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import genome.DataContainer;
-import genome.Node;
 
 //The Java class will be hosted at the URI path "/api"
 @Path("/api")
-public class NodeService {
-	
+public class RestApi {
+
 	// The Java method will process HTTP GET requests
 	@GET
 	// The Java method will produce content identified by the MIME Media
@@ -34,8 +31,17 @@ public class NodeService {
 	@Path("/getdimensions")
 	@Produces("application/json")
 	public DimensionsObject requestDimensions() {
-		return new DimensionsObject(DataContainer.DC.getDataWidth(),
-				DataContainer.DC.getDataHeight());
+		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
+	}
+	
+	// The Java method will process HTTP GET requests
+	@GET
+	// The Java method will produce content identified by the MIME Media
+	// type "application/json"
+	@Path("/getphylogenetictree")
+	@Produces("application/json")
+	public PhylogeneticTreeObject requestPhylogeneticTree() {
+		return new PhylogeneticTreeObject(DataContainer.DC.getPhylogeneticTree());
 	}
 
 }
