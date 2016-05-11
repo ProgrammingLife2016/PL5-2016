@@ -30,9 +30,11 @@ public class DataContainer {
     /**
      * Constructer for the datacontainer, starts with empty hashmaps.
      */
-    // public static DataContainer DC = Parser.parse("./data/TB10.gfa");
-    public static DataContainer DC = Parser.parse("data/TB10.gfa");
+    public static final DataContainer DC = Parser.parse("data/TB10.gfa");
 
+    /**
+     * Constructor.
+     */
     public DataContainer() {
         nodes = new HashMap<>();
         edges = new HashMap<>();
@@ -172,12 +174,26 @@ public class DataContainer {
         this.dataHeight = dataHeight;
     }
 
-    public CopyOnWriteArrayList<Node> getNodes(double xleft, double ytop, double xright, double ybtm) {
+    /**
+     * Get the nodes in a certain area, on a certain zoomlevel based on that area.
+     *
+     * @param xleft  The leftmost coordinate.
+     * @param ytop   The upper coordinate.
+     * @param xright The rightmost coordinate.
+     * @param ybtm   The lower coordinate.
+     * @return A list of nodes that fall into this zoomlevel and area.
+     */
+    public CopyOnWriteArrayList<Node> getNodes(double xleft,
+                                               double ytop,
+                                               double xright,
+                                               double ybtm) {
 
         CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
         ArrayList<Node> correctNodes = new ArrayList<>();
         for (Node n : nodes.values()) {
-            if (n.getxCoordinate() < xright && n.getxCoordinate() > xleft && n.getyCoordinate() > ytop
+            if (n.getxCoordinate() < xright
+                    && n.getxCoordinate() > xleft
+                    && n.getyCoordinate() > ytop
                     && n.getyCoordinate() < ybtm) {
                 correctNodes.add(n);
             }
@@ -200,9 +216,20 @@ public class DataContainer {
         return res;
     }
 
+    /**
+     * Getter for the phylogenicTree.
+     *
+     * @return The tree.
+     */
     public PhylogeneticTree getPhylogeneticTree() {
         return phylogeneticTree;
     }
+
+    /**
+     * Setter for the phylogenicTree.
+     *
+     * @param phylogeneticTree
+     */
 
     public void setPhylogeneticTree(PhylogeneticTree phylogeneticTree) {
         this.phylogeneticTree = phylogeneticTree;
