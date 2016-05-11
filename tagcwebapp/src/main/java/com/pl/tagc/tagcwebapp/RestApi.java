@@ -63,5 +63,15 @@ public class RestApi {
 		// NodeListObject
 		return new NodeListObject(DataContainer.DC.getNodes(0, 0, 1000, 1000));
 	}
+	
+	// The Java method will process HTTP GET requests
+	@GET
+	// The Java method will produce content identified by the MIME Media
+	// type "application/json"
+	@Path("/getnewickstring")
+	@Produces("application/json")
+	public NewickStringObject getNewickString() {
+		return new NewickStringObject("test");
+	}
 
 }

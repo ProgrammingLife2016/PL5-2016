@@ -18,10 +18,10 @@ $(document).ready(function() {
 	makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
 });
 
-function drawTree(newickStringObject) {
+function drawTree(newickStringJSONObject) {
 	var svg = d3.select(container_id).append("svg").attr("width", width).attr(
 			"height", height);
-	tree(newickString).svg(svg).layout();
+	tree(newickStringObject.str).svg(svg).layout();
 }
 
 
