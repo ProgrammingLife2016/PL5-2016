@@ -1,10 +1,13 @@
 package com.pl.tagc.tagcwebapp;
 
+import java.util.List;
+
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+
 import genome.DataContainer;
 
 //The Java class will be hosted at the URI path "/api"
@@ -30,7 +33,8 @@ public class RestApi {
 	// type "application/json"
 	@Path("/getdimensions")
 	@Produces("application/json")
-	public DimensionsObject requestDimensions() {
+	public DimensionsObject requestDimensions(@QueryParam("names") List<String> names) {
+		System.out.println(names);
 		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
 	}
 	
@@ -41,6 +45,17 @@ public class RestApi {
 	@Path("/getphylogenetictree")
 	@Produces("application/json")
 	public PhylogeneticTreeObject requestPhylogeneticTree() {
+		return new PhylogeneticTreeObject(DataContainer.DC.getPhylogeneticTree());
+	}
+	
+	// The Java method will process HTTP GET requests
+	@GET
+	// The Java method will produce content identified by the MIME Media
+	// type "application/json"
+	@Path("/getribbongraph")
+	@Produces("application/json")
+	public PhylogeneticTreeObject requestRibbonGraph() {
+		//dummy data for now should return a Ribbon type Object instead of the phylogenetic tree
 		return new PhylogeneticTreeObject(DataContainer.DC.getPhylogeneticTree());
 	}
 
