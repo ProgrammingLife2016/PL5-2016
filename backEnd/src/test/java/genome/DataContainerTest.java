@@ -11,8 +11,8 @@ import static org.junit.Assert.assertTrue;
 public class DataContainerTest {
 
 	private DataContainer data;
-	private Node node1;
-	private Node node2;
+	private Strand strand1;
+	private Strand strand2;
 	private Edge edge;
 	
 	/**
@@ -22,12 +22,12 @@ public class DataContainerTest {
     public void setUp() {
     	data = new DataContainer();
     	String[] genomes = {"ref1", "ref2"};
-    	node1 = new Node(1, "AA", genomes, "ref1", 0);
-    	node2 = new Node(2, "TG", genomes, "ref1", 3);
+    	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
+    	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
     	edge = new Edge(1, 2);
     	
-    	data.addNode(node1);
-    	data.addNode(node2);
+    	data.addNode(strand1);
+    	data.addNode(strand2);
     	data.addEdge(edge);
     }
     
@@ -36,8 +36,8 @@ public class DataContainerTest {
      */
     @Test
     public void testAddNode() {
-    	assertEquals(data.getNodes().get(node1.getId()), node1);
-    	assertEquals(data.getNodes().get(node2.getId()), node2);
+    	assertEquals(data.getNodes().get(strand1.getId()), strand1);
+    	assertEquals(data.getNodes().get(strand2.getId()), strand2);
     }
     
     /**
@@ -53,8 +53,8 @@ public class DataContainerTest {
      */
     @Test
     public void test() {
-    	assertTrue(data.calculateCoordinates().get(0).contains(node1));
-    	assertTrue(data.calculateCoordinates().get(1).contains(node2));
+    	assertTrue(data.calculateCoordinates().get(0).contains(strand1));
+    	assertTrue(data.calculateCoordinates().get(1).contains(strand2));
     }
     
     /**

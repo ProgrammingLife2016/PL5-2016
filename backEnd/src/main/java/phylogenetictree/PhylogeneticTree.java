@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 public class PhylogeneticTree {
 
     /**
-     * The root Node of the Tree.
+     * The root Strand of the Tree.
      */
     private PhylogeneticNode root;
 

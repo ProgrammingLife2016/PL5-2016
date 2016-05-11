@@ -1,6 +1,6 @@
 package com.pl.tagc.tagcwebapp;
 
-import genome.Node;
+import genome.Strand;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -12,7 +12,7 @@ import com.sun.jersey.api.json.JSONJAXBContext;
 public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
 	private JAXBContext context;
-	private Class[] types = { Node.class, NodeListObject.class, RestApi.class };
+	private Class[] types = { Strand.class, NodeListObject.class, RestApi.class };
 
 	public JAXBContextResolver() throws Exception {
 		this.context = new JSONJAXBContext(JSONConfiguration.natural().build(), types);

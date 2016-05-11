@@ -27,13 +27,13 @@ public class GenomesTest {
 	 */
 	@Test
 	public void test() {
-		ArrayList<Node> res = new ArrayList<Node>();
-		assertEquals(genome.getNodes(), res);
+		ArrayList<Strand> res = new ArrayList<Strand>();
+		assertEquals(genome.getStrands(), res);
 		String[] genomes = {"ref1", "ref2"};
-    	Node node = new Node(1, "AA", genomes, "ref1", 0);
-    	res.add(node);
-    	genome.addNode(node);
-    	assertEquals(genome.getNodes(), res);
+    	Strand strand = new Strand(1, "AA", genomes, "ref1", 0);
+    	res.add(strand);
+    	genome.addNode(strand);
+    	assertEquals(genome.getStrands(), res);
 	}
 
 }

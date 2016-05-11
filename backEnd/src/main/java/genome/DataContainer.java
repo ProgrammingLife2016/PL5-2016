@@ -19,7 +19,7 @@ import phylogenetictree.PhylogeneticTree;
  */
 public class DataContainer {
 
-    private HashMap<Integer, Node> nodes;
+    private HashMap<Integer, Strand> nodes;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
     private double dataWidth;
@@ -44,18 +44,18 @@ public class DataContainer {
     }
 
     /**
-     * Adding a node to the data.
+     * Adding a strand to the data.
      *
-     * @param node The added node.
+     * @param strand The added strand.
      */
-    public void addNode(Node node) {
-        nodes.put(node.getId(), node);
+    public void addNode(Strand strand) {
+        nodes.put(strand.getId(), strand);
 
-        for (String genomeID : node.getGenomes()) {
+        for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome());
             }
-            genomes.get(genomeID).addNode(node);
+            genomes.get(genomeID).addNode(strand);
         }
     }
 
@@ -73,7 +73,7 @@ public class DataContainer {
      *
      * @return Nodes.
      */
-    public HashMap<Integer, Node> getNodes() {
+    public HashMap<Integer, Strand> getNodes() {
         return nodes;
     }
 
@@ -91,42 +91,42 @@ public class DataContainer {
      *
      * @return The ordered set.
      */
-    public HashMap<Integer, HashSet<Node>> calculateCoordinates() {
+    public HashMap<Integer, HashSet<Strand>> calculateCoordinates() {
         double maxWidth = 0;
         double maxHeight = 0;
 
         // calculate the x-coordinates
         for (HashMap.Entry<String, Genome> entry : genomes.entrySet()) {
-            ArrayList<Node> currentGenomeNodes = entry.getValue().getNodes();
+            ArrayList<Strand> currentGenomeStrands = entry.getValue().getStrands();
 
-            currentGenomeNodes.get(0).updatexCoordinate(0);
-            Node prevNode = currentGenomeNodes.get(0);
-            for (int i = 1; i < currentGenomeNodes.size(); i++) {
-                Node currentNode = currentGenomeNodes.get(i);
-                currentGenomeNodes.get(i).updatexCoordinate(i); // update the
+            currentGenomeStrands.get(0).updatexCoordinate(0);
+            Strand prevStrand = currentGenomeStrands.get(0);
+            for (int i = 1; i < currentGenomeStrands.size(); i++) {
+                Strand currentStrand = currentGenomeStrands.get(i);
+                currentGenomeStrands.get(i).updatexCoordinate(i); // update the
                 // nodes
                 // x-coordinate
 
-                Edge currentEdge = edges.get(prevNode.getId() + "|" + currentNode.getId());
+                Edge currentEdge = edges.get(prevStrand.getId() + "|" + currentStrand.getId());
                 currentEdge.setWeight(currentEdge.getWeight() + 1);
-                prevNode = currentNode;
+                prevStrand = currentStrand;
             }
         }
 
-        HashMap<Integer, HashSet<Node>> nodesByxCoordinate = new HashMap<>();
-        for (HashMap.Entry<Integer, Node> entry : nodes.entrySet()) {
+        HashMap<Integer, HashSet<Strand>> nodesByxCoordinate = new HashMap<>();
+        for (HashMap.Entry<Integer, Strand> entry : nodes.entrySet()) {
             if (!nodesByxCoordinate.containsKey((int) entry.getValue().getxCoordinate())) {
                 nodesByxCoordinate.put((int) entry.getValue().getxCoordinate(), new HashSet<>());
             }
             nodesByxCoordinate.get((int) entry.getValue().getxCoordinate()).add(entry.getValue());
         }
 
-        for (HashMap.Entry<Integer, HashSet<Node>> c : nodesByxCoordinate.entrySet()) {
+        for (HashMap.Entry<Integer, HashSet<Strand>> c : nodesByxCoordinate.entrySet()) {
             int y = 0;
-            for (Node node : c.getValue()) {
-                node.setyCoordinate(y);
+            for (Strand strand : c.getValue()) {
+                strand.setyCoordinate(y);
                 maxHeight = Math.max(maxHeight, y);
-                maxWidth = Math.max(maxWidth, node.getxCoordinate());
+                maxWidth = Math.max(maxWidth, strand.getxCoordinate());
                 y++;
             }
         }
@@ -183,26 +183,26 @@ public class DataContainer {
      * @param ybtm   The lower coordinate.
      * @return A list of nodes that fall into this zoomlevel and area.
      */
-    public CopyOnWriteArrayList<Node> getNodes(double xleft,
-                                               double ytop,
-                                               double xright,
-                                               double ybtm) {
+    public CopyOnWriteArrayList<Strand> getNodes(double xleft,
+                                                 double ytop,
+                                                 double xright,
+                                                 double ybtm) {
 
-        CopyOnWriteArrayList<Node> res = new CopyOnWriteArrayList<Node>();
-        ArrayList<Node> correctNodes = new ArrayList<>();
-        for (Node n : nodes.values()) {
+        CopyOnWriteArrayList<Strand> res = new CopyOnWriteArrayList<Strand>();
+        ArrayList<Strand> correctStrands = new ArrayList<>();
+        for (Strand n : nodes.values()) {
             if (n.getxCoordinate() < xright
                     && n.getxCoordinate() > xleft
                     && n.getyCoordinate() > ytop
                     && n.getyCoordinate() < ybtm) {
-                correctNodes.add(n);
+                correctStrands.add(n);
             }
         }
 
-        Collections.sort(correctNodes, (n1, n2) -> n2.getWeight() - n1.getWeight());
+        Collections.sort(correctStrands, (n1, n2) -> n2.getWeight() - n1.getWeight());
 
         int count = 0;
-        for (Node n : correctNodes) {
+        for (Strand n : correctStrands) {
 
             res.add(n);
             count++;

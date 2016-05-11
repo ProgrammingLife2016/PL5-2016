@@ -11,7 +11,7 @@ import java.util.Collection;
 
 import genome.DataContainer;
 import genome.Edge;
-import genome.Node;
+import genome.Strand;
 
 /**
  * @author Jeffrey Helgers.
@@ -100,21 +100,21 @@ public class Database {
 	}	
 	
 	/**
-	 * Inserts the nodes into the database.
-	 * @param nodes The nodes to be inserted.
+	 * Inserts the strands into the database.
+	 * @param strands The strands to be inserted.
 	 */
-	private void insertNodes(Collection<Node> nodes) {
-		System.out.println("inserting nodes");
+	private void insertNodes(Collection<Strand> strands) {
+		System.out.println("inserting strains");
 		String sql = "INSERT INTO node VALUES(?,?,?,?,?)";
 		PreparedStatement ps = null;
 		try {
 			ps = connection.prepareStatement(sql);
-			for (Node node : nodes) {
-				ps.setInt(1, node.getId());
-				ps.setString(2, node.getSequence());
-				ps.setInt(3, node.getWeight());
-				ps.setString(4, node.getReferenceGenome());
-				ps.setInt(5, node.getReferenceCoordinate());
+			for (Strand strand : strands) {
+				ps.setInt(1, strand.getId());
+				ps.setString(2, strand.getSequence());
+				ps.setInt(3, strand.getWeight());
+				ps.setString(4, strand.getReferenceGenome());
+				ps.setInt(5, strand.getReferenceCoordinate());
 				ps.addBatch();
 			}
 			ps.executeBatch();
@@ -187,8 +187,8 @@ public class Database {
 	 * @param sql The executed query.
 	 * @return The nodes that satisfy the query.
 	 */
-	public ArrayList<Node> getNodes(String sql) {
-		ArrayList<Node> result = new ArrayList<Node>();
+	public ArrayList<Strand> getNodes(String sql) {
+		ArrayList<Strand> result = new ArrayList<Strand>();
 		ResultSet rs = null;
 		try {
 			statement = connection.createStatement();
@@ -200,7 +200,7 @@ public class Database {
 				String referenceGenome = rs.getString("referenceGenome");
 				int referenceCoordinate = rs.getInt("referenceCoordinate");
 	
-				result.add(new Node(id, sequence, new String[weight], 
+				result.add(new Strand(id, sequence, new String[weight],
 						referenceGenome, referenceCoordinate));
 			}
 		} catch (SQLException e) {

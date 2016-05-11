@@ -7,7 +7,7 @@ package genome;
 /**
  * Class that contains the graph nodes.
  */
-public class Node {
+public class Strand {
 
     private int id; //node id
     private String sequence; //dna in node
@@ -26,8 +26,8 @@ public class Node {
      * @param referenceGenome The reference genome id.
      * @param referenceCoordinate the reference coordinate.
      */
-    public Node(int id, String sequence, String[] newGenomes, String referenceGenome,
-    		int referenceCoordinate) {
+    public Strand(int id, String sequence, String[] newGenomes, String referenceGenome,
+				  int referenceCoordinate) {
         this.id = id;
         this.sequence = sequence;
         genomes = new String[newGenomes.length];
