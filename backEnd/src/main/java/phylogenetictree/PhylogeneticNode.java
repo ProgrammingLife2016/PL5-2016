@@ -43,7 +43,7 @@ public class PhylogeneticNode {
         nameLabel = "";
         distance = 0.;
         children = new ArrayList<>();
-       // genomes = new ArrayList<>();
+        genomes = new ArrayList<>();
     }
 
     /**
@@ -59,8 +59,8 @@ public class PhylogeneticNode {
         nameLabel = node.getName();
         this.distance = distance;
         children = new ArrayList<>();
-//        genomes = new ArrayList<>();
-//        this.parent = parent;
+        genomes = new ArrayList<>();
+        this.parent = parent;
         this.id = id;
 
         for (int i = 0; i < node.numberChildren(); i++) {
