@@ -36,7 +36,7 @@ public class RestApi {
 	public DimensionsObject requestDimensions() {
 		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
 	}
-	
+
 	// The Java method will process HTTP GET requests
 	@GET
 	// The Java method will produce content identified by the MIME Media
@@ -46,17 +46,22 @@ public class RestApi {
 	public PhylogeneticTreeObject requestPhylogeneticTree() {
 		return new PhylogeneticTreeObject(DataContainer.DC.getPhylogeneticTree());
 	}
-	
+
 	// The Java method will process HTTP GET requests
 	@GET
 	// The Java method will produce content identified by the MIME Media
 	// type "application/json"
 	@Path("/getribbongraph")
 	@Produces("application/json")
-	public PhylogeneticTreeObject requestRibbonGraph(@QueryParam("names") List<String> names) {
+	public NodeListObject requestRibbonGraph(@QueryParam("names") List<String> names) {
 		System.out.println(names);
-		//dummy data for now should return a Ribbon type Object instead of the phylogenetic tree 
-		return new PhylogeneticTreeObject(DataContainer.DC.getPhylogeneticTree());
+
+		// return new
+		// RibbonGraphObject(DataContainer.DC.generateRibbonGraph(names));
+
+		// dummy data for now should return a Ribbon type Object instead of a
+		// NodeListObject
+		return new NodeListObject(DataContainer.DC.getNodes(0, 0, 1000, 1000));
 	}
 
 }
