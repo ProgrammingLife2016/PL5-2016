@@ -37,15 +37,16 @@ public class RestApi {
 		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
 	}
 
-	// The Java method will process HTTP GET requests
-	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "application/json"
-	@Path("/getphylogenetictree")
-	@Produces("application/json")
-	public PhylogeneticTreeObject requestPhylogeneticTree() {
-		return new PhylogeneticTreeObject(DataContainer.DC.getPhylogeneticTree());
-	}
+// 	This method is outdated. Not sure if this will be needed anymore. 
+//	// The Java method will process HTTP GET requests
+//	@GET
+//	// The Java method will produce content identified by the MIME Media
+//	// type "application/json"
+//	@Path("/getphylogenetictree")
+//	@Produces("application/json")
+//	public PhylogeneticTreeObject requestPhylogeneticTree() {
+//		return new PhylogeneticTreeObject(DataContainer.DC.getPhylogeneticTree());
+//	}
 
 	// The Java method will process HTTP GET requests
 	@GET

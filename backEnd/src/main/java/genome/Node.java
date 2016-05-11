@@ -185,4 +185,5 @@ public class Node {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
+	
 }

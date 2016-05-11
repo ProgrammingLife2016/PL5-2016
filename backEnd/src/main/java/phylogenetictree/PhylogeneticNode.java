@@ -18,14 +18,14 @@ public class PhylogeneticNode {
     /**
      * The Genomes contained in this nodes children.
      */
-//    private ArrayList<String> genomes;
-//    /**
-//     * This nodes' parent.
-//     */
-//    private PhylogeneticNode parent;
-//    /**
-//     * This nodes' genome name ("" if not a leaf).
-//     */
+    private ArrayList<String> genomes;
+    /**
+     * This nodes' parent.
+     */
+    private PhylogeneticNode parent;
+    /**
+     * This nodes' genome name ("" if not a leaf).
+     */
     private String nameLabel;
     /**
      * The distance to its parent.
@@ -76,10 +76,8 @@ public class PhylogeneticNode {
      * If this node is a leaf, add the genome it contains to all its parents.
      */
     private void checkLeaf() {
-        if (!nameLabel.equals("")) {
-//            if (this.parent != null) {
-//                parent.addGenome(nameLabel);
-//            }
+        if (!nameLabel.equals("") && this.parent != null) {
+        	parent.addGenome(nameLabel);
         }
     }
 
@@ -124,9 +122,9 @@ public class PhylogeneticNode {
      *
      * @return a list of genome labels
      */
-//    public ArrayList<String> getGenomes() {
-//        return genomes;
-//    }
+    public ArrayList<String> getGenomes() {
+        return genomes;
+    }
 
     /**
      * Add a genome to this node and its parents, if its parent is not the root.
@@ -134,10 +132,10 @@ public class PhylogeneticNode {
      * @param genome The genome to add.
      */
     public void addGenome(final String genome) {
-//        genomes.add(genome);
-//        if (parent != null) {
-//            parent.addGenome(genome);
-//        }
+        genomes.add(genome);
+        if (parent != null) {
+            parent.addGenome(genome);
+        }
     }
 
     /**
@@ -149,14 +147,14 @@ public class PhylogeneticNode {
         return id;
     }
 
-//    /**
-//     * Get the parent of this node.
-//     *
-//     * @return The parent, null if root.
-//     */
-//    public PhylogeneticNode getParent() {
-//        return parent;
-//    }
+    /**
+     * Get the parent of this node.
+     *
+     * @return The parent, null if root.
+     */
+    public PhylogeneticNode getParent() {
+        return parent;
+    }
 
 
 }
