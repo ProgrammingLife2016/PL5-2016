@@ -73,7 +73,6 @@ public class ComputeMutation {
 	public boolean testInsertion(int basePlace) {
 		if (common.contains(baseNodes.get(basePlace + 1))) {
 			System.out.println("insertion");
-			baseNodes.get(basePlace).setInsertion(true);
 			Insertion in = new Insertion(base, other, 
 					baseNodes.get(basePlace), baseNodes.get(basePlace + 1));
 			mutations.addMutation(base.getId(), in);
