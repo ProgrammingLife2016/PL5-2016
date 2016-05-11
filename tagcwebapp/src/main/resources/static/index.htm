@@ -91,8 +91,7 @@ function getRibbonGraph(names) {
         dataType: 'JSON',
         type: 'GET',
         data: {
-        	'names': names 
-        	
+        	'names': JSON.stringify(names)         	
         }
     }).done(function(data) {
         drawRibbonGraph(data);
