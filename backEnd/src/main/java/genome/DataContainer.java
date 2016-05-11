@@ -85,12 +85,12 @@ public class DataContainer {
     public HashMap<String, Edge> getEdges() {
         return edges;
     }
-
+    
     /**
      * Compute and order all the nodes according to their x and y coordinate.
-     *
      * @return The ordered set.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     public HashMap<Integer, HashSet<Node>> calculateCoordinates() {
         double maxWidth = 0;
         double maxHeight = 0;

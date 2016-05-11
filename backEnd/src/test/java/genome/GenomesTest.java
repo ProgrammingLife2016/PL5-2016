@@ -26,7 +26,7 @@ public class GenomesTest {
 	 * Tests adding nodes to the genome.
 	 */
 	@Test
-	public void test() {
+	public void testAddNode() {
 		ArrayList<Node> res = new ArrayList<Node>();
 		assertEquals(genome.getNodes(), res);
 		String[] genomes = {"ref1", "ref2"};
@@ -35,5 +35,4 @@ public class GenomesTest {
     	genome.addNode(node);
     	assertEquals(genome.getNodes(), res);
 	}
-
 }

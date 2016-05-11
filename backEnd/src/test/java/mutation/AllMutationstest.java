@@ -100,4 +100,25 @@ public class AllMutationstest {
 		assertEquals(result.size(), 1);
 		assertTrue(result.get(0) instanceof Deletion);
 	}
+	
+	/**
+	 * Test no mutations, but the genomes are different.
+	 */
+	@Test
+	public void testNoMutationDifferent() {
+		String[] common = { g1.getId(), g2.getId() };
+		String[] one = { g1.getId() };
+		String[] two = { g2.getId() };
+		n1.setGenomes(common);
+		n2.setGenomes(one);
+		n3.setGenomes(two);
+		n4.setGenomes(common);
+		dc.addNode(n1);
+		dc.addNode(n2);
+		dc.addNode(n3);
+		dc.addNode(n4);
+		AllMutations mutations = new AllMutations(dc);
+		result = mutations.getGenomeMutations(g2.getId());
+		assertEquals(result.size(), 0);
+	}
 }

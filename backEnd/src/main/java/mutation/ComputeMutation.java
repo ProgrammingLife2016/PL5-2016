@@ -62,16 +62,15 @@ public final class ComputeMutation {
 	 * @param otherPlace Starting position at the other genome.
 	 * @return
 	 */
-	private static boolean getMutation(int basePlace, int otherPlace) {
+	private static void getMutation(int basePlace, int otherPlace) {
 		if (basePlace < (baseNodes.size() - 1) && otherPlace < (otherNodes.size() - 1)) {
 			if (baseNodes.get(basePlace + 1).equals(otherNodes.get(otherPlace + 1))) {
-				return false;
 			} else {
-				return (testInsertion(basePlace)
-						|| testDeletion(basePlace, otherPlace));
+				if (!testInsertion(basePlace)) {
+					testDeletion(basePlace, otherPlace);
+				}
 			}
 		}
-		return false;
 	}
 	
 	/**
@@ -96,7 +95,7 @@ public final class ComputeMutation {
 	 * @param otherPlace Starting position at the other genome.
 	 * @return
 	 */
-	private static boolean testDeletion(int basePlace, int otherPlace) {
+	private static void testDeletion(int basePlace, int otherPlace) {
 		if (common.contains(otherNodes.get(otherPlace + 1))) {
 			basePlace++;
 			ArrayList<Node> deleted = new ArrayList<>();
@@ -107,8 +106,6 @@ public final class ComputeMutation {
 			}
 			Deletion de = new Deletion(base, other, deleted);
 			mutations.addMutation(base.getId(), de);
-			return true;
 		}
-		return false;
 	}
 }
