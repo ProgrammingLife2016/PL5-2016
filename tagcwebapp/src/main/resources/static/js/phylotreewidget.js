@@ -14,14 +14,16 @@ var test_string = "((TKK_03_0029:0.0288928292315,((TKK_04_0005:1.02364427249e-06
 $(document).ready(function() {
 	addCompareGenomeButtonBindings();
 	set_default_tree_settings()
-	drawTree();
+	var newickString = getNewickString();
+	makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
 });
 
-function drawTree() {
+function drawTree(newickStringObject) {
 	var svg = d3.select(container_id).append("svg").attr("width", width).attr(
 			"height", height);
-	tree(test_string).svg(svg).layout();
+	tree(newickString).svg(svg).layout();
 }
+
 
 function addCompareGenomeButtonBindings() {
 
@@ -34,21 +36,24 @@ function addCompareGenomeButtonBindings() {
 			}
 		});
 		console.log(names);
-		getRibbonGraph(names);
+		
+		var data = {
+			'names' : JSON.stringify(names);
+		}
+		
+		makeRestAPIcall('getribbongraph','JSON', 'GET', data, drawRibbonGraph);
 	})
 }
 
-function getRibbonGraph(names) {
-	var url = 'http://localhost:9998/';
+function makeRestAPIcall(apiCall, dataType, requestType, reqData, callback) {
+	var url = 'http://localhost:9998/api/';
 	$.ajax({
-		url : url + 'api/getribbongraph',
-		dataType : 'JSON',
-		type : 'GET',
-		data : {
-			'names' : JSON.stringify(names)
-		}
-	}).done(function(data) {
-		drawRibbonGraph(data);
+		url : url + apiCall,
+		dataType : dataType,
+		type : requestType,
+		data : reqData
+	}).done(function(respData) {
+		callback(respData);
 	});
 }
 
