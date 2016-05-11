@@ -10,13 +10,33 @@
 <script src="js/jquery.js" type="application/javascript"></script>
 <script src="js/jquery-ui.min.js" type="application/javascript"></script>
 <script src="js/main.js" type="application/javascript"></script>
+
+<style>
+
+#left-side-bar{ 
+	width: 20%;
+	float:left;
+
+}
+#container{
+	margin-left: 20%;
+}
+</style>
+
 </head>
 <body>
 
 	<div id="header"></div>
 
 	<div id="splashscreen"></div>
-
+	<div id = "main_container">
+	<div id="left-side-bar">
+	<div>
+        		<button id = 'compGenomesButton' type="button" class="btn btn-default" data-dismiss="modal">Compare Genomes</button>
+            </div>        	
+            <div id = 'tree_container' class = 'tree-widget' style=" display: inline-block;">
+            </div>
+	</div>
 	<div id="container">
 
 		<button type="button" id="zoominbtn">Zoom in</button>
@@ -29,6 +49,7 @@
 		<div id="zoomWindow" class="genome">
 			<canvas></canvas>
 		</div>
+	</div>
 	</div>
 
 </body>
