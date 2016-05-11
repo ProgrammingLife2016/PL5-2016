@@ -244,6 +244,9 @@
         
     <div class = 'row'>
         <div class = 'col-md-12'>
+        	<div>
+        		<button id = 'compGenomesButton' type="button" class="btn btn-default" data-dismiss="modal">Compare Genomes</button>
+            </div>        	
             <div id = 'tree_container' class = 'tree-widget' style=" display: inline-block;">
             </div>
         </div>
@@ -255,6 +258,14 @@
 -->
 
 <script>
+
+
+$('#compGenomesButton').on('click', function (e) {
+	var selectedNodeObjects = tree.get_selection();
+	var names = [];
+	selectedNodeObjects.forEach (function (d) { if (d.name) {names.push(d.name)}; });
+	console.log(names); 
+})
 
 
 $('#newick_export_modal').on('show.bs.modal', function (e) {
