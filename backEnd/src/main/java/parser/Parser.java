@@ -2,16 +2,13 @@ package parser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-
 
 import genome.DataContainer;
 import genome.Edge;
 import genome.Node;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
@@ -37,11 +34,8 @@ public class Parser {
 		String line;
 		DataContainer result = new DataContainer();
 		try {
-
 			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
-			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
-			reader = new BufferedReader(r);
-
+			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 			reader.readLine();
 			reader.readLine();
 			line = reader.readLine();
@@ -59,7 +53,6 @@ public class Parser {
 			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			System.out.println("No datafile has been found!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

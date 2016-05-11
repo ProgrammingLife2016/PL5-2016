@@ -227,10 +227,8 @@ public class DataContainer {
 
     /**
      * Setter for the phylogenicTree.
-     *
-     * @param phylogeneticTree
+     * @param phylogeneticTree The tree.
      */
-
     public void setPhylogeneticTree(PhylogeneticTree phylogeneticTree) {
         this.phylogeneticTree = phylogeneticTree;
     }

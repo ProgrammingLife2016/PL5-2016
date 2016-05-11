@@ -54,7 +54,8 @@ public class PhylogeneticNode {
      * @param distance The distance.
      * @param id       The id of this node, root being 0. Incrementing breath first.
      */
-    public PhylogeneticNode(final TreeNode node, final PhylogeneticNode parent, final double distance, final int id) {
+    public PhylogeneticNode(final TreeNode node, final PhylogeneticNode parent,
+    		final double distance, final int id) {
         nameLabel = node.getName();
         this.distance = distance;
         children = new ArrayList<>();

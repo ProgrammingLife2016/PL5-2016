@@ -1,12 +1,11 @@
 package phylogenetictree;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-;import java.util.ArrayList;
+import java.util.ArrayList;
 
 
 /**
@@ -75,8 +74,8 @@ public class TreeParserTest {
      */
     @Test
     public void testParent() throws Exception {
-        assertEquals(tree.getRoot(),tree.getNode(1).getParent());
-        assertEquals(null,tree.getRoot().getParent());
+        assertEquals(tree.getRoot(), tree.getNode(1).getParent());
+        assertEquals(null, tree.getRoot().getParent());
     }
 
     /**
@@ -85,12 +84,10 @@ public class TreeParserTest {
      */
     @Test
     public void testContainsGenomes() throws Exception {
-        ArrayList<String> testList= new ArrayList<>();
+        ArrayList<String> testList = new ArrayList<>();
         testList.add("C");
         testList.add("D");
 
-        assertEquals(tree.getNode(3).getGenomes(),testList);
-
-
+        assertEquals(tree.getNode(3).getGenomes(), testList);
     }
 }
