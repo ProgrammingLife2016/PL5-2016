@@ -8,13 +8,17 @@ import java.util.ArrayList;
  *
  */
 public class Genome {
+
     private ArrayList<Strand> strands;
+    private String id;
 
     /**
      * Constructor to create a new genome.
+     * @param id The genome name.
      */
-    public Genome() {
+    public Genome(String id) {
         strands = new ArrayList<>();
+        this.id = id;
     }
 
     /**
@@ -31,5 +35,13 @@ public class Genome {
      */
     public ArrayList<Strand> getStrands() {
         return strands;
+    }
+    
+    /**
+     * Get the genome id.
+     * @return Id.
+     */
+    public String getId() {
+    	return id;
     }
 }

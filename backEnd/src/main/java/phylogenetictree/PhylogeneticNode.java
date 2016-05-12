@@ -60,10 +60,8 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      * If this node is a leaf, add the genome it contains to all its parents.
      */
     private void checkLeaf() {
-        if (!nameLabel.equals("")) {
-            if (this.parent != null) {
-                parent.addGenome(nameLabel);
-            }
+        if (!nameLabel.equals("") && this.parent != null) {
+        	parent.addGenome(nameLabel);
         }
     }
 

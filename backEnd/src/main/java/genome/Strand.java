@@ -185,4 +185,5 @@ public class Strand {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
+	
 }

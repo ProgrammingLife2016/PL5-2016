@@ -51,12 +51,12 @@ public class Controller {
      *
      * @param strand The added strand.
      */
-    public void addNode(Strand strand) {
+    public void addStrand(Strand strand) {
         nodes.put(strand.getId(), strand);
 
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
-                genomes.put(genomeID, new Genome());
+                genomes.put(genomeID, new Genome(genomeID));
             }
             genomes.get(genomeID).addNode(strand);
         }
@@ -94,6 +94,7 @@ public class Controller {
      *
      * @return The ordered set.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     public HashMap<Integer, HashSet<Strand>> calculateCoordinates() {
         double maxWidth = 0;
         double maxHeight = 0;
@@ -139,7 +140,6 @@ public class Controller {
 
         return nodesByxCoordinate;
     }
-
 
     /**
      * Get the data width.
@@ -230,10 +230,20 @@ public class Controller {
 
     /**
      * Setter for the phylogenicTree.
+     *
      * @param phylogeneticTree The tree.
      */
     public void setPhylogeneticTree(PhylogeneticTree phylogeneticTree) {
         this.phylogeneticTree = phylogeneticTree;
+    }
+
+    /**
+     * Get all the genomes in the data.
+     *
+     * @return Genomes.
+     */
+    public HashMap<String, Genome> getGenomes() {
+        return genomes;
     }
 
 }
