@@ -1,6 +1,6 @@
 package controller;
 
-import genome.Edge;
+import genome.StrandEdge;
 import genome.Genome;
 import genome.Strand;
 import parser.Parser;
@@ -23,7 +23,7 @@ import phylogenetictree.PhylogeneticTree;
 public class Controller {
 
     private HashMap<Integer, Strand> nodes;
-    private HashMap<String, Edge> edges;
+    private HashMap<String, StrandEdge> edges;
     private HashMap<String, Genome> genomes;
     private double dataWidth;
     private double dataHeight;
@@ -63,12 +63,12 @@ public class Controller {
     }
 
     /**
-     * Adding an edge to the data.
+     * Adding an StrandEdge to the data.
      *
-     * @param edge The added edge.
+     * @param StrandEdge The added StrandEdge.
      */
-    public void addEdge(Edge edge) {
-        edges.put(edge.getStart() + "|" + edge.getEnd(), edge);
+    public void addEdge(StrandEdge StrandEdge) {
+        edges.put(StrandEdge.getStart() + "|" + StrandEdge.getEnd(), StrandEdge);
     }
 
     /**
@@ -85,7 +85,7 @@ public class Controller {
      *
      * @return Edges.
      */
-    public HashMap<String, Edge> getEdges() {
+    public HashMap<String, StrandEdge> getEdges() {
         return edges;
     }
 
@@ -110,8 +110,8 @@ public class Controller {
                 // nodes
                 // x-coordinate
 
-                Edge currentEdge = edges.get(prevStrand.getId() + "|" + currentStrand.getId());
-                currentEdge.setWeight(currentEdge.getWeight() + 1);
+                StrandEdge currentStrandEdge = edges.get(prevStrand.getId() + "|" + currentStrand.getId());
+                currentStrandEdge.setWeight(currentStrandEdge.getWeight() + 1);
                 prevStrand = currentStrand;
             }
         }

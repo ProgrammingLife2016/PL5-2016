@@ -57,7 +57,7 @@ public class TreeParserTest {
      */
     @Test
     public void testGetNodeEnd() {
-        assertEquals(tree.getNode(5).getDistance(), 0.4, 0.001);
+        assertEquals(tree.getNode(8).getDistance(), 0.4, 0.001);
     }
 
     /**

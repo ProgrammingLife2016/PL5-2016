@@ -4,8 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-import controller.Controller;
-import genome.Edge;
+import genome.StrandEdge;
 import genome.Strand;
 
 import java.io.BufferedReader;
@@ -61,14 +60,14 @@ public class Parser {
 	}
 
 	/**
-	 * Creates an Edge from input data.
+	 * Creates an StrandEdge from input data.
 	 * @param splittedLine A line that contains an edge read from the file.
-	 * @return An Edge.
+	 * @return An StrandEdge.
 	 */
-	private static Edge createEdge(String[] splittedLine) {
+	private static StrandEdge createEdge(String[] splittedLine) {
 		int startId = Integer.parseInt(splittedLine[1]);
 		int endId = Integer.parseInt(splittedLine[3]);
-		return new Edge(startId, endId);
+		return new StrandEdge(startId, endId);
 	}
 
 	/**

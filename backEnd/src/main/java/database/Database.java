@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import controller.Controller;
-import genome.Edge;
+import genome.StrandEdge;
 import genome.Strand;
 
 /**
@@ -132,13 +132,13 @@ public class Database {
 	}
 	
 	/**
-	 * Inserts the edges into the database.
-	 * @param edges The edges to be inserted.
+	 * Inserts the StrandEdges into the database.
+	 * @param StrandEdges The StrandEdges to be inserted.
 	 */
-	private void insertEdges(Collection<Edge> edges) {
-		System.out.println("inserting edges");
-		for (Edge edge : edges) {
-			String sql = "INSERT INTO edge values(" + edge.getStart() + ", " + edge.getEnd() + ")";
+	private void insertEdges(Collection<StrandEdge> StrandEdges) {
+		System.out.println("inserting StrandEdges");
+		for (StrandEdge StrandEdge : StrandEdges) {
+			String sql = "INSERT INTO edge values(" + StrandEdge.getStart() + ", " + StrandEdge.getEnd() + ")";
 			try {
 				statement = connection.createStatement();
 				statement.executeUpdate(sql);
@@ -153,8 +153,8 @@ public class Database {
 	 * @param sql The executed query.
 	 * @return The edges that satisfy the query.
 	 */
-	public ArrayList<Edge> getEdges(String sql) {
-		ArrayList<Edge> result = new ArrayList<Edge>();
+	public ArrayList<StrandEdge> getEdges(String sql) {
+		ArrayList<StrandEdge> result = new ArrayList<StrandEdge>();
 		ResultSet rs = null;
 		try {
 			statement = connection.createStatement();
@@ -164,7 +164,7 @@ public class Database {
 				int start = rs.getInt("startid");
 				int end = rs.getInt("endid");
 				
-				result.add(new Edge(start, end));
+				result.add(new StrandEdge(start, end));
 			}
 			
 		} catch (SQLException e) {

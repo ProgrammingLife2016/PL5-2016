@@ -14,7 +14,7 @@ public class ControllerTest {
 	private Controller data;
 	private Strand strand1;
 	private Strand strand2;
-	private Edge edge;
+	private StrandEdge StrandEdge;
 	
 	/**
 	 * Setting up the Controller.
@@ -25,11 +25,11 @@ public class ControllerTest {
     	String[] genomes = {"ref1", "ref2"};
     	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
     	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
-    	edge = new Edge(1, 2);
+    	StrandEdge = new StrandEdge(1, 2);
     	
     	data.addNode(strand1);
     	data.addNode(strand2);
-    	data.addEdge(edge);
+    	data.addEdge(StrandEdge);
     }
     
     /**
@@ -42,11 +42,11 @@ public class ControllerTest {
     }
     
     /**
-     * Tests adding a Edge.
+     * Tests adding a StrandEdge.
      */
     @Test
     public void testAddEdge() {
-    	assertEquals(data.getEdges().get(edge.getStart() + "|" + edge.getEnd()), edge);
+    	assertEquals(data.getEdges().get(StrandEdge.getStart() + "|" + StrandEdge.getEnd()), StrandEdge);
     }
     
     /**

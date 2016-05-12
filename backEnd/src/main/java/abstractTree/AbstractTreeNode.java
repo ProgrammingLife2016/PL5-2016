@@ -30,26 +30,26 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
      *
      * @param parent The parent of this node, root having null.
      */
-    public AbstractTreeNode(T parent) {
+    public AbstractTreeNode(T parent, int childNumber) {
 
         children = new ArrayList<>();
         this.parent = parent;
-        this.id = generateId(parent);
+        this.id = generateId(parent, childNumber);
 
 
     }
 
     /**
      * Generates the id of this node breath first based on the id of the parent node, root being 0.
+     *
      * @param parent The parent of this node.
      * @return The generated id, root being 0.
      */
-    public int generateId(T parent) {
+    public int generateId(T parent, int childNumber) {
         if (parent == null) {
             return 0;
         }
-        int res = parent.getChildren().indexOf(this);
-        return res+parent.getId()*2+1;
+        return childNumber + parent.getId() * 2 + 1;
 
 
     }
