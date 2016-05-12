@@ -22,6 +22,15 @@ public class RibbonNode {
         return label;
     }
 
+    public RibbonEdge getEdge(int idFrom, int idTo) {
+        for (RibbonEdge edge : edges) {
+            if (edge.getStart() == idFrom && edge.getEnd() == idTo) {
+                return edge;
+            }
+        }
+        return null;
+    }
+
     public void setLabel(String label) {
         this.label = label;
     }
@@ -32,6 +41,10 @@ public class RibbonNode {
 
     public ArrayList<RibbonEdge> getEdges() {
         return edges;
+    }
+
+    public void addEdge(RibbonEdge edge) {
+        edges.add(edge);
     }
 
     public void setEdges(ArrayList<RibbonEdge> edges) {

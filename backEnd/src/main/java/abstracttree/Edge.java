@@ -20,6 +20,7 @@ public class Edge {
     public Edge(int startId, int endId) {
     	this.startId = startId;
     	this.endId = endId;
+        this.weight=1;
     }
 
     /**

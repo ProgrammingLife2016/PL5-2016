@@ -16,4 +16,8 @@ public class RibbonEdge extends Edge {
     public RibbonEdge(int startId, int endId) {
         super(startId, endId);
     }
+
+    public void incrementWeight(){
+        this.setWeight(this.getWeight()+1);
+    }
 }

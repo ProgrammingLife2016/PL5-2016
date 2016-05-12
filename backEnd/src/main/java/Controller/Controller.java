@@ -1,17 +1,19 @@
 package controller;
 
+import datatree.DataNode;
+import datatree.DataTree;
 import genome.StrandEdge;
 import genome.Genome;
 import genome.Strand;
 import parser.Parser;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
+import ribbonnodes.RibbonEdge;
+import ribbonnodes.RibbonNode;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -22,12 +24,14 @@ import phylogenetictree.PhylogeneticTree;
  */
 public class Controller {
 
+    //TODO move strand graph to seperate class.
     private HashMap<Integer, Strand> strandNodes;
     private HashMap<String, StrandEdge> strandEdges;
     private HashMap<String, Genome> genomes;
     private double dataWidth;
     private double dataHeight;
     private PhylogeneticTree phylogeneticTree;
+    private DataTree dataTree;
 
 
     /**
@@ -44,6 +48,70 @@ public class Controller {
         genomes = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
+        dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), null, 0));
+    }
+
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, ArrayList<String> genomes, int zoomLevel) {
+        ArrayList<RibbonNode> result = new ArrayList<>();
+        ArrayList<DataNode> filteredNodes = dataTree.getDataNodes(minX, maxX, genomes, zoomLevel);
+
+        for (DataNode node : filteredNodes) {
+            for (Strand strand : node.getStrands()) {
+                //Here the nodes are placed in order (notice node.getgenomes and not ribbon.getgenomes).
+                RibbonNode ribbonNode = new RibbonNode(strand.getId(), node.getGenomes());
+                result.add(ribbonNode);
+            }
+        }
+
+        addRibbonEdges(result,genomes);
+
+        return result;
+
+    }
+
+    public void addRibbonEdges(ArrayList<RibbonNode> nodes, ArrayList<String> genomes) {
+        nodes.sort(new Comparator<RibbonNode>() {
+            @Override
+            public int compare(RibbonNode o1, RibbonNode o2) {
+                if (o1.getId() > o2.getId())
+                    return 1;
+                else if (o1.getId() < o2.getId())
+                    return -1;
+                return 0;
+            }
+        });
+//TODO make readable
+        for (String genome : genomes) {
+            for (int i = 0; i < nodes.size(); i++) {
+                RibbonNode startNode = nodes.get(i);
+
+                if (startNode.getGenomes().contains(genome)) {
+                    for (int p = i; p < nodes.size(); p++) {
+                        RibbonNode endNode = nodes.get(p);
+                        if (endNode.getGenomes().contains(genome)) {
+                            if (startNode.getEdge(startNode.getId(), endNode.getId()) == null) {
+                                RibbonEdge edge = new RibbonEdge(startNode.getId(), endNode.getId());
+                                startNode.addEdge(edge);
+                                endNode.addEdge(edge);
+
+                            }
+                            else {
+                                startNode.getEdge(startNode.getId(),endNode.getId()).incrementWeight();
+                            }
+
+                        }
+                        i=p;
+                    }
+
+
+
+                }
+
+
+            }
+        }
+
+
     }
 
     /**
@@ -88,7 +156,6 @@ public class Controller {
     public HashMap<String, StrandEdge> getEdges() {
         return strandEdges;
     }
-
 
 
     /**
@@ -139,10 +206,26 @@ public class Controller {
 
     /**
      * Setter for the phylogenicTree.
+     *
      * @param phylogeneticTree The tree.
      */
     public void setPhylogeneticTree(PhylogeneticTree phylogeneticTree) {
         this.phylogeneticTree = phylogeneticTree;
     }
 
+    public DataTree getDataTree() {
+        return dataTree;
+    }
+
+    public void setDataTree(DataTree dataTree) {
+        this.dataTree = dataTree;
+    }
+
+    public HashMap<String, Genome> getGenomes() {
+        return genomes;
+    }
+
+    public void setGenomes(HashMap<String, Genome> genomes) {
+        this.genomes = genomes;
+    }
 }

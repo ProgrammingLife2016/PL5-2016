@@ -9,6 +9,7 @@ import genome.Strand;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * Created by Jeffrey on 24-4-2016.
@@ -55,6 +56,8 @@ public class Parser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		result.getDataTree().addStrands(new ArrayList<>(result.getGenomes().values()));
 		return result;
 	}
 

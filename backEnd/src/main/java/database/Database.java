@@ -62,7 +62,7 @@ public class Database {
 				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"
 						+ databaseName, username, password);
 				createTables();
-				insertNodes(controller.getNodes().values());
+				insertNodes(controller.getstrandNodes().values());
 				insertEdges(controller.getEdges().values());
 			} catch (SQLException e1) {
 				e1.printStackTrace();
