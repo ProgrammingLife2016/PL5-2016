@@ -19,7 +19,7 @@ public class GenomesTest {
 	 */
 	@Before
 	public void setUp() {
-		genome = new Genome();
+		genome = new Genome("GenomeIDTest");
 	}
 	
 	/**
@@ -32,7 +32,7 @@ public class GenomesTest {
 		String[] genomes = {"ref1", "ref2"};
     	Strand strand = new Strand(1, "AA", genomes, "ref1", 0);
     	res.add(strand);
-    	genome.addNode(strand);
+    	genome.addStrand(strand);
     	assertEquals(genome.getStrands(), res);
 	}
 

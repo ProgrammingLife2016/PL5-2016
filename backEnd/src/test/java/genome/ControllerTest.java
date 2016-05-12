@@ -27,8 +27,8 @@ public class ControllerTest {
     	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
     	StrandEdge = new StrandEdge(1, 2);
     	
-    	data.addNode(strand1);
-    	data.addNode(strand2);
+    	data.addStrand(strand1);
+    	data.addStrand(strand2);
     	data.addEdge(StrandEdge);
     }
     
@@ -37,8 +37,8 @@ public class ControllerTest {
      */
     @Test
     public void testAddNode() {
-    	assertEquals(data.getNodes().get(strand1.getId()), strand1);
-    	assertEquals(data.getNodes().get(strand2.getId()), strand2);
+    	assertEquals(data.getstrandNodes().get(strand1.getId()), strand1);
+    	assertEquals(data.getstrandNodes().get(strand2.getId()), strand2);
     }
     
     /**
@@ -49,24 +49,8 @@ public class ControllerTest {
     	assertEquals(data.getEdges().get(StrandEdge.getStart() + "|" + StrandEdge.getEnd()), StrandEdge);
     }
     
-    /**
-     * Tests giving the nodes coordinates.
-     */
-    @Test
-    public void test() {
-    	assertTrue(data.calculateCoordinates().get(0).contains(strand1));
-    	assertTrue(data.calculateCoordinates().get(1).contains(strand2));
-    }
-    
-    /**
-     * Test data height.
-     */
-    @Test
-    public void testDataHeight() {
-    	data.setDataHeight(10.0);
-    	assertEquals(data.getDataHeight(), 10.0, 0.001);
-    }
-    
+
+
     /**
      * Test data width.
      */

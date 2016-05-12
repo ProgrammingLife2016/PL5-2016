@@ -24,12 +24,12 @@ import ribbonnodes.RibbonNode;
  */
 public class Controller {
 
-    //TODO move strand graph to seperate class.
+    //TODO move strand graph and genomes to seperate class.
     private HashMap<Integer, Strand> strandNodes;
     private HashMap<String, StrandEdge> strandEdges;
     private HashMap<String, Genome> genomes;
+    private ArrayList<String> activeGenomes;
     private double dataWidth;
-    private double dataHeight;
     private PhylogeneticTree phylogeneticTree;
     private DataTree dataTree;
 
@@ -45,15 +45,16 @@ public class Controller {
     public Controller() {
         strandNodes = new HashMap<>();
         strandEdges = new HashMap<>();
+        activeGenomes= new ArrayList<>();
         genomes = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), null, 0));
     }
 
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, ArrayList<String> genomes, int zoomLevel) {
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
         ArrayList<RibbonNode> result = new ArrayList<>();
-        ArrayList<DataNode> filteredNodes = dataTree.getDataNodes(minX, maxX, genomes, zoomLevel);
+        ArrayList<DataNode> filteredNodes = dataTree.getDataNodes(minX, maxX, activeGenomes, zoomLevel);
 
         for (DataNode node : filteredNodes) {
             for (Strand strand : node.getStrands()) {
@@ -63,7 +64,7 @@ public class Controller {
             }
         }
 
-        addRibbonEdges(result,genomes);
+        addRibbonEdges(result,activeGenomes);
 
         return result;
 
@@ -167,14 +168,7 @@ public class Controller {
         return this.dataWidth;
     }
 
-    /**
-     * Get the data height.
-     *
-     * @return The data height.
-     */
-    public double getDataHeight() {
-        return this.dataHeight;
-    }
+
 
     /**
      * Set the data width.
@@ -185,14 +179,6 @@ public class Controller {
         this.dataWidth = dataWidth;
     }
 
-    /**
-     * Set the data height.
-     *
-     * @param dataHeight New data height.
-     */
-    public void setDataHeight(double dataHeight) {
-        this.dataHeight = dataHeight;
-    }
 
 
     /**
@@ -227,5 +213,13 @@ public class Controller {
 
     public void setGenomes(HashMap<String, Genome> genomes) {
         this.genomes = genomes;
+    }
+
+    public ArrayList<String> getActiveGenomes() {
+        return activeGenomes;
+    }
+
+    public void setActiveGenomes(ArrayList<String> activeGenomes) {
+        this.activeGenomes = activeGenomes;
     }
 }

@@ -19,25 +19,7 @@ public class StrandTest {
     	String[] genomes = {"ref1", "ref2"};
     	strand = new Strand(1, "AA", genomes, "ref1", 0);
     }
-    
-    /**
-     * Tests whether we can change the x coordinate.
-     */
-    @Test
-    public void testGetXCoordinate() {
-    	strand.setxCoordinate(10.0);
-    	assertEquals(strand.getxCoordinate(), 10.0, 0.001);
-    }
 
-    /**
-     * Tests whether we can change the x coordinate.
-     */
-    @Test
-    public void testGetYCoordinate() {
-    	strand.setyCoordinate(10.0);
-    	assertEquals(strand.getyCoordinate(), 10.0, 0.001);
-    }
-    
     /**
      * Tests getting the id of the strand.
      */
@@ -101,15 +83,6 @@ public class StrandTest {
     	assertEquals(strand.getWeight(), 4);
     }
     
-    /**
-     * Tests updating the x coordinate.
-     */
-    @Test
-    public void testUpdateXCoordinate() {
-    	String[] genomes = {"ref1", "ref2"};
-    	strand = new Strand(1, "AA", genomes, "ref1", 0);
-    	strand.updatexCoordinate(2);
-    	assertEquals(strand.getxCoordinate(), 2, 0.001);
-    }
+
     
 }

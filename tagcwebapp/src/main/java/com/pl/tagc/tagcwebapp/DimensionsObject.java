@@ -9,23 +9,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 public class DimensionsObject {
 
 	private double width;
-	private double height;
 
 	public DimensionsObject() {
 	}
 
-	public DimensionsObject(double width, double height) {
+	public DimensionsObject(double width) {
 		this.setWidth(width);
-		this.setHeight(height);
 	}
 
-	public double getHeight() {
-		return height;
-	}
 
-	public void setHeight(double height) {
-		this.height = height;
-	}
 
 	public double getWidth() {
 		return width;
