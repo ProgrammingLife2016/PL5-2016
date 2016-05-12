@@ -1,6 +1,7 @@
 package phylogenetictree;
 
 
+import abstracttree.AbstractTreeNode;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.util.ArrayList;
@@ -9,42 +10,23 @@ import java.util.ArrayList;
  * Created by Matthijs on 4-5-2016.
  * A node in the phylogenetic tree. Stores a name if the node is a leaf.
  */
-public class PhylogeneticNode {
+public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
 
-    /**
-     * The child nodes of this node.
-     */
-    private ArrayList<PhylogeneticNode> children;
+
     /**
      * The Genomes contained in this nodes children.
      */
     private ArrayList<String> genomes;
+
     /**
-     * This nodes' parent.
-     */
-    private PhylogeneticNode parent;
-    /**
-     * This nodes' genome name ("" if not a leaf).
+     * The name of this genome, "" if not a leaf.
      */
     private String nameLabel;
     /**
      * The distance to its parent.
      */
     private double distance;
-    /**
-     * The Id of the node.
-     */
-    private int id;
 
-    /**
-     * Initialize an empty node.
-     */
-    public PhylogeneticNode() {
-        nameLabel = "";
-        distance = 0.;
-        children = new ArrayList<>();
-        genomes = new ArrayList<>();
-    }
 
     /**
      * Initialize this node from tree node, recursively.
@@ -52,52 +34,42 @@ public class PhylogeneticNode {
      * @param node     The node.
      * @param parent   The parentNode of this node, null if root.
      * @param distance The distance.
-     * @param id       The id of this node, root being 0. Incrementing breath first.
+     * @param childNumber The childNumber.
      */
     public PhylogeneticNode(final TreeNode node, final PhylogeneticNode parent,
-    		final double distance, final int id) {
+                            final double distance, int childNumber) {
+
+        super(parent, childNumber);
         nameLabel = node.getName();
         this.distance = distance;
-        children = new ArrayList<>();
         genomes = new ArrayList<>();
-        this.parent = parent;
-        this.id = id;
+
+        adaptChild(node);
+        checkLeaf();
+
+    }
+
+    /**
+     * Addapt the child node.
+     * @param node Node.
+     */
+    public void adaptChild(TreeNode node) {
 
         for (int i = 0; i < node.numberChildren(); i++) {
             TreeNode child = node.getChild(i);
-            addChild(new PhylogeneticNode(child, this, child.getWeight(), id + 1 + i));
+            addChild(new PhylogeneticNode(child, this, child.getWeight(), i));
         }
-
-        checkLeaf();
-
     }
 
     /**
      * If this node is a leaf, add the genome it contains to all its parents.
      */
     private void checkLeaf() {
-        if (!nameLabel.equals("") && this.parent != null) {
-        	parent.addGenome(nameLabel);
+        if (!nameLabel.equals("") && this.getParent() != null) {
+            this.getParent().addGenome(nameLabel);
         }
     }
 
-    /**
-     * Get the children of a node.
-     *
-     * @return The children as ArryList.
-     */
-    public ArrayList<PhylogeneticNode> getChildren() {
-        return children;
-    }
-
-    /**
-     * Adds child node and stores the distance to that node.
-     *
-     * @param node the node
-     */
-    public void addChild(final PhylogeneticNode node) {
-        children.add(node);
-    }
 
     /**
      * returns a string of lenght 0 if the node is not a leaf.
@@ -133,28 +105,9 @@ public class PhylogeneticNode {
      */
     public void addGenome(final String genome) {
         genomes.add(genome);
-        if (parent != null) {
-            parent.addGenome(genome);
+        if (this.getParent() != null) {
+            this.getParent().addGenome(genome);
         }
     }
-
-    /**
-     * Get the id of this node.
-     *
-     * @return The id.
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Get the parent of this node.
-     *
-     * @return The parent, null if root.
-     */
-    public PhylogeneticNode getParent() {
-        return parent;
-    }
-
 
 }

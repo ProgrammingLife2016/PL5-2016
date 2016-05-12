@@ -8,8 +8,8 @@ import java.util.ArrayList;
  *
  */
 public class Genome {
-	
-    private ArrayList<Node> nodes;
+
+    private ArrayList<Strand> strands;
     private String id;
 
     /**
@@ -17,24 +17,24 @@ public class Genome {
      * @param id The genome name.
      */
     public Genome(String id) {
-        nodes = new ArrayList<>();
+        strands = new ArrayList<>();
         this.id = id;
     }
 
     /**
-     * Add a node to the genome.
-     * @param node The added node.
+     * Add a strand to the genome.
+     * @param strand The added strand.
      */
-    public void addNode(Node node) {
-        nodes.add(node);
+    public void addStrand(Strand strand) {
+        strands.add(strand);
     }
 
     /**
-     * Get all the nodes from the genome.
-     * @return The nodes the genome passes through.
+     * Get all the strands from the genome.
+     * @return The strands the genome passes through.
      */
-    public ArrayList<Node> getNodes() {
-        return nodes;
+    public ArrayList<Strand> getStrands() {
+        return strands;
     }
     
     /**
