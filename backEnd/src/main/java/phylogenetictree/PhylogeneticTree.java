@@ -1,6 +1,6 @@
 package phylogenetictree;
 
-import abstractTree.TreeStructure;
+import abstracttree.TreeStructure;
 import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 

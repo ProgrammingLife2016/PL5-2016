@@ -1,7 +1,7 @@
 package phylogenetictree;
 
 
-import abstractTree.AbstractTreeNode;
+import abstracttree.AbstractTreeNode;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.util.ArrayList;
@@ -44,13 +44,13 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
         this.distance = distance;
         genomes = new ArrayList<>();
 
-        addChildren(node);
+        adaptChild(node);
         checkLeaf();
 
     }
 
     @Override
-    public void addChildren(TreeNode node) {
+    public void adaptChild(TreeNode node) {
 
         for (int i = 0; i < node.numberChildren(); i++) {
             TreeNode child = node.getChild(i);

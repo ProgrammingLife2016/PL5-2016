@@ -1,4 +1,4 @@
-package abstractTree;
+package abstracttree;
 
 
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
@@ -40,11 +40,11 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     }
 
     /**
-     * Add the children to this node.
+     * Add the children to this node. Add variables that are needed by the subclass. (Adapter).
      *
      * @param node The treeNode that contains the children of this node.
      */
-    public abstract void addChildren(TreeNode node);
+    public abstract void adaptChild(TreeNode node);
 
 
     /**
