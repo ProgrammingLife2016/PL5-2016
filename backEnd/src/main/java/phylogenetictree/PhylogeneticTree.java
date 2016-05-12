@@ -46,7 +46,7 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         reader = new BufferedReader(r);
         TreeParser tp = new TreeParser(reader);
         tree = tp.tokenize("");
-        this.setRoot(new PhylogeneticNode(tree.getRoot(), null, 0.,0));
+        this.setRoot(new PhylogeneticNode(tree.getRoot(), null, 0., 0));
     }
 
     /**

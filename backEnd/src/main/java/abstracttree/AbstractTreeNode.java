@@ -30,6 +30,7 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
      * Initialize this node from tree node, recursively.
      *
      * @param parent The parent of this node, root having null.
+     * @param childNumber Childnumber.
      */
     public AbstractTreeNode(T parent, int childNumber) {
 
@@ -44,6 +45,7 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
      * Generates the id of this node breath first based on the id of the parent node, root being 0.
      *
      * @param parent The parent of this node.
+     * @param childNumber The childnumber.
      * @return The generated id, root being 0.
      */
     public int generateId(T parent, int childNumber) {

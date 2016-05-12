@@ -7,8 +7,8 @@ import genome.Strand;
 
 /**
  * 
- * @author Jeffrey Helgers
- * This class computes the mutations between two genomes.
+ * @author Jeffrey Helgers This class computes the mutations between two
+ *         genomes.
  */
 public final class ComputeMutation {
 
@@ -18,19 +18,23 @@ public final class ComputeMutation {
 	private static ArrayList<Strand> otherStrands;
 	private static ArrayList<Strand> common;
 	private static AllMutations mutations;
-	
+
 	/**
 	 * Not used constructor.
 	 */
 	private ComputeMutation() {
-		
+
 	}
-	
+
 	/**
 	 * Compute all the mutations betwee two genomes.
-	 * @param base1 Reference genome.
-	 * @param other1 Compared genome.
-	 * @param mutations1 That stores the mutations.
+	 * 
+	 * @param base1
+	 *            Reference genome.
+	 * @param other1
+	 *            Compared genome.
+	 * @param mutations1
+	 *            That stores the mutations.
 	 */
 	public static void compute(Genome base1, Genome other1, AllMutations mutations1) {
 		base = base1;
@@ -42,7 +46,7 @@ public final class ComputeMutation {
 		mutations = mutations1;
 		allMutations();
 	}
-	
+
 	/**
 	 * Computes all the mutations between the two genomes.
 	 */
@@ -54,28 +58,31 @@ public final class ComputeMutation {
 			getMutation(basePlace, otherPlace);
 		}
 	}
-	
+
 	/**
-	 * First tests if the next genome in both the genomes is the same.
-	 * If not, then there can be a mutation.
-	 * @param basePlace Starting position at the base genome.
-	 * @param otherPlace Starting position at the other genome.
+	 * First tests if the next genome in both the genomes is the same. If not,
+	 * then there can be a mutation.
+	 * 
+	 * @param basePlace
+	 *            Starting position at the base genome.
+	 * @param otherPlace
+	 *            Starting position at the other genome.
 	 * @return
 	 */
 	private static void getMutation(int basePlace, int otherPlace) {
-		if (basePlace < (baseStrands.size() - 1) && otherPlace < (otherStrands.size() - 1)) {
-			if (baseStrands.get(basePlace + 1).equals(otherStrands.get(otherPlace + 1))) {
-			} else {
-				if (!testInsertion(basePlace)) {
-					testDeletion(basePlace, otherPlace);
-				}
-			}
+		if (basePlace < (baseStrands.size() - 1) && otherPlace < (otherStrands.size() - 1)
+				&& !baseStrands.get(basePlace + 1).equals(otherStrands.get(otherPlace + 1))) {
+			testInsertion(basePlace); 
+			testDeletion(basePlace, otherPlace);
+			
 		}
 	}
-	
+
 	/**
 	 * Checks if an insertion appeared.
-	 * @param basePlace Starting position at the base genome.
+	 * 
+	 * @param basePlace
+	 *            Starting position at the base genome.
 	 * @return
 	 */
 	private static boolean testInsertion(int basePlace) {
@@ -88,11 +95,14 @@ public final class ComputeMutation {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Checks if a deletion appeared.
-	 * @param basePlace Starting position at the base genome.
-	 * @param otherPlace Starting position at the other genome.
+	 * 
+	 * @param basePlace
+	 *            Starting position at the base genome.
+	 * @param otherPlace
+	 *            Starting position at the other genome.
 	 * @return
 	 */
 	private static void testDeletion(int basePlace, int otherPlace) {

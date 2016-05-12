@@ -34,6 +34,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      * @param node     The node.
      * @param parent   The parentNode of this node, null if root.
      * @param distance The distance.
+     * @param childNumber The childNumber.
      */
     public PhylogeneticNode(final TreeNode node, final PhylogeneticNode parent,
                             final double distance, int childNumber) {
@@ -48,11 +49,15 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
 
     }
 
+    /**
+     * Addapt the child node.
+     * @param node Node.
+     */
     public void adaptChild(TreeNode node) {
 
         for (int i = 0; i < node.numberChildren(); i++) {
             TreeNode child = node.getChild(i);
-            addChild(new PhylogeneticNode(child, this, child.getWeight(),i));
+            addChild(new PhylogeneticNode(child, this, child.getWeight(), i));
         }
     }
 

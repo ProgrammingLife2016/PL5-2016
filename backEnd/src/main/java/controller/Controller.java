@@ -117,15 +117,15 @@ public class Controller {
             }
         }
 
-        HashMap<Integer, HashSet<Strand>> StrandsByxCoordinate = new HashMap<>();
+        HashMap<Integer, HashSet<Strand>> strandsByxCoordinate = new HashMap<>();
         for (HashMap.Entry<Integer, Strand> entry : strands.entrySet()) {
-            if (!StrandsByxCoordinate.containsKey((int) entry.getValue().getxCoordinate())) {
-                StrandsByxCoordinate.put((int) entry.getValue().getxCoordinate(), new HashSet<>());
+            if (!strandsByxCoordinate.containsKey((int) entry.getValue().getxCoordinate())) {
+                strandsByxCoordinate.put((int) entry.getValue().getxCoordinate(), new HashSet<>());
             }
-            StrandsByxCoordinate.get((int) entry.getValue().getxCoordinate()).add(entry.getValue());
+            strandsByxCoordinate.get((int) entry.getValue().getxCoordinate()).add(entry.getValue());
         }
 
-        for (HashMap.Entry<Integer, HashSet<Strand>> c : StrandsByxCoordinate.entrySet()) {
+        for (HashMap.Entry<Integer, HashSet<Strand>> c : strandsByxCoordinate.entrySet()) {
             int y = 0;
             for (Strand strand : c.getValue()) {
                 strand.setyCoordinate(y);
@@ -138,7 +138,7 @@ public class Controller {
         dataWidth = maxWidth;
         dataHeight = maxHeight;
 
-        return StrandsByxCoordinate;
+        return strandsByxCoordinate;
     }
 
     /**

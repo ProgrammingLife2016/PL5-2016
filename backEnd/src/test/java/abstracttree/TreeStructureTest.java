@@ -22,6 +22,10 @@ public class TreeStructureTest {
     private AbstractTreeNode testRoot;
 
 
+    /**
+     * Setting up the tree.
+     * @throws Exception Exception.
+     */
     @Before
     public void setUp() throws Exception {
         //Set up the test tree.
@@ -51,11 +55,19 @@ public class TreeStructureTest {
 
     }
 
+    /**
+     * Test getting a specific node.
+     * @throws Exception Exception.
+     */
     @Test
     public void testGetNode() throws Exception {
         assertEquals(tree.getNode(4), c);
     }
 
+    /**
+     * Test setting the root.
+     * @throws Exception Exception.
+     */
     @Test
     public void testSetRoot() throws Exception {
         assertEquals(tree.getRoot().getId(), 1);
@@ -63,6 +75,10 @@ public class TreeStructureTest {
         assertEquals(tree.getRoot().getId(), 4);
     }
 
+    /**
+     * Test getting the root.
+     * @throws Exception Exception.
+     */
     @Test
     public void testGetRoot() throws Exception {
         assertEquals(tree.getRoot(), testRoot);

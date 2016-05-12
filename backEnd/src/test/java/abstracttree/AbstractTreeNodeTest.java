@@ -31,7 +31,7 @@ public class AbstractTreeNodeTest {
     }
 
     /**
-     * Test getChildren method
+     * Test getChildren method.
      *
      * @throws Exception if fail.
      */
