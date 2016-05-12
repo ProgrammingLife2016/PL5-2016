@@ -26,15 +26,15 @@ public class TreeStructureTest {
     public void setUp() throws Exception {
         //Set up the test tree.
         testRoot = Mockito.mock(AbstractTreeNode.class, Mockito.CALLS_REAL_METHODS);
-        testRoot.id = 1;
+        testRoot.setId(1);
         a = Mockito.mock(AbstractTreeNode.class, Mockito.CALLS_REAL_METHODS);
-        a.id = 2;
+        a.setId(2);
         b = Mockito.mock(AbstractTreeNode.class, Mockito.CALLS_REAL_METHODS);
-        b.id = 3;
+        b.setId(3);
         c = Mockito.mock(AbstractTreeNode.class, Mockito.CALLS_REAL_METHODS);
-        c.id = 4;
+        c.setId(4);
         d = Mockito.mock(AbstractTreeNode.class, Mockito.CALLS_REAL_METHODS);
-        d.id = 5;
+        d.setId(5);
 
         ArrayList<AbstractTreeNode> rootChildren = new ArrayList<>();
         rootChildren.add(a);
@@ -43,8 +43,8 @@ public class TreeStructureTest {
         aChildren.add(c);
         aChildren.add(d);
 
-        testRoot.children = rootChildren;
-        a.children = aChildren;
+        testRoot.setChildren(rootChildren);
+        a.setChildren(aChildren);
 
         tree = new TreeStructure(testRoot);
 

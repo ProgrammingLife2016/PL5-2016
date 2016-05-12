@@ -12,6 +12,6 @@ public class ribbonNode extends AbstractTreeNode {
      * @param parent The parent of this node, null if root.
      */
     public ribbonNode(ribbonNode parent) {
-        super(parent);
+        super(parent, 0);
     }
 }

@@ -46,7 +46,7 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         reader = new BufferedReader(r);
         TreeParser tp = new TreeParser(reader);
         tree = tp.tokenize("");
-        this.setRoot(new PhylogeneticNode(tree.getRoot(), null, 0.));
+        this.setRoot(new PhylogeneticNode(tree.getRoot(), null, 0.,0));
     }
 
     /**
@@ -57,10 +57,10 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
      */
     public PhylogeneticNode getNodeWithLabel(final String name) {
 
-        if (root.getNameLabel().equals(name)) {
-            return root;
-        } else if (root.getChildren().size() != 0) {
-            for (PhylogeneticNode child : root.getChildren()) {
+        if (this.getRoot().getNameLabel().equals(name)) {
+            return getRoot();
+        } else if (getRoot().getChildren().size() != 0) {
+            for (PhylogeneticNode child : getRoot().getChildren()) {
                 if (child.getNameLabel().equals(name)) {
                     return child;
                 }

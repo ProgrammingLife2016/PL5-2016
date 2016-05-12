@@ -1,28 +1,29 @@
 package abstracttree;
 
 
-import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
-
 import java.util.ArrayList;
 
 /**
  * Created by Matthijs on 4-5-2016.
  * An abstract class for a node in a tree.
+ *
+ * @param <T> The instantiated subclass of this node.
  */
 public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
+
 
     /**
      * The child nodes of this node.
      */
-    protected ArrayList<T> children;
+    private ArrayList<T> children;
     /**
      * This nodes' parent.
      */
-    protected T parent;
+    private T parent;
     /**
      * The Id of the node.
      */
-    protected int id;
+    private int id;
 
 
     /**
@@ -30,26 +31,26 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
      *
      * @param parent The parent of this node, root having null.
      */
-    public AbstractTreeNode(T parent) {
+    public AbstractTreeNode(T parent, int childNumber) {
 
         children = new ArrayList<>();
         this.parent = parent;
-        this.id = generateId(parent);
+        this.id = generateId(parent, childNumber);
 
 
     }
 
     /**
      * Generates the id of this node breath first based on the id of the parent node, root being 0.
+     *
      * @param parent The parent of this node.
      * @return The generated id, root being 0.
      */
-    public int generateId(T parent) {
+    public int generateId(T parent, int childNumber) {
         if (parent == null) {
             return 0;
         }
-        int res = parent.getChildren().indexOf(this);
-        return res+parent.getId()*2+1;
+        return childNumber + parent.getId() * 2 + 1;
 
 
     }
@@ -92,5 +93,29 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
         return parent;
     }
 
+    /**
+     * Set the parent.
+     *
+     * @param parent set the parent.
+     */
+    public void setParent(T parent) {
+        this.parent = parent;
+    }
 
+    /**
+     * Set the id.
+     *
+     * @param id The id to set.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Set the children of this node.
+     * @param children The children to set.
+     */
+    public void setChildren(ArrayList<T> children) {
+        this.children = children;
+    }
 }

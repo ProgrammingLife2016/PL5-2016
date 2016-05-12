@@ -3,13 +3,15 @@ package abstracttree;
 
 /**
  * Created by Matthijs on 4-5-2016.
+ *
+ * @param <T> The treeNode subclass contained in the tree.
  */
 public class TreeStructure<T extends AbstractTreeNode> {
 
     /**
      * The root Strand of the TreeStructure.
      */
-    protected T root;
+    private T root;
 
     /**
      * Default contstructor.
@@ -67,7 +69,7 @@ public class TreeStructure<T extends AbstractTreeNode> {
      *
      * @return The root.
      */
-    public AbstractTreeNode getRoot() {
+    public T getRoot() {
         return root;
     }
 

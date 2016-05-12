@@ -3,6 +3,7 @@ package abstracttree;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -15,35 +16,59 @@ public class AbstractTreeNodeTest {
 
     private AbstractTreeNode node;
 
+    /**
+     * Set up the tests.
+     *
+     * @throws Exception if fail.
+     */
     @Before
     public void setUp() throws Exception {
         node = Mockito.mock(AbstractTreeNode.class, Mockito.CALLS_REAL_METHODS);
-        node.parent=node;
-        node.id=5;
-        node.children=new ArrayList();
-        node.children.add(node);
+        node.setChildren(new ArrayList());
+        node.setParent(node);
+        node.setId(5);
+        node.getChildren().add(node);
     }
 
-
+    /**
+     * Test getChildren method
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testGetChildren() throws Exception {
-        assertEquals(node.getChildren(),node.children);
+        assertEquals(node.getChildren(), node.getChildren());
     }
 
+    /**
+     * Test add child.
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testAddChild() throws Exception {
-        assertEquals(node.children.size(),1);
+        assertEquals(node.getChildren().size(), 1);
         node.addChild(node);
-        assertEquals(node.children.size(),2);
+        assertEquals(node.getChildren().size(), 2);
     }
 
+    /**
+     * Test get id.
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testGetId() throws Exception {
-        assertEquals(node.getId(),5);
+        assertEquals(node.getId(), 5);
     }
 
+    /**
+     * Test get parent.
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testGetParent() throws Exception {
-        assertEquals(node.getParent(),node);
+        assertEquals(node.getParent(), node);
     }
 }
