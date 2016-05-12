@@ -3,7 +3,7 @@ package mutation;
 import java.util.ArrayList;
 
 import genome.Genome;
-import genome.Node;
+import genome.Strand;
 
 /**
  * 
@@ -14,9 +14,9 @@ public final class ComputeMutation {
 
 	private static Genome base;
 	private static Genome other;
-	private static ArrayList<Node> baseNodes;
-	private static ArrayList<Node> otherNodes;
-	private static ArrayList<Node> common;
+	private static ArrayList<Strand> baseStrands;
+	private static ArrayList<Strand> otherStrands;
+	private static ArrayList<Strand> common;
 	private static AllMutations mutations;
 	
 	/**
@@ -35,10 +35,10 @@ public final class ComputeMutation {
 	public static void compute(Genome base1, Genome other1, AllMutations mutations1) {
 		base = base1;
 		other = other1;
-		baseNodes = base.getNodes();
-		otherNodes = other.getNodes();
-		common = new ArrayList<Node>(baseNodes);
-		common.retainAll(otherNodes);
+		baseStrands = base.getStrands();
+		otherStrands = other.getStrands();
+		common = new ArrayList<Strand>(baseStrands);
+		common.retainAll(otherStrands);
 		mutations = mutations1;
 		allMutations();
 	}
@@ -48,9 +48,9 @@ public final class ComputeMutation {
 	 */
 	private static void allMutations() {
 		for (int i = 0; i < common.size(); i++) {
-			Node current = common.get(i);
-			int basePlace = baseNodes.indexOf(current);
-			int otherPlace = otherNodes.indexOf(current);
+			Strand current = common.get(i);
+			int basePlace = baseStrands.indexOf(current);
+			int otherPlace = otherStrands.indexOf(current);
 			getMutation(basePlace, otherPlace);
 		}
 	}
@@ -63,8 +63,8 @@ public final class ComputeMutation {
 	 * @return
 	 */
 	private static void getMutation(int basePlace, int otherPlace) {
-		if (basePlace < (baseNodes.size() - 1) && otherPlace < (otherNodes.size() - 1)) {
-			if (baseNodes.get(basePlace + 1).equals(otherNodes.get(otherPlace + 1))) {
+		if (basePlace < (baseStrands.size() - 1) && otherPlace < (otherStrands.size() - 1)) {
+			if (baseStrands.get(basePlace + 1).equals(otherStrands.get(otherPlace + 1))) {
 			} else {
 				if (!testInsertion(basePlace)) {
 					testDeletion(basePlace, otherPlace);
@@ -79,10 +79,10 @@ public final class ComputeMutation {
 	 * @return
 	 */
 	private static boolean testInsertion(int basePlace) {
-		if (common.contains(baseNodes.get(basePlace + 1))) {
+		if (common.contains(baseStrands.get(basePlace + 1))) {
 			System.out.println("insertion");
 			Insertion in = new Insertion(base, other, 
-					baseNodes.get(basePlace), baseNodes.get(basePlace + 1));
+					baseStrands.get(basePlace), baseStrands.get(basePlace + 1));
 			mutations.addMutation(base.getId(), in);
 			return true;
 		}
@@ -96,12 +96,12 @@ public final class ComputeMutation {
 	 * @return
 	 */
 	private static void testDeletion(int basePlace, int otherPlace) {
-		if (common.contains(otherNodes.get(otherPlace + 1))) {
+		if (common.contains(otherStrands.get(otherPlace + 1))) {
 			basePlace++;
-			ArrayList<Node> deleted = new ArrayList<>();
-			while (!baseNodes.get(basePlace).equals(otherNodes.get(otherPlace + 1))) {
+			ArrayList<Strand> deleted = new ArrayList<>();
+			while (!baseStrands.get(basePlace).equals(otherStrands.get(otherPlace + 1))) {
 				System.out.println("deletion");
-				deleted.add(baseNodes.get(basePlace));
+				deleted.add(baseStrands.get(basePlace));
 				basePlace++;
 			}
 			Deletion de = new Deletion(base, other, deleted);

@@ -25,7 +25,7 @@ public class Genome {
      * Add a strand to the genome.
      * @param strand The added strand.
      */
-    public void addNode(Strand strand) {
+    public void addStrand(Strand strand) {
         strands.add(strand);
     }
 

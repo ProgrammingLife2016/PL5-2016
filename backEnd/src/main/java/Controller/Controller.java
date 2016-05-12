@@ -18,11 +18,11 @@ import phylogenetictree.PhylogeneticTree;
  */
 
 /**
- * Datacontainer that stores the edges and nodes of a particular genome.
+ * Datacontainer that stores the edges and Strands of a particular genome.
  */
 public class Controller {
 
-    private HashMap<Integer, Strand> nodes;
+    private HashMap<Integer, Strand> strands;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
     private double dataWidth;
@@ -39,7 +39,7 @@ public class Controller {
      * Constructor.
      */
     public Controller() {
-        nodes = new HashMap<>();
+        strands = new HashMap<>();
         edges = new HashMap<>();
         genomes = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
@@ -52,13 +52,13 @@ public class Controller {
      * @param strand The added strand.
      */
     public void addStrand(Strand strand) {
-        nodes.put(strand.getId(), strand);
+        strands.put(strand.getId(), strand);
 
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome(genomeID));
             }
-            genomes.get(genomeID).addNode(strand);
+            genomes.get(genomeID).addStrand(strand);
         }
     }
 
@@ -72,12 +72,12 @@ public class Controller {
     }
 
     /**
-     * Get all the node in the data.
+     * Get all the Strand in the data.
      *
-     * @return Nodes.
+     * @return Strands.
      */
-    public HashMap<Integer, Strand> getNodes() {
-        return nodes;
+    public HashMap<Integer, Strand> getStrands() {
+        return strands;
     }
 
     /**
@@ -90,7 +90,7 @@ public class Controller {
     }
 
     /**
-     * Compute and order all the nodes according to their x and y coordinate.
+     * Compute and order all the Strands according to their x and y coordinate.
      *
      * @return The ordered set.
      */
@@ -108,7 +108,7 @@ public class Controller {
             for (int i = 1; i < currentGenomeStrands.size(); i++) {
                 Strand currentStrand = currentGenomeStrands.get(i);
                 currentGenomeStrands.get(i).updatexCoordinate(i); // update the
-                // nodes
+                // Strands
                 // x-coordinate
 
                 Edge currentEdge = edges.get(prevStrand.getId() + "|" + currentStrand.getId());
@@ -117,15 +117,15 @@ public class Controller {
             }
         }
 
-        HashMap<Integer, HashSet<Strand>> nodesByxCoordinate = new HashMap<>();
-        for (HashMap.Entry<Integer, Strand> entry : nodes.entrySet()) {
-            if (!nodesByxCoordinate.containsKey((int) entry.getValue().getxCoordinate())) {
-                nodesByxCoordinate.put((int) entry.getValue().getxCoordinate(), new HashSet<>());
+        HashMap<Integer, HashSet<Strand>> StrandsByxCoordinate = new HashMap<>();
+        for (HashMap.Entry<Integer, Strand> entry : strands.entrySet()) {
+            if (!StrandsByxCoordinate.containsKey((int) entry.getValue().getxCoordinate())) {
+                StrandsByxCoordinate.put((int) entry.getValue().getxCoordinate(), new HashSet<>());
             }
-            nodesByxCoordinate.get((int) entry.getValue().getxCoordinate()).add(entry.getValue());
+            StrandsByxCoordinate.get((int) entry.getValue().getxCoordinate()).add(entry.getValue());
         }
 
-        for (HashMap.Entry<Integer, HashSet<Strand>> c : nodesByxCoordinate.entrySet()) {
+        for (HashMap.Entry<Integer, HashSet<Strand>> c : StrandsByxCoordinate.entrySet()) {
             int y = 0;
             for (Strand strand : c.getValue()) {
                 strand.setyCoordinate(y);
@@ -138,7 +138,7 @@ public class Controller {
         dataWidth = maxWidth;
         dataHeight = maxHeight;
 
-        return nodesByxCoordinate;
+        return StrandsByxCoordinate;
     }
 
     /**
@@ -178,22 +178,22 @@ public class Controller {
     }
 
     /**
-     * Get the nodes in a certain area, on a certain zoomlevel based on that area.
+     * Get the Strands in a certain area, on a certain zoomlevel based on that area.
      *
      * @param xleft  The leftmost coordinate.
      * @param ytop   The upper coordinate.
      * @param xright The rightmost coordinate.
      * @param ybtm   The lower coordinate.
-     * @return A list of nodes that fall into this zoomlevel and area.
+     * @return A list of Strands that fall into this zoomlevel and area.
      */
-    public CopyOnWriteArrayList<Strand> getNodes(double xleft,
+    public CopyOnWriteArrayList<Strand> getStrands(double xleft,
                                                  double ytop,
                                                  double xright,
                                                  double ybtm) {
 
         CopyOnWriteArrayList<Strand> res = new CopyOnWriteArrayList<Strand>();
         ArrayList<Strand> correctStrands = new ArrayList<>();
-        for (Strand n : nodes.values()) {
+        for (Strand n : strands.values()) {
             if (n.getxCoordinate() < xright
                     && n.getxCoordinate() > xleft
                     && n.getyCoordinate() > ytop

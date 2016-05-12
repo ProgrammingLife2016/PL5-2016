@@ -44,7 +44,7 @@ public class Parser {
 				String temp = splittedLine[0];
 				if (temp.equals("S")) {
 					Strand strand = createNode(splittedLine);
-					result.addNode(strand);
+					result.addStrand(strand);
 				} else if (temp.equals("L")) {
 					result.addEdge(createEdge(splittedLine));
 				}

@@ -21,7 +21,7 @@ public class RestApi {
 	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
 			@DefaultValue("0") @QueryParam("ytop") double ytop, @DefaultValue("100") @QueryParam("xright") double xright,
 			@DefaultValue("100") @QueryParam("ybtm") double ybtm) {
-		NodeListObject r = new NodeListObject(Controller.DC.getNodes(xleft, ytop, xright, ybtm));
+		NodeListObject r = new NodeListObject(Controller.DC.getStrands(xleft, ytop, xright, ybtm));
 		return r;
 	}
 

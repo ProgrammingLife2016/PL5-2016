@@ -27,18 +27,18 @@ public class ControllerTest {
     	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
     	edge = new Edge(1, 2);
     	
-    	data.addNode(strand1);
-    	data.addNode(strand2);
+    	data.addStrand(strand1);
+    	data.addStrand(strand2);
     	data.addEdge(edge);
     }
     
     /**
-     * Tests adding a node.
+     * Tests adding a Strand.
      */
     @Test
-    public void testAddNode() {
-    	assertEquals(data.getNodes().get(strand1.getId()), strand1);
-    	assertEquals(data.getNodes().get(strand2.getId()), strand2);
+    public void testAddStrand() {
+    	assertEquals(data.getStrands().get(strand1.getId()), strand1);
+    	assertEquals(data.getStrands().get(strand2.getId()), strand2);
     }
     
     /**
@@ -50,7 +50,7 @@ public class ControllerTest {
     }
     
     /**
-     * Tests giving the nodes coordinates.
+     * Tests giving the Strands coordinates.
      */
     @Test
     public void test() {

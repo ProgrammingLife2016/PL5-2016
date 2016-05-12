@@ -91,13 +91,5 @@ public class TreeParserTest {
         assertEquals(tree.getNode(3).getGenomes(), testList);
     }
     
-    /**
-     * Test empty node.
-     */
-    @Test
-    public void testEmptyNode() {
-    	PhylogeneticNode node = new PhylogeneticNode();
-    	assertEquals(node.getNameLabel(), "");
-    	assertEquals(node.getId(), 0);
-    }
+
 }

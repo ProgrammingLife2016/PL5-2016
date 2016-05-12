@@ -33,7 +33,7 @@ public class GenomesTest {
         ArrayList<Strand> res = new ArrayList<Strand>();
         assertEquals(genome.getStrands(), res);
         res.add(strand);
-        genome.addNode(strand);
+        genome.addStrand(strand);
         assertEquals(genome.getStrands(), res);
     }
 }
