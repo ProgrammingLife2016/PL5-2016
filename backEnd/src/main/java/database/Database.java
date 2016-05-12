@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import genome.DataContainer;
+import controller.Controller;
 import genome.Edge;
 import genome.Strand;
 
@@ -22,7 +22,7 @@ public class Database {
   private Connection connection;
   private Statement statement;
   private String name;
-  private DataContainer dataContainer;
+  private Controller controller;
 
   private static String username = "postgres";
   private static String password = "TagC";
@@ -32,9 +32,9 @@ public class Database {
 	 * @param databaseName Name of the database.
 	 * @param data Input for the database.
 	 */
-	public Database(String databaseName, DataContainer data) {
+	public Database(String databaseName, controller.Controller data) {
 		name = databaseName.toLowerCase();
-		dataContainer = data;
+		controller = data;
 		createDatabaseConnection(databaseName);
 	}
 	
@@ -62,8 +62,8 @@ public class Database {
 				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"
 						+ databaseName, username, password);
 				createTables();
-				insertNodes(dataContainer.getNodes().values());
-				insertEdges(dataContainer.getEdges().values());
+				insertNodes(controller.getNodes().values());
+				insertEdges(controller.getEdges().values());
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			} 

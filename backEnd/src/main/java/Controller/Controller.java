@@ -1,5 +1,8 @@
-package genome;
+package controller;
 
+import genome.Edge;
+import genome.Genome;
+import genome.Strand;
 import parser.Parser;
 
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ import phylogenetictree.PhylogeneticTree;
 /**
  * Datacontainer that stores the edges and nodes of a particular genome.
  */
-public class DataContainer {
+public class Controller {
 
     private HashMap<Integer, Strand> nodes;
     private HashMap<String, Edge> edges;
@@ -30,12 +33,12 @@ public class DataContainer {
     /**
      * Constructer for the datacontainer, starts with empty hashmaps.
      */
-    public static final DataContainer DC = Parser.parse("data/TB10.gfa");
+    public static final controller.Controller DC = Parser.parse("data/TB10.gfa");
 
     /**
      * Constructor.
      */
-    public DataContainer() {
+    public Controller() {
         nodes = new HashMap<>();
         edges = new HashMap<>();
         genomes = new HashMap<>();

@@ -1,4 +1,5 @@
 package genome;
+import controller.Controller;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,19 +9,19 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Matthijs on 24-4-2016.
  */
-public class DataContainerTest {
+public class ControllerTest {
 
-	private DataContainer data;
+	private Controller data;
 	private Strand strand1;
 	private Strand strand2;
 	private Edge edge;
 	
 	/**
-	 * Setting up the DataContainer.
+	 * Setting up the Controller.
 	 */
     @Before
     public void setUp() {
-    	data = new DataContainer();
+    	data = new controller.Controller();
     	String[] genomes = {"ref1", "ref2"};
     	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
     	strand2 = new Strand(2, "TG", genomes, "ref1", 3);

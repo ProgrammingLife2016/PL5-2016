@@ -28,23 +28,31 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     /**
      * Initialize this node from tree node, recursively.
      *
-     * @param id The id of this node, root being 0. Incrementing breath first.
+     * @param parent The parent of this node, root having null.
      */
-    public AbstractTreeNode(int id, T parent) {
+    public AbstractTreeNode(T parent) {
 
         children = new ArrayList<>();
-        this.id = id;
         this.parent = parent;
+        this.id = generateId(parent);
 
 
     }
 
     /**
-     * Add the children to this node. Add variables that are needed by the subclass. (Adapter).
-     *
-     * @param node The treeNode that contains the children of this node.
+     * Generates the id of this node breath first based on the id of the parent node, root being 0.
+     * @param parent The parent of this node.
+     * @return The generated id, root being 0.
      */
-    public abstract void adaptChild(TreeNode node);
+    public int generateId(T parent) {
+        if (parent == null) {
+            return 0;
+        }
+        int res = parent.getChildren().indexOf(this);
+        return res+parent.getId()*2+1;
+
+
+    }
 
 
     /**

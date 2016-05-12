@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import genome.DataContainer;
+import controller.Controller;
 
 /**
  *
@@ -18,9 +18,9 @@ public class ParserTest {
 	 */
 	@Test
 	public void test() {
-		DataContainer dataContainer = Parser.parse("data/TB10.gfa");
-		assertEquals(dataContainer.getNodes().get(1).getId(), 1);
-		assertEquals(dataContainer.getEdges().get("1|2").getStart(), 1);
-		assertEquals(dataContainer.getEdges().get("1|2").getEnd(), 2);
+		controller.Controller controller = Parser.parse("data/TB10.gfa");
+		assertEquals(controller.getNodes().get(1).getId(), 1);
+		assertEquals(controller.getEdges().get("1|2").getStart(), 1);
+		assertEquals(controller.getEdges().get("1|2").getEnd(), 2);
 	}
 }

@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-import genome.DataContainer;
+import controller.Controller;
 import genome.Edge;
 import genome.Strand;
 
@@ -25,14 +25,14 @@ public class Parser {
     }
 	
 	/**
-	 * Reads the file as a graph in to an DataContainer.
+	 * Reads the file as a graph in to an Controller.
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-	public static DataContainer parse(String file) {
+	public static controller.Controller parse(String file) {
 		BufferedReader reader;
 		String line;
-		DataContainer result = new DataContainer();
+		controller.Controller result = new controller.Controller();
 		try {
 			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
 			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
