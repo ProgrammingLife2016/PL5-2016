@@ -34,6 +34,7 @@ public class RestApi {
 	 *            the bottom bound of the bounding box
 	 * @return the node list object
 	 */	
+	@GET
 	@Path("/getnodes")
 	@Produces("application/json")
 	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
