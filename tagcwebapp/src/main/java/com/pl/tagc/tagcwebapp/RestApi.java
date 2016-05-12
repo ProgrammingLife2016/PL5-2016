@@ -10,48 +10,62 @@ import javax.ws.rs.QueryParam;
 
 import genome.DataContainer;
 
-//The Java class will be hosted at the URI path "/api"
+/**
+ * The Class RestApi.
+ * The Java class will be hosted at the URI path "/api". The annotation @GET in the class means 
+ * the Java method will process HTTP GET request. The annotation @Produces("application/json") 
+ * means the method will produce content identified by the MIME Media type "application/json".
+ * @author Kasper Grabarz
+ */
 @Path("/api")
 public class RestApi {
 
-	// The Java method will process HTTP GET requests
-	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "application/json"
+	/**
+	 * Requests nodes that have their coordinates within the bounding box defined by the 
+	 * parameters.
+	 *
+	 * @param xleft
+	 *            the left bound of the bounding box
+	 * @param ytop
+	 *            the top bound of the bounding box
+	 * @param xright
+	 *            the right bound of the bounding box
+	 * @param ybtm
+	 *            the bottom bound of the bounding box
+	 * @return the node list object
+	 */	
 	@Path("/getnodes")
 	@Produces("application/json")
 	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
-			@DefaultValue("0") @QueryParam("ytop") double ytop, @DefaultValue("100") @QueryParam("xright") double xright,
+			@DefaultValue("0") @QueryParam("ytop") double ytop, 
+			@DefaultValue("100") @QueryParam("xright") double xright,
 			@DefaultValue("100") @QueryParam("ybtm") double ybtm) {
 		NodeListObject r = new NodeListObject(DataContainer.DC.getNodes(xleft, ytop, xright, ybtm));
 		return r;
 	}
 
-	// The Java method will process HTTP GET requests
+	/**
+	 * Request dimensions.
+	 *
+	 * @return the dimensions object
+	 */
 	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "application/json"
 	@Path("/getdimensions")
 	@Produces("application/json")
 	public DimensionsObject requestDimensions() {
-		return new DimensionsObject(DataContainer.DC.getDataWidth(), DataContainer.DC.getDataHeight());
+		double dataWidth = DataContainer.DC.getDataWidth();
+		double dataHeight = DataContainer.DC.getDataHeight();
+		return new DimensionsObject(dataWidth, dataHeight);
 	}
 
-// 	This method is outdated. Not sure if this will be needed anymore. 
-//	// The Java method will process HTTP GET requests
-//	@GET
-//	// The Java method will produce content identified by the MIME Media
-//	// type "application/json"
-//	@Path("/getphylogenetictree")
-//	@Produces("application/json")
-//	public PhylogeneticTreeObject requestPhylogeneticTree() {
-//		return new PhylogeneticTreeObject(DataContainer.DC.getPhylogeneticTree());
-//	}
-
-	// The Java method will process HTTP GET requests
+	/**
+	 * Request ribbon graph.
+	 *
+	 * @param names
+	 *            the names 
+	 * @return the node list object
+	 */
 	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "application/json"
 	@Path("/getribbongraph")
 	@Produces("application/json")
 	public NodeListObject requestRibbonGraph(@QueryParam("names") List<String> names) {
@@ -64,11 +78,13 @@ public class RestApi {
 		// NodeListObject
 		return new NodeListObject(DataContainer.DC.getNodes(0, 0, 1000, 1000));
 	}
-	
-	// The Java method will process HTTP GET requests
+
+	/**
+	 * Gets the newick string.
+	 *
+	 * @return the newick string
+	 */
 	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "application/json"
 	@Path("/getnewickstring")
 	@Produces("application/json")
 	public NewickStringObject getNewickString() {
