@@ -15,15 +15,15 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     /**
      * The child nodes of this node.
      */
-    protected ArrayList<T> children;
+    private ArrayList<T> children;
     /**
      * This nodes' parent.
      */
-    protected T parent;
+    private T parent;
     /**
      * The Id of the node.
      */
-    protected int id;
+    private int id;
 
 
     /**
@@ -65,14 +65,14 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     public T getNode(final int id) {
 
         if (this.getId() == id) {
-            return (T)this;
+            return (T) this;
         } else if (this.getChildren().size() != 0) {
             for (T obj : this.getChildren()) {
                 T child =  obj;
                 if (child.getId() == id) {
                     return child;
                 }
-                T node = (T)child.getNode(id);
+                T node = (T) child.getNode(id);
                 if (node != null) {
                     return node;
                 }

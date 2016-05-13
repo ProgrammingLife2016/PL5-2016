@@ -67,10 +67,10 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      */
     private void checkLeaf() {
         if (!nameLabel.equals("")) {
-            nameLabel=nameLabel+".fasta";
+            nameLabel = nameLabel + ".fasta";
             genomes.add(nameLabel);
-            if (this.parent != null) {
-                parent.addGenome(nameLabel);
+            if (this.getParent() != null) {
+                getParent().addGenome(nameLabel);
             }
 
         }
@@ -91,7 +91,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
                 if (child.getNameLabel().equals(name)) {
                     return child;
                 }
-                PhylogeneticNode node=child.getNodeWithLabel(name);
+                PhylogeneticNode node = child.getNodeWithLabel(name);
                 if (node != null) {
                     return node;
                 }

@@ -8,7 +8,7 @@ import phylogenetictree.PhylogeneticNode;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Class testing datanode.
@@ -16,9 +16,13 @@ import static org.junit.Assert.*;
  */
 public class DataNodeTest {
 
-    DataNode node; //the testnode.
-    DataNode child; //test child.
+    private DataNode node; //the testnode.
+    private DataNode child; //test child.
 
+    /**
+     * Setting up the test class.
+     * @throws Exception if fail.
+     */
     @Before
     public void setUp() throws Exception {
         node = new DataNode(null, 0);
@@ -31,8 +35,6 @@ public class DataNodeTest {
         child.setGenomes(childGenomes);
         node.addChild(child);
         node.setGenomes(parentGenomes);
-
-
 
     }
 
@@ -54,21 +56,19 @@ public class DataNodeTest {
         assertEquals(testNode.getChildWithGenome("1").getId(), child.getId());
     }
 
+    /**
+     * Test getting the child with specific genome.
+     * @throws Exception if fail.
+     */
     @Test
     public void testGetChildWithGenome() throws Exception {
         assertEquals(child, node.getChildWithGenome("1"));
     }
 
-    @Test
-    public void testGetStrands() throws Exception {
-        String[] strandGenomes = {"1"};
-        Strand strand = new Strand(1, "tagc", strandGenomes, "1", 0);
-        ArrayList<Strand> strands = new ArrayList<>();
-        node.setStrands(strands);
-
-        assertEquals(node.getStrands(), strands);
-    }
-
+    /**
+     * Test setting the strands.
+     * @throws Exception if fail.
+     */
     @Test
     public void testSetStrands() throws Exception {
         String[] strandGenomes = {"1"};
@@ -81,20 +81,10 @@ public class DataNodeTest {
         assertEquals(node.getStrands().size(), 1);
     }
 
-    @Test
-    public void testGetGenomes() throws Exception {
-        ArrayList<String> childGenomes = new ArrayList<>();
-        childGenomes.add("1");
-
-        assertEquals(child.getGenomes(), childGenomes);
-    }
-
-    @Test
-    public void testGetLevel() throws Exception {
-        assertEquals(child.getLevel(), 1);
-        assertEquals(node.getLevel(), 0);
-    }
-
+    /**
+     * Test setting the level.
+     * @throws Exception if fail.
+     */
     @Test
     public void testSetLevel() throws Exception {
         assertEquals(node.getLevel(), 0);
@@ -102,6 +92,10 @@ public class DataNodeTest {
         assertEquals(node.getLevel(), 5);
     }
 
+    /**
+     * Test setting the genomes.
+     * @throws Exception if fail.
+     */
     @Test
     public void testSetGenomes() throws Exception {
         ArrayList<String> childGenomes = new ArrayList<>();
@@ -110,6 +104,6 @@ public class DataNodeTest {
         childGenomes.add("1");
         assertEquals(child.getGenomes(), childGenomes);
         child.setGenomes(testGenomes);
-        assertEquals(child.getGenomes(),testGenomes);
+        assertEquals(child.getGenomes(), testGenomes);
     }
 }

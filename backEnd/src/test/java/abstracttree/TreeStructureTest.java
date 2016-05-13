@@ -61,7 +61,7 @@ public class TreeStructureTest {
      */
     @Test
     public void testGetNode() throws Exception {
-        assertEquals(tree.getRoot().getNode(4),c);
+        assertEquals(tree.getRoot().getNode(4), c);
 
     }
 

@@ -10,9 +10,6 @@ import abstracttree.Edge;
  * data container class that stores the start and end of an edge, as well as its weight.
  */
 public class StrandEdge extends Edge {
-    private int startId;
-    private int endId;
-    private int weight;
 
     /**
      * Constructor to create an edge.

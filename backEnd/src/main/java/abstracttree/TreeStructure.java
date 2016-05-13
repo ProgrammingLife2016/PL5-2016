@@ -11,7 +11,7 @@ public class TreeStructure<T extends AbstractTreeNode> {
     /**
      * The root Strand of the TreeStructure.
      */
-    protected T root;
+    private T root;
 
     /**
      * Default contstructor.

@@ -38,11 +38,18 @@ public class Genome {
         return strands;
     }
 
-
+    /**
+     * Get the id.
+     * @return Id.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Set the id.
+     * @param id Id.
+     */
     public void setId(String id) {
         this.id = id;
     }

@@ -3,7 +3,7 @@ package abstracttree;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Class to test Edge.
@@ -16,7 +16,7 @@ public class EdgeTest {
     /**
      * Set up the Edge.
      *
-     * @throws Exception
+     * @throws Exception if fail.
      */
     @Before
     public void setUp() throws Exception {

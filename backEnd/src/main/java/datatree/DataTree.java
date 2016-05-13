@@ -16,10 +16,8 @@ public class DataTree extends TreeStructure<DataNode> {
 
     /**
      * Default constructor.
-     *
-     * @param root
+     * @param root The root.
      */
-
     public DataTree(DataNode root) {
         super(root);
     }
@@ -36,14 +34,14 @@ public class DataTree extends TreeStructure<DataNode> {
 
         //add all strands to the leafs.
         for (Genome genome : genomes) {
-            DataNode leaf = root.getGenomeLeaf(genome.getId());
+            DataNode leaf = getRoot().getGenomeLeaf(genome.getId());
             if (leaf != null) {
                 leaf.setStrands(genome.getStrands());
             }
 
         }
 
-        addStrands(root);
+        addStrands(getRoot());
 
 
     }
@@ -53,42 +51,37 @@ public class DataTree extends TreeStructure<DataNode> {
      *
      * @param currentNode the tree root.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     public void addStrands(DataNode currentNode) {
         if (currentNode.getChildren().size() > 0) {
             DataNode child1 = currentNode.getChildren().get(0);
             DataNode child2 = currentNode.getChildren().get(1);
-
             if (child1.getStrands().size() == 0) {
                 addStrands(child1);
             }
             if (child2.getStrands().size() == 0) {
                 addStrands(child2);
             }
-
-            if(child1.getStrands().size()==0){
-                if (child2.getStrands().size()!=0){
+            if (child1.getStrands().size() == 0) {
+                if (child2.getStrands().size() != 0) {
                     currentNode.setStrands((ArrayList<Strand>) child2.getStrands().clone());
                     child2.getStrands().removeAll(child2.getStrands());
                 }
             }
-            else if (child2.getStrands().size()==0){
-                if(child1.getStrands().size()!=0){
+            else if (child2.getStrands().size() == 0) {
+                if (child1.getStrands().size() != 0) {
                     currentNode.setStrands((ArrayList<Strand>) child1.getStrands().clone());
                     child1.getStrands().removeAll(child1.getStrands());
                 }
             }
-            else if (child1.getStrands().size()!=0&&child2.getStrands().size()!=0) {
+            else if (child1.getStrands().size() != 0 && child2.getStrands().size() != 0) {
                 ArrayList<Strand> parentStrands = (ArrayList<Strand>) child1.getStrands().clone();
                 parentStrands.retainAll(child2.getStrands());
                 currentNode.setStrands(parentStrands);
-
                 child1.getStrands().removeAll(parentStrands);
                 child2.getStrands().removeAll(parentStrands);
             }
-
-
         }
-
     }
 
     /**
@@ -100,7 +93,8 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param level   The maximum tree level to zoom to.
      * @return A list of datanodes that pertain to the parameters.
      */
-    public ArrayList<DataNode> getDataNodes(int xMin, int xMax, ArrayList<String> genomes, int level) {
+    public ArrayList<DataNode> getDataNodes(int xMin, int xMax, 
+    		ArrayList<String> genomes, int level) {
         return filterNodes(xMin, xMax, getDataNodesForGenomes(genomes, level), genomes);
 
     }
@@ -114,7 +108,8 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param genomes The genomes to retain.
      * @return A filtered list of nodes.
      */
-    public ArrayList<DataNode> filterNodes(int xMin, int xMax, Set<DataNode> nodes, ArrayList<String> genomes) {
+    public ArrayList<DataNode> filterNodes(int xMin, int xMax, Set<DataNode> nodes, 
+    		ArrayList<String> genomes) {
         ArrayList<DataNode> result = new ArrayList<>();
         result.addAll(nodes);
         result = (ArrayList<DataNode>) result.clone();
@@ -158,7 +153,7 @@ public class DataTree extends TreeStructure<DataNode> {
      */
     public Set<DataNode> getDataNodesForGenome(String genomeId, int level) {
         Set<DataNode> result = new HashSet<>();
-        DataNode currentNode = root;
+        DataNode currentNode = getRoot();
         while (currentNode.getLevel() <= level) {
             result.add(currentNode);
             currentNode = currentNode.getChildWithGenome(genomeId);

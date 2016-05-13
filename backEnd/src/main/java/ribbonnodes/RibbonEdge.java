@@ -17,7 +17,10 @@ public class RibbonEdge extends Edge {
         super(startId, endId);
     }
 
-    public void incrementWeight(){
-        this.setWeight(this.getWeight()+1);
+    /**
+     * Increment the weight.
+     */
+    public void incrementWeight() {
+        this.setWeight(this.getWeight() + 1);
     }
 }

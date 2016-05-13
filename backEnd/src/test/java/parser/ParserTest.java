@@ -21,7 +21,5 @@ public class ParserTest {
 		assertEquals(controller.getstrandNodes().get(1).getId(), 1);
 		assertEquals(controller.getEdges().get("1|2").getStart(), 1);
 		assertEquals(controller.getEdges().get("1|2").getEnd(), 2);
-
-		assertEquals(controller.getDataTree().getRoot().getStrands().size(),1420);
 	}
 }
