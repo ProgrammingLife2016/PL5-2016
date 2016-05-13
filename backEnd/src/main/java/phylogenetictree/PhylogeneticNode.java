@@ -61,11 +61,39 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      */
     private void checkLeaf() {
         if (!nameLabel.equals("")) {
+            nameLabel=nameLabel+".fasta";
+            genomes.add(nameLabel);
             if (this.parent != null) {
                 parent.addGenome(nameLabel);
             }
         }
     }
+
+    /**
+     * Get node with nameLabel name through depth first search.
+     *
+     * @param name The name of the node.
+     * @return The node, null if it is not contained in this graph.
+     */
+    public PhylogeneticNode getNodeWithLabel(final String name) {
+
+        if (this.getNameLabel().equals(name)) {
+            return this;
+        } else if (this.getChildren().size() != 0) {
+            for (PhylogeneticNode child : this.getChildren()) {
+                if (child.getNameLabel().equals(name)) {
+                    return child;
+                }
+                PhylogeneticNode node=child.getNodeWithLabel(name);
+                if (node != null) {
+                    return node;
+                }
+            }
+        }
+
+        return null;
+    }
+
 
 
     /**

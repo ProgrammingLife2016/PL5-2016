@@ -8,7 +8,6 @@ import genome.Strand;
 import parser.Parser;
 
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
@@ -20,7 +19,7 @@ import ribbonnodes.RibbonNode;
  */
 
 /**
- * Datacontainer that stores the edges and strandNodes of a particular genome.
+ * Controller returns the ribbon nodes based on a UI request.
  */
 public class Controller {
 
@@ -28,14 +27,16 @@ public class Controller {
     private HashMap<Integer, Strand> strandNodes;
     private HashMap<String, StrandEdge> strandEdges;
     private HashMap<String, Genome> genomes;
-    private ArrayList<String> activeGenomes;
-    private double dataWidth;
-    private PhylogeneticTree phylogeneticTree;
-    private DataTree dataTree;
+
+
+    private ArrayList<String> activeGenomes;//The current genomes selected in the GUI.
+    private double dataWidth; // The with of the Data.
+    private PhylogeneticTree phylogeneticTree; //The phylogenetic tree parsed from the dataFile.
+    private DataTree dataTree; //The dataTree containing the Strands.
 
 
     /**
-     * Constructer for the datacontainer, starts with empty hashmaps.
+     * Datacontainer Singleton, starts with empty hashmaps.
      */
     public static final controller.Controller DC = Parser.parse("data/TB10.gfa");
 
@@ -45,13 +46,21 @@ public class Controller {
     public Controller() {
         strandNodes = new HashMap<>();
         strandEdges = new HashMap<>();
-        activeGenomes= new ArrayList<>();
+        activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), null, 0));
     }
 
+    /**
+     * Get the ribbon nodes with edges for a certain view in the GUI.
+     *
+     * @param minX      the minx of the view.
+     * @param maxX      the maxx of the view.
+     * @param zoomLevel the zoomlevel of the view.
+     * @return The list of ribbonNodes.
+     */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<DataNode> filteredNodes = dataTree.getDataNodes(minX, maxX, activeGenomes, zoomLevel);
@@ -64,11 +73,18 @@ public class Controller {
             }
         }
 
-        addRibbonEdges(result,activeGenomes);
+        addRibbonEdges(result, activeGenomes);
 
         return result;
 
     }
+
+    /**
+     * Calculate and add the edges between the ribbon nodes.
+     *
+     * @param nodes   The ribbonnodes to connect.
+     * @param genomes The active Genomes.
+     */
 
     public void addRibbonEdges(ArrayList<RibbonNode> nodes, ArrayList<String> genomes) {
         nodes.sort(new Comparator<RibbonNode>() {
@@ -81,38 +97,52 @@ public class Controller {
                 return 0;
             }
         });
-//TODO make readable
+
         for (String genome : genomes) {
             for (int i = 0; i < nodes.size(); i++) {
                 RibbonNode startNode = nodes.get(i);
 
                 if (startNode.getGenomes().contains(genome)) {
-                    for (int p = i; p < nodes.size(); p++) {
-                        RibbonNode endNode = nodes.get(p);
-                        if (endNode.getGenomes().contains(genome)) {
-                            if (startNode.getEdge(startNode.getId(), endNode.getId()) == null) {
-                                RibbonEdge edge = new RibbonEdge(startNode.getId(), endNode.getId());
-                                startNode.addEdge(edge);
-                                endNode.addEdge(edge);
-
-                            }
-                            else {
-                                startNode.getEdge(startNode.getId(),endNode.getId()).incrementWeight();
-                            }
-
-                        }
-                        i=p;
+                    i++;
+                    RibbonNode endNode = nodes.get(i);
+                    while (!checkEdge(startNode, endNode, genome) && i < nodes.size()) {
+                        i++;
+                        endNode = nodes.get(i);
                     }
-
-
 
                 }
 
 
             }
+
+
         }
+    }
 
 
+    /**
+     * Check if an edge should exist between two ribbon nodes, and add it if it should.
+     *
+     * @param startNode The start node.
+     * @param endNode   The end node.
+     * @param genomeID  The Genome of this path.
+     * @return True if edge was found.
+     */
+
+    public boolean checkEdge(RibbonNode startNode, RibbonNode endNode, String genomeID) {
+        if (endNode.getGenomes().contains(genomeID)) {
+            if (startNode.getEdge(startNode.getId(), endNode.getId()) == null) {
+                RibbonEdge edge = new RibbonEdge(startNode.getId(), endNode.getId());
+                startNode.addEdge(edge);
+                endNode.addEdge(edge);
+
+            } else {
+                startNode.getEdge(startNode.getId(), endNode.getId()).incrementWeight();
+            }
+            return true;
+
+        }
+        return false;
     }
 
     /**
@@ -169,7 +199,6 @@ public class Controller {
     }
 
 
-
     /**
      * Set the data width.
      *
@@ -178,7 +207,6 @@ public class Controller {
     public void setDataWidth(double dataWidth) {
         this.dataWidth = dataWidth;
     }
-
 
 
     /**
@@ -199,26 +227,56 @@ public class Controller {
         this.phylogeneticTree = phylogeneticTree;
     }
 
+    /**
+     * Getter for the dataTree;
+     *
+     * @return the datatree;
+     */
     public DataTree getDataTree() {
         return dataTree;
     }
 
+    /**
+     * Setter for the datatree;
+     *
+     * @param dataTree the datatree.
+     */
     public void setDataTree(DataTree dataTree) {
         this.dataTree = dataTree;
     }
 
+    /**
+     * Getter for the genomes.
+     *
+     * @return the genomes.
+     */
     public HashMap<String, Genome> getGenomes() {
         return genomes;
     }
 
+    /**
+     * Setter for the genomes.
+     *
+     * @param genomes The genomes.
+     */
     public void setGenomes(HashMap<String, Genome> genomes) {
         this.genomes = genomes;
     }
 
+    /**
+     * The active genomes in the Gui.
+     *
+     * @return the active genomeIDS.
+     */
     public ArrayList<String> getActiveGenomes() {
         return activeGenomes;
     }
 
+    /**
+     * Setter for the activeGenomes.
+     *
+     * @param activeGenomes The genomeIDS.
+     */
     public void setActiveGenomes(ArrayList<String> activeGenomes) {
         this.activeGenomes = activeGenomes;
     }

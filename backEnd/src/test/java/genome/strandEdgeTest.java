@@ -40,7 +40,7 @@ public class strandEdgeTest {
      */
     @Test
     public void testWeight() {
-    	assertEquals(StrandEdge.getWeight(), 0);
+    	assertEquals(StrandEdge.getWeight(), 1);
     	StrandEdge.setWeight(10);
     	assertEquals(StrandEdge.getWeight(), 10);
     }
