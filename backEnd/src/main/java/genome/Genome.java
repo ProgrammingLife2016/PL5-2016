@@ -3,9 +3,7 @@ package genome;
 import java.util.ArrayList;
 
 /**
- * 
  * @author Jeffrey Helgers
- *
  */
 public class Genome {
 
@@ -17,12 +15,14 @@ public class Genome {
      * @param id The genome name.
      */
     public Genome(String id) {
+        this.id = id;
         strands = new ArrayList<>();
         this.id = id;
     }
 
     /**
      * Add a strand to the genome.
+     *
      * @param strand The added strand.
      */
     public void addStrand(Strand strand) {
@@ -31,17 +31,28 @@ public class Genome {
 
     /**
      * Get all the strands from the genome.
+     *
      * @return The strands the genome passes through.
      */
     public ArrayList<Strand> getStrands() {
         return strands;
     }
-    
+
     /**
-     * Get the genome id.
+     * Get the id.
      * @return Id.
      */
     public String getId() {
-    	return id;
+        return id;
     }
+
+    /**
+     * Set the id.
+     * @param id Id.
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
 }

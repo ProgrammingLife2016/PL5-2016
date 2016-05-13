@@ -49,36 +49,8 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         this.setRoot(new PhylogeneticNode(tree.getRoot(), null, 0., 0));
     }
 
-    /**
-     * Get node with nameLabel name through depth first search.
-     *
-     * @param name The name of the node.
-     * @return The node, null if it is not contained in this graph.
-     */
-    public PhylogeneticNode getNodeWithLabel(final String name) {
 
-        if (this.getRoot().getNameLabel().equals(name)) {
-            return getRoot();
-        } else if (getRoot().getChildren().size() != 0) {
-            for (PhylogeneticNode child : getRoot().getChildren()) {
-                if (child.getNameLabel().equals(name)) {
-                    return child;
-                }
-                PhylogeneticTree subTree = new PhylogeneticTree(child);
-                PhylogeneticNode node = subTree.getNodeWithLabel(name);
-                if (node != null) {
-                    return node;
-                }
-            }
-        }
 
-        return null;
-    }
-
-    @Override
-    public PhylogeneticNode getNode(int id) {
-        return (PhylogeneticNode) super.getNode(id);
-    }
 
 
 

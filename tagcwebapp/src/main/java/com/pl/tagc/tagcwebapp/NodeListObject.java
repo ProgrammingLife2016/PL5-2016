@@ -1,6 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
 import genome.Strand;
+import ribbonnodes.RibbonEdge;
+import ribbonnodes.RibbonNode;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -19,7 +21,7 @@ public class NodeListObject {
 	/** The id. */
 	@SuppressWarnings("unused")
 	private String id = "test";
-	private List<Strand> cList;
+	private List<RibbonNode> cList;
 
 	/**
 	 * Instantiates a new node list object.
@@ -27,12 +29,11 @@ public class NodeListObject {
 	public NodeListObject() {
 	}
 
-
-	public NodeListObject(CopyOnWriteArrayList<Strand> cList) {
+	public NodeListObject(CopyOnWriteArrayList<RibbonNode> cList) {
 		this.cList = cList;
 	}
 
-	public List<Strand> getcList() {
+	public List<RibbonNode> getcList() {
 		return cList;
 	};
 }

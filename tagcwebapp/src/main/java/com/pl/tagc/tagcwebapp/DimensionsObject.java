@@ -13,9 +13,7 @@ public class DimensionsObject {
 
 	/** The width. */
 	private double width;
-	
-	/** The height. */
-	private double height;
+
 
 	/**
 	 * Instantiates a new dimensions object.
@@ -27,30 +25,12 @@ public class DimensionsObject {
 	 * Instantiates a new dimensions object.
 	 *
 	 * @param width the width
-	 * @param height the height
 	 */
-	public DimensionsObject(double width, double height) {
+	public DimensionsObject(double width) {
 		this.setWidth(width);
-		this.setHeight(height);
 	}
 
-	/**
-	 * Gets the height.
-	 *
-	 * @return the height
-	 */
-	public double getHeight() {
-		return height;
-	}
 
-	/**
-	 * Sets the height.
-	 *
-	 * @param height the new height
-	 */
-	public void setHeight(double height) {
-		this.height = height;
-	}
 
 	/**
 	 * Gets the width.

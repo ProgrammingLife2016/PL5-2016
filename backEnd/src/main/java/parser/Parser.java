@@ -4,11 +4,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-import genome.Edge;
+import genome.StrandEdge;
+
 import genome.Strand;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * Created by Jeffrey on 24-4-2016.
@@ -55,19 +57,19 @@ public class Parser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		result.calculateCoordinates();
+		result.getDataTree().addStrands(new ArrayList<>(result.getGenomes().values()));
 		return result;
 	}
 
 	/**
-	 * Creates an Edge from input data.
+	 * Creates an StrandEdge from input data.
 	 * @param splittedLine A line that contains an edge read from the file.
-	 * @return An Edge.
+	 * @return An StrandEdge.
 	 */
-	private static Edge createEdge(String[] splittedLine) {
+	private static StrandEdge createEdge(String[] splittedLine) {
 		int startId = Integer.parseInt(splittedLine[1]);
 		int endId = Integer.parseInt(splittedLine[3]);
-		return new Edge(startId, endId);
+		return new StrandEdge(startId, endId);
 	}
 
 	/**
