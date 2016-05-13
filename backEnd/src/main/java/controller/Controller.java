@@ -8,6 +8,12 @@ import genome.Strand;
 import parser.Parser;
 
 import java.util.Comparator;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,6 +36,7 @@ public class Controller {
     private HashMap<String, StrandEdge> strandEdges;
     private HashMap<String, Genome> genomes;
 
+    private String newickString;
 
     private ArrayList<String> activeGenomes; //The current genomes selected in the GUI.
     private double dataWidth; // The with of the Data.
@@ -54,6 +61,8 @@ public class Controller {
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
+        newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");
+
     }
 
     /**
@@ -284,6 +293,40 @@ public class Controller {
     public void setActiveGenomes(ArrayList<String> activeGenomes) {
         this.activeGenomes = activeGenomes;
     }
+    
+    /**
+     * Get the newick string.
+     * @return String.
+     */
+    public String getNewickString() {
+		return newickString;
+	}
+    
 
+    /**
+     * Load rar file data.
+     * @param fileName The file.
+     * @return String.
+     */
+	public String loadRawFileData(String fileName) {
 
+		String rawFileData = "";
+
+		try {
+			BufferedReader reader;
+			InputStream in = PhylogeneticTree.class.getClassLoader().getResourceAsStream(fileName);
+			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
+			reader = new BufferedReader(r);
+			String line = reader.readLine();
+			while (line != null) {
+				rawFileData = rawFileData + line;
+				line = reader.readLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return rawFileData;
+	}
+    
 }

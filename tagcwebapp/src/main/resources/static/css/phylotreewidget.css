@@ -1,0 +1,23 @@
+#left-side-bar{ 
+	width: 30%;
+	height: 450px; 
+	float:left;
+	position: relative;
+ 
+}
+
+#compGenomesButton
+{
+margin: 5px;
+}
+
+#container{
+	margin-left: 30%;
+}
+
+#treeViewPort{	
+ position:absolute;
+ 	width: 100%;
+	height: 100%;
+	overflow: scroll;
+}
