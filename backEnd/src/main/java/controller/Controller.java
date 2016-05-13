@@ -5,6 +5,12 @@ import genome.Genome;
 import genome.Strand;
 import parser.Parser;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,13 +28,14 @@ import phylogenetictree.PhylogeneticTree;
  */
 public class Controller {
 
+
     private HashMap<Integer, Strand> strands;
     private HashMap<String, Edge> edges;
     private HashMap<String, Genome> genomes;
     private double dataWidth;
     private double dataHeight;
     private PhylogeneticTree phylogeneticTree;
-
+    private String newickString;
 
     /**
      * Constructer for the datacontainer, starts with empty hashmaps.
@@ -44,6 +51,7 @@ public class Controller {
         genomes = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
+        newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");
     }
 
     /**
@@ -246,4 +254,28 @@ public class Controller {
         return genomes;
     }
 
+	public String getNewickString() {
+		return newickString;
+	}
+
+	public String loadRawFileData(String fileName) {
+
+		String rawFileData = "";
+
+		try {
+			BufferedReader reader;
+			InputStream in = PhylogeneticTree.class.getClassLoader().getResourceAsStream(fileName);
+			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
+			reader = new BufferedReader(r);
+			String line = reader.readLine();
+			while (line != null) {
+				rawFileData = rawFileData + line;
+				line = reader.readLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return rawFileData;
+	}
 }

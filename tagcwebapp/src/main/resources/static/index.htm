@@ -1,35 +1,58 @@
 <html>
+
 <head>
 <title>TAGC - PL</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/phylotreewidget.css">
 <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 <link rel="stylesheet" type="text/css"
 	href="css/jquery-ui.structure.css">
 <link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.css">
+<link rel="stylesheet"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">	
+<link href="phylotree/phylotree.css" rel="stylesheet">
 
 <script src="js/jquery.js" type="application/javascript"></script>
 <script src="js/jquery-ui.min.js" type="application/javascript"></script>
+<script	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="phylotree/phylotree.js"></script>
+
+<script src="js/phylotreewidget.js" type="application/javascript"></script>
 <script src="js/main.js" type="application/javascript"></script>
 </head>
+
 <body>
 
 	<div id="header"></div>
 
 	<div id="splashscreen"></div>
-
-	<div id="container">
-
-		<button type="button" id="zoominbtn">Zoom in</button>
-		<button type="button" id="zoomoutbtn">Zoom out</button>
-
-		<div id="minimap" class="mainGenome genome">
-			<div class="slider"></div>
+	<div id="main_container">
+		<div id="left-side-bar">
+			<div>
+				<button id='compGenomesButton' type="button" class="btn btn-default"
+					data-dismiss="modal">Compare Genomes</button>
+			</div>
+			<div id="treeViewPort">
+				<div id='tree_container' class='tree-widget'
+					style="display: inline-block;"></div>
+			</div>
 		</div>
+		<div id="container">
 
-		<div id="zoomWindow" class="genome">
-			<canvas></canvas>
+			<button type="button" id="zoominbtn">Zoom in</button>
+			<button type="button" id="zoomoutbtn">Zoom out</button>
+
+			<div id="minimap" class="mainGenome genome">
+				<div class="slider"></div>
+			</div>
+
+			<div id="zoomWindow" class="genome">
+				<canvas></canvas>
+			</div>
 		</div>
 	</div>
-
 </body>
 </html>

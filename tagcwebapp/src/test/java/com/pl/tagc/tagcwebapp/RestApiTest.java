@@ -23,7 +23,7 @@ public class RestApiTest extends JerseyTest {
     }
 
     /**
-     * Test, that the resource response is in JSON format
+     * Test, that the resource response is in JSON format.
      */
     @Test
     public void testRestApiResource() {

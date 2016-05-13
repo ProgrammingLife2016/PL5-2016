@@ -14,31 +14,35 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.ServerConfiguration;
 
-/*
+/**
  * Instructions:
  * 
- * http://localhost:9998/app/index.htm 	
- * 		can be used to access the static file index.htm.
+ * http://localhost:9998/app/index.htm Can be used to access the static file
+ * index.htm.
  * 
- * http://localhost:9998/api/getnodes?xleft=10&xright=70&ytop=30&ybtm=80 
- * 		can be used to get a json list of nodes that are in the viewport defined by the four 
- * 		values: xleft xright ytop and ybtm.
- * http://localhost:9998/api/getdimensions 
- * 		can be used to get a the width and height of the genome graph data.  
- * http://localhost:9998/api/getphylogenetictree 
- * 		responds with a phylogenetic tree in JSON format 
- *  
- * */
+ * http://localhost:9998/api/<apicall> Can be used to make api calls to the
+ * server. For a list of api calls please see RestApi.java.
+ * 
+ */
 
+final class Main {
 
-public class Main {
+	private Main() {
+	}
 
+	/** The Constant WEB_ROOT. */
 	public static final String WEB_ROOT = "/static/";
+
+	/** The Constant APP_PATH. */
 	public static final String APP_PATH = "/app/";
+
+	/** The Constant PORT. */
 	public static final int PORT = 9998;
 
 	/**
-	 * Instantiates and configures a HttpServer
+	 * Instantiates and configures a HttpServer.
+	 *
+	 * @return the http server
 	 */
 	public static HttpServer startServer() {
 		final HttpServer server = new HttpServer();
@@ -49,34 +53,40 @@ public class Main {
 			}
 		}));
 
-		final NetworkListener listener = new NetworkListener("grizzly", "localhost", PORT);
-
-		server.addListener(listener);
+		server.addListener(new NetworkListener("grizzly", "localhost", PORT));
 
 		final ServerConfiguration config = server.getServerConfiguration();
 		// add handler for serving static content
-		config.addHttpHandler(new CLStaticHttpHandler(Main.class.getClassLoader(), WEB_ROOT), APP_PATH);
+		config.addHttpHandler(new CLStaticHttpHandler(Main.class.getClassLoader(), WEB_ROOT),
+				APP_PATH);
 
 		// add handler for serving JAX-RS resources
-		config.addHttpHandler(RuntimeDelegate.getInstance().createEndpoint(createResourceConfig(), GrizzlyHttpContainer.class),
-				"");
+		config.addHttpHandler(
+				RuntimeDelegate.getInstance().createEndpoint(createResourceConfig(),
+						GrizzlyHttpContainer.class), "");
 
 		try {
-			// Start the server.
 			server.start();
 		} catch (Exception ex) {
-			throw new ProcessingException("Exception thrown when trying to start grizzly server", ex);
+			throw new ProcessingException("Exception thrown when trying to start grizzly server",
+					ex);
 		}
 
 		return server;
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 */
 	public static void main(String[] args) {
 
 		try {
-			final HttpServer server = startServer();
-			System.out.println(String.format(
-					"Application started.\n" + "Access it at %s\n" + "Stop the application using CTRL+C", getAppUri()));
+			startServer();
+			System.out.println(String.format("Application started.%n" + "Access it at %s%n"
+					+ "Stop the application using CTRL+C", getAppUri()));
 
 			Thread.currentThread().join();
 		} catch (InterruptedException ex) {
