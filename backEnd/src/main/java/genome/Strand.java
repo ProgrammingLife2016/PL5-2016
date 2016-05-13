@@ -11,8 +11,6 @@ public class Strand {
 
     private int id; //node id
     private String sequence; //dna in node
-    private double xCoordinate;
-    private double yCoordinate;
     private String[] genomes; //genomes that contain this node
     private String referenceGenome; // the refrence genome of this node
     private int referenceCoordinate; //coordinate of this node in the refr genome
@@ -37,27 +35,11 @@ public class Strand {
         this.referenceGenome = referenceGenome;
         this.referenceCoordinate = referenceCoordinate;
 
-        xCoordinate = 0.;
-        yCoordinate = 0.;
+
 
         this.weight = genomes.length;
     }
 
-    /**
-     * Set the x coordinate.
-     * @param xCoordinate The x coordinate.
-     */
-    public void setxCoordinate(double xCoordinate) {
-        this.xCoordinate = xCoordinate;
-    }
-
-    /**
-     * Set the y coordinate.
-     * @param yCoordinate The y coordinate.
-     */
-    public void setyCoordinate(double yCoordinate) {
-        this.yCoordinate = yCoordinate;
-    }
 
     /**
      * Get the node id.
@@ -75,21 +57,7 @@ public class Strand {
         return sequence;
     }
 
-    /**
-     * Get the x coordinate.
-     * @return The x coordinate.
-     */
-    public double getxCoordinate() {
-        return xCoordinate;
-    }
 
-    /**
-     * Get the y coordinate.
-     * @return The y coordinate.
-     */
-    public double getyCoordinate() {
-        return yCoordinate;
-    }
 
     /**
      * Get the genomes passing through the node.
@@ -111,13 +79,6 @@ public class Strand {
         return weight;
     }
 
-    /**
-     * Update the x coordinate.
-     * @param i The update value.
-     */
-    public void updatexCoordinate(int i) {
-        xCoordinate = Math.max(i, xCoordinate);
-    }
 
     /**
      * Get the reference genome.

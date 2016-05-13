@@ -1,48 +1,98 @@
 package com.pl.tagc.tagcwebapp;
 
+import java.util.List;
+
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-
 import controller.Controller;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 //The Java class will be hosted at the URI path "/api"
+/**
+ * The Class RestApi.
+ * The Java class will be hosted at the URI path "/api". The annotation @GET in the class means 
+ * the Java method will process HTTP GET request. The annotation @Produces("application/json") 
+ * means the method will produce content identified by the MIME Media type "application/json".
+ * @author Kasper Grabarz
+ */
+
 @Path("/api")
 public class RestApi {
 
-	// The Java method will process HTTP GET requests
+	/**
+	 * Requests nodes that have their coordinates within the bounding box defined by the 
+	 * parameters.
+	 *
+	 * @param xleft
+	 *            the left bound of the bounding box
+	 * @param ytop
+	 *            the top bound of the bounding box
+	 * @param xright
+	 *            the right bound of the bounding box
+	 * @param ybtm
+	 *            the bottom bound of the bounding box
+	 * @return the node list object
+	 */	
 	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "application/json"
 	@Path("/getnodes")
 	@Produces("application/json")
-	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") double xleft,
-			@DefaultValue("0") @QueryParam("ytop") double ytop, @DefaultValue("100") @QueryParam("xright") double xright,
-			@DefaultValue("100") @QueryParam("ybtm") double ybtm) {
-		NodeListObject r = new NodeListObject(Controller.DC.getStrands(xleft, ytop, xright, ybtm));
+
+	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
+			@DefaultValue("100") @QueryParam("xright") int xright,
+			@DefaultValue("1") @QueryParam("zoom") int zoom) {
+		NodeListObject r = new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(xleft, xright, zoom)));
+
 		return r;
 	}
 
-	// The Java method will process HTTP GET requests
+	/**
+	 * Request dimensions.
+	 *
+	 * @return the dimensions object
+	 */
 	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "application/json"
 	@Path("/getdimensions")
 	@Produces("application/json")
 	public DimensionsObject requestDimensions() {
-		return new DimensionsObject(controller.Controller.DC.getDataWidth(), controller.Controller.DC.getDataHeight());
+		return new DimensionsObject(controller.Controller.DC.getDataWidth());
+
 	}
-	
-	// The Java method will process HTTP GET requests
+
+	/**
+	 * Request ribbon graph.
+	 *
+	 * @param names
+	 *            the names 
+	 * @return the node list object
+	 */
 	@GET
-	// The Java method will produce content identified by the MIME Media
-	// type "application/json"
-	@Path("/getphylogenetictree")
+	@Path("/getribbongraph")
 	@Produces("application/json")
-	public PhylogeneticTreeObject requestPhylogeneticTree() {
-		return new PhylogeneticTreeObject(controller.Controller.DC.getPhylogeneticTree());
+	public NodeListObject requestRibbonGraph(@QueryParam("names") List<String> names) {
+		System.out.println(names);
+
+		// return new
+		// RibbonGraphObject(DataContainer.DC.generateRibbonGraph(names));
+
+		// dummy data for now should return a Ribbon type Object instead of a
+		// NodeListObject
+		return new NodeListObject(new CopyOnWriteArrayList<>( Controller.DC.getRibbonNodes(0, 5000, 5)));
+	}
+
+	/**
+	 * Gets the newick string.
+	 *
+	 * @return the newick string
+	 */
+	@GET
+	@Path("/getnewickstring")
+	@Produces("application/json")
+	public NewickStringObject getNewickString() {
+		return new NewickStringObject(Controller.DC.getNewickString());
 	}
 
 }

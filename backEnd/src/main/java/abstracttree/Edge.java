@@ -1,4 +1,4 @@
-package genome;
+package abstracttree;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -20,6 +20,7 @@ public class Edge {
     public Edge(int startId, int endId) {
     	this.startId = startId;
     	this.endId = endId;
+        this.weight = 1;
     }
 
     /**

@@ -56,6 +56,30 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
 
 
     }
+    /**
+     * Get node with id through depth first search.
+     *
+     * @param id The id of the node.
+     * @return The node, null if it is not contained in this graph.
+     */
+    public T getNode(final int id) {
+
+        if (this.getId() == id) {
+            return (T) this;
+        } else if (this.getChildren().size() != 0) {
+            for (T obj : this.getChildren()) {
+                T child =  obj;
+                if (child.getId() == id) {
+                    return child;
+                }
+                T node = (T) child.getNode(id);
+                if (node != null) {
+                    return node;
+                }
+            }
+        }
+        return null;
+    }
 
 
     /**

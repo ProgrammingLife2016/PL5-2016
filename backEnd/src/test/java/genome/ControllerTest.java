@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -14,7 +13,7 @@ public class ControllerTest {
 	private Controller data;
 	private Strand strand1;
 	private Strand strand2;
-	private Edge edge;
+	private StrandEdge edge;
 	
 	/**
 	 * Setting up the Controller.
@@ -25,7 +24,7 @@ public class ControllerTest {
     	String[] genomes = {"ref1", "ref2"};
     	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
     	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
-    	edge = new Edge(1, 2);
+    	edge = new StrandEdge(1, 2);
     	
     	data.addStrand(strand1);
     	data.addStrand(strand2);
@@ -37,8 +36,8 @@ public class ControllerTest {
      */
     @Test
     public void testAddStrand() {
-    	assertEquals(data.getStrands().get(strand1.getId()), strand1);
-    	assertEquals(data.getStrands().get(strand2.getId()), strand2);
+    	assertEquals(data.getstrandNodes().get(strand1.getId()), strand1);
+    	assertEquals(data.getstrandNodes().get(strand2.getId()), strand2);
     }
     
     /**
@@ -49,24 +48,7 @@ public class ControllerTest {
     	assertEquals(data.getEdges().get(edge.getStart() + "|" + edge.getEnd()), edge);
     }
     
-    /**
-     * Tests giving the Strands coordinates.
-     */
-    @Test
-    public void test() {
-    	assertTrue(data.calculateCoordinates().get(0).contains(strand1));
-    	assertTrue(data.calculateCoordinates().get(1).contains(strand2));
-    }
-    
-    /**
-     * Test data height.
-     */
-    @Test
-    public void testDataHeight() {
-    	data.setDataHeight(10.0);
-    	assertEquals(data.getDataHeight(), 10.0, 0.001);
-    }
-    
+
     /**
      * Test data width.
      */

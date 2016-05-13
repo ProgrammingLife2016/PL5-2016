@@ -57,6 +57,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
 
         for (int i = 0; i < node.numberChildren(); i++) {
             TreeNode child = node.getChild(i);
+
             addChild(new PhylogeneticNode(child, this, child.getWeight(), i));
         }
     }
@@ -65,10 +66,41 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      * If this node is a leaf, add the genome it contains to all its parents.
      */
     private void checkLeaf() {
-        if (!nameLabel.equals("") && this.getParent() != null) {
-            this.getParent().addGenome(nameLabel);
+        if (!nameLabel.equals("")) {
+            nameLabel = nameLabel + ".fasta";
+            genomes.add(nameLabel);
+            if (this.getParent() != null) {
+                getParent().addGenome(nameLabel);
+            }
+
         }
     }
+
+    /**
+     * Get node with nameLabel name through depth first search.
+     *
+     * @param name The name of the node.
+     * @return The node, null if it is not contained in this graph.
+     */
+    public PhylogeneticNode getNodeWithLabel(final String name) {
+
+        if (this.getNameLabel().equals(name)) {
+            return this;
+        } else if (this.getChildren().size() != 0) {
+            for (PhylogeneticNode child : this.getChildren()) {
+                if (child.getNameLabel().equals(name)) {
+                    return child;
+                }
+                PhylogeneticNode node = child.getNodeWithLabel(name);
+                if (node != null) {
+                    return node;
+                }
+            }
+        }
+
+        return null;
+    }
+
 
 
     /**
