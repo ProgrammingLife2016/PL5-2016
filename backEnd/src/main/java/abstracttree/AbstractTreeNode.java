@@ -1,15 +1,16 @@
 package abstracttree;
 
 
-import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
-
 import java.util.ArrayList;
 
 /**
  * Created by Matthijs on 4-5-2016.
  * An abstract class for a node in a tree.
+ *
+ * @param <T> The instantiated subclass of this node.
  */
 public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
+
 
     /**
      * The child nodes of this node.
@@ -29,6 +30,7 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
      * Initialize this node from tree node, recursively.
      *
      * @param parent The parent of this node, root having null.
+     * @param childNumber Childnumber.
      */
     public AbstractTreeNode(T parent, int childNumber) {
 
@@ -43,6 +45,7 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
      * Generates the id of this node breath first based on the id of the parent node, root being 0.
      *
      * @param parent The parent of this node.
+     * @param childNumber The childnumber.
      * @return The generated id, root being 0.
      */
     public int generateId(T parent, int childNumber) {
@@ -116,5 +119,29 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
         return parent;
     }
 
+    /**
+     * Set the parent.
+     *
+     * @param parent set the parent.
+     */
+    public void setParent(T parent) {
+        this.parent = parent;
+    }
 
+    /**
+     * Set the id.
+     *
+     * @param id The id to set.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Set the children of this node.
+     * @param children The children to set.
+     */
+    public void setChildren(ArrayList<T> children) {
+        this.children = children;
+    }
 }

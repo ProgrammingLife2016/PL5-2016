@@ -8,6 +8,7 @@ import genome.Strand;
 import parser.Parser;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
@@ -153,6 +154,7 @@ public class Controller {
     public void addStrand(Strand strand) {
         strandNodes.put(strand.getId(), strand);
 
+
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome(genomeID));
@@ -171,12 +173,13 @@ public class Controller {
     }
 
     /**
-     * Get all the node in the data.
+     * Get all the Strand in the data.
      *
      * @return strandNodes.
      */
     public HashMap<Integer, Strand> getstrandNodes() {
         return strandNodes;
+
     }
 
     /**
@@ -227,6 +230,7 @@ public class Controller {
         this.phylogeneticTree = phylogeneticTree;
     }
 
+
     /**
      * Getter for the dataTree;
      *
@@ -272,12 +276,14 @@ public class Controller {
         return activeGenomes;
     }
 
-    /**
-     * Setter for the activeGenomes.
-     *
-     * @param activeGenomes The genomeIDS.
-     */
+
+    /* Setter for the activeGenomes.
+    *
+    * @param activeGenomes The genomeIDS.
+    */
     public void setActiveGenomes(ArrayList<String> activeGenomes) {
         this.activeGenomes = activeGenomes;
     }
+
+
 }

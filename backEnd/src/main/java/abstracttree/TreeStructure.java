@@ -3,6 +3,8 @@ package abstracttree;
 
 /**
  * Created by Matthijs on 4-5-2016.
+ *
+ * @param <T> The treeNode subclass contained in the tree.
  */
 public class TreeStructure<T extends AbstractTreeNode> {
 

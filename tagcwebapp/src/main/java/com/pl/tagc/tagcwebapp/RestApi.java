@@ -20,10 +20,12 @@ public class RestApi {
 	// type "application/json"
 	@Path("/getnodes")
 	@Produces("application/json")
+
 	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
 			@DefaultValue("100") @QueryParam("xright") int xright,
 			@DefaultValue("1") @QueryParam("zoom") int zoom) {
 		NodeListObject r = new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(xleft, xright, zoom)));
+
 		return r;
 	}
 

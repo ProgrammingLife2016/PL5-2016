@@ -58,6 +58,7 @@ public class TreeParserTest {
     @Test
     public void testGetNodeEnd() {
         assertEquals(tree.getRoot().getNode(8).getDistance(), 0.4, 0.001);
+
     }
 
     /**
@@ -90,4 +91,6 @@ public class TreeParserTest {
 
         assertEquals(tree.getRoot().getNode(3).getGenomes(), testList);
     }
+    
+
 }

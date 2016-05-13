@@ -6,15 +6,18 @@ import java.util.ArrayList;
  * @author Jeffrey Helgers
  */
 public class Genome {
+
     private ArrayList<Strand> strands;
     private String id;
 
     /**
      * Constructor to create a new genome.
+     * @param id The genome name.
      */
     public Genome(String id) {
         this.id = id;
         strands = new ArrayList<>();
+        this.id = id;
     }
 
     /**
@@ -43,5 +46,6 @@ public class Genome {
     public void setId(String id) {
         this.id = id;
     }
+
 
 }
