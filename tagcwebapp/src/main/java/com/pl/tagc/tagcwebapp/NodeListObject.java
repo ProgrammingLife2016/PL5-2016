@@ -1,6 +1,6 @@
 package com.pl.tagc.tagcwebapp;
 
-import genome.Node;
+import genome.Strand;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -19,9 +19,7 @@ public class NodeListObject {
 	/** The id. */
 	@SuppressWarnings("unused")
 	private String id = "test";
-	
-	/** The c list. */
-	private List<Node> cList;
+	private List<Strand> cList;
 
 	/**
 	 * Instantiates a new node list object.
@@ -29,21 +27,12 @@ public class NodeListObject {
 	public NodeListObject() {
 	}
 
-	/**
-	 * Instantiates a new node list object.
-	 *
-	 * @param cList the c list
-	 */
-	public NodeListObject(CopyOnWriteArrayList<Node> cList) {
+
+	public NodeListObject(CopyOnWriteArrayList<Strand> cList) {
 		this.cList = cList;
 	}
 
-	/**
-	 * Gets the c list.
-	 *
-	 * @return the c list
-	 */
-	public List<Node> getcList() {
+	public List<Strand> getcList() {
 		return cList;
 	};
 }

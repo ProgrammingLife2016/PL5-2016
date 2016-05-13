@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-import genome.DataContainer;
+import controller.Controller;
 
 /**
  * 
@@ -13,14 +13,14 @@ import genome.DataContainer;
  */
 public class AllMutations {
 
-	private DataContainer dc;
+	private Controller dc;
 	private HashMap<String, ArrayList<Mutation>> mutations;
 		
 	/**
 	 * Constructor to create.
 	 * @param dc The given data container.
 	 */
-	public AllMutations(DataContainer dc) {
+	public AllMutations(Controller dc) {
 		this.dc = dc;
 		mutations = new HashMap<>();
 		setKeys(dc.getGenomes().keySet());

@@ -1,6 +1,6 @@
 package com.pl.tagc.tagcwebapp;
 
-import genome.Node;
+import genome.Strand;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -17,10 +17,7 @@ public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
 	/** The context. */
 	private JAXBContext context;
-	
-	/** The types. */
-	@SuppressWarnings("rawtypes")
-	private Class[] types = { Node.class, NodeListObject.class, RestApi.class };
+	private Class[] types = { Strand.class, NodeListObject.class, RestApi.class };
 
 	/**
 	 * Instantiates a new JAXB context resolver.

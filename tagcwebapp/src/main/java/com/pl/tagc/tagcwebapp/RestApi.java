@@ -7,8 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-
-import genome.DataContainer;
+import controller.Controller;
 
 /**
  * The Class RestApi.
@@ -41,7 +40,7 @@ public class RestApi {
 			@DefaultValue("0") @QueryParam("ytop") double ytop, 
 			@DefaultValue("100") @QueryParam("xright") double xright,
 			@DefaultValue("100") @QueryParam("ybtm") double ybtm) {
-		NodeListObject r = new NodeListObject(DataContainer.DC.getNodes(xleft, ytop, xright, ybtm));
+		NodeListObject r = new NodeListObject(Controller.DC.getStrands(xleft, ytop, xright, ybtm));
 		return r;
 	}
 
@@ -54,8 +53,8 @@ public class RestApi {
 	@Path("/getdimensions")
 	@Produces("application/json")
 	public DimensionsObject requestDimensions() {
-		double dataWidth = DataContainer.DC.getDataWidth();
-		double dataHeight = DataContainer.DC.getDataHeight();
+		double dataWidth = Controller.DC.getDataWidth();
+		double dataHeight = Controller.DC.getDataHeight();
 		return new DimensionsObject(dataWidth, dataHeight);
 	}
 
@@ -77,7 +76,7 @@ public class RestApi {
 
 		// dummy data for now should return a Ribbon type Object instead of a
 		// NodeListObject
-		return new NodeListObject(DataContainer.DC.getNodes(0, 0, 1000, 1000));
+		return new NodeListObject(Controller.DC.getStrands(0, 0, 1000, 1000));
 	}
 
 	/**
@@ -89,7 +88,7 @@ public class RestApi {
 	@Path("/getnewickstring")
 	@Produces("application/json")
 	public NewickStringObject getNewickString() {
-		return new NewickStringObject(DataContainer.DC.getNewickString());
+		return new NewickStringObject(Controller.DC.getNewickString());
 	}
 
 }

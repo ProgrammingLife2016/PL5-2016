@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import genome.Genome;
-import genome.Node;
+import genome.Strand;
 
 /**
  * 
@@ -16,8 +16,8 @@ import genome.Node;
 public class InsertionTest {
 
 	private Insertion insertion;
-	private Node start;
-	private Node end;
+	private Strand start;
+	private Strand end;
 	private Genome reference;
 	private Genome other;
 	
@@ -28,13 +28,13 @@ public class InsertionTest {
 	public void setUp() {
 		reference = new Genome("base");
 		other = new Genome("other");
-		start = new Node(1, "A", new String[1], reference.getId(), 1);
-		end = new Node(2, "CT", new String[1], other.getId(), 1);
+		start = new Strand(1, "A", new String[1], reference.getId(), 1);
+		end = new Strand(2, "CT", new String[1], other.getId(), 1);
 		insertion = new Insertion(reference, other, start, end);
 	}
 
 	/**
-	 * Test get start node.
+	 * Test get start Strand.
 	 */
 	@Test
 	public void testGetStart() {
@@ -42,7 +42,7 @@ public class InsertionTest {
 	}
 	
 	/**
-	 * Test get end node.
+	 * Test get end Strand.
 	 */
 	@Test
 	public void testGetEnd() {

@@ -1,4 +1,5 @@
 package genome;
+import controller.Controller;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,36 +9,36 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Matthijs on 24-4-2016.
  */
-public class DataContainerTest {
+public class ControllerTest {
 
-	private DataContainer data;
-	private Node node1;
-	private Node node2;
+	private Controller data;
+	private Strand strand1;
+	private Strand strand2;
 	private Edge edge;
 	
 	/**
-	 * Setting up the DataContainer.
+	 * Setting up the Controller.
 	 */
     @Before
     public void setUp() {
-    	data = new DataContainer();
+    	data = new Controller();
     	String[] genomes = {"ref1", "ref2"};
-    	node1 = new Node(1, "AA", genomes, "ref1", 0);
-    	node2 = new Node(2, "TG", genomes, "ref1", 3);
+    	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
+    	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
     	edge = new Edge(1, 2);
     	
-    	data.addNode(node1);
-    	data.addNode(node2);
+    	data.addStrand(strand1);
+    	data.addStrand(strand2);
     	data.addEdge(edge);
     }
     
     /**
-     * Tests adding a node.
+     * Tests adding a Strand.
      */
     @Test
-    public void testAddNode() {
-    	assertEquals(data.getNodes().get(node1.getId()), node1);
-    	assertEquals(data.getNodes().get(node2.getId()), node2);
+    public void testAddStrand() {
+    	assertEquals(data.getStrands().get(strand1.getId()), strand1);
+    	assertEquals(data.getStrands().get(strand2.getId()), strand2);
     }
     
     /**
@@ -49,12 +50,12 @@ public class DataContainerTest {
     }
     
     /**
-     * Tests giving the nodes coordinates.
+     * Tests giving the Strands coordinates.
      */
     @Test
     public void test() {
-    	assertTrue(data.calculateCoordinates().get(0).contains(node1));
-    	assertTrue(data.calculateCoordinates().get(1).contains(node2));
+    	assertTrue(data.calculateCoordinates().get(0).contains(strand1));
+    	assertTrue(data.calculateCoordinates().get(1).contains(strand2));
     }
     
     /**
