@@ -1,9 +1,11 @@
-var width = 800, height = 600, color_scheme = d3.scale.category10();
-var tree = d3.layout.phylotree("body").size([ height, width ]).separation(
+var width = 300, height = 600, color_scheme = d3.scale.category10();
+var tree = d3.layout.phylotree("body").separation(
 		function(a, b) {
 			return 0;
-		})
+		});
+
 var container_id = '#tree_container';
+var svgPanZoomObject;
 
 $(document).ready(function() {
 	addCompareGenomeButtonBindings();
@@ -12,9 +14,21 @@ $(document).ready(function() {
 });
 
 function drawTree(newickStringJSONObject) {
+	 width = $("#treeViewPort").width();
+	 height = $("#treeViewPort").height();
 	var svg = d3.select(container_id).append("svg").attr("width", width).attr(
 			"height", height);
-	tree(newickStringJSONObject.newickString).svg(svg).layout(); 
+	tree.size([height, width])(newickStringJSONObject.newickString).svg(svg).layout(); 
+	philoSVG = $("#tree_container svg");
+	philoSVG.attr("width", width);
+	philoSVG.attr("height", height);
+	philoSVG.attr("viewBox", "0 0 " + width + " " + height);
+	svgPanZoomObject = svgPanZoom(philoSVG.get(0),{
+		controlIconsEnabled: true, 
+		minZoom:0,
+		maxZoom:100,
+		zoomScaleSensitivity:0.8
+			}); 
 }
 
 
