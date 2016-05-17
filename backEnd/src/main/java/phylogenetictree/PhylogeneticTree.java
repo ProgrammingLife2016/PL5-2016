@@ -50,7 +50,6 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         tree = tp.tokenize("");  
         this.setRoot(new PhylogeneticNode(tree.getRoot(), null, 0., 0));
         removeEmptyLeaves(currentGenomes);
-        ArrayList<PhylogeneticNode> r1 = getLeaves(getRoot(), new ArrayList<PhylogeneticNode>());
         removeRedundantNodes(currentGenomes);
         generateId(getRoot());
         
@@ -61,7 +60,8 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
      * @param currentGenomes The genomes that has to be in the tree.
      */
 	private void removeEmptyLeaves(ArrayList<String> currentGenomes) {
-		ArrayList<PhylogeneticNode> leaves = getLeaves(getRoot(), new ArrayList<PhylogeneticNode>());
+		ArrayList<PhylogeneticNode> leaves = getLeaves(getRoot(), 
+				new ArrayList<PhylogeneticNode>());
 		while (leaves.size() != currentGenomes.size()) {
 			for (PhylogeneticNode leaf : leaves) {
 				if (!currentGenomes.contains(leaf.getNameLabel())) {
@@ -78,7 +78,8 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
 	 * @param result The result.
 	 * @return All the leaves.
 	 */
-	private ArrayList<PhylogeneticNode> getLeaves(PhylogeneticNode node, ArrayList<PhylogeneticNode> result) {
+	private ArrayList<PhylogeneticNode> getLeaves(PhylogeneticNode node, 
+			ArrayList<PhylogeneticNode> result) {
 		if (node.getChildren().size() == 0) {
 			result.add(node);
 		} else {

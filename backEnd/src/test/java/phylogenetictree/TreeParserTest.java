@@ -82,7 +82,6 @@ public class TreeParserTest {
      */
     @Test
     public void testParent() throws Exception {
-    	tree.getRoot();
         assertEquals(tree.getRoot(), tree.getRoot().getChildren().get(0).getParent());
         assertEquals(null, tree.getRoot().getParent());
     }

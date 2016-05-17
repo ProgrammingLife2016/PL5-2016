@@ -33,10 +33,10 @@ public class Parser {
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-	public static controller.Controller parse(String file) {
+	public static Controller parse(String file) {
 		BufferedReader reader;
 		String line;
-		Controller result = new controller.Controller();
+		Controller result = new Controller();
 		try {
 			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
 			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
@@ -105,12 +105,18 @@ public class Parser {
 			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 			reader.readLine();
 			line = reader.readLine();
+			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	
-		String[] splitted = line.split("\t");
-		String[] genomes = splitted[1].split(";");
-		genomes = Arrays.copyOfRange(genomes, 1, genomes.length);
-		return new ArrayList<String>(Arrays.asList(genomes));
+		}
+		
+		if (line != null) {
+			String[] splitted = line.split("\t");
+			String[] genomes = splitted[1].split(";");
+			
+			genomes = Arrays.copyOfRange(genomes, 1, genomes.length);
+			return new ArrayList<String>(Arrays.asList(genomes));
+		}
+		return null;
 	}
 }

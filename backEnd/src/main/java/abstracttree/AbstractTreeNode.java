@@ -145,6 +145,10 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
         this.children = children;
     }
     
+    /**
+     * Remove child from the child array.
+     * @param child The removed child.
+     */
     public void removeChild(AbstractTreeNode<T> child) {
     	children.remove(child);
     }
