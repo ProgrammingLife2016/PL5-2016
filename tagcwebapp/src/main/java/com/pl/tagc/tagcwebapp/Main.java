@@ -54,7 +54,11 @@ final class Main {
 		}));
 
 		server.addListener(new NetworkListener("grizzly", "localhost", PORT));
-
+		
+		for (NetworkListener l : server.getListeners()) {
+		    l.getFileCache().setEnabled(false);
+		}
+		
 		final ServerConfiguration config = server.getServerConfiguration();
 		// add handler for serving static content
 		config.addHttpHandler(new CLStaticHttpHandler(Main.class.getClassLoader(), WEB_ROOT),
