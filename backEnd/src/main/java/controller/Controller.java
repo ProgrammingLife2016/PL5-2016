@@ -57,8 +57,9 @@ public class Controller {
         strandEdges = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
+        ArrayList<String> currentGenomes = Parser.getPresentGenomes("data/TB10.gfa");
         phylogeneticTree = new PhylogeneticTree();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk", currentGenomes);
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
         newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");

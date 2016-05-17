@@ -144,4 +144,8 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     public void setChildren(ArrayList<T> children) {
         this.children = children;
     }
+    
+    public void removeChild(AbstractTreeNode<T> child) {
+    	children.remove(child);
+    }
 }

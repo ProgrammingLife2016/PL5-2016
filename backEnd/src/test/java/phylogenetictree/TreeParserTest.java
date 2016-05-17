@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -25,7 +26,8 @@ public class TreeParserTest {
     @Before
     public void setUp() {
         tree = new PhylogeneticTree();
-        tree.parseTree("testFile");
+        String[] leafs = {"A.fasta", "C.fasta", "D.fasta"};
+        tree.parseTree("testFile", new ArrayList<String>(Arrays.asList(leafs)));
     }
 
     /**
@@ -33,7 +35,7 @@ public class TreeParserTest {
      */
     @Test
     public void testRootSize() {
-        assertEquals(tree.getRoot().getChildren().size(), 3);
+        assertEquals(tree.getRoot().getChildren().size(), 2);
     }
 
     /**
@@ -75,6 +77,7 @@ public class TreeParserTest {
      */
     @Test
     public void testParent() throws Exception {
+    	tree.getRoot();
         assertEquals(tree.getRoot(), tree.getRoot().getNode(1).getParent());
         assertEquals(null, tree.getRoot().getParent());
     }

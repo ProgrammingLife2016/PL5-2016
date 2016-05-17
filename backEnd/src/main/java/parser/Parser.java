@@ -11,6 +11,7 @@ import genome.Strand;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Jeffrey on 24-4-2016.
@@ -87,5 +88,27 @@ public class Parser {
 		int referenceCoordinate = Integer.parseInt(ref);
 
 		return new Strand(nodeId, sequence, genomes, referenceGenome, referenceCoordinate);
+	}
+
+	/**
+	 * Get all the genomes that are in the file.
+	 * @param file The file.
+	 * @return The genomes.
+	 */
+	public static ArrayList<String> getPresentGenomes(String file) {
+		BufferedReader reader;
+		String line = null;
+		try {
+			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+			reader.readLine();
+			line = reader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+		String[] splitted = line.split("\t");
+		String[] genomes = splitted[1].split(";");
+		genomes = Arrays.copyOfRange(genomes, 1, genomes.length);
+		return new ArrayList<String>(Arrays.asList(genomes));
 	}
 }
