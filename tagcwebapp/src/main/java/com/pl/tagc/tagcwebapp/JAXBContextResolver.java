@@ -19,7 +19,7 @@ public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 	/** The context. */
 	private JAXBContext context;
 	private Class[] types = { NodeListObject.class, RestApi.class, 
-			DimensionsObject.class};
+			DimensionsObject.class,PhylogeneticTreeObject.class};
 
 	/**
 	 * Instantiates a new JAXB context resolver.

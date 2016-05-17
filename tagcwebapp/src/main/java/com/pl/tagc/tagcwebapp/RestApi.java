@@ -86,7 +86,7 @@ public class RestApi {
 	@Path("/getphylogenetictree")
 	@Produces("application/json")
 	public PhylogeneticTreeObject requestPhylogeneticTree() {
-		return new PhylogeneticTreeObject(Controller.DC.getPhylogeneticTree());
+		return new PhylogeneticTreeObject(Controller.DC.getPhylogeneticTree().getRoot());
 	}
 	
 	/**
