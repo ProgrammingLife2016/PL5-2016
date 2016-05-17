@@ -28,11 +28,11 @@ public class TreeParserTest {
         tree = new PhylogeneticTree();
         String[] leafs = {"A.fasta", "C.fasta", "D.fasta"};
         tree.parseTree("data/testFile", new ArrayList<String>(Arrays.asList(leafs)));
-        String x = tree.getRoot().getChildren().get(1).getNameLabel();
-        if (x.equals("")) {
-        	x = "leeg";
-        }
-        System.out.println(x);
+//        String x = tree.getRoot().getChildren().get(1).getNameLabel();
+//        if (x.equals("")) {
+//        	x = "leeg";
+//        }
+//        System.out.println(x);
     }
 
     /**
@@ -94,8 +94,8 @@ public class TreeParserTest {
     @Test
     public void testContainsGenomes() throws Exception {
         ArrayList<String> testList = new ArrayList<>();
-        testList.add("C.fasta");
-        testList.add("D.fasta");
+        testList.add("A.fasta");
+        testList.add("AA.fasta");
 
         assertEquals(tree.getRoot().getChildren().get(0).getGenomes(), testList);
     }

@@ -13,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import controller.Controller;
+
 /**
  * Created by Jeffrey on 24-4-2016.
  */
@@ -34,7 +36,7 @@ public class Parser {
 	public static controller.Controller parse(String file) {
 		BufferedReader reader;
 		String line;
-		controller.Controller result = new controller.Controller();
+		Controller result = new controller.Controller();
 		try {
 			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
 			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
