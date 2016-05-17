@@ -23,7 +23,11 @@ public class Edge {
         this.weight = 1;
     }
 
-    /**
+    public Edge() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * Set the weight of an edge.
      * @param weight The new weight.
      */

@@ -74,15 +74,21 @@ public class RestApi {
 	@Produces("application/json")
 	public NodeListObject requestRibbonGraph(@QueryParam("names") List<String> names) {
 		System.out.println(names);
-
-		// return new
-		// RibbonGraphObject(DataContainer.DC.generateRibbonGraph(names));
-
-		// dummy data for now should return a Ribbon type Object instead of a
-		// NodeListObject
 		return new NodeListObject(new CopyOnWriteArrayList<>( Controller.DC.getRibbonNodes(0, 5000, 5)));
 	}
 
+	/**
+	 * Request phylogenetic tree.
+	 *
+	 * @return the phylogenetic tree object
+	 */
+	@GET
+	@Path("/getphylogenetictree")
+	@Produces("application/json")
+	public PhylogeneticTreeObject requestPhylogeneticTree() {
+		return new PhylogeneticTreeObject(Controller.DC.getPhylogeneticTree());
+	}
+	
 	/**
 	 * Gets the newick string.
 	 *

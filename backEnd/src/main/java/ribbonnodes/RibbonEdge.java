@@ -7,6 +7,11 @@ import abstracttree.Edge;
  * Created by Matthijs on 12-5-2016.
  */
 public class RibbonEdge extends Edge {
+	
+	public RibbonEdge(){
+		super();
+	}
+	
     /**
      * Constructor to create an edge.
      *

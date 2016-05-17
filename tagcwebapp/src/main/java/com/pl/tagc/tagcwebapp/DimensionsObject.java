@@ -1,14 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-
 /**
  * The Class DimensionsObject.
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement
 public class DimensionsObject {
 
 	/** The width. */
