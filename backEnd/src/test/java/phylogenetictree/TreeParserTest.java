@@ -27,7 +27,7 @@ public class TreeParserTest {
     public void setUp() {
         tree = new PhylogeneticTree();
         String[] leafs = {"A.fasta", "C.fasta", "D.fasta"};
-        tree.parseTree("data/testFile", new ArrayList<String>(Arrays.asList(leafs)));
+        tree.parseTree("testFile", new ArrayList<String>(Arrays.asList(leafs)));
 //        String x = tree.getRoot().getChildren().get(1).getNameLabel();
 //        if (x.equals("")) {
 //        	x = "leeg";
@@ -64,7 +64,7 @@ public class TreeParserTest {
      */
     @Test
     public void testGetNodeEnd() {
-        assertEquals(tree.getRoot().getNode(4).getDistance(), 0.4, 0.001);
+        assertEquals(tree.getRoot().getNode(2).getDistance(), 0.5, 0.001);
 
     }
 
@@ -73,7 +73,7 @@ public class TreeParserTest {
      */
     @Test
     public void testGetNodeMiddle() {
-        assertEquals(tree.getRoot().getNode(1).getDistance(), 0.5, 0.001);
+        assertEquals(tree.getRoot().getNode(1).getDistance(), 0.1, 0.001);
     }
 
     /**
@@ -96,7 +96,7 @@ public class TreeParserTest {
         testList.add("C.fasta");
         testList.add("D.fasta");
 
-        assertEquals(tree.getRoot().getChildren().get(0).getGenomes(), testList);
+        assertEquals(tree.getRoot().getChildren().get(1).getGenomes(), testList);
     }
     
 
