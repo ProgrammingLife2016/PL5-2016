@@ -76,6 +76,7 @@ body, html {
     display: inline-block;
     border-right: 3px solid rgba(55, 192, 251, 0.75);
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 #zoom {
@@ -93,6 +94,7 @@ div#minimapContainer {
 
 #minimap {
     height: 100%;
+    position: relative;
 }
 
 #minimap .slider {
@@ -103,4 +105,9 @@ div#minimapContainer {
 
 #d3_layout_phylotree_context_menu a {
     cursor: pointer;
+}
+
+.canvasContainer {
+    position: absolute;
+    top: 0;
 }

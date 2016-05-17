@@ -169,7 +169,7 @@ public class Controller {
                 genomes.put(genomeID, new Genome(genomeID));
 
                 //HARDCODED ACTIVE GENOMES
-                if(!(activeGenomes.size()>2)){
+                if (!(activeGenomes.size() > 2)) {
                     activeGenomes.add(genomeID);
                 }
             }

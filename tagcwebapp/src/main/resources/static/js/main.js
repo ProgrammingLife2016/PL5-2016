@@ -40,7 +40,7 @@ function screenResize() {
     if ($('#minimapContainer').find('canvas').length) {
         $('#minimap').find('canvas')[0].width = $('#minimap').width();
         $('#minimap').find('canvas')[0].height = $('#minimap').height();
-        drawGenome(null); //Update the canvas
+        drawMinimap(null); //Update the canvas
         zoom(1, 0);
         if (treeRedrawTimeout) {
             clearTimeout(treeRedrawTimeout);
@@ -137,7 +137,7 @@ var drawZoom = function(nodes) {
     });
 };
 
-var drawGenome = function(nodes) {
+var drawMinimap = function(nodes) {
     if (nodes == null) {
         nodes = cachedNodes;
     } else {
@@ -158,22 +158,25 @@ function draw(data, c, translate) {
     var points = data.cList;
     var ctx = c.getContext("2d");
     ctx.clearRect(0, 0, c.width, c.height);
+
+    var count = 0;
+
     $.each(points, function(id, value) {
         ctx.beginPath();
         var coor = translate(value.xCoordinate, value.yCoordinate);
 
-        ctx.arc(coor.x, coor.y, value.weight / 10, 0, 2 * Math.PI);
+        ctx.arc(count++, c.height / 2, 5, 0, 2 * Math.PI);
         ctx.stroke();
-        $.each(value.edges, function(key, edge) {
-            if (edge.targetX != -1 && edge.targetY != -1) {
-                ctx.beginPath();
-                ctx.moveTo(coor.x, coor.y);
-                var targetCoor = translate(edge.targetX, edge.targetY);
-                ctx.lineTo(targetCoor.x, targetCoor.y);
-                ctx.lineWidth = edge.weight;
-                ctx.stroke();
-            }
-        });
+        //$.each(value.edges, function(key, edge) {
+        //    if (edge.targetX != -1 && edge.targetY != -1) {
+        //        ctx.beginPath();
+        //        ctx.moveTo(coor.x, coor.y);
+        //        var targetCoor = translate(edge.targetX, edge.targetY);
+        //        ctx.lineTo(targetCoor.x, targetCoor.y);
+        //        ctx.lineWidth = edge.weight;
+        //        ctx.stroke();
+        //    }
+        //});
     });
 }
 
@@ -221,23 +224,20 @@ function updatezoomWindow()
 {
     var slider = $('#minimap .slider');
     var x = Math.floor(slider.position().left - slider.parent().position().left);
-    var y = Math.floor(slider.position().top - slider.parent().position().top);
     var width = slider.width();
-    var height = slider.height();
-    var boundingBox = computeBoundingBox(x, y, width, height)
+    var boundingBox = computeBoundingBox(x, width);
     getNodes(boundingBox, drawZoom);
 }
 
 // This function translates from one representation of a bounding box in gui coordinates to
 // coordinates expected by the REST api. It takes x, y, width and height arguments and returns 
 // an object with left right top and bottom properties.  
-function computeBoundingBox(x, y, width, height)
+function computeBoundingBox(x, width)
 {
     return {
-        'xleft': x * ratio,
-        'xright': (x + width) * ratio,
-        'ytop': y / yZoom * ratio,
-        'ybtm': (y + height) / yZoom * ratio
+        'xleft': x,
+        'xright': (x + width),
+        zoom: 3
     }
 }
 
@@ -258,31 +258,17 @@ function initialize() {
 }
 
 function initializeMinimap() {
-    $.ajax({
-        url: url + 'api/getdimensions',
-        dataType: 'JSON',
-        type: 'GET'
-    }).done(function(data) {
-        var minimap = $('#minimap');
-        var height = minimap.width() * (data.height / data.width);
-        if (height < minHeight) {
-            yZoom = Math.floor(minHeight / height);
-            height *= yZoom;
-        }
+    var minimap = $('#minimap');
+    minimap.height($('#minimapContainer').height());
 
-        minimap.height(height);
+    var slider = minimap.find('.slider');
 
-        var slider = minimap.find('.slider');
-
-        ratio = data.width / minimap.width();
-
-        minimap.find('.canvasContainer').html(
-            $('<canvas/>', {'class':'genomeCanvas', Width: minimap.width(), Height: minimap.height() })
-        );
-        var boundingBox = computeBoundingBox(0, 0, minimap.width(), minimap.height());
-        getNodes(boundingBox, drawGenome);
-        zoom(-1, 1);
-    });
+    minimap.find('.canvasContainer').html(
+        $('<canvas/>', {'class':'genomeCanvas', Width: minimap.width(), Height: minimap.height() })
+    );
+    var boundingBox = computeBoundingBox(0, 10000000);
+    getNodes(boundingBox, drawMinimap);
+    zoom(-1, 1);
 }
 
 function initializeZoomWindow() {
