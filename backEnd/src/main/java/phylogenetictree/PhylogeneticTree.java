@@ -49,29 +49,12 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         TreeParser tp = new TreeParser(reader);
         tree = tp.tokenize("");  
         this.setRoot(new PhylogeneticNode(tree.getRoot(), null, 0., 0));
-        //removeRedundantGenomes(getRoot(), currentGenomes);
         removeEmptyLeaves(currentGenomes);
         ArrayList<PhylogeneticNode> r1 = getLeaves(getRoot(), new ArrayList<PhylogeneticNode>());
-        //removeRedundantNodes(currentGenomes);
+        removeRedundantNodes(currentGenomes);
         generateId(getRoot());
         
     }
-
-//	private void removeRedundantGenomes(PhylogeneticNode node, 
-//    		ArrayList<String> currentGenomes) {
-//    	PhylogeneticNode child1 = node.getChildren().get(0);
-//    	PhylogeneticNode child2 = node.getChildren().get(1);
-//    	if (child1.getNameLabel().equals("")) {
-//    		removeRedundantGenomes(child1, currentGenomes);    		
-//    	} else if (!currentGenomes.contains(child1.getNameLabel())) {
-//    		node.removeChild(child1);
-//    	}
-//    	if (child2.getNameLabel().equals("")) {
-//    		removeRedundantGenomes(child2, currentGenomes);    		
-//    	} else if (!currentGenomes.contains(child2.getNameLabel())) {
-//    		node.removeChild(child2);
-//    	}
-//    }
 	
     /**
      * Remove the leaves that does not matter from the tree.
@@ -112,26 +95,37 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
 	 * @param currentGenomes The genomes that are present in the tree.
 	 */
     private void removeRedundantNodes(ArrayList<String> currentGenomes) {
-    	PhylogeneticNode node = getRoot();
+    	PhylogeneticNode rootNode = getRoot();
     	for (String genome : currentGenomes) {
-    		System.out.println(genome);
-    		PhylogeneticNode leaf = node.getNodeWithLabel(genome);
-    		System.out.println(leaf.getNameLabel());
+    		PhylogeneticNode leaf = rootNode.getNodeWithLabel(genome);
     		PhylogeneticNode parent = leaf.getParent();
-    		while (!parent.equals(node) && parent.getChildren().size() < 2) {
-    			leaf.setParent(parent.getParent());
-    			parent.getParent().removeChild(parent);
-    			parent.addChild(leaf);
-    			leaf = parent;
-    			parent = parent.getParent();
+    		while (!parent.equals(rootNode)) {
+    			if (parent.getChildren().size() == 2) {
+    				leaf = parent;
+    				parent = parent.getParent();
+    			} else {
+    				parent.getParent().removeChild(parent);
+    				parent.getParent().addChild(leaf);
+    				leaf.setParent(parent.getParent());
+    				parent = leaf.getParent();
+    			}
     		}
+    	}
+    	if (rootNode.getChildren().size() == 1) {
+    		rootNode.getChildren().get(0).setParent(null);
+    		setRoot(rootNode.getChildren().get(0));
+    		getRoot().setId(0);
     	}
 	}
     
+    /**
+     * Generate the id's for the tree.
+     * @param node Start node.
+     */
     private void generateId(PhylogeneticNode node) {
-    	ArrayList<PhylogeneticNode> children = new ArrayList<>();
+    	ArrayList<PhylogeneticNode> children = node.getChildren();
     	for (PhylogeneticNode child : children) {
-    		child.generateId(node, children.indexOf(child));
+    		child.setId(child.generateId(node, children.indexOf(child)));
     		generateId(child);
     	}
     }

@@ -64,7 +64,7 @@ public class TreeParserTest {
      */
     @Test
     public void testGetNodeEnd() {
-        assertEquals(tree.getRoot().getNode(6).getDistance(), 0.4, 0.001);
+        assertEquals(tree.getRoot().getNode(4).getDistance(), 0.4, 0.001);
 
     }
 
@@ -73,7 +73,7 @@ public class TreeParserTest {
      */
     @Test
     public void testGetNodeMiddle() {
-        assertEquals(tree.getRoot().getNode(3).getDistance(), 0.1, 0.001);
+        assertEquals(tree.getRoot().getNode(1).getDistance(), 0.5, 0.001);
     }
 
     /**
@@ -94,8 +94,8 @@ public class TreeParserTest {
     @Test
     public void testContainsGenomes() throws Exception {
         ArrayList<String> testList = new ArrayList<>();
-        testList.add("A.fasta");
-        testList.add("AA.fasta");
+        testList.add("C.fasta");
+        testList.add("D.fasta");
 
         assertEquals(tree.getRoot().getChildren().get(0).getGenomes(), testList);
     }
