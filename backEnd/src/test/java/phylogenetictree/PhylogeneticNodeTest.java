@@ -15,6 +15,12 @@ public class PhylogeneticNodeTest {
     PhylogeneticNode child1; //The first child of node;
     PhylogeneticNode child2; //The second child of node;
 
+
+    /**
+     * Set up the tests.
+     *
+     * @throws Exception if fail.
+     */
     @Before
     public void setUp() throws Exception {
         node = new PhylogeneticNode(null, 0);
@@ -44,7 +50,7 @@ public class PhylogeneticNodeTest {
 
         PhylogeneticNode testNode = new PhylogeneticNode(treeRoot, null, 1., 0);
         assertEquals(testNode.getNameLabel(), "");
-        assertEquals(testNode.getGenomes().size(),2);
+        assertEquals(testNode.getGenomes().size(), 2);
         for (int i = 0; i < 2; i++) {
             PhylogeneticNode child = testNode.getChildren().get(i);
             assertEquals(child.getNameLabel(), "child" + (i + 1) + ".fasta");
@@ -91,34 +97,37 @@ public class PhylogeneticNodeTest {
 
     /**
      * Test the getter of distance.
+     *
      * @throws Exception if fail.
      */
     @Test
     public void testGetDistance() throws Exception {
-        assertEquals(node.getDistance(),0.,0.00001);
+        assertEquals(node.getDistance(), 0., 0.00001);
     }
 
     /**
      * Test the getter for genomes.
+     *
      * @throws Exception if fail.
      */
     @Test
     public void testGetGenomes() throws Exception {
-        assertEquals(node.getGenomes().get(0),"child1.fasta");
-        assertEquals(node.getNodeWithLabel("child1.fasta").getGenomes().get(0),"child1.fasta");
+        assertEquals(node.getGenomes().get(0), "child1.fasta");
+        assertEquals(node.getNodeWithLabel("child1.fasta").getGenomes().get(0), "child1.fasta");
     }
 
     /**
      * Test the addition of a genome to a node.
+     *
      * @throws Exception if fail.
      */
     @Test
     public void testAddGenome() throws Exception {
         String genome = "genome2";
-        assertEquals(node.getGenomes().size(),2);
+        assertEquals(node.getGenomes().size(), 2);
         child1.addGenome(genome);
-        assertEquals(node.getGenomes().size(),3);
-        assertEquals(node.getGenomes().get(2),"genome2");
+        assertEquals(node.getGenomes().size(), 3);
+        assertEquals(node.getGenomes().get(2), "genome2");
 
     }
 }
