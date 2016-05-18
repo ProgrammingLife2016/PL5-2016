@@ -167,6 +167,11 @@ public class Controller {
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome(genomeID));
+
+                //HARDCODED ACTIVE GENOMES
+                if (!(activeGenomes.size() > 2)) {
+                    activeGenomes.add(genomeID);
+                }
             }
             genomes.get(genomeID).addStrand(strand);
         }

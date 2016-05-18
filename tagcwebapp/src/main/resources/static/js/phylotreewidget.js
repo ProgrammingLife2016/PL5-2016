@@ -10,7 +10,7 @@ var svgPanZoomObject;
 
 $(document).ready(function() {
     addCompareGenomeButtonBindings();
-    set_default_tree_settings()
+    set_default_tree_settings();
     makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
 });
 
@@ -52,12 +52,12 @@ function addCompareGenomeButtonBindings() {
         console.log(names);
 
         var data = {
-            'names' : JSON.stringify(names)
+            'names' : names
         };
 
         fullSizeMinimap();
 
-        makeRestAPIcall('getribbongraph','JSON', 'GET', data, drawRibbonGraph);
+        makeRestAPIcall('getribbongraph', 'JSON', 'POST', data, drawRibbonGraph);
     })
 }
 
@@ -76,6 +76,7 @@ function makeRestAPIcall(apiCall, dataType, requestType, reqData, callback) {
 function drawRibbonGraph(graph) {
     console.log("drawRibbonGraph function called with data:");
     console.log(graph);
+    initializeMinimap();
 }
 
 function set_default_tree_settings() {

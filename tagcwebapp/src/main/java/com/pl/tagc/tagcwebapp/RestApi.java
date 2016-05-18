@@ -1,12 +1,10 @@
 package com.pl.tagc.tagcwebapp;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
+
 import controller.Controller;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,12 +27,8 @@ public class RestApi {
 	 *
 	 * @param xleft
 	 *            the left bound of the bounding box
-	 * @param ytop
-	 *            the top bound of the bounding box
 	 * @param xright
 	 *            the right bound of the bounding box
-	 * @param ybtm
-	 *            the bottom bound of the bounding box
 	 * @return the node list object
 	 */	
 	@GET
@@ -44,9 +38,7 @@ public class RestApi {
 	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
 			@DefaultValue("100") @QueryParam("xright") int xright,
 			@DefaultValue("1") @QueryParam("zoom") int zoom) {
-		NodeListObject r = new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(xleft, xright, zoom)));
-
-		return r;
+        return new NodeListObject(new CopyOnWriteArrayList<>( Controller.DC.getRibbonNodes(0, 5000, 5)));
 	}
 
 	/**
@@ -69,12 +61,10 @@ public class RestApi {
 	 *            the names 
 	 * @return the node list object
 	 */
-	@GET
+	@POST
 	@Path("/getribbongraph")
 	@Produces("application/json")
-	public NodeListObject requestRibbonGraph(@QueryParam("names") List<String> names) {
-		System.out.println(names);
-
+	public NodeListObject requestRibbonGraph(@FormParam("names") List<String> names) {
 		// return new
 		// RibbonGraphObject(DataContainer.DC.generateRibbonGraph(names));
 
