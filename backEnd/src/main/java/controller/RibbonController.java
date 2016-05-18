@@ -31,17 +31,24 @@ public final class RibbonController {
         ArrayList<DataNode> filteredNodes =
                 dataTree.getDataNodes(minX, maxX, activeGenomes, zoomLevel);
 
+        int id=0;
         for (DataNode node : filteredNodes) {
             for (Strand strand : node.getStrands()) {
                 //Here the nodes are placed in order
                 //(notice node.getgenomes and not ribbon.getgenomes).
-                RibbonNode ribbonNode = new RibbonNode(strand.getId(), new ArrayList<>(Arrays.asList(strand.getGenomes())));
-                ribbonNode.setY(strand.getWeight() * 10);
+                RibbonNode ribbonNode = new RibbonNode(id, new ArrayList<>(Arrays.asList(strand.getGenomes())));
+                ribbonNode.addStrand(strand);
+                ribbonNode.setX(strand.getId());
+                ribbonNode.setY(strand.getWeight() * 10); //TODO find way to structure more clearly
+                id++;
                 result.add(ribbonNode);
             }
         }
 
         addRibbonEdges(result, activeGenomes);
+        result = collapseBubbles(result);
+        addRibbonEdges(result, activeGenomes);
+
 
         return result;
 
@@ -55,6 +62,7 @@ public final class RibbonController {
      */
 
     public static void addRibbonEdges(ArrayList<RibbonNode> nodes, ArrayList<String> genomes) {
+        //Sort on Id since toplevel have a low id.
         nodes.sort(new Comparator<RibbonNode>() {
             @Override
             public int compare(RibbonNode o1, RibbonNode o2) {
@@ -75,10 +83,11 @@ public final class RibbonController {
                     int j = i + 1;
                     RibbonNode endNode = nodes.get(j);
                     while (!checkEdge(startNode, endNode, genome) && j < nodes.size()) {
-                        j++;
                         endNode = nodes.get(j);
+                        j++;
+
                     }
-                    i = j-1;
+                    i = j - 1;
                 }
             }
         }
@@ -95,17 +104,83 @@ public final class RibbonController {
      */
 
     public static boolean checkEdge(RibbonNode startNode, RibbonNode endNode, String genomeID) {
+
         if (endNode.getGenomes().contains(genomeID)) {
-            if (startNode.getEdge(startNode.getId(), endNode.getId()) == null) {
+            if (startNode.getOutEdge(startNode.getId(), endNode.getId()) == null) {
                 RibbonEdge edge = new RibbonEdge(startNode.getId(), endNode.getId());
                 startNode.addEdge(edge);
+                endNode.addEdge(edge);
 
             } else {
-                startNode.getEdge(startNode.getId(), endNode.getId()).incrementWeight();
+                startNode.getOutEdge(startNode.getId(), endNode.getId()).incrementWeight();
             }
             return true;
 
         }
         return false;
+    }
+
+    public static RibbonNode getNodeWithId(int id, ArrayList<RibbonNode> nodes) {
+        for (RibbonNode node : nodes) {
+            if (node.getId() == id) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    public static RibbonNode collapseRibbonNodes(RibbonNode node, RibbonNode other) {
+        RibbonNode bubble = new RibbonNode(node.getId(), node.getGenomes());
+        bubble.addStrands(node.getStrands());
+        bubble.addStrands(other.getStrands());
+        bubble.setX((node.getX() + other.getX()) / 2);
+        bubble.setY((node.getY() + other.getY()) / 2);
+        bubble.setInEdges(node.getInEdges());
+        for (RibbonEdge edge : other.getEdges()) {
+            RibbonEdge newOut = edge;
+            newOut.setStartId(bubble.getId());
+            bubble.addEdge(newOut);
+        }
+
+
+        return bubble;
+    }
+
+    public static ArrayList<RibbonNode> collapseBubbles(ArrayList<RibbonNode> nodes) {
+        ArrayList<RibbonNode> collapsed = new ArrayList<>();
+        ArrayList<RibbonNode> result = new ArrayList<>();
+
+        do {
+            collapsed = new ArrayList<>();
+            result = new ArrayList<>();
+            for (RibbonNode node : nodes) {
+                if (node.getEdges().size() == 1 && !collapsed.contains(node)) {
+                    if (getNodeWithId(node.getEdges().get(0).getEnd(), nodes) != null) {
+                        RibbonNode other = getNodeWithId(node.getEdges().get(0).getEnd(), nodes);
+                        if (other.getInEdges().size() == 1 && !collapsed.contains(other)) {
+                            collapsed.add(node);
+                            collapsed.add(other);
+                            result.add(collapseRibbonNodes(node, other));
+                        }
+
+
+                    } else {
+                        result.add(node);
+                    }
+                }
+
+
+            }
+            nodes = result;
+
+        } while (collapsed.size() != 0);
+
+        for (RibbonNode node : result) {
+            node.setInEdges(new ArrayList<>());
+            node.setOutEdges(new ArrayList<>());
+        }
+
+        return result;
+
     }
 }

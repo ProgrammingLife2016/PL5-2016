@@ -272,6 +272,7 @@ function parseNodeData(nodes) {
         result[value.id] = {
             x: value.x - left,
             y: value.y,
+            strands: value.strands,
             edges: value.edges,
             genomes: value.genomes
         }

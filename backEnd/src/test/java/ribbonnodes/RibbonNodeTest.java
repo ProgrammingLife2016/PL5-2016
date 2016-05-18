@@ -55,9 +55,9 @@ public class RibbonNodeTest {
      */
     @Test
     public void testGetEdge() throws Exception {
-        assertEquals(node1.getEdge(0, 1), edge);
-        assertEquals(node2.getEdge(0, 1), edge);
-        assertEquals(node1.getEdge(1, 0), null);
+        assertEquals(node1.getOutEdge(0, 1), edge);
+        assertEquals(node2.getInEdge(0, 1), edge);
+        assertEquals(node1.getInEdge(1, 0), null);
 
     }
 
@@ -120,11 +120,9 @@ public class RibbonNodeTest {
         RibbonEdge edge2 = new RibbonEdge(0, 1);
         RibbonEdge edge3 = new RibbonEdge(0, 4);
         RibbonEdge edge4 = new RibbonEdge(0, 2);
-        ArrayList<RibbonEdge> edges = new ArrayList<>();
-        edges.add(edge2);
-        edges.add(edge3);
-        edges.add(edge4);
-        node1.setEdges(edges);
+        node1.addEdge(edge2);
+        node1.addEdge(edge3);
+        node1.addEdge(edge4);
         assertEquals(node1.getEdges().size(), 3);
         assertEquals(node1.getEdges().get(2), edge4);
     }

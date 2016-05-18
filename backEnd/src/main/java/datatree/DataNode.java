@@ -82,7 +82,6 @@ public class DataNode extends AbstractTreeNode<DataNode> {
     public DataNode getGenomeLeaf(final String genomeName) {
 
 
-
         for (DataNode child : this.getChildren()) {
             if (child.getGenomes().size() == 1
                     && child.getGenomes().get(0).equals(genomeName)) {

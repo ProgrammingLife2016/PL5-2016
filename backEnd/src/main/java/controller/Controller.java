@@ -90,7 +90,7 @@ public class Controller {
                 genomes.put(genomeID, new Genome(genomeID));
 
                 //HARDCODED ACTIVE GENOMES
-                if (!(activeGenomes.size() > 2)) {
+                if (!(activeGenomes.size() > 3 || genomeID.equals("MT_H37RV_BRD_V5.ref.fasta"))) {
                     activeGenomes.add(genomeID);
                 }
             }

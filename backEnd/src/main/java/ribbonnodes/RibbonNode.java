@@ -1,5 +1,7 @@
 package ribbonnodes;
 
+import genome.Strand;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,12 +9,14 @@ import java.util.Random;
  * Created by Matthijs on 12-5-2016.
  */
 public class RibbonNode {
-    private int id;
-    private int x;
-    private int y;
-    private ArrayList<RibbonEdge> edges;
-    private ArrayList<String> genomes;
-    private String label;
+    private int id; // The id of the Node.
+    private int x; //The x coordinate of the Node.
+    private int y; // The y coordinate of the Node.
+    private ArrayList<RibbonEdge> inEdges; // The edges going in to the node.
+    private ArrayList<RibbonEdge> outEdges; // The edges going out of the node.
+    private ArrayList<String> genomes; //The genomes that go through this node.
+    private ArrayList<Strand> strands; // The strands contained in this node.
+    private String label; // The textLabel of this node.
 
     /**
      * Constructor for the RibbonNode.
@@ -21,7 +25,9 @@ public class RibbonNode {
      * @param genomes The genomes.
      */
     public RibbonNode(int id, ArrayList<String> genomes) {
-        edges = new ArrayList<>();
+        inEdges = new ArrayList<>();
+        outEdges = new ArrayList<>();
+        strands = new ArrayList<>();
         this.genomes = genomes;
         this.id = id;
         this.x = id; //for now
@@ -38,20 +44,38 @@ public class RibbonNode {
     }
 
     /**
-     * Get specific edge.
+     * Get specific Inedge.
      *
      * @param idFrom Edge start id.
      * @param idTo   Edge end id.
      * @return Edge.
      */
-    public RibbonEdge getEdge(int idFrom, int idTo) {
-        for (RibbonEdge edge : edges) {
+    public RibbonEdge getInEdge(int idFrom, int idTo) {
+        for (RibbonEdge edge : inEdges) {
             if (edge.getStart() == idFrom && edge.getEnd() == idTo) {
                 return edge;
             }
         }
         return null;
     }
+
+
+    /**
+     * Get specific Outedge.
+     *
+     * @param idFrom Edge start id.
+     * @param idTo   Edge end id.
+     * @return Edge.
+     */
+    public RibbonEdge getOutEdge(int idFrom, int idTo) {
+        for (RibbonEdge edge : outEdges) {
+            if (edge.getStart() == idFrom && edge.getEnd() == idTo) {
+                return edge;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Set the label.
@@ -72,12 +96,24 @@ public class RibbonNode {
     }
 
     /**
-     * Get the edges.
+     * Get the out edges.
      *
      * @return Edges.
      */
     public ArrayList<RibbonEdge> getEdges() {
-        return edges;
+        return outEdges;
+    }
+
+    public ArrayList<RibbonEdge> getInEdges() {
+        return inEdges;
+    }
+
+    public void setOutEdges(ArrayList<RibbonEdge> outEdges) {
+        this.outEdges = outEdges;
+    }
+
+    public void setInEdges(ArrayList<RibbonEdge> inEdges) {
+        this.inEdges = inEdges;
     }
 
     /**
@@ -86,17 +122,13 @@ public class RibbonNode {
      * @param edge Edge.
      */
     public void addEdge(RibbonEdge edge) {
-        edges.add(edge);
+        if (edge.getEnd() == this.getId()) {
+            inEdges.add(edge);
+        } else {
+            outEdges.add(edge);
+        }
     }
 
-    /**
-     * Set the edges.
-     *
-     * @param edges Edges.
-     */
-    public void setEdges(ArrayList<RibbonEdge> edges) {
-        this.edges = edges;
-    }
 
     /**
      * Get the genomes.
@@ -122,5 +154,17 @@ public class RibbonNode {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public ArrayList<Strand> getStrands() {
+        return strands;
+    }
+
+    public void addStrands(ArrayList<Strand> strands) {
+        this.strands.addAll(strands);
+    }
+
+    public void addStrand(Strand strand) {
+        this.strands.add(strand);
     }
 }
