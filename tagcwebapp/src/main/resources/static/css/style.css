@@ -1,59 +1,106 @@
-div, body, html {
-    padding: 0;
-    margin: 0;
-}
+/*div, body, html {*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+/*}*/
 
-#splashscreen {
-    position: absolute;
+/*#splashscreen {*/
+    /*position: absolute;*/
+    /*width: 100%;*/
+    /*height: 110px;*/
+    /*left: 0;*/
+    /*top: 15%;*/
+    /*display: none;*/
+    /*background: url('../img/logo.jpg') no-repeat;*/
+    /*background-size: 100% auto*/
+/*}*/
+
+/*#container {*/
+    /*display: none;*/
+    /*padding: 30px;*/
+    /*margin: 0;*/
+/*}*/
+
+/*#header {*/
+    /*display: none;*/
+    /*left: 0;*/
+    /*width: 0;*/
+    /*margin-left: 2px;*/
+    /*height: 117px;*/
+    /*background: url('../img/background-top.jpg') repeat-x;*/
+    /*background-size: auto 100%;*/
+/*}*/
+
+/*#container .genome {*/
+    /*width: 100%;*/
+    /*height: 300px;*/
+    /*border: 1px solid #454545;*/
+    /*background-color: #EEE;*/
+    /*margin-bottom: 30px;*/
+/*}*/
+
+/*#container .genome .slider {*/
+    /*background-color: rgba(00, 127, 255, .2);*/
+    /*border: 1px solid #007fff;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    /*width: 100%;*/
+    /*height: 75px;*/
+    /*box-sizing: border-box;*/
+    /*cursor: pointer;*/
+/*}*/
+
+/*#container #zoomWindow, #container #zoomWindow canvas {*/
+    /*width: 100%;*/
+    /*height: 300px;*/
+/*}*/
+
+/*#minimap canvas {*/
+    /*position: absolute;*/
+/*}*/
+
+body, html {
+    overflow: hidden;
+    height: 100%;
     width: 100%;
-    height: 110px;
-    left: 0;
-    top: 15%;
-    display: none;
-    background: url('../img/logo.jpg') no-repeat;
-    background-size: 100% auto
 }
 
-#container {
-    display: none;
-    padding: 30px;
-    margin: 0;
-}
-
-#header {
-    display: none;
-    left: 0;
-    width: 0;
-    margin-left: 2px;
-    height: 117px;
-    background: url('../img/background-top.jpg') repeat-x;
-    background-size: auto 100%
-}
-
-#container .genome {
-    width: 100%;
+#sub {
     height: 300px;
-    border: 1px solid #454545;
-    background-color: #EEE;
-    margin-bottom: 30px;
+    background-color: rgba(255,255,255, 0.5);
 }
 
-#container .genome .slider {
-    background-color: rgba(00, 127, 255, .2);
-    border: 1px solid #007fff;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 75px;
+#phylogenyContainer {
+    width: 50%;
+    height: 100%;
+    float: left;
+    display: inline-block;
+    border-right: 3px solid rgba(55, 192, 251, 0.75);
     box-sizing: border-box;
-    cursor: pointer;
 }
 
-#container #zoomWindow, #container #zoomWindow canvas {
-    width: 100%;
+#zoom {
+    border-bottom: 7px solid rgba(27, 27, 27, 0.75);
+    box-sizing: border-box;
     height: 300px;
 }
 
-#minimap canvas {
-    position: absolute;
+div#minimapContainer {
+    display: inline-block;
+    width: 50%;
+    float: left;
+    height: 100%;
+}
+
+#minimap {
+    height: 100%;
+}
+
+#minimap .slider {
+    height: 100%;
+    left: 0;
+    background-color: rgba(0, 0, 255, 0.3);
+}
+
+#d3_layout_phylotree_context_menu a {
+    cursor: pointer;
 }
