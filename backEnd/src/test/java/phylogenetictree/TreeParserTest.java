@@ -28,11 +28,6 @@ public class TreeParserTest {
         tree = new PhylogeneticTree();
         String[] leafs = {"A.fasta", "C.fasta", "D.fasta"};
         tree.parseTree("testFile", new ArrayList<String>(Arrays.asList(leafs)));
-//        String x = tree.getRoot().getChildren().get(1).getNameLabel();
-//        if (x.equals("")) {
-//        	x = "leeg";
-//        }
-//        System.out.println(x);
     }
 
     /**
@@ -99,6 +94,9 @@ public class TreeParserTest {
         assertEquals(tree.getRoot().getChildren().get(1).getGenomes(), testList);
     }
     
+    /**
+     * Test if the tree has the right amount of leaves.
+     */
     @Test
     public void testLeafsize() {
     	assertEquals(tree.getLeaves(tree.getRoot(), new ArrayList<>()).size(), 3);

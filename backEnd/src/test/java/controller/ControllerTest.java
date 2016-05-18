@@ -1,5 +1,4 @@
 package controller;
-import controller.Controller;
 import genome.Strand;
 import genome.StrandEdge;
 import org.junit.Before;
