@@ -95,7 +95,6 @@ public class TreeParserTest {
         ArrayList<String> testList = new ArrayList<>();
         testList.add("C.fasta");
         testList.add("D.fasta");
-        testList.add("AA.fasta");
 
         assertEquals(tree.getRoot().getChildren().get(1).getGenomes(), testList);
     }
