@@ -78,7 +78,7 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
 	 * @param result The result.
 	 * @return All the leaves.
 	 */
-	private ArrayList<PhylogeneticNode> getLeaves(PhylogeneticNode node, 
+	public ArrayList<PhylogeneticNode> getLeaves(PhylogeneticNode node, 
 			ArrayList<PhylogeneticNode> result) {
 		if (node.getChildren().size() == 0) {
 			result.add(node);

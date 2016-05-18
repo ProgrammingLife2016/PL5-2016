@@ -95,9 +95,25 @@ public class TreeParserTest {
         ArrayList<String> testList = new ArrayList<>();
         testList.add("C.fasta");
         testList.add("D.fasta");
+        testList.add("AA.fasta");
 
         assertEquals(tree.getRoot().getChildren().get(1).getGenomes(), testList);
     }
     
-
+    @Test
+    public void testLeafsize() {
+    	assertEquals(tree.getLeaves(tree.getRoot(), new ArrayList<>()).size(), 3);
+    }
+    
+    @Test
+    public void testFourLeaves() {
+    	tree = new PhylogeneticTree();
+    	ArrayList<String> leaves = new ArrayList<>();
+    	leaves.add("A.fasta");
+    	leaves.add("AA.fasta");
+    	leaves.add("C.fasta");
+    	leaves.add("D.fasta");
+    	tree.parseTree("testFile", leaves);
+    	assertEquals(tree.getLeaves(tree.getRoot(), new ArrayList<PhylogeneticNode>()).size(), leaves.size());
+    }
 }
