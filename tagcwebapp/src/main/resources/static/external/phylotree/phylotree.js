@@ -579,21 +579,28 @@ d3.layout.phylotree = function(container) {
         return phylotree;
     };
 
-    function phylotree(nwk, bootstrap_values) {
-
+    function phylotree(tree_data, isNewickFormat, bootstrap_values) {
+    	
         d3_phylotree_add_event_listener();
 
+        if(isNewickFormat)
+        	{
+        	var _node_data = (typeof tree_data == "string") ? d3_phylotree_newick_parser(tree_data, bootstrap_values) : tree_data;
+            // this builds children and links;
 
-        var _node_data = (typeof nwk == "string") ? d3_phylotree_newick_parser(nwk, bootstrap_values) : nwk;
-        // this builds children and links;
+            if (!_node_data['json']) {
+                nodes = [];
+            } else {
+                newick_string = tree_data;
+                nodes = d3_hierarchy.call(this, _node_data.json);
+            }
 
-        if (!_node_data['json']) {
-            nodes = [];
-        } else {
-            newick_string = nwk;
-            nodes = d3_hierarchy.call(this, _node_data.json);
-        }
-
+        	}
+        else
+        	{
+        		nodes = d3_hierarchy.call(this, tree_data);
+        	}
+        
         phylotree.placenodes();
         links = phylotree.links(nodes);
         return phylotree;

@@ -25,8 +25,8 @@ function drawTree(newickStringJSONObject) {
     var height = $("#treeViewPort").height();
     var svg = d3.select(container_id).append("svg").attr("width", width).attr(
         "height", height);
-    tree.size([height, width])(newickString).svg(svg).layout();
-    enablePanZoom(){
+    tree.size([height, width])(newickString, true).svg(svg).layout();
+    enablePanZoom();
 }
 
 function enablePanZoom(){
