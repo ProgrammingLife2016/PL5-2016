@@ -1,14 +1,13 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import genome.Strand;
+
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 import javax.xml.bind.JAXBContext;
 
-import org.eclipse.persistence.jaxb.JAXBContextProperties;
-
+import com.sun.jersey.api.json.JSONConfiguration;
+import com.sun.jersey.api.json.JSONJAXBContext;
 
 /**
  * The Class JAXBContextResolver.
@@ -18,30 +17,21 @@ public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
 	/** The context. */
 	private JAXBContext context;
-	private Class[] types = { NodeListObject.class, RestApi.class, 
-			DimensionsObject.class,PhylogeneticTreeObject.class};
+	private Class[] types = { Strand.class, NodeListObject.class, RestApi.class };
 
 	/**
 	 * Instantiates a new JAXB context resolver.
 	 *
-	 * @throws Exception
-	 *             the exception
+	 * @throws Exception the exception
 	 */
 	public JAXBContextResolver() throws Exception {
-		Map<String, Object> properties = new HashMap<String, Object>(2);
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream in = classLoader.getResourceAsStream(
-				"bindings.json");
-		properties.put(JAXBContextProperties.OXM_METADATA_SOURCE, in);
-		properties.put("eclipselink.media-type", "application/json");
-		this.context = JAXBContext.newInstance(types, properties);
+		this.context = new JSONJAXBContext(JSONConfiguration.natural().build(), types);
 	}
 
 	/**
-	 * 
+	 *  
 	 *
-	 * @param objectType
-	 *            the object type
+	 * @param objectType the object type
 	 * @return the JAXB context
 	 * @see javax.ws.rs.ext.ContextResolver#getContext(java.lang.Class)
 	 */

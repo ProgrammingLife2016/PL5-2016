@@ -11,8 +11,6 @@ public class RibbonNode {
     private ArrayList<String> genomes;
     private String label;
 
-    RibbonNode(){}
-    
     /**
      * Constructor for the RibbonNode.
      * @param id The id.
