@@ -55,15 +55,13 @@ public class Controller {
     public Controller() {
         strandNodes = new HashMap<>();
         strandEdges = new HashMap<>();
-        activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
-        ArrayList<String> currentGenomes = Parser.getPresentGenomes("data/TB10.gfa");
+        activeGenomes = Parser.getPresentGenomes("data/TB10.gfa");
         phylogeneticTree = new PhylogeneticTree();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk", currentGenomes);
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk", activeGenomes);
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
         newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");
-
     }
 
     /**
