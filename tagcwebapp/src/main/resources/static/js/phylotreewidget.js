@@ -26,18 +26,23 @@ function drawTree(newickStringJSONObject) {
     var svg = d3.select(container_id).append("svg").attr("width", width).attr(
         "height", height);
     tree.size([height, width])(newickString).svg(svg).layout();
-    philoSVG = $("#tree_container svg");
-    philoSVG.attr("width", width);
-    philoSVG.attr("height", height);
-    philoSVG.attr("viewBox", "0 0 " + width + " " + height);
-    svgPanZoomObject = svgPanZoom(philoSVG.get(0) ,{
-        controlIconsEnabled: true,
-        minZoom:0,
-        maxZoom:100,
-        zoomScaleSensitivity:0.8
-    });
+    enablePanZoom(){
 }
 
+function enablePanZoom(){
+	var width = $("#treeViewPort").width();
+	var height = $("#treeViewPort").height();
+	var philoSVG = $("#tree_container svg");
+	philoSVG.attr("width", width);
+	philoSVG.attr("height", height);
+	philoSVG.attr("viewBox", "0 0 " + width + " " + height);
+	svgPanZoomObject = svgPanZoom(philoSVG.get(0),{
+		controlIconsEnabled: true, 
+		minZoom:0,
+		maxZoom:100,
+		zoomScaleSensitivity:0.8
+			});
+	}
 
 function addCompareGenomeButtonBindings() {
 
