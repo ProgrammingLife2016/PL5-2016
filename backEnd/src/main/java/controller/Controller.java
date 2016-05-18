@@ -2,29 +2,24 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
-import genome.StrandEdge;
 import genome.Genome;
 import genome.Strand;
+import genome.StrandEdge;
 import parser.Parser;
+import phylogenetictree.PhylogeneticNode;
+import phylogenetictree.PhylogeneticTree;
+import ribbonnodes.RibbonEdge;
+import ribbonnodes.RibbonNode;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import phylogenetictree.PhylogeneticNode;
-import phylogenetictree.PhylogeneticTree;
-import ribbonnodes.RibbonEdge;
-import ribbonnodes.RibbonNode;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -51,21 +46,24 @@ public class Controller {
     /**
      * Datacontainer Singleton, starts with empty hashmaps.
      */
+    //public static final controller.Controller DC = Parser.parse("data/TB10.gfa");
     public static final controller.Controller DC = Parser.parse("data/TB10.gfa");
 
     /**
      * Constructor.
+     * @param dataFile where the datafile is stored.
+     * @param phyloTree where the phylogenetic tree file is stored.
      */
-    public Controller() {
+    public Controller(String dataFile, String phyloTree) {
         strandNodes = new HashMap<>();
         strandEdges = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
+        phylogeneticTree.parseTree(phyloTree);
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
-        newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");
+        newickString = loadRawFileData(phyloTree);
 
     }
 
@@ -192,7 +190,6 @@ public class Controller {
      */
     public HashMap<Integer, Strand> getstrandNodes() {
         return strandNodes;
-
     }
 
     /**
@@ -333,56 +330,4 @@ public class Controller {
 
 		return rawFileData;
 	}
-
-    /**
-     * Create a CSV from the nodes for batch importing.
-     * @param fileName the path where the CSV should be saved.
-     */
-    public void createNodesCSV(String fileName) {
-        File file = new File(fileName);
-        // creates the file
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
-            writer.println("id,sequence");
-            for (Strand strand : strandNodes.values()) {
-                writer.println(strand.getId() + "," + strand.getSequence());
-            }
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Create a CSV from the links for batch importing.
-     * @param fileName the path where the CSV should be saved.
-     */
-    public void createEdgesCSV(String fileName) {
-        File file = new File(fileName);
-        // creates the file
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
-            writer.println("start,end,genome");
-            for (Map.Entry<String, Genome> kv : genomes.entrySet()) {
-                List<Strand> strands = kv.getValue().getStrands();
-                for (int i = 1; i < strands.size(); i++) {
-                    writer.println(strands.get(i - 1).getId() + ","
-                            + strands.get(i).getId() + "," + kv.getKey());
-                }
-            }
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

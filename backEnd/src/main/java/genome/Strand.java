@@ -4,6 +4,8 @@ package genome;
  *
  */
 
+import org.neo4j.graphdb.Node;
+
 /**
  * Class that contains the graph nodes.
  */
@@ -39,6 +41,19 @@ public class Strand {
 
         this.weight = genomes.length;
     }
+
+	/**
+	 * Constructor to create a new strand.
+	 * @param o The Object (returned by the Cypherquery) from which a strand should be created.
+	 */
+	public Strand(Object o) {
+		Node no = (Node) o;
+		this.id = java.lang.Math.toIntExact((long) no.getProperty("id"));
+		this.sequence = (String) no.getProperty("sequence");
+		//String genomes = (String) no.getProperty("genomes");
+		this.referenceGenome = (String) no.getProperty("refGenome");
+		this.referenceCoordinate = java.lang.Math.toIntExact((long) no.getProperty("refCoor"));
+	}
 
 
     /**

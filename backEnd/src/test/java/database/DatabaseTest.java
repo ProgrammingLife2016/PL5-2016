@@ -1,6 +1,8 @@
 package database;
 
-import controller.Controller;
+import genome.Genome;
+import genome.Strand;
+import genome.StrandEdge;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,10 +11,10 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.tooling.GlobalGraphOperations;
-import parser.Parser;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,10 +30,7 @@ public class DatabaseTest {
      */
     @Before
     public void setup() {
-        Controller dc = Parser.parse("data/test2.gfa");
-        db = new Database("test.db", dc);
-        dc.createNodesCSV("data/nodes.csv");
-        dc.createEdgesCSV("data/edges.csv");
+        db = new Database("test.db", "data/test1.gfa", "", false);
     }
 
     /**
@@ -44,13 +43,35 @@ public class DatabaseTest {
     }
 
     /**
+     * Test if opening an existing database works.
+     */
+    @Test
+    public void testDBOpening() {
+        Iterable<Node> allNodes;
+        db.getGraphService().shutdown();
+        db = new Database("test.db", "data/test1.gfa", "", true);
+
+        int i = 1;
+        try (Transaction tx = db.getGraphService().beginTx()) {
+            //Fetch all nodes from the database
+            allNodes = GlobalGraphOperations.at(db.getGraphService()).getAllNodes();
+            tx.success();
+
+            //Check if all nodes are inserted correctly in the database
+            for (Node a : allNodes) {
+                Assert.assertEquals(a.getProperty("id"), (long) i);
+                i++;
+            }
+        }
+    }
+
+    /**
      * Test if all nodes from the test file get inserted.
      */
     @Test
     public void testNodeInsertion() {
         Iterable<Node> allNodes;
-        String[] strands = {"", "AAAAAAAA", "A", "C", "T", "G", "GG", "TA", "GG",
-                "CGATGCAA", "CG", "TAG", "AT", "GAG", "CAG", "ATA"};
+        String[] strands = {"", "AAAAAAAA", "A", "C"};
 
         int i = 1;
         try (Transaction tx = db.getGraphService().beginTx()) {
@@ -62,12 +83,14 @@ public class DatabaseTest {
             for (Node a : allNodes) {
                 Assert.assertEquals(a.getProperty("id"), (long) i);
                 Assert.assertEquals(a.getProperty("sequence"), strands[i]);
+                Assert.assertEquals(a.getProperty("refGenome"), "AA");
+                Assert.assertEquals(a.getProperty("refCoor"), (long) 371);
                 i++;
             }
         }
 
         //Make sure no extra nodes are inserted
-        Assert.assertEquals(16, i);
+        Assert.assertEquals(4, i);
     }
 
     /**
@@ -77,39 +100,8 @@ public class DatabaseTest {
     public void testEdgeInsertion() {
         Iterable<Relationship> allRelas;
         Set<String> strands = new HashSet<>();
-        strands.add("1|2 AA");
-        strands.add("2|3 AA");
-        strands.add("3|10 AA");
-        strands.add("10|11 AA");
-        strands.add("11|12 AA");
-        strands.add("12|13 AA");
-        strands.add("13|14 AA");
-        strands.add("14|15 AA");
-        strands.add("1|3 BB");
-        strands.add("3|5 BB");
-        strands.add("5|7 BB");
-        strands.add("7|8 BB");
-        strands.add("8|9 BB");
-        strands.add("9|12 BB");
-        strands.add("12|13 BB");
-        strands.add("13|15 BB");
-        strands.add("1|3 CC");
-        strands.add("3|5 CC");
-        strands.add("5|6 CC");
-        strands.add("6|8 CC");
-        strands.add("8|9 CC");
-        strands.add("9|12 CC");
-        strands.add("12|15 CC");
-        strands.add("1|3 DD");
-        strands.add("3|5 DD");
-        strands.add("5|6 DD");
-        strands.add("6|9 DD");
-        strands.add("9|12 DD");
-        strands.add("12|15 DD");
-        strands.add("1|3 EE");
-        strands.add("3|4 EE");
-        strands.add("4|12 EE");
-        strands.add("12|15 EE");
+        strands.add("1|2");
+        strands.add("2|3");
 
         int i = 1;
 
@@ -121,14 +113,59 @@ public class DatabaseTest {
             for (Relationship a : allRelas) {
                 String coordinates = a.getStartNode().getProperty("id") + "|"
                         + a.getEndNode().getProperty("id");
-                Assert.assertTrue(strands.contains(coordinates + " " + a.getProperty("genome")));
+                Assert.assertTrue(strands.contains(coordinates));
                 i++;
             }
             tx.success();
         }
 
         //Make sure no extra edges are inserted
-        Assert.assertEquals(i, 34);
+        Assert.assertEquals(i, 3);
+    }
+
+    /**
+     * Test if nodes get retrieved correctly.
+     */
+    @Test
+    public void testNodeRetrieval() {
+        List<Strand> strands = db.returnNodes("MATCH (n) RETURN n");
+        Assert.assertEquals(1, strands.get(0).getId());
+        Assert.assertEquals(2, strands.get(1).getId());
+        Assert.assertEquals(3, strands.get(2).getId());
+        Assert.assertEquals(3, strands.size());
+
+        strands = db.returnNodes("MATCH (n {id: 1}) RETURN n");
+        Assert.assertEquals(1, strands.get(0).getId());
+        Assert.assertEquals(1, strands.size());
+    }
+
+    /**
+     * Test if all relationships get retrieved correctly.
+     */
+    @Test
+    public void testRelaRetrieval() {
+        List<StrandEdge> strandEdges = db.returnEdges("MATCH (a)-[b:GENOME]->(c) RETURN b");
+        Assert.assertEquals(1, strandEdges.get(0).getStart());
+        Assert.assertEquals(2, strandEdges.get(0).getEnd());
+        Assert.assertEquals(2, strandEdges.get(1).getStart());
+        Assert.assertEquals(3, strandEdges.get(1).getEnd());
+        Assert.assertEquals(2, strandEdges.size());
+    }
+
+    /**
+     * Test if all relationships get retrieved correctly.
+     */
+    @Test
+    public void testGenomeRetrieval() {
+        Genome genome = db.returnGenome("AA");
+        Assert.assertEquals("AA", genome.getId());
+        Assert.assertEquals(1, genome.getStrands().get(0).getId());
+        Assert.assertEquals(2, genome.getStrands().get(1).getId());
+        Assert.assertEquals(3, genome.getStrands().get(2).getId());
+
+        genome = db.returnGenome("BB");
+        Assert.assertEquals("BB", genome.getId());
+        Assert.assertEquals(3, genome.getStrands().get(0).getId());
     }
 
     /**

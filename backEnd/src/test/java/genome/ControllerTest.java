@@ -20,7 +20,7 @@ public class ControllerTest {
 	 */
     @Before
     public void setUp() {
-    	data = new Controller();
+    	data = new Controller("data/TB10.gfa", "data/340tree.rooted.TKK.nwk");
     	String[] genomes = {"ref1", "ref2"};
     	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
     	strand2 = new Strand(2, "TG", genomes, "ref1", 3);

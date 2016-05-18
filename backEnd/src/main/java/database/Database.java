@@ -1,14 +1,20 @@
 package database;
 
 import controller.Controller;
+import genome.Genome;
+import genome.Strand;
+import genome.StrandEdge;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseBuilder;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import parser.Parser;
 
 import java.io.File;
-import java.sql.Connection;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author user.
@@ -21,35 +27,57 @@ public class Database {
     //private Controller controller;
     private GraphDatabaseService graphDb;
 
-    private static String username = "postgres";
-    private static String password = "TagC";
-
     /**
      * Create a Database with its connection.
      * @param databasePath Path of the databasefile.
-     * @param data Input for the database.
+     * @param dataPath Input for the database.
+     * @param phyloPath Where the phylogenetic tree file is stored.
+     * @param useExistingDB if false, a new database will be created from the data.
      */
-    public Database(String databasePath, Controller data) {
+    public Database(String databasePath, String dataPath, String phyloPath, boolean useExistingDB) {
         path = databasePath.toLowerCase();
 
-        //controller = data;
-        createDatabaseConnection(databasePath);
+        //Parse the data to csv-files
+        new Parser("temp", dataPath);
+
+        createDatabaseConnection(useExistingDB);
 
         //Populate the database with constraints, indexes and actual data
-        createIndexes();
-        createConstraints();
-        insertNodes();
-        insertEdges();
+        if (!useExistingDB) {
+            createIndexes();
+            createConstraints();
+            insertNodes("temp/nodes.csv");
+            insertEdges("temp/edges.csv");
+        }
+    }
+
+    /**
+     * Create a controller class from the database.
+     * @return the controller to be used.
+     */
+    public Controller createController() {
+        Controller c = new Controller("data/TB10.gfa", "data/340tree.rooted.TKK.nwk");
+        for (Strand s : returnNodes("SELECT s RETURN s")) {
+            c.addStrand(s);
+        }
+        for (StrandEdge se : returnEdges("MATCH (a)-[b:GENOME]->(c) RETURN b")) {
+            c.addEdge(se);
+        }
+        return c;
     }
 
     /**
      * Set up the database connection.
      * If there isn't a database yet create it.
      */
-    private void createDatabaseConnection(String databasePath) {
+    private void createDatabaseConnection(boolean useExistingDB) {
+        if (!useExistingDB) {
+            deleteDirectory(new File(path));
+        }
+
         System.out.println("setting up connection");
         GraphDatabaseBuilder dbBuilder = new GraphDatabaseFactory().
-                newEmbeddedDatabaseBuilder(new File(databasePath));
+                newEmbeddedDatabaseBuilder(new File(path));
         graphDb = dbBuilder.newGraphDatabase();
         System.out.println("Opened database successfully");
     }
@@ -75,14 +103,14 @@ public class Database {
             File[] files = dir.listFiles();
             assert files != null;
 
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory()) {
+            for (File f : files) {
+                if (f.isDirectory()) {
                     //call recursively if it's a directory
-                    deleteDirectory(files[i]);
+                    deleteDirectory(f);
                 }
                 else {
                     //delete file otherwise
-                    boolean deleted = files[i].delete();
+                    boolean deleted = f.delete();
                 }
             }
         }
@@ -115,27 +143,91 @@ public class Database {
 
     /**
      * Inserts the nodes into the database.
+     * @param file the filePath of the csv
      */
-    private void insertNodes() {
+    private void insertNodes(String file) {
         try (Transaction tx = graphDb.beginTx()) {
-            graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + new File("data/nodes.csv").toURI()
-                    + "\' AS csvLine\nCREATE (p:Strand { id: toInt(csvLine.id), sequence: "
-                    + "csvLine.sequence })");
+            graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + new File(file).toURI()
+                    + "\' AS csvLine\nCREATE (p:Strand { id: toInt(csvLine.id), "
+                    + "sequence: csvLine.sequence, genomes: split(csvLine.genomes,\";\"), "
+                    + "refGenome: csvLine.refGenome, refCoor: TOINT(csvLine.refCoor) })");
             tx.success();
         }
     }
 
     /**
      * Inserts the edges into the database.
+     * @param file the filePath of the csv
      */
-    private void insertEdges() {
+    private void insertEdges(String file) {
         try (Transaction tx = graphDb.beginTx()) {
-            graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + new File("data/edges.csv").toURI()
+            graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + new File(file).toURI()
                     + "\' AS csvLine\nMATCH (start:Strand { id: toInt(csvLine.start)}),"
                     + "(end:Strand { id: toInt(csvLine.end)})\n"
-                    + "CREATE (start)-[:GENOME { genome: csvLine.genome }]->(end)");
+                    + "CREATE (start)-[:GENOME]->(end)");
             tx.success();
         }
+    }
+
+    /**
+     * Returns the results from the query as nodes.
+     * @param query the Cypher-query to be done on the database
+     * @return the list of Strands returned by the query
+     */
+    public List<Strand> returnNodes(String query) {
+        List<Strand> result = new ArrayList<>();
+
+        try (Transaction ignored = graphDb.beginTx();
+              Result r = graphDb.execute(query)) {
+            while (r.hasNext()) {
+                Map<String, Object> row = r.next();
+                for (Object n : row.values()) {
+                    result.add(new Strand(n));
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Returns the results from the query as edges.
+     * @param query the Cypher-query to be done on the database
+     * @return the list of StrandEdges returned by the query
+     */
+    public List<StrandEdge> returnEdges(String query) {
+        List<StrandEdge> result = new ArrayList<>();
+
+        try (Transaction ignored = graphDb.beginTx();
+             Result r = graphDb.execute(query)) {
+            while (r.hasNext()) {
+                Map<String, Object> row = r.next();
+                for (Object n : row.values()) {
+                    result.add(new StrandEdge(n));
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Returns the results from the query as genomes.
+     * @param genomeName the id/name of the genome to be retrieved
+     * @return the requested genome
+     */
+    public Genome returnGenome(String genomeName) {
+        Genome genome = new Genome(genomeName);
+
+        try (Transaction ignored = graphDb.beginTx();
+             Result r = graphDb.execute("MATCH (n:Strand) WHERE \"" + genomeName
+                     + "\" IN n.genomes RETURN n")) {
+            while (r.hasNext()) {
+                Map<String, Object> row = r.next();
+                for (Object n : row.values()) {
+                    genome.addStrand(new Strand(n));
+                }
+            }
+        }
+        return genome;
     }
 
     /**
