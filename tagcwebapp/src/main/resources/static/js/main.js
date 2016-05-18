@@ -161,7 +161,7 @@ function draw(points, c, translate) {
 
     $.each(points, function(id, point) {
         ctx.beginPath();
-        ctx.arc(translate(point.x), nodeHeight, 5, 0, 2 * Math.PI);
+        ctx.arc(translate(point.x),nodeHeight+ point.y, 5, 0, 2 * Math.PI);
         ctx.stroke();
 
         $.each(point.edges, function(key, edge) {
@@ -171,8 +171,8 @@ function draw(points, c, translate) {
             }
             if (target) {
                 ctx.beginPath();
-                ctx.moveTo(translate(point.x), nodeHeight);
-                ctx.lineTo(translate(target.x), nodeHeight);
+                ctx.moveTo(translate(point.x),nodeHeight+ point.y);
+                ctx.lineTo(translate(target.x),nodeHeight+ point.y);
                 ctx.lineWidth = edge.weight;
                 ctx.stroke();
             }
@@ -266,11 +266,12 @@ function parseNodeData(nodes) {
     var result = {};
 
     var left = nodes[0].id;
-    var ratio = $('#minimap').width() / (nodes[nodes.length-1].id - left);
+    var ratio = $('#minimap').width() / (nodes[nodes.length-1].x - left);
 
     $.each(nodes, function(key, value) {
         result[value.id] = {
-            x: value.id - left,
+            x: value.x - left,
+            y: value.y,
             edges: value.edges,
             genomes: value.genomes
         }

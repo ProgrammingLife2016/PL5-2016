@@ -1,29 +1,36 @@
 package ribbonnodes;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Matthijs on 12-5-2016.
  */
 public class RibbonNode {
     private int id;
+    private int x;
+    private int y;
     private ArrayList<RibbonEdge> edges;
     private ArrayList<String> genomes;
     private String label;
 
     /**
      * Constructor for the RibbonNode.
-     * @param id The id.
+     *
+     * @param id      The id.
      * @param genomes The genomes.
      */
     public RibbonNode(int id, ArrayList<String> genomes) {
         edges = new ArrayList<>();
         this.genomes = genomes;
         this.id = id;
+        this.x = id; //for now
+        this.y = 0;
     }
 
     /**
      * Get the label.
+     *
      * @return Label.
      */
     public String getLabel() {
@@ -32,8 +39,9 @@ public class RibbonNode {
 
     /**
      * Get specific edge.
+     *
      * @param idFrom Edge start id.
-     * @param idTo Edge end id.
+     * @param idTo   Edge end id.
      * @return Edge.
      */
     public RibbonEdge getEdge(int idFrom, int idTo) {
@@ -47,6 +55,7 @@ public class RibbonNode {
 
     /**
      * Set the label.
+     *
      * @param label Label.
      */
     public void setLabel(String label) {
@@ -55,6 +64,7 @@ public class RibbonNode {
 
     /**
      * Get the id.
+     *
      * @return Id.
      */
     public int getId() {
@@ -63,6 +73,7 @@ public class RibbonNode {
 
     /**
      * Get the edges.
+     *
      * @return Edges.
      */
     public ArrayList<RibbonEdge> getEdges() {
@@ -71,6 +82,7 @@ public class RibbonNode {
 
     /**
      * Add an edge.
+     *
      * @param edge Edge.
      */
     public void addEdge(RibbonEdge edge) {
@@ -79,6 +91,7 @@ public class RibbonNode {
 
     /**
      * Set the edges.
+     *
      * @param edges Edges.
      */
     public void setEdges(ArrayList<RibbonEdge> edges) {
@@ -87,6 +100,7 @@ public class RibbonNode {
 
     /**
      * Get the genomes.
+     *
      * @return Genomes.
      */
     public ArrayList<String> getGenomes() {
@@ -94,4 +108,19 @@ public class RibbonNode {
     }
 
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

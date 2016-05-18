@@ -66,93 +66,14 @@ public class Controller {
     }
 
     /**
-     * Get the ribbon nodes with edges for a certain view in the GUI.
-     *
-     * @param minX      the minx of the view.
-     * @param maxX      the maxx of the view.
-     * @param zoomLevel the zoomlevel of the view.
+     * Wrapper method that returns a list of filtered node for the particular query.
+     * @param minX The minimal X of the nodes.
+     * @param maxX The maximal X of the nodes.
+     * @param zoomLevel The zoomlevel to filter to.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
-        ArrayList<RibbonNode> result = new ArrayList<>();
-        ArrayList<DataNode> filteredNodes = 
-        		dataTree.getDataNodes(minX, maxX, activeGenomes, zoomLevel);
-
-        for (DataNode node : filteredNodes) {
-            for (Strand strand : node.getStrands()) {
-                //Here the nodes are placed in order 
-            	//(notice node.getgenomes and not ribbon.getgenomes).
-                RibbonNode ribbonNode = new RibbonNode(strand.getId(), node.getGenomes());
-                result.add(ribbonNode);
-            }
-        }
-
-        addRibbonEdges(result, activeGenomes);
-
-        return result;
-
-    }
-
-    /**
-     * Calculate and add the edges between the ribbon nodes.
-     *
-     * @param nodes   The ribbonnodes to connect.
-     * @param genomes The active Genomes.
-     */
-
-    public void addRibbonEdges(ArrayList<RibbonNode> nodes, ArrayList<String> genomes) {
-        nodes.sort(new Comparator<RibbonNode>() {
-            @Override
-            public int compare(RibbonNode o1, RibbonNode o2) {
-                if (o1.getId() > o2.getId()) {
-                    return 1;
-                }
-                else if (o1.getId() < o2.getId()) {
-                    return -1;
-                }
-                return 0;
-            }
-        });
-        for (String genome : genomes) {
-            for (int i = 0; i < nodes.size(); i++) {
-                RibbonNode startNode = nodes.get(i);
-
-                if (startNode.getGenomes().contains(genome)) {
-                    i++;
-                    RibbonNode endNode = nodes.get(i);
-                    while (!checkEdge(startNode, endNode, genome) && i < nodes.size()) {
-                        i++;
-                        endNode = nodes.get(i);
-                    }
-                }
-            }
-        }
-    }
-
-
-    /**
-     * Check if an edge should exist between two ribbon nodes, and add it if it should.
-     *
-     * @param startNode The start node.
-     * @param endNode   The end node.
-     * @param genomeID  The Genome of this path.
-     * @return True if edge was found.
-     */
-
-    public boolean checkEdge(RibbonNode startNode, RibbonNode endNode, String genomeID) {
-        if (endNode.getGenomes().contains(genomeID)) {
-            if (startNode.getEdge(startNode.getId(), endNode.getId()) == null) {
-                RibbonEdge edge = new RibbonEdge(startNode.getId(), endNode.getId());
-                startNode.addEdge(edge);
-                endNode.addEdge(edge);
-
-            } else {
-                startNode.getEdge(startNode.getId(), endNode.getId()).incrementWeight();
-            }
-            return true;
-
-        }
-        return false;
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel){
+        return RibbonController.getRibbonNodes(minX,maxX,zoomLevel,dataTree,activeGenomes);
     }
 
     /**
