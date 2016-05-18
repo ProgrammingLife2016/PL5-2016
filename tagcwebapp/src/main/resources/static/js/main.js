@@ -172,7 +172,7 @@ function draw(points, c, translate) {
             if (target) {
                 ctx.beginPath();
                 ctx.moveTo(translate(point.x),nodeHeight+ point.y);
-                ctx.lineTo(translate(target.x),nodeHeight+ point.y);
+                ctx.lineTo(translate(target.x),nodeHeight+ target.y);
                 ctx.lineWidth = edge.weight;
                 ctx.stroke();
             }

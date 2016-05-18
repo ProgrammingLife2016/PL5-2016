@@ -119,6 +119,7 @@ public class DataTree extends TreeStructure<DataNode> {
             for (Strand strand : node.getStrands()) {
                 if (strand.getId() > xMax + 10 || strand.getId() < xMin - 10) {
                     newStrands.add(strand);
+                    strand.retainGenomes(genomes);
                 }
             }
             node.setStrands(newStrands);

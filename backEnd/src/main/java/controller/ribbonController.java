@@ -7,6 +7,7 @@ import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -18,10 +19,10 @@ public final class RibbonController {
     /**
      * Get the ribbon nodes with edges for a certain view in the GUI.
      *
-     * @param minX      the minx of the view.
-     * @param maxX      the maxx of the view.
-     * @param zoomLevel the zoomlevel of the view.
-     * @param dataTree the filled and processed tree of the data.
+     * @param minX          the minx of the view.
+     * @param maxX          the maxx of the view.
+     * @param zoomLevel     the zoomlevel of the view.
+     * @param dataTree      the filled and processed tree of the data.
      * @param activeGenomes the genomes to filter for.
      * @return The list of ribbonNodes.
      */
@@ -34,7 +35,8 @@ public final class RibbonController {
             for (Strand strand : node.getStrands()) {
                 //Here the nodes are placed in order
                 //(notice node.getgenomes and not ribbon.getgenomes).
-                RibbonNode ribbonNode = new RibbonNode(strand.getId(), node.getGenomes());
+                RibbonNode ribbonNode = new RibbonNode(strand.getId(), new ArrayList<>(Arrays.asList(strand.getGenomes())));
+                ribbonNode.setY(strand.getWeight() * 10);
                 result.add(ribbonNode);
             }
         }
@@ -58,24 +60,25 @@ public final class RibbonController {
             public int compare(RibbonNode o1, RibbonNode o2) {
                 if (o1.getId() > o2.getId()) {
                     return 1;
-                }
-                else if (o1.getId() < o2.getId()) {
+                } else if (o1.getId() < o2.getId()) {
                     return -1;
                 }
                 return 0;
             }
         });
         for (String genome : genomes) {
+            System.out.println(genome);
             for (int i = 0; i < nodes.size(); i++) {
                 RibbonNode startNode = nodes.get(i);
 
-                if (startNode.getGenomes().contains(genome)) {
-                    i++;
-                    RibbonNode endNode = nodes.get(i);
-                    while (!checkEdge(startNode, endNode, genome) && i < nodes.size()) {
-                        i++;
-                        endNode = nodes.get(i);
+                if (startNode.getGenomes().contains(genome) && i + 1 < nodes.size()) {
+                    int j = i + 1;
+                    RibbonNode endNode = nodes.get(j);
+                    while (!checkEdge(startNode, endNode, genome) && j < nodes.size()) {
+                        j++;
+                        endNode = nodes.get(j);
                     }
+                    i = j-1;
                 }
             }
         }
@@ -96,7 +99,6 @@ public final class RibbonController {
             if (startNode.getEdge(startNode.getId(), endNode.getId()) == null) {
                 RibbonEdge edge = new RibbonEdge(startNode.getId(), endNode.getId());
                 startNode.addEdge(edge);
-                endNode.addEdge(edge);
 
             } else {
                 startNode.getEdge(startNode.getId(), endNode.getId()).incrementWeight();
