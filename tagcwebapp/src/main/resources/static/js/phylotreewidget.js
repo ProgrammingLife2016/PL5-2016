@@ -11,21 +11,36 @@ var svgPanZoomObject;
 $(document).ready(function() {
     addCompareGenomeButtonBindings();
     set_default_tree_settings()
-    makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
+    //makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
+    makeRestAPIcall('getphylogenetictree','JSON', 'GET', '', drawTree);
 });
 
-function drawTree(newickStringJSONObject) {
-    if (newickStringJSONObject != null) {
-        var newickString = newickStringJSONObject.newickString;
-        cacheNewickString = newickString;
-    } else {
-        var newickString = cacheNewickString;
-    }
+function drawTree(json) {
+	
+	var isNewickFormat = false;
+	var tree_data;
+	
+	if(isNewickFormat)
+		{
+		
+		if (newickStringJSONObject != null) {
+	        tree_data = json.newickString;
+	        cacheNewickString = newickString;
+	    } else {
+	    	tree_data = cacheNewickString;
+	    }
+		
+		}
+	else
+		{
+		tree_data = json.phylogeneticTreeRoot;
+		}
+    
     var width = $("#treeViewPort").width();
     var height = $("#treeViewPort").height();
     var svg = d3.select(container_id).append("svg").attr("width", width).attr(
         "height", height);
-    tree.size([height, width])(newickString, true).svg(svg).layout();
+    tree.size([height, width])(tree_data, isNewickFormat).svg(svg).layout();
     enablePanZoom();
 }
 
