@@ -113,3 +113,7 @@ div#minimapContainer {
     position: absolute;
     top: 0;
 }
+
+#zoomWindow {
+    height: 100%;
+}

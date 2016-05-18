@@ -20,8 +20,6 @@ function screenResize() {
     }
 
     if ($(window).height() != screenHeight) {
-        console.log(screenHeight);
-        console.log($(window).height());
         $("#zoom").height(Math.ceil($("#zoom").height() * $(window).height() / screenHeight));
         screenHeight = $(window).height();
     }
@@ -31,7 +29,9 @@ function screenResize() {
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     if ($('#zoom').find('canvas').length) {
-        $('#zoom').find('canvas').height = $('#zoom').height();
+        $('#zoom').find('canvas')[0].height = $('#zoom').height();
+        $('#zoom').find('canvas')[0].width = $('#zoom').width();
+        updatezoomWindow();
     }
 
     //Update sub width

@@ -10,7 +10,7 @@ var svgPanZoomObject;
 
 $(document).ready(function() {
     addCompareGenomeButtonBindings();
-    set_default_tree_settings()
+    set_default_tree_settings();
     makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
 });
 
