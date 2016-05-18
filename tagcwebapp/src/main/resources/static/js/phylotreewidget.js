@@ -1,5 +1,5 @@
 var color_scheme = d3.scale.category10();
-var cacheNewickString;
+var cached_json_data;
 var tree = d3.layout.phylotree("body").separation(
     function(a, b) {
         return 0;
@@ -11,37 +11,56 @@ var svgPanZoomObject;
 $(document).ready(function() {
     addCompareGenomeButtonBindings();
     set_default_tree_settings()
-    //makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
-    makeRestAPIcall('getphylogenetictree','JSON', 'GET', '', drawTree);
+    makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
+    //makeRestAPIcall('getphylogenetictree','JSON', 'GET', '', drawTree);
 });
 
 function drawTree(json) {
+	var json = refreshCache(json);	 
+	var isJSONtree = containsJSONtree(json);
+	var tree_data = getTreeData(json, isJSONtree);
 	
-	var isNewickFormat = false;
-	var tree_data;
-	
-	if(isNewickFormat)
-		{
-		
-		if (newickStringJSONObject != null) {
-	        tree_data = json.newickString;
-	        cacheNewickString = newickString;
-	    } else {
-	    	tree_data = cacheNewickString;
-	    }
-		
-		}
-	else
-		{
-		tree_data = json.phylogeneticTreeRoot;
-		}
-    
     var width = $("#treeViewPort").width();
     var height = $("#treeViewPort").height();
     var svg = d3.select(container_id).append("svg").attr("width", width).attr(
         "height", height);
-    tree.size([height, width])(tree_data, isNewickFormat).svg(svg).layout();
+    tree.size([height, width])(tree_data, isJSONtree).svg(svg).layout();
     enablePanZoom();
+}
+function refreshCache(json)
+{
+	if(json == null)
+		{
+		return cached_json_data;
+		}
+	else {
+		cached_json_data = json;
+		return json;
+	}
+}
+
+function containsJSONtree(obj)
+{
+	if(obj == null)
+	{
+		return false;	
+	}
+	else
+	{	
+		return obj.phylogeneticTreeRoot != null;
+	}
+}
+
+function getTreeData(json, isJSONtree)
+{
+	if(isJSONtree)
+	{		
+		return json.phylogeneticTreeRoot;	
+	}
+	else if(json != null )
+	{
+		return json.newickString;
+	}
 }
 
 function enablePanZoom(){
