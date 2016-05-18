@@ -52,10 +52,22 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         removeEmptyLeaves(currentGenomes);
         removeRedundantNodes(currentGenomes);
         generateId(getRoot());
-        
+        updateGenomesPassingThrough(getRoot());        
     }
 	
-    /**
+    private void updateGenomesPassingThrough(PhylogeneticNode node) {
+    	if (node.getChildren().size() == 0) {
+    		String genome = node.getGenomes().get(0);
+    		node.setGenomes(new ArrayList<String>());
+    		node.addGenome(genome);
+    	} else {
+    		node.setGenomes(new ArrayList<String>());
+    		updateGenomesPassingThrough(node.getChildren().get(0));
+    		updateGenomesPassingThrough(node.getChildren().get(1));
+    	}
+	}
+
+	/**
      * Remove the leaves that does not matter from the tree.
      * @param currentGenomes The genomes that has to be in the tree.
      */

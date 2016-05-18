@@ -162,6 +162,14 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
             this.getParent().addGenome(genome);
         }
     }
+    
+    /**
+     * Set the genomes passing through the node.
+     * @param genomes Genomes paasing through.
+     */
+    public void setGenomes(ArrayList<String> genomes) {
+    	this.genomes = genomes;
+    }
 
 
 
