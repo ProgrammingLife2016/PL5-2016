@@ -127,13 +127,11 @@ function pxToInt(css) {
 }
 
 var drawZoom = function(nodes) {
-    draw(nodes, $('#zoomWindow canvas')[0], function(x, y) {
-        var slider = $('#minimap .slider');
-        var sliderRatio = $('#zoomWindow').width() / slider.width();
-        return {
-            x: (x / ratio - pxToInt(slider.css('left'))) * sliderRatio,
-            y: (y / ratio - pxToInt(slider.css('top'))) * sliderRatio
-        }
+    var ratio = $('#zoomWindow').width() / Object.keys(nodes).length;
+    var left = nodes[Object.keys(nodes)[0]].x - 1;
+
+    draw(nodes, $('#zoomWindow canvas')[0], function(x) {
+        return (x - left) * ratio;
     });
 };
 
@@ -143,40 +141,42 @@ var drawMinimap = function(nodes) {
     } else {
         cachedNodes = nodes;
     }
-    draw(nodes, $('#minimap canvas')[0], function(x, y) {
-        return {
-            x: x / ratio * 50,
-            y: y / ratio * 50
-        }
+    var ratio = $('#minimap').width() / Object.keys(nodes).length;
+
+    draw(nodes, $('#minimap canvas')[0], function(x) {
+        return x * ratio;
     });
 };
 
-function draw(data, c, translate) {
+function draw(points, c, translate) {
     if (typeof c == "undefined") {
         return;
     }
-    var points = data.cList;
     var ctx = c.getContext("2d");
     ctx.clearRect(0, 0, c.width, c.height);
 
-    var count = 0;
+    var count = 20;
+    var counter = 0;
+    var nodeHeight = c.height / 2;
 
-    $.each(points, function(id, value) {
+    $.each(points, function(id, point) {
         ctx.beginPath();
-        var coor = translate(value.xCoordinate, value.yCoordinate);
-
-        ctx.arc(count++, c.height / 2, 5, 0, 2 * Math.PI);
+        ctx.arc(translate(point.x), nodeHeight, 5, 0, 2 * Math.PI);
         ctx.stroke();
-        //$.each(value.edges, function(key, edge) {
-        //    if (edge.targetX != -1 && edge.targetY != -1) {
-        //        ctx.beginPath();
-        //        ctx.moveTo(coor.x, coor.y);
-        //        var targetCoor = translate(edge.targetX, edge.targetY);
-        //        ctx.lineTo(targetCoor.x, targetCoor.y);
-        //        ctx.lineWidth = edge.weight;
-        //        ctx.stroke();
-        //    }
-        //});
+
+        $.each(point.edges, function(key, edge) {
+            var target = points[edge.start];
+            if (edge.start == id) {
+                target = cachedNodes[edge.end];
+            }
+            if (target) {
+                ctx.beginPath();
+                ctx.moveTo(translate(point.x), nodeHeight);
+                ctx.lineTo(translate(target.x), nodeHeight);
+                ctx.lineWidth = edge.weight;
+                ctx.stroke();
+            }
+        });
     });
 }
 
@@ -223,10 +223,31 @@ function zoom(direction, zoomAmount) {
 function updatezoomWindow()
 {
     var slider = $('#minimap .slider');
-    var x = Math.floor(slider.position().left - slider.parent().position().left);
+    var totalWidth = $('#minimap').width();
+    var left = pxToInt(slider.css('left'));
     var width = slider.width();
-    var boundingBox = computeBoundingBox(x, width);
-    getNodes(boundingBox, drawZoom);
+    //var boundingBox = computeBoundingBox(x, width);
+    //getNodes(boundingBox, drawZoom);
+    //Temp:
+    if (cachedNodes) {
+        var nodeSize = Object.keys(cachedNodes).length;
+
+        var start = Math.ceil(left / totalWidth * nodeSize);
+        var end = start + Math.ceil(width / totalWidth * nodeSize);
+
+        var nodeList = {};
+        var count = 0;
+        $.each(cachedNodes, function(key, value) {
+            if (count++ >= start) {
+                nodeList[key] = value;
+            }
+            if (count > end) {
+                return false;
+            }
+        });
+
+        drawZoom(nodeList);
+    }
 }
 
 // This function translates from one representation of a bounding box in gui coordinates to
@@ -241,6 +262,22 @@ function computeBoundingBox(x, width)
     }
 }
 
+function parseNodeData(nodes) {
+    var result = {};
+
+    var left = nodes[0].id;
+    var ratio = $('#minimap').width() / (nodes[nodes.length-1].id - left);
+
+    $.each(nodes, function(key, value) {
+        result[value.id] = {
+            x: value.id - left,
+            edges: value.edges,
+            genomes: value.genomes
+        }
+    });
+    return result;
+}
+
 function getNodes(boundingBox, callback) {
     $.ajax({
         url: url + 'api/getnodes',
@@ -248,7 +285,7 @@ function getNodes(boundingBox, callback) {
         type: 'GET',
         data: boundingBox
     }).done(function(data) {
-        callback(data);
+        callback(parseNodeData(data.cList));
     });
 }
 
