@@ -1,32 +1,46 @@
 package com.pl.tagc.tagcwebapp;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@XmlAccessorType(XmlAccessType.FIELD)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder={"name", "children"})
 @XmlRootElement
 public class PhylogeneticTreeObject {
 		@SuppressWarnings("unused")
-		private String id = null;
-		 @XmlJavaTypeAdapter(PhylogeneticNodeAdapter.class)
-		private PhylogeneticNode phylogeneticTreeRoot;
-
+		private String name = "root";
+		private ArrayList<PhylogeneticNode> children;
 		public PhylogeneticTreeObject() {
 		}
 
 		public PhylogeneticTreeObject(PhylogeneticNode phylogeneticTreeRoot) {
-			this.phylogeneticTreeRoot = phylogeneticTreeRoot;
+			this.children = phylogeneticTreeRoot.getChildren();
+		}
+		
+		public String getName() {
+			return name;
 		}
 
-		public PhylogeneticNode getPhylogeneticTreeRoot() {
-			return phylogeneticTreeRoot;
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public ArrayList<PhylogeneticNode> getChildren() {
+			return children;
+		}
+
+		public void setChildren(ArrayList<PhylogeneticNode> children) {
+			this.children = children;
 		};
 }

@@ -11,8 +11,8 @@ var svgPanZoomObject;
 $(document).ready(function() {
     addCompareGenomeButtonBindings();
     set_default_tree_settings();
-    makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
-    //makeRestAPIcall('getphylogenetictree','JSON', 'GET', '', drawTree);
+    //makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
+    makeRestAPIcall('getphylogenetictree','JSON', 'GET', '', drawTree);
 });
 
 function drawTree(json) {
@@ -47,7 +47,7 @@ function containsJSONtree(obj)
 	}
 	else
 	{	
-		return obj.phylogeneticTreeRoot != null;
+		return obj.name != null && obj.name == "root";
 	}
 }
 
@@ -55,7 +55,7 @@ function getTreeData(json, isJSONtree)
 {
 	if(isJSONtree)
 	{		
-		return json.phylogeneticTreeRoot;	
+		return json;	
 	}
 	else if(json != null )
 	{

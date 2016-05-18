@@ -1,5 +1,6 @@
 package com.pl.tagc.tagcwebapp;
 
+
 /**
  * The Class DimensionsObject.
  */
@@ -7,7 +8,6 @@ public class DimensionsObject {
 
 	/** The width. */
 	private double width;
-
 
 	/**
 	 * Instantiates a new dimensions object.

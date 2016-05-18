@@ -17,6 +17,12 @@ public class PhylogeneticNodeAdapter extends XmlAdapter<AdaptedPhylogeneticNode,
     	adaptedNode.setNameLabel(node.getNameLabel());
     	adaptedNode.setDistance(node.getDistance());
     	adaptedNode.setChildren(node.getChildren());
+    	boolean isFirstChild = true;
+    	if(node.getParent() != null)
+    	{
+    		isFirstChild = node.getParent().getChildren().get(0).equals(node);
+    	}    	
+    	adaptedNode.setOriginalChildOrder(isFirstChild ? 1 : 2);
         return adaptedNode;
     }
 

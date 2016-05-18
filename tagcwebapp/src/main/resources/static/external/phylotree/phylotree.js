@@ -583,10 +583,13 @@ d3.layout.phylotree = function(container) {
     	
         d3_phylotree_add_event_listener();
         var _node_data;
+       var tt = "((TKK_04_0005:1.02364427249e-06,TKK_04_0020:1.02364427249e-06):0.00581151247664,(((TKK_04_0120:0.000617768881078,TKK_04_0085:0.000180134778091):0.00054475696593,((TKK_04_0080:0.000575695127794,TKK-01-0070:0.000118243641824):0.00032713084129,TKK-01-0080:0.000308003484252):1.02364427249e-06):0.00672115893225,TKK_04_0003:0.00521542687277):1.02364427249e-06);"
+        _node_data = (typeof tt == "string") ? d3_phylotree_newick_parser(tt, bootstrap_values) : tt;
+          // this builds children and links;
         if(!isJSONtree)
         	{
         	//var tree_data = "((TKK_04_0005:1.02364427249e-06,TKK_04_0020:1.02364427249e-06):0.00581151247664,(((TKK_04_0120:0.000617768881078,TKK_04_0085:0.000180134778091):0.00054475696593,((TKK_04_0080:0.000575695127794,TKK-01-0070:0.000118243641824):0.00032713084129,TKK-01-0080:0.000308003484252):1.02364427249e-06):0.00672115893225,TKK_04_0003:0.00521542687277):1.02364427249e-06);"
-          _node_data = (typeof tree_data == "string") ? d3_phylotree_newick_parser(tree_data, bootstrap_values) : tree_data;
+          //_node_data = (typeof tree_data == "string") ? d3_phylotree_newick_parser(tree_data, bootstrap_values) : tree_data;
             // this builds children and links;
 
             if (!_node_data['json']) {

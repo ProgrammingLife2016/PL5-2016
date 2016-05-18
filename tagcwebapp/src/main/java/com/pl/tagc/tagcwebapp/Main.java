@@ -6,9 +6,9 @@ import java.util.logging.Logger;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.ext.RuntimeDelegate;
 
+import org.eclipse.persistence.jaxb.MarshallerProperties;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer;
 import org.glassfish.jersey.server.ResourceConfig;
-
 import org.glassfish.grizzly.http.server.CLStaticHttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
@@ -113,6 +113,7 @@ final class Main {
 	 * @return Jersey server-side application configuration.
 	 */
 	public static ResourceConfig createResourceConfig() {
-		return new ResourceConfig().registerClasses(RestApi.class);
+		return new ResourceConfig().registerClasses(RestApi.class).
+				property(MarshallerProperties.JSON_MARSHAL_EMPTY_COLLECTIONS, false);
 	}
 }
