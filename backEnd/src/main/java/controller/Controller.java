@@ -7,15 +7,19 @@ import genome.Genome;
 import genome.Strand;
 import parser.Parser;
 
-import java.util.Comparator;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
@@ -311,8 +315,8 @@ public class Controller {
 
     /**
      * Load rar file data.
-     * @param fileName The file.
-     * @return String.
+     * @param fileName The file to be loaded.
+     * @return String return the raw data file.
      */
 	public String loadRawFileData(String fileName) {
 
@@ -328,11 +332,63 @@ public class Controller {
 				rawFileData = rawFileData + line;
 				line = reader.readLine();
 			}
+            reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return rawFileData;
 	}
-    
+
+    /**
+     * Create a CSV from the nodes for batch importing.
+     * @param fileName the path where the CSV should be saved.
+     */
+    public void createNodesCSV(String fileName) {
+        File file = new File(fileName);
+        // creates the file
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+            writer.println("id,sequence");
+            for (Strand strand : strandNodes.values()) {
+                writer.println(strand.getId() + "," + strand.getSequence());
+            }
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Create a CSV from the links for batch importing.
+     * @param fileName the path where the CSV should be saved.
+     */
+    public void createEdgesCSV(String fileName) {
+        File file = new File(fileName);
+        // creates the file
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+            writer.println("start,end,genome");
+            for (Map.Entry<String, Genome> kv : genomes.entrySet()) {
+                List<Strand> strands = kv.getValue().getStrands();
+                for (int i = 1; i < strands.size(); i++) {
+                    writer.println(strands.get(i - 1).getId() + ","
+                            + strands.get(i).getId() + "," + kv.getKey());
+                }
+            }
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
