@@ -103,16 +103,4 @@ public class TreeParserTest {
     public void testLeafsize() {
     	assertEquals(tree.getLeaves(tree.getRoot(), new ArrayList<>()).size(), 3);
     }
-    
-    @Test
-    public void testFourLeaves() {
-    	tree = new PhylogeneticTree();
-    	ArrayList<String> leaves = new ArrayList<>();
-    	leaves.add("A.fasta");
-    	leaves.add("AA.fasta");
-    	leaves.add("C.fasta");
-    	leaves.add("D.fasta");
-    	tree.parseTree("testFile", leaves);
-    	assertEquals(tree.getLeaves(tree.getRoot(), new ArrayList<PhylogeneticNode>()).size(), leaves.size());
-    }
 }
