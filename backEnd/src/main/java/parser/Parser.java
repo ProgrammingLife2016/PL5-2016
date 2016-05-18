@@ -13,6 +13,9 @@ import genome.StrandEdge;
 import genome.Strand;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import controller.Controller;
 
 /**
  * Created by Jeffrey on 24-4-2016.
@@ -64,7 +67,7 @@ public class Parser {
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-	public static controller.Controller parse(String file) {
+	public static Controller parse(String file) {
 		BufferedReader reader;
 		String line;
 		controller.Controller result = new controller.Controller("data/TB10.gfa",
@@ -124,37 +127,37 @@ public class Parser {
 		return new Strand(nodeId, sequence, genomes, referenceGenome, referenceCoordinate);
 	}
 
-	/**
-	 * Reads the file as a graph in to an Controller.
-	 * @param file The file that is read.
-	 * @return The graph in the file.
-	 */
-	private void parseToCSV(String file) {
-		BufferedReader reader;
-		String line;
-		try {
-			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
-			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-			reader.readLine();
-			reader.readLine();
-			line = reader.readLine();
-			while (line != null) {
-				String[] splittedLine = line.split("\t");
-				String temp = splittedLine[0];
-				if (temp.equals("S")) {
-					writeNode(splittedLine);
-				} else if (temp.equals("L")) {
-					writeEdge(splittedLine);
-				}
-				line = reader.readLine();
-			}
-			reader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Reads the file as a graph in to an Controller.
+     * @param file The file that is read.
+     * @return The graph in the file.
+     */
+    private void parseToCSV(String file) {
+        BufferedReader reader;
+        String line;
+        try {
+            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            reader.readLine();
+            reader.readLine();
+            line = reader.readLine();
+            while (line != null) {
+                String[] splittedLine = line.split("\t");
+                String temp = splittedLine[0];
+                if (temp.equals("S")) {
+                    writeNode(splittedLine);
+                } else if (temp.equals("L")) {
+                    writeEdge(splittedLine);
+                }
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Writes an edge to the CSV-file.
@@ -178,4 +181,32 @@ public class Parser {
         nodes.println(String.format("%s,%s,%s,%s,%s", id, sequence, genomes,
                 referenceGenome, refCoor));
 	}
+
+    /**
+     * Get all the genomes that are in the file.
+     * @param file The file.
+     * @return The genomes.
+     */
+    public static ArrayList<String> getPresentGenomes(String file) {
+        BufferedReader reader;
+        String line = null;
+        try {
+            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            reader.readLine();
+            line = reader.readLine();
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (line != null) {
+            String[] splitted = line.split("\t");
+            String[] genomes = splitted[1].split(";");
+
+            genomes = Arrays.copyOfRange(genomes, 1, genomes.length);
+            return new ArrayList<String>(Arrays.asList(genomes));
+        }
+        return null;
+    }
 }

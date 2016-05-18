@@ -59,9 +59,10 @@ public class Controller {
         strandEdges = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
+        ArrayList<String> currentGenomes = Parser.getPresentGenomes("data/TB10.gfa");
         phylogeneticTree = new PhylogeneticTree();
-        phylogeneticTree.parseTree(phyloTree);
-        dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
+        phylogeneticTree.parseTree(phyloTree, currentGenomes);
+        dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(),
         		null, 0));
         newickString = loadRawFileData(phyloTree);
 
@@ -169,6 +170,11 @@ public class Controller {
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome(genomeID));
+
+                //HARDCODED ACTIVE GENOMES
+                if (!(activeGenomes.size() > 2)) {
+                    activeGenomes.add(genomeID);
+                }
             }
             genomes.get(genomeID).addStrand(strand);
         }

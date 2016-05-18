@@ -27,13 +27,25 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      */
     private double distance;
 
+    /**
+     * Default constructor.
+     *
+     * @param parent      T
+     * @param childNumber
+     */
+    public PhylogeneticNode(PhylogeneticNode parent, int childNumber) {
+        super(parent, childNumber);
+        this.nameLabel = "";
+        this.distance = 0.;
+        this.genomes = new ArrayList<>();
+    }
 
     /**
      * Initialize this node from tree node, recursively.
      *
-     * @param node     The node.
-     * @param parent   The parentNode of this node, null if root.
-     * @param distance The distance.
+     * @param node        The node.
+     * @param parent      The parentNode of this node, null if root.
+     * @param distance    The distance.
      * @param childNumber The childNumber.
      */
     public PhylogeneticNode(final TreeNode node, final PhylogeneticNode parent,
@@ -51,6 +63,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
 
     /**
      * Addapt the child node.
+     *
      * @param node Node.
      */
     public void adaptChild(TreeNode node) {
@@ -101,7 +114,15 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
         return null;
     }
 
-
+    /**
+     * set the label of this node.
+     *
+     * @return the node name label
+     */
+    public void setNameLabel(String nameLabel) {
+        this.nameLabel = nameLabel;
+        checkLeaf();
+    }
 
     /**
      * returns a string of lenght 0 if the node is not a leaf.
@@ -141,5 +162,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
             this.getParent().addGenome(genome);
         }
     }
+
+
 
 }
