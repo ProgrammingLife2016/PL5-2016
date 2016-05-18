@@ -106,8 +106,8 @@ public class RibbonNodeTest {
         RibbonEdge edge2 = new RibbonEdge(1, 0);
         assertEquals(node1.getEdges().size(), 1);
         node1.addEdge(edge2);
-        assertEquals(node1.getEdges().size(), 2);
-        assertEquals(node1.getEdges().get(1), edge2);
+        assertEquals(node1.getEdges().size(), 1);
+        assertEquals(node1.getInEdges().get(0), edge2);
     }
 
     /**
@@ -123,8 +123,8 @@ public class RibbonNodeTest {
         node1.addEdge(edge2);
         node1.addEdge(edge3);
         node1.addEdge(edge4);
-        assertEquals(node1.getEdges().size(), 3);
-        assertEquals(node1.getEdges().get(2), edge4);
+        assertEquals(node1.getEdges().size(), 4);
+        assertEquals(node1.getEdges().get(3), edge4);
     }
 
     @Test
