@@ -34,6 +34,9 @@ public class Controller {
     //Todo move strand graph and genomes to seperate class.
     private HashMap<Integer, Strand> strandNodes;
     private HashMap<String, Genome> genomes;
+    private HashMap<String, Genome> test;
+    
+    public HashMap<String, Genome> getTest() { return test; }
 
     private String newickString;
 
@@ -55,6 +58,7 @@ public class Controller {
         strandNodes = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
+        test = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
@@ -71,7 +75,7 @@ public class Controller {
      * @return The list of ribbonNodes.
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel){
-        return RibbonController.getRibbonNodes(minX,maxX,zoomLevel,dataTree,activeGenomes, genomes, strandNodes);
+        return RibbonController.getRibbonNodes(minX,maxX,zoomLevel,dataTree,activeGenomes, test, strandNodes);
     }
 
     /**
@@ -85,13 +89,14 @@ public class Controller {
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome(genomeID));
-                System.out.println("hoevaak");
+                test.put(genomeID, new Genome(genomeID));
                 //HARDCODED ACTIVE GENOMES
                 if (!genomeID.equals("MT_H37RV_BRD_V5.ref.fasta")) {
                     activeGenomes.add(genomeID);
                 }
             } else {
                 genomes.get(genomeID).addStrand(strand);
+                test.get(genomeID).addStrand(strand);
             }
         }
     }

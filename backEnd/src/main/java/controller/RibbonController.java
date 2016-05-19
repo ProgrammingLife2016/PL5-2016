@@ -32,17 +32,13 @@ public final class RibbonController {
     public static ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel, DataTree dataTree, 
     		ArrayList<String> activeGenomes, HashMap<String, Genome> genomes, HashMap<Integer, Strand> strands) {
         ArrayList<RibbonNode> result = new ArrayList<>();
+        HashMap<Integer, RibbonNode> tempResult = new HashMap<>();
         ArrayList<DataNode> filteredNodes =
                 dataTree.getDataNodes(minX, maxX, activeGenomes, 100);
-        for (Genome g : genomes.values()) {
-        	if (g.getStrands().size() == 5495) {
-        		System.out.println(g.getId());
-        	}
-        }
+        
         String reference = "MT_H37RV_BRD_V5.ref.fasta";
         Genome referenceGenome = genomes.get(reference);
         int x =  0;
-        System.out.println(referenceGenome.getStrands().size());
         for (Strand strand : referenceGenome.getStrands()) {
         	RibbonNode ribbon = new RibbonNode(strand.getId(), strand.getGenomes());
         	ribbon.setX(x);
@@ -50,11 +46,40 @@ public final class RibbonController {
         	for (StrandEdge edge : strand.getEdges()) {
         		ribbon.addEdge(new RibbonEdge(edge.getStart(), edge.getEnd()));
         	}
+        	tempResult.put(ribbon.getId(), ribbon);
         	result.add(ribbon);
-        	System.out.println("hhh");
         	x += 10;
         }
         
+        String reference2 = "TKK_02_0001.fasta";
+        Genome genome = genomes.get(reference2);
+        System.out.println("hier");
+        System.out.println(genome.getStrands().size());
+        x = 0;
+        for (int i = 0; i < genome.getStrands().size(); i++) {
+        	System.out.println(i);
+        	Strand strand = genome.getStrands().get(i);
+        	if (!tempResult.containsKey(strand.getId())) {
+        		x += 10;
+        		while (!tempResult.containsKey(strand.getId())) {
+        			if (i + 1 == genome.getStrands().size()) {
+        				break;
+        			}
+        			Strand temp = genome.getStrands().get(i + 1);     
+        			RibbonNode ribbon = new RibbonNode(strand.getId(), strand.getGenomes());
+        			ribbon.setX(x);
+        			ribbon.setY(50);
+        			ribbon.addEdge(new RibbonEdge(ribbon.getId(), temp.getId()));
+        			i++;
+        			tempResult.put(ribbon.getId(), ribbon);
+        			result.add(ribbon);
+        			strand = genome.getStrands().get(i);
+        		}
+        		
+        	} else {
+        		x = tempResult.get(strand.getId()).getX();
+        	}
+        }
         
 //        for (DataNode node : filteredNodes) {
 //            for (Strand strand : node.getStrands()) {
