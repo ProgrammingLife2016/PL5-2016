@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 /**
  * The Class NodeListObject.
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class NodeListObject {
 	
@@ -35,5 +35,9 @@ public class NodeListObject {
 
 	public List<RibbonNode> getcList() {
 		return cList;
+	}
+
+	public void setcList(List<RibbonNode> cList) {
+		this.cList = cList;
 	};
 }

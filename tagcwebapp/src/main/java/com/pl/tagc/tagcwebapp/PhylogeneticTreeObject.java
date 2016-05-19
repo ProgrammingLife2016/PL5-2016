@@ -15,8 +15,8 @@ import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 //@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder={"name", "children"})
 @XmlRootElement
+@XmlType(propOrder={"name", "children"})
 public class PhylogeneticTreeObject {
 		@SuppressWarnings("unused")
 		private String name = "root";
