@@ -1,4 +1,4 @@
-package com.pl.tagc.tagcwebapp;
+package com.pl.tagc.xmladapterlogic;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 

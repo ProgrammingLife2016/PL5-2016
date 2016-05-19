@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.ws.rs.*;
 
+import com.pl.tagc.xmladapterlogic.NodeListObject;
+import com.pl.tagc.xmladapterlogic.PhylogeneticTreeObject;
+
 import controller.Controller;
 
 import java.util.concurrent.CopyOnWriteArrayList;
