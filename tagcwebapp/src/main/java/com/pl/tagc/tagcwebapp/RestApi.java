@@ -63,11 +63,10 @@ public class RestApi {
 	 */
 	@POST
 	@Path("/getribbongraph")
-	@Produces("application/json")
-	public NodeListObject requestRibbonGraph(List<Integer> ids) {
-		System.out.println(ids.size());
-		System.out.println(ids);
-		return new NodeListObject(new CopyOnWriteArrayList<>( Controller.DC.getRibbonNodes(0, 5000, 5)));
+	public void requestRibbonGraph(@FormParam("names[]") List<String> names) {
+		System.out.println(names.size());
+		System.out.println(names);
+		Controller.DC.setActiveGenomes((ArrayList<String>) names);
 	}
 
 	/**
