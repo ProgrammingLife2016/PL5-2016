@@ -1,11 +1,13 @@
-package com.pl.tagc.tagcwebapp;
+ package com.pl.tagc.tagcwebapp;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import phylogenetictree.PhylogeneticNode;
 
 /**
- * The Class PhylogeneticNodeAdapter.
+ * The Class PhylogeneticNodeAdapter. This is an XMLAdapter with the standard
+ * marshal and unmarshal functions. For the API please refer to 
+ * https://docs.oracle.com/javase/7/docs/api/javax/xml/bind/annotation/adapters/XmlAdapter.html 
  */
 public class PhylogeneticNodeAdapter extends XmlAdapter<AdaptedPhylogeneticNode, PhylogeneticNode> {
 

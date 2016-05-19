@@ -18,6 +18,9 @@ import static org.junit.Assert.assertEquals;
  */
 public class RestApiTest extends JerseyTest {
 
+	/* (non-Javadoc)
+	 * @see org.glassfish.jersey.test.JerseyTest#configure()
+	 */
 	@Override
 	protected ResourceConfig configure() {
 		enable(TestProperties.LOG_TRAFFIC);
@@ -34,6 +37,12 @@ public class RestApiTest extends JerseyTest {
 		assertEquals("json", response.getMediaType().getSubtype());
 	}
 
+	/**
+	 * Tests that the getphylogenetictree REST endpoint returns the test tree loaded
+	 * from the nwk file in the expected format.
+	 *
+	 * @throws Exception 
+	 */
 	@Test
 	public void testGetPhylogeneticTree() throws Exception {
 		
