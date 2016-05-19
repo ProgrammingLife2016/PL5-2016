@@ -689,8 +689,8 @@ d3.layout.phylotree = function(container) {
 
         menu_object.selectAll("li").remove();
         if (node) {
-            if (!d3_phylotree_is_leafnode(node)) {
-            	
+        	
+            if (!d3_phylotree_is_leafnode(node)) {            	
             	//author: Kasper Grabarz
             	//These are customisations
             	if (true) {

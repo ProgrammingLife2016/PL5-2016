@@ -91,7 +91,7 @@ function addCompareGenomeButtonBindings() {
         console.log(ids);
 
         var data = {
-            'ids' : ids
+            'ids' : JSON.stringify(ids)
         };
 
         fullSizeMinimap();
