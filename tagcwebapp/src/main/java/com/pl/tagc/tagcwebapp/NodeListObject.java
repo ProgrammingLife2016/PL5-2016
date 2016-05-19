@@ -1,4 +1,4 @@
-package com.pl.tagc.xmladapterlogic;
+package com.pl.tagc.tagcwebapp;
 
 import genome.Strand;
 import ribbonnodes.RibbonEdge;

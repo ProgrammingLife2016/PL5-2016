@@ -82,16 +82,16 @@ function addCompareGenomeButtonBindings() {
 
     $('#compGenomesButton').on('click', function(e) {
         var selectedNodeObjects = tree.get_selection();
-        var names = [];
+        var ids = [];
         selectedNodeObjects.forEach(function(d) {
-            if (d.name) {
-                names.push(d.name);
+            if (d.id) {
+                ids.push(d.id);
             }
         });
-        console.log(names);
+        console.log(ids);
 
         var data = {
-            'names' : names
+            'ids' : ids
         };
 
         fullSizeMinimap();

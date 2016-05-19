@@ -1,4 +1,4 @@
-package com.pl.tagc.xmladapterlogic;
+package com.pl.tagc.tagcwebapp;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import phylogenetictree.PhylogeneticNode;
 
-@XmlType(propOrder={"nameLabel","originalChildOrder","children","distance","annotation"})
+@XmlType(propOrder={"nameLabel","originalChildOrder","children","distance","annotation","id"})
 public class AdaptedPhylogeneticNode {
 	
     private ArrayList<PhylogeneticNode> children;
@@ -20,6 +20,7 @@ public class AdaptedPhylogeneticNode {
     /**
      * The distance to its parent.
      */
+    private int id;
     private double distance;
     private String annotation = "";
     private int originalChildOrder;
@@ -75,6 +76,14 @@ public class AdaptedPhylogeneticNode {
 	@XmlElement(name = "original_child_order")
 	public int getOriginalChildOrder() {
 		return originalChildOrder;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

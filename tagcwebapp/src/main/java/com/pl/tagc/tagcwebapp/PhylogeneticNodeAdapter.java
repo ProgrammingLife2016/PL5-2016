@@ -1,4 +1,4 @@
-package com.pl.tagc.xmladapterlogic;
+package com.pl.tagc.tagcwebapp;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -17,6 +17,7 @@ public class PhylogeneticNodeAdapter extends XmlAdapter<AdaptedPhylogeneticNode,
     	adaptedNode.setNameLabel(node.getNameLabel());
     	adaptedNode.setDistance(node.getDistance());
     	adaptedNode.setChildren(node.getChildren());
+    	adaptedNode.setId(node.getId());
     	boolean isFirstChild = true;
     	if(node.getParent() != null)
     	{

@@ -5,9 +5,6 @@ import java.util.List;
 
 import javax.ws.rs.*;
 
-import com.pl.tagc.xmladapterlogic.NodeListObject;
-import com.pl.tagc.xmladapterlogic.PhylogeneticTreeObject;
-
 import controller.Controller;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -67,7 +64,8 @@ public class RestApi {
 	@POST
 	@Path("/getribbongraph")
 	@Produces("application/json")
-	public NodeListObject requestRibbonGraph(@FormParam("names") List<String> names) {
+	public NodeListObject requestRibbonGraph(@FormParam("ids") List<String> ids) {
+		System.out.println(ids);
 		return new NodeListObject(new CopyOnWriteArrayList<>( Controller.DC.getRibbonNodes(0, 5000, 5)));
 	}
 
