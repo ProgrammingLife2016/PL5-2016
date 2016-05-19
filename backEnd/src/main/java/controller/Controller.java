@@ -33,7 +33,6 @@ public class Controller {
 
     //Todo move strand graph and genomes to seperate class.
     private HashMap<Integer, Strand> strandNodes;
-    private HashMap<String, StrandEdge> strandEdges;
     private HashMap<String, Genome> genomes;
 
     private String newickString;
@@ -54,7 +53,6 @@ public class Controller {
      */
     public Controller() {
         strandNodes = new HashMap<>();
-        strandEdges = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
@@ -99,33 +97,14 @@ public class Controller {
     }
 
     /**
-     * Adding an StrandEdge to the data.
-     *
-     * @param strandEdge The added StrandEdge.
-     */
-    public void addEdge(StrandEdge strandEdge) {
-        strandEdges.put(strandEdge.getStart() + "|" + strandEdge.getEnd(), strandEdge);
-    }
-
-    /**
      * Get all the Strand in the data.
      *
      * @return strandNodes.
      */
-    public HashMap<Integer, Strand> getstrandNodes() {
+    public HashMap<Integer, Strand> getStrandNodes() {
         return strandNodes;
 
     }
-
-    /**
-     * Get all the edges in the data.
-     *
-     * @return Edges.
-     */
-    public HashMap<String, StrandEdge> getEdges() {
-        return strandEdges;
-    }
-
 
     /**
      * Get the data width.

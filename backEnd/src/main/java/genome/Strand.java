@@ -17,6 +17,7 @@ public class Strand {
     private String referenceGenome; // the refrence genome of this node
     private int referenceCoordinate; //coordinate of this node in the refr genome
     private int weight; // amount of genomes that contain this node
+    private ArrayList<StrandEdge> edges;
 
     /**
      * Constructor to create a node.
@@ -36,9 +37,8 @@ public class Strand {
         }
         this.referenceGenome = referenceGenome;
         this.referenceCoordinate = referenceCoordinate;
-
-
         this.weight = genomes.length;
+        this.edges = new ArrayList<>();
     }
 
 
@@ -161,10 +161,17 @@ public class Strand {
             genomes[i] = newGenomes.get(i);
         }
         this.weight = genomes.length;
-
-
-
-
-
+    }
+    
+    public void addEdge(StrandEdge edge) {
+    	edges.add(edge);
+    }
+    
+    public void setEdges(ArrayList<StrandEdge> edges) {
+    	this.edges = edges;
+    }
+    
+    public ArrayList<StrandEdge> getEdges() {
+    	return edges;
     }
 }

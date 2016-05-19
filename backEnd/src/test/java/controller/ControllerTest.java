@@ -30,7 +30,6 @@ public class ControllerTest {
     	
     	data.addStrand(strand1);
     	data.addStrand(strand2);
-    	data.addEdge(edge);
     }
     
     /**
@@ -38,19 +37,10 @@ public class ControllerTest {
      */
     @Test
     public void testAddStrand() {
-    	assertEquals(data.getstrandNodes().get(strand1.getId()), strand1);
-    	assertEquals(data.getstrandNodes().get(strand2.getId()), strand2);
+    	assertEquals(data.getStrandNodes().get(strand1.getId()), strand1);
+    	assertEquals(data.getStrandNodes().get(strand2.getId()), strand2);
     }
     
-    /**
-     * Tests adding a Edge.
-     */
-    @Test
-    public void testAddEdge() {
-    	assertEquals(data.getEdges().get(edge.getStart() + "|" + edge.getEnd()), edge);
-    }
-    
-
     /**
      * Test data width.
      */

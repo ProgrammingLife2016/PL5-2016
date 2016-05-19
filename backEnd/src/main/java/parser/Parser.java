@@ -47,7 +47,8 @@ public class Parser {
 					Strand strand = createNode(splittedLine);
 					result.addStrand(strand);
 				} else if (temp.equals("L")) {
-					result.addEdge(createEdge(splittedLine));
+					StrandEdge edge = createEdge(splittedLine);
+					result.getStrandNodes().get(edge.getStart()).addEdge(edge);
 				}
 				line = reader.readLine();
 			}
