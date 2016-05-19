@@ -25,13 +25,14 @@ public class Parser {
 	private PrintWriter nodes;
 	private PrintWriter edges;
     private PrintWriter phylo;
+    private int parentID = 0;
 
 	/**
 	 * Constructor to create an Parser.
      * @param destPath the destination path
      * @param currentPath the path of the files
 	 */
-	public Parser(String destPath, String currentPath) {
+	public Parser(String destPath, String currentPath, String phyloTree) {
         new File(destPath).mkdir();
         File nodeFile = new File(destPath + "/nodes.csv");
 		File edgeFile = new File(destPath + "/edges.csv");
@@ -57,6 +58,7 @@ public class Parser {
 		}
 
 		parseToCSV(currentPath);
+        getPhyloFile(phyloTree);
 		edges.close();
 		nodes.close();
         phylo.close();
@@ -208,5 +210,52 @@ public class Parser {
             return new ArrayList<String>(Arrays.asList(genomes));
         }
         return null;
+    }
+
+    /**
+     * Get the content from the phylogenetic tree.
+     * @param file the path of the file
+     */
+    public void getPhyloFile(String file) {
+        BufferedReader reader;
+        String line = null;
+        try {
+            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            line = reader.readLine();
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        parsePhyloTree(line.substring(0, line.length() - 1), 0);
+    }
+
+    /**
+     * Recursively parses the inputted Newick tree (assumed binary).
+     * @param tree the path of the file
+     */
+    public void parsePhyloTree(String tree, int parent) {
+        int parCount = 0;
+        boolean isParent = false;
+
+        for (int i = 0; i < tree.length(); i++) {
+            if (tree.charAt(i) == '(') {
+                parCount++;
+            } else if (tree.charAt(i) == ')') {
+                parCount--;
+            } else if (tree.charAt(i) == ',' && parCount == 1) {
+                parentID++; //global id counter
+                int temp = parentID; //keep current value so it doesn't change in recursive calls.
+                phylo.println(parent + "," + temp + ",0");
+                parsePhyloTree(tree.substring(1, i), temp);
+                parsePhyloTree(tree.substring(i + 1, tree.length() - 1), temp);
+                isParent = true;
+            }
+        }
+
+        if(!isParent) {
+            phylo.println(parent + "," + tree.split(":")[0] + ",0");
+        }
     }
 }

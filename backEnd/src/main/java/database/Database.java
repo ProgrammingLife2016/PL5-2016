@@ -38,7 +38,7 @@ public class Database {
         path = databasePath.toLowerCase();
 
         //Parse the data to csv-files
-        new Parser("temp", dataPath);
+        new Parser("temp", dataPath, phyloPath);
 
         createDatabaseConnection(useExistingDB);
 
@@ -48,6 +48,7 @@ public class Database {
             createConstraints();
             insertNodes("temp/nodes.csv");
             insertEdges("temp/edges.csv");
+            insertPhyloTree("temp/phylo.csv");
         }
     }
 
@@ -165,6 +166,24 @@ public class Database {
                     + "\' AS csvLine\nMATCH (start:Strand { id: toInt(csvLine.start)}),"
                     + "(end:Strand { id: toInt(csvLine.end)})\n"
                     + "CREATE (start)-[:GENOME]->(end)");
+            tx.success();
+        }
+    }
+
+    /**
+     * Inserts the phylogenetic tree into the database.
+     * @param file the filePath of the csv
+     */
+    private void insertPhyloTree(String file) {
+        try (Transaction tx = graphDb.beginTx()) {
+            graphDb.execute("CREATE (n:Phylo {genome: \"0\"})");
+            graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + new File(file).toURI()
+                    + "\' AS csvLine\nMERGE (n:Phylo {genome:csvLine.child}) ON "
+                    + "CREATE SET n.genome = csvLine.child");
+            graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + new File(file).toURI()
+                    + "\' AS csvLine\nMATCH (parent:Phylo {genome:csvLine.parent})\n" +
+                    "MATCH (child:Phylo {genome:csvLine.child})\n" +
+                    "CREATE (parent)-[:PHYLOPARENT]->(child)");
             tx.success();
         }
     }
