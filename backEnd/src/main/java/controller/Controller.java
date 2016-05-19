@@ -232,9 +232,15 @@ public class Controller {
      *
      * @return The tree.
      */
-    public PhylogeneticTree getPhylogeneticTree() {
-        return phylogeneticTree;
-    }
+    public PhylogeneticTree loadPhylogeneticTree(int treeId) {
+		if (treeId == 0) {
+			phylogeneticTree = new PhylogeneticTree();
+			phylogeneticTree.parseTree("testGenomeNwk");
+			return phylogeneticTree;
+		} else {
+			return phylogeneticTree;
+		}
+	}
 
     /**
      * Setter for the phylogenicTree.

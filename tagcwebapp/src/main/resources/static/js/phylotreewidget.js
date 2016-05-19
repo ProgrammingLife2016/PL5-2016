@@ -12,7 +12,7 @@ $(document).ready(function() {
     addCompareGenomeButtonBindings();
     set_default_tree_settings();
     //makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
-    makeRestAPIcall('getphylogenetictree','JSON', 'GET', '', drawTree);
+    makeRestAPIcall('getphylogenetictree','JSON', 'GET', {'treeId' : 1}, drawTree);
 });
 
 function drawTree(json) {
