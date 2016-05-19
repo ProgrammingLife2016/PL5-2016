@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test class to test the ribbonNodes.
@@ -13,9 +13,9 @@ import static org.junit.Assert.*;
  */
 public class RibbonNodeTest {
 
-    RibbonNode node1;
-    RibbonNode node2;
-    RibbonEdge edge;
+    private RibbonNode node1;
+    private RibbonNode node2;
+    private RibbonEdge edge;
 
     /**
      * Set up the tests.
@@ -49,7 +49,7 @@ public class RibbonNodeTest {
     }
 
     /**
-     * Test the getEdge method
+     * Test the getEdge method.
      *
      * @throws Exception if fail.
      */
@@ -127,6 +127,10 @@ public class RibbonNodeTest {
         assertEquals(node1.getEdges().get(3), edge4);
     }
 
+    /**
+     * Test the get genomes method.
+     * @throws Exception If fail.
+     */
     @Test
     public void testGetGenomes() throws Exception {
         assertEquals(node1.getGenomes().size(), 2);

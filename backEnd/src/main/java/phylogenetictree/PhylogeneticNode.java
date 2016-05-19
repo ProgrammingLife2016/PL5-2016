@@ -30,8 +30,8 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
     /**
      * Default constructor.
      *
-     * @param parent      T
-     * @param childNumber
+     * @param parent      T.
+     * @param childNumber Child number.
      */
     public PhylogeneticNode(PhylogeneticNode parent, int childNumber) {
         super(parent, childNumber);
@@ -117,7 +117,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
     /**
      * set the label of this node.
      *
-     * @return the node name label
+     * @param nameLabel New label.
      */
     public void setNameLabel(String nameLabel) {
         this.nameLabel = nameLabel;

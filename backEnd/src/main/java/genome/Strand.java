@@ -160,14 +160,26 @@ public class Strand {
         this.weight = genomes.length;
     }
     
+    /**
+     * Add an edge to the edges.
+     * @param edge The added edge.
+     */
     public void addEdge(StrandEdge edge) {
     	edges.add(edge);
     }
     
+    /**
+     * Set the edges.
+     * @param edges New edges.
+     */
     public void setEdges(ArrayList<StrandEdge> edges) {
     	this.edges = edges;
     }
     
+    /**
+     * Get the edges.
+     * @return Edges.
+     */
     public ArrayList<StrandEdge> getEdges() {
     	return edges;
     }

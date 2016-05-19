@@ -2,12 +2,10 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
-import genome.StrandEdge;
 import genome.Genome;
 import genome.Strand;
 import parser.Parser;
 
-import java.util.Comparator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +17,6 @@ import java.util.HashMap;
 
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
-import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 /**
@@ -34,9 +31,7 @@ public class Controller {
     //Todo move strand graph and genomes to seperate class.
     private HashMap<Integer, Strand> strandNodes;
     private HashMap<String, Genome> genomes;
-    private HashMap<String, Genome> test;
-    
-    public HashMap<String, Genome> getTest() { return test; }
+    private HashMap<String, Genome> temp;
 
     private String newickString;
 
@@ -58,7 +53,7 @@ public class Controller {
         strandNodes = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
-        test = new HashMap<>();
+        temp = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
@@ -74,8 +69,9 @@ public class Controller {
      * @param zoomLevel The zoomlevel to filter to.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel){
-        return RibbonController.getRibbonNodes(minX,maxX,zoomLevel,dataTree,activeGenomes, test, strandNodes);
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
+        return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, 
+        		dataTree, activeGenomes, temp);
     }
 
     /**
@@ -89,14 +85,14 @@ public class Controller {
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome(genomeID));
-                test.put(genomeID, new Genome(genomeID));
+                temp.put(genomeID, new Genome(genomeID));
                 //HARDCODED ACTIVE GENOMES
                 if (!genomeID.equals("MT_H37RV_BRD_V5.ref.fasta")) {
                     activeGenomes.add(genomeID);
                 }
             } else {
                 genomes.get(genomeID).addStrand(strand);
-                test.get(genomeID).addStrand(strand);
+                temp.get(genomeID).addStrand(strand);
             }
         }
     }
@@ -237,6 +233,5 @@ public class Controller {
 		}
 
 		return rawFileData;
-	}
-    
+	}    
 }

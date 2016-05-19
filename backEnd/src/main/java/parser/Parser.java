@@ -30,7 +30,8 @@ public class Parser {
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-	public static controller.Controller parse(String file) {
+	 @SuppressWarnings("checkstyle:methodlength")
+	 public static controller.Controller parse(String file) {
 		BufferedReader reader;
 		String line;
 		controller.Controller result = new controller.Controller();

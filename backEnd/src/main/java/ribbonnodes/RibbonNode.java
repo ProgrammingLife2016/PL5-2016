@@ -3,7 +3,6 @@ package ribbonnodes;
 import genome.Strand;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Matthijs on 12-5-2016.
@@ -104,14 +103,26 @@ public class RibbonNode {
         return outEdges;
     }
 
+    /**
+     * Get the incoming edges.
+     * @return InEdges.
+     */
     public ArrayList<RibbonEdge> getInEdges() {
         return inEdges;
     }
 
+    /**
+     * Set the outgoing edges.
+     * @param outEdges New outgoing edges.
+     */
     public void setOutEdges(ArrayList<RibbonEdge> outEdges) {
         this.outEdges = outEdges;
     }
 
+    /**
+     * Set the incoming edges.
+     * @param inEdges The new incoming edges.
+     */
     public void setInEdges(ArrayList<RibbonEdge> inEdges) {
         this.inEdges = inEdges;
     }
@@ -139,31 +150,58 @@ public class RibbonNode {
         return genomes;
     }
 
-
+    /**
+     * Get x coordinate.
+     * @return X.
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Set x coordinate.
+     * @param x New x.
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Get y coordinate.
+     * @return Y.
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Set the y coordinate.
+     * @param y New y.
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Get the strands.
+     * @return Strands.
+     */
     public ArrayList<Strand> getStrands() {
         return strands;
     }
 
+    /**
+     * Add a multiple strands.
+     * @param strands Added strands.
+     */
     public void addStrands(ArrayList<Strand> strands) {
         this.strands.addAll(strands);
     }
 
+    /**
+     * Add a strand.
+     * @param strand Added strand.
+     */
     public void addStrand(Strand strand) {
         this.strands.add(strand);
     }
