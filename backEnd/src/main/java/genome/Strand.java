@@ -63,11 +63,8 @@ public class Strand {
      * Get the genomes passing through the node.
      * @return The genomes id's.
      */
-    public String[] getGenomes() {
-        String[] res = new String[genomes.length];
-        for (int i = 0; i < genomes.length; i++) {
-            res[i] = genomes[i];
-        }
+    public ArrayList<String> getGenomes() {
+	    ArrayList<String> res = new ArrayList<>(Arrays.asList(genomes));   
         return res;
     }
 

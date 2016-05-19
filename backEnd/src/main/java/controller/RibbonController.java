@@ -3,12 +3,15 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import genome.Strand;
+import genome.StrandEdge;
+import genome.Genome;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 
 /**
  * Created by Matthijs on 18-5-2016.
@@ -26,28 +29,48 @@ public final class RibbonController {
      * @param activeGenomes the genomes to filter for.
      * @return The list of ribbonNodes.
      */
-    public static ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel, DataTree dataTree, ArrayList<String> activeGenomes) {
+    public static ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel, DataTree dataTree, 
+    		ArrayList<String> activeGenomes, HashMap<String, Genome> genomes, HashMap<Integer, Strand> strands) {
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<DataNode> filteredNodes =
-                dataTree.getDataNodes(minX, maxX, activeGenomes, zoomLevel);
-
-        int id=0;
-        for (DataNode node : filteredNodes) {
-            for (Strand strand : node.getStrands()) {
-                //Here the nodes are placed in order
-                //(notice node.getgenomes and not ribbon.getgenomes).
-                RibbonNode ribbonNode = new RibbonNode(id, new ArrayList<>(Arrays.asList(strand.getGenomes())));
-                ribbonNode.addStrand(strand);
-                ribbonNode.setX(strand.getId());
-                ribbonNode.setY(strand.getWeight() * 10); //TODO find way to structure more clearly
-                id++;
-                result.add(ribbonNode);
-            }
+                dataTree.getDataNodes(minX, maxX, activeGenomes, 100);
+        for (Genome g : genomes.values()) {
+        	if (g.getStrands().size() == 5495) {
+        		System.out.println(g.getId());
+        	}
         }
+        String reference = "MT_H37RV_BRD_V5.ref.fasta";
+        Genome referenceGenome = genomes.get(reference);
+        int x =  0;
+        System.out.println(referenceGenome.getStrands().size());
+        for (Strand strand : referenceGenome.getStrands()) {
+        	RibbonNode ribbon = new RibbonNode(strand.getId(), strand.getGenomes());
+        	ribbon.setX(x);
+        	ribbon.setY(10);
+        	for (StrandEdge edge : strand.getEdges()) {
+        		ribbon.addEdge(new RibbonEdge(edge.getStart(), edge.getEnd()));
+        	}
+        	result.add(ribbon);
+        	System.out.println("hhh");
+        	x += 10;
+        }
+        
+        
+//        for (DataNode node : filteredNodes) {
+//            for (Strand strand : node.getStrands()) {
+//                //Here the nodes are placed in order
+//                //(notice node.getgenomes and not ribbon.getgenomes).
+//                RibbonNode ribbonNode = new RibbonNode(strand.getId(), strand.getGenomes());
+//                ribbonNode.addStrand(strand);
+//                ribbonNode.setX(strand.getId());
+//                ribbonNode.setY(strand.getWeight() * 10); //TODO find way to structure more clearly
+//                result.add(ribbonNode);
+//            }
+//        }
 
-        addRibbonEdges(result, activeGenomes);
-        result = collapseBubbles(result);
-        addRibbonEdges(result, activeGenomes);
+        //addRibbonEdges(result, activeGenomes);
+        //result = collapseBubbles(result);
+        //addRibbonEdges(result, activeGenomes);
 
 
         return result;

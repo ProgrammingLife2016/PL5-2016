@@ -71,7 +71,7 @@ public class Controller {
      * @return The list of ribbonNodes.
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel){
-        return RibbonController.getRibbonNodes(minX,maxX,zoomLevel,dataTree,activeGenomes);
+        return RibbonController.getRibbonNodes(minX,maxX,zoomLevel,dataTree,activeGenomes, genomes, strandNodes);
     }
 
     /**
@@ -82,17 +82,17 @@ public class Controller {
     public void addStrand(Strand strand) {
         strandNodes.put(strand.getId(), strand);
 
-
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome(genomeID));
-
+                System.out.println("hoevaak");
                 //HARDCODED ACTIVE GENOMES
-                if (!(activeGenomes.size() > 3 || genomeID.equals("MT_H37RV_BRD_V5.ref.fasta"))) {
+                if (!genomeID.equals("MT_H37RV_BRD_V5.ref.fasta")) {
                     activeGenomes.add(genomeID);
                 }
+            } else {
+                genomes.get(genomeID).addStrand(strand);
             }
-            genomes.get(genomeID).addStrand(strand);
         }
     }
 
