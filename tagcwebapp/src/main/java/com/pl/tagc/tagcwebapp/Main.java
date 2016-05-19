@@ -2,10 +2,8 @@ package com.pl.tagc.tagcwebapp;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.ext.RuntimeDelegate;
-
 import org.eclipse.persistence.jaxb.MarshallerProperties;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer;
 import org.glassfish.jersey.server.ResourceConfig;
