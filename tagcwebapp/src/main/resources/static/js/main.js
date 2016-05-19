@@ -13,28 +13,37 @@ var zoomWidth = 100;
 var cachedNodes;
 var currentMousePos = { x: -1, y: -1 };
 
+/**
+ * When the screen resizes, or one of the panels resizes, the others need to be resized as well
+ * This function will update all other panels when one resizes, or update all panels when the screen resizes.
+ */
 function screenResize() {
+    //If the width has changed since last time, update the width of the left sub panel accordingly
     if ($(window).width() != screenWidth) {
         $("#phylogenyContainer").width(Math.ceil($("#phylogenyContainer").width() * $(window).width() / screenWidth));
         screenWidth = $(window).width();
     }
 
+    //If the height has changed since last time, update the height of the zoom panel accordingly
     if ($(window).height() != screenHeight) {
         $("#zoom").height(Math.ceil($("#zoom").height() * $(window).height() / screenHeight));
         screenHeight = $(window).height();
     }
 
-    //Update height
+    //Update the height of the sub panel after change of the zoom panel.
+    //The sub panel becomes the height of the screen, minus the height of the zoom and header bar.
     var borderHeight = parseInt($("#zoom").css("border-bottom-width").replace('px', ''));
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
-    if ($('#zoom').find('canvas').length) {
+    if ($('#zoom').find('canvas').length) { //Update the canvas height and width in the zoom panel
         $('#zoom').find('canvas')[0].height = $('#zoom').height();
         $('#zoom').find('canvas')[0].width = $('#zoom').width();
         updatezoomWindow();
     }
 
-    //Update sub width
+    //Update the width of the sub panel and zoom panel and the canvasses in it.
+    //If the width of a subpanel has changed or the screen, update both the upper canvas and the panels in the sub.
+    //Both canvasses need to be updated as well.
     var borderWidth = parseInt($("#phylogenyContainer").css("border-right-width").replace('px', ''));
     $('#minimapContainer').width($("#sub").width() - $("#phylogenyContainer").width() - borderWidth);
     if ($('#minimapContainer').find('canvas').length) {
@@ -48,26 +57,27 @@ function screenResize() {
         treeRedrawTimeout = setTimeout(function() {
             drawTree(null); //Update the phylogenyTree
         }, 1500);
-    } 
+    }
 }
 
 $('document').ready(function() {
 
     screenResize();
 
+    //Add a resizable to the south side of the zoom panel
     $("#zoom").resizable({
         handles: 's'
     });
+    //Add a resizable to the east side of the phylogeny panel
     $("#phylogenyContainer").resizable({
         handles: 'e'
     });
-    $('#zoom').resize(function() {
-        screenResize();
-    });
-    $('#phylogenyContainer').resize(function() {
+    //Trigger screenResize when a resizable panel is resized
+    $('#zoom, #phylogenyContainer').resize(function() {
         screenResize();
     });
 
+    //Trigger screenResize after a real screen resize
     $(window).resize(function() {
         if (screenResizeTimeout) {
             clearTimeout(screenResizeTimeout);
@@ -85,7 +95,7 @@ $('document').ready(function() {
         zoom(1, 10);
     });
 
-
+    //Bind the mouseScroll to trigger zooming on the miniMap
     $('body').bind('mousewheel DOMMouseScroll', function(e) {
         if ($(currentHover).is('#minimap')) {
             e.preventDefault();
@@ -104,12 +114,14 @@ $('document').ready(function() {
             }
         });
 
+    //This makes the system know if the mouse is currently over a genome.
     $('.genome').hover(function() {
         currentHover = this;
     }, function() {
         currentHover = null;
     });
 
+    //Constantly check where the mouse is, to let the zooming work better.
     $('#minimapContainer').mousemove(function(event) {
         currentMousePos.x = event.pageX;
         currentMousePos.y = event.pageY;
@@ -118,14 +130,19 @@ $('document').ready(function() {
     initialize();
 });
 
-function resizeBlocks() {
-
-}
-
+/**
+ * Change css pixel distance to an integer: 25px to 25
+ * @param css The css value
+ * @returns {Number} The css value changed to an integer
+ */
 function pxToInt(css) {
     return parseFloat(css.replace('px', ''));
 }
 
+/**
+ * Draw the zoom data
+ * @param nodes
+ */
 var drawZoom = function(nodes) {
     var ratio = $('#zoomWindow').width() / Object.keys(nodes).length;
     var left = nodes[Object.keys(nodes)[0]].x - 1;
@@ -135,6 +152,10 @@ var drawZoom = function(nodes) {
     });
 };
 
+/**
+ * Draw the minimap
+ * @param nodes
+ */
 var drawMinimap = function(nodes) {
     if (nodes == null) {
         nodes = cachedNodes;
@@ -148,6 +169,13 @@ var drawMinimap = function(nodes) {
     });
 };
 
+/**
+ * The global draw method that draws either the minimap or the zoomWindow. Based on a given translate method, the
+ * coordinates are translated to the right position.
+ * @param points
+ * @param c
+ * @param translate
+ */
 function draw(points, c, translate) {
     if (typeof c == "undefined") {
         return;
@@ -180,6 +208,11 @@ function draw(points, c, translate) {
     });
 }
 
+/**
+ * The method that does the zooming, based on your mouse position, the zooming is applied.
+ * @param direction
+ * @param zoomAmount
+ */
 function zoom(direction, zoomAmount) {
     var slider = $('.slider', currentHover);
     var minimap = $('#minimap');
@@ -194,6 +227,7 @@ function zoom(direction, zoomAmount) {
     var left = parseInt(slider.css('left').replace('px', ''));
     var difference = Math.abs(currentWidth - newWidth);
 
+    //If zooming in the zoomField should zoom towards the cursor
     if (direction > 0) {
         var mouseX = currentMousePos.x - minimap.position().left;
         var leftSide = mouseX - left;
@@ -213,6 +247,7 @@ function zoom(direction, zoomAmount) {
     slider.css('left', left + 'px');
     slider.width(parseInt(newWidth) +'px');
     clearTimeout(zoomTimeout);
+    //If not zooming anymore, update the ZoomWindow with new data.
     if (zoomAmount != 0) {
         zoomTimeout = setTimeout(function () {
             updatezoomWindow();
@@ -220,6 +255,9 @@ function zoom(direction, zoomAmount) {
     }
 }
 
+/**
+ * Update the window that shows the zoomed genome
+ */
 function updatezoomWindow()
 {
     var slider = $('#minimap .slider');
@@ -251,8 +289,8 @@ function updatezoomWindow()
 }
 
 // This function translates from one representation of a bounding box in gui coordinates to
-// coordinates expected by the REST api. It takes x, y, width and height arguments and returns 
-// an object with left right top and bottom properties.  
+// coordinates expected by the REST api. It takes x, y, width and height arguments and returns
+// an object with left right top and bottom properties.
 function computeBoundingBox(x, width)
 {
     return {
@@ -262,6 +300,11 @@ function computeBoundingBox(x, width)
     }
 }
 
+/**
+ * Parse the received node data from the server to something that we can use better.
+ * @param nodes
+ * @returns {{}}
+ */
 function parseNodeData(nodes) {
     var result = {};
 
@@ -278,6 +321,11 @@ function parseNodeData(nodes) {
     return result;
 }
 
+/**
+ * Fetch the nodes from the server based on a boundingBox.
+ * @param boundingBox
+ * @param callback
+ */
 function getNodes(boundingBox, callback) {
     $.ajax({
         url: url + 'api/getnodes',
@@ -289,11 +337,17 @@ function getNodes(boundingBox, callback) {
     });
 }
 
+/**
+ * Initialize both canvasses.
+ */
 function initialize() {
     initializeMinimap();
     initializeZoomWindow();
 }
 
+/**
+ * Initialize the minimap canvas
+ */
 function initializeMinimap() {
     var minimap = $('#minimap');
     minimap.height($('#minimapContainer').height());
@@ -308,6 +362,9 @@ function initializeMinimap() {
     zoom(-1, 1);
 }
 
+/**
+ * Initialize the zooming window canvas.
+ */
 function initializeZoomWindow() {
     var zoomWindow = $('#zoomWindow');
     zoomWindow.prepend(
@@ -315,6 +372,9 @@ function initializeZoomWindow() {
     );
 }
 
+/**
+ * Make the phylogney Panel small, and the minimap Panel big
+ */
 function fullSizeMinimap() {
     $('#phylogenyContainer').animate({
         'width': 30
