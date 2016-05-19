@@ -690,6 +690,42 @@ d3.layout.phylotree = function(container) {
         menu_object.selectAll("li").remove();
         if (node) {
             if (!d3_phylotree_is_leafnode(node)) {
+            	
+            	//author: Kasper Grabarz
+            	//These are customisations
+            	if (true) {
+                    menu_object.append("li").append("a")
+                        .attr("tabindex", "-1")
+                        .text("Deselect all")
+                        .on("click", function(d) {
+                            menu_object.style("display", "none");
+                            phylotree.modify_selection(function(d) {return false});
+                        });
+                }
+            	
+            	if (true) {
+                    menu_object.append("li").append("a")
+                        .attr("tabindex", "-1")
+                        .text("Select node")
+                        .on("click", function(d) {
+                            menu_object.style("display", "none");
+                            phylotree.modify_selection([node]);
+                        });
+                }
+            	
+            	if (true) {
+                    menu_object.append("li").append("a")
+                        .attr("tabindex", "-1")
+                        .text("Deselect node")
+                        .on("click", function(d) {
+                            menu_object.style("display", "none");
+                            phylotree.modify_selection(function (d) { return d != node && d[selection_attribute_name]});
+                        });
+                    menu_object.append("li").attr("class", "divider");
+                    menu_object.append("li").attr("class", "dropdown-header").text("Toggle selection");
+                }
+            	
+            	
                 if (options["collapsible"]) {
                     menu_object.append("li").append("a")
                         .attr("tabindex", "-1")
