@@ -59,6 +59,7 @@ public class Controller {
         genomes = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
+        //phylogeneticTree.parseTree("testGenomeNwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
         newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");
@@ -231,9 +232,15 @@ public class Controller {
      *
      * @return The tree.
      */
-    public PhylogeneticTree getPhylogeneticTree() {
-        return phylogeneticTree;
-    }
+    public PhylogeneticTree loadPhylogeneticTree(int treeId) {
+		if (treeId == 0) {
+			phylogeneticTree = new PhylogeneticTree();
+			phylogeneticTree.parseTree("testGenomeNwk");
+			return phylogeneticTree;
+		} else {
+			return phylogeneticTree;
+		}
+	}
 
     /**
      * Setter for the phylogenicTree.

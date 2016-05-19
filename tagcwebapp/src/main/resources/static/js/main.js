@@ -55,7 +55,7 @@ function screenResize() {
             clearTimeout(treeRedrawTimeout);
         }
         treeRedrawTimeout = setTimeout(function() {
-            drawTree(null); //Update the phylogenyTree
+            //drawTree(null); //Update the phylogenyTree
         }, 1500);
     }
 }

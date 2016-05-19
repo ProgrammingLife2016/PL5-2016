@@ -579,21 +579,32 @@ d3.layout.phylotree = function(container) {
         return phylotree;
     };
 
-    function phylotree(nwk, bootstrap_values) {
-
+    function phylotree(tree_data, isJSONtree, bootstrap_values) {
+    	
         d3_phylotree_add_event_listener();
+        var _node_data;
+       var tt = "((TKK_04_0005:1.02364427249e-06,TKK_04_0020:1.02364427249e-06):0.00581151247664,(((TKK_04_0120:0.000617768881078,TKK_04_0085:0.000180134778091):0.00054475696593,((TKK_04_0080:0.000575695127794,TKK-01-0070:0.000118243641824):0.00032713084129,TKK-01-0080:0.000308003484252):1.02364427249e-06):0.00672115893225,TKK_04_0003:0.00521542687277):1.02364427249e-06);"
+        _node_data = (typeof tt == "string") ? d3_phylotree_newick_parser(tt, bootstrap_values) : tt;
+          // this builds children and links;
+        if(!isJSONtree)
+        	{
+        	//var tree_data = "((TKK_04_0005:1.02364427249e-06,TKK_04_0020:1.02364427249e-06):0.00581151247664,(((TKK_04_0120:0.000617768881078,TKK_04_0085:0.000180134778091):0.00054475696593,((TKK_04_0080:0.000575695127794,TKK-01-0070:0.000118243641824):0.00032713084129,TKK-01-0080:0.000308003484252):1.02364427249e-06):0.00672115893225,TKK_04_0003:0.00521542687277):1.02364427249e-06);"
+          //_node_data = (typeof tree_data == "string") ? d3_phylotree_newick_parser(tree_data, bootstrap_values) : tree_data;
+            // this builds children and links;
 
+            if (!_node_data['json']) {
+                nodes = [];
+            } else {
+                newick_string = tree_data;
+                nodes = d3_hierarchy.call(this, _node_data.json);
+            }
 
-        var _node_data = (typeof nwk == "string") ? d3_phylotree_newick_parser(nwk, bootstrap_values) : nwk;
-        // this builds children and links;
-
-        if (!_node_data['json']) {
-            nodes = [];
-        } else {
-            newick_string = nwk;
-            nodes = d3_hierarchy.call(this, _node_data.json);
-        }
-
+        	}
+        else
+        	{
+        		nodes = d3_hierarchy.call(this, tree_data);
+        	}
+        
         phylotree.placenodes();
         links = phylotree.links(nodes);
         return phylotree;
@@ -678,7 +689,43 @@ d3.layout.phylotree = function(container) {
 
         menu_object.selectAll("li").remove();
         if (node) {
-            if (!d3_phylotree_is_leafnode(node)) {
+        	
+            if (!d3_phylotree_is_leafnode(node)) {            	
+            	//author: Kasper Grabarz
+            	//These are customisations
+            	if (true) {
+                    menu_object.append("li").append("a")
+                        .attr("tabindex", "-1")
+                        .text("Deselect all")
+                        .on("click", function(d) {
+                            menu_object.style("display", "none");
+                            phylotree.modify_selection(function(d) {return false});
+                        });
+                }
+            	
+            	if (true) {
+                    menu_object.append("li").append("a")
+                        .attr("tabindex", "-1")
+                        .text("Select node")
+                        .on("click", function(d) {
+                            menu_object.style("display", "none");
+                            phylotree.modify_selection([node]);
+                        });
+                }
+            	
+            	if (true) {
+                    menu_object.append("li").append("a")
+                        .attr("tabindex", "-1")
+                        .text("Deselect node")
+                        .on("click", function(d) {
+                            menu_object.style("display", "none");
+                            phylotree.modify_selection(function (d) { return d != node && d[selection_attribute_name]});
+                        });
+                    menu_object.append("li").attr("class", "divider");
+                    menu_object.append("li").attr("class", "dropdown-header").text("Toggle selection");
+                }
+            	
+            	
                 if (options["collapsible"]) {
                     menu_object.append("li").append("a")
                         .attr("tabindex", "-1")
