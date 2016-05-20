@@ -52,7 +52,7 @@ public class Parser {
             nodes = new PrintWriter(destPath + "/nodes.csv", "UTF-8");
             nodes.println("id,sequence,genomes,refGenome,refCoor");
             phylo = new PrintWriter(destPath + "/phylo.csv", "UTF-8");
-            phylo.println("parent,child,dist");
+            phylo.println("parent,child,dist,pc");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -247,7 +247,7 @@ public class Parser {
             } else if (tree.charAt(i) == ',' && parCount == 1) {
                 parentID++; //global id counter
                 int temp = parentID; //keep current value so it doesn't change in recursive calls.
-                phylo.println(parent + "," + temp + ",0");
+                phylo.println(parent + "," + temp + ",0,parent");
                 parsePhyloTree(tree.substring(1, i), temp);
                 parsePhyloTree(tree.substring(i + 1, tree.length() - 1), temp);
                 isParent = true;
@@ -255,7 +255,7 @@ public class Parser {
         }
 
         if(!isParent) {
-            phylo.println(parent + "," + tree.split(":")[0] + ",0");
+            phylo.println(parent + "," + tree.split(":")[0] + ",0,child");
         }
     }
 }

@@ -5,6 +5,7 @@ import genome.Genome;
 import genome.Strand;
 import genome.StrandEdge;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseBuilder;
@@ -13,8 +14,11 @@ import parser.Parser;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 
 /**
  * @author user.
@@ -22,9 +26,7 @@ import java.util.Map;
  */
 public class Database {
 
-    //private Connection connection;
     private String path;
-    //private Controller controller;
     private GraphDatabaseService graphDb;
 
     /**
@@ -176,14 +178,14 @@ public class Database {
      */
     private void insertPhyloTree(String file) {
         try (Transaction tx = graphDb.beginTx()) {
-            graphDb.execute("CREATE (n:Phylo {genome: \"0\"})");
+            graphDb.execute("CREATE (n:Phylo {genome: \"0\", pc: \"parent\"})");
             graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + new File(file).toURI()
                     + "\' AS csvLine\nMERGE (n:Phylo {genome:csvLine.child}) ON "
-                    + "CREATE SET n.genome = csvLine.child");
+                    + "CREATE SET n += {genome: csvLine.child, pc: csvLine.pc}");
             graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + new File(file).toURI()
-                    + "\' AS csvLine\nMATCH (parent:Phylo {genome:csvLine.parent})\n" +
-                    "MATCH (child:Phylo {genome:csvLine.child})\n" +
-                    "CREATE (parent)-[:PHYLOPARENT]->(child)");
+                    + "\' AS csvLine\nMATCH (parent:Phylo {genome:csvLine.parent})\n"
+                    + "MATCH (child:Phylo {genome:csvLine.child})\n"
+                    + "CREATE (parent)-[:PHYLOPARENT]->(child)");
             tx.success();
         }
     }
@@ -247,6 +249,27 @@ public class Database {
             }
         }
         return genome;
+    }
+
+    /**
+     * Returns all genomes that descent from the selected genome/parent-id.
+     * @param id the id/name of the genome/parent who's descendants should be returned
+     * @return list of all descending genomes
+     */
+    public Set<String> returnDescGenome(String id) {
+        Set<String> result = new HashSet<>();
+
+        try (Transaction ignored = graphDb.beginTx();
+             Result r = graphDb.execute("MATCH (a:Phylo {genome: \"" + id + "\"})-[*]->(n:Phylo) "
+                     + "WHERE n.pc = \"child\" RETURN n")) {
+            while (r.hasNext()) {
+                Map<String, Object> row = r.next();
+                for (Object n : row.values()) {
+                    result.add(((Node) n).getProperty("genome").toString());
+                }
+            }
+        }
+        return result;
     }
 
     /**

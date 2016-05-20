@@ -132,6 +132,7 @@ public class DatabaseTest {
         //Iterable<Node> allNodes;
         ResourceIterator<Node> allNodes;
         String[] genomes = {"0", "1", "AA", "2", "3", "BB", "CC", "DD"};
+        String[] pc = {"parent", "parent", "child", "parent", "parent", "child", "child", "child"};
 
         int i = 0;
         try (Transaction tx = db.getGraphService().beginTx()) {
@@ -144,6 +145,7 @@ public class DatabaseTest {
             while (allNodes.hasNext()) {
                 a = allNodes.next();
                 Assert.assertEquals(genomes[i], a.getProperty("genome"));
+                Assert.assertEquals(pc[i], a.getProperty("pc"));
                 i++;
             }
         }
@@ -232,6 +234,19 @@ public class DatabaseTest {
         genome = db.returnGenome("BB");
         Assert.assertEquals("BB", genome.getId());
         Assert.assertEquals(3, genome.getStrands().get(0).getId());
+    }
+
+    /**
+     * Test if all relationships get retrieved correctly.
+     */
+    @Test
+    public void testPhyloRetrieval() {
+        Set<String> wanted = new HashSet<String>();
+        wanted.add("BB");
+        wanted.add("CC");
+        Assert.assertEquals(db.returnDescGenome("3"), wanted);
+        wanted.add("DD");
+        Assert.assertEquals(db.returnDescGenome("2"), wanted);
     }
 
     /**
