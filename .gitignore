@@ -4,6 +4,7 @@
 .recommenders
 .classpath
 .project
+.checkstyle
 Project Docs/
 .class
 /.idea
