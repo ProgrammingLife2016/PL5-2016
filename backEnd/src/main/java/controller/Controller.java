@@ -230,6 +230,7 @@ public class Controller {
     /**
      * Getter for the phylogenicTree.
      *
+     * @param treeId the tree id
      * @return The tree.
      */
     public PhylogeneticTree loadPhylogeneticTree(int treeId) {
