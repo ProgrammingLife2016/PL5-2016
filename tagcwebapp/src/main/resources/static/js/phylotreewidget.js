@@ -45,6 +45,8 @@ function addCompareGenomeButtonBindings() {
         var selectedNodeObjects = tree.get_selection();
         var names = [];
         selectedNodeObjects.forEach(function(d) {
+            console.log('test');
+            console.log(d);
             if (d.name) {
                 names.push(d.name);
             }
