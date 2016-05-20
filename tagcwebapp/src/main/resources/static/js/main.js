@@ -12,6 +12,7 @@ var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
 var cachedNodes;
 var currentMousePos = { x: -1, y: -1 };
+var counter = 1;
 
 function screenResize() {
     if ($(window).width() != screenWidth) {
@@ -24,10 +25,15 @@ function screenResize() {
         screenHeight = $(window).height();
     }
 
+    if ($("#zoom").height() + $("#header").height() > (screenHeight - 25)) {
+        $("#zoom").height(screenHeight - 25 - $("#header").height());
+    }
+
     //Update height
     var borderHeight = parseInt($("#zoom").css("border-bottom-width").replace('px', ''));
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
+    $('#minimap').height($('#sub').height());
     if ($('#zoom').find('canvas').length) {
         $('#zoom').find('canvas')[0].height = $('#zoom').height();
         $('#zoom').find('canvas')[0].width = $('#zoom').width();
@@ -46,7 +52,7 @@ function screenResize() {
             clearTimeout(treeRedrawTimeout);
         }
         treeRedrawTimeout = setTimeout(function() {
-            drawTree(null); //Update the phylogenyTree
+            //drawTree(null); //Update the phylogenyTree
         }, 1500);
     } 
 }
@@ -62,10 +68,22 @@ $('document').ready(function() {
         handles: 'e'
     });
     $('#zoom').resize(function() {
-        screenResize();
+        if (screenResizeTimeout) {
+            clearTimeout(screenResizeTimeout);
+        }
+        screenResizeTimeout = setTimeout(function() {
+            screenResize();
+        }, 500);
     });
+
     $('#phylogenyContainer').resize(function() {
-        screenResize();
+        if (screenResizeTimeout) {
+            clearTimeout(screenResizeTimeout);
+            console.log("timeOut");
+        }
+        screenResizeTimeout = setTimeout(function() {
+            screenResize();
+        }, 500);
     });
 
     $(window).resize(function() {
@@ -74,7 +92,7 @@ $('document').ready(function() {
         }
         screenResizeTimeout = setTimeout(function() {
             screenResize();
-        }, 100);
+        }, 500);
     });
 
 
@@ -98,9 +116,13 @@ $('document').ready(function() {
     $(slider)
         .draggable({
             containment: "parent",
-            stop: function() {
-                clearTimeout(zoomTimeout);
-                zoomTimeout = setTimeout(function() { updatezoomWindow() }, 500);
+            drag: function() {
+                //Temp, to make it look smooth, can be done if lazy loading is implemented
+                updatezoomWindow();
+
+                //Should be this when we have specific zoomData
+                //clearTimeout(zoomTimeout);
+                //zoomTimeout = setTimeout(function() { updatezoomWindow() }, 50);
             }
         });
 
@@ -159,9 +181,11 @@ function draw(points, c, translate) {
     var counter = 0;
     var nodeHeight = c.height / 2;
 
+    var yTranslate = (c.height < 200)?c.height / 2 / 110 : 1;
+
     $.each(points, function(id, point) {
         ctx.beginPath();
-        ctx.arc(translate(point.x),nodeHeight+ point.y, 5, 0, 2 * Math.PI);
+        ctx.arc(translate(point.x), nodeHeight + point.y * yTranslate, 5, 0, 2 * Math.PI);
         ctx.stroke();
 
         $.each(point.edges, function(key, edge) {
@@ -171,8 +195,8 @@ function draw(points, c, translate) {
             }
             if (target) {
                 ctx.beginPath();
-                ctx.moveTo(translate(point.x),nodeHeight+ point.y);
-                ctx.lineTo(translate(target.x),nodeHeight+ target.y);
+                ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
+                ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
                 ctx.lineWidth = edge.weight;
                 ctx.stroke();
             }
@@ -318,9 +342,13 @@ function initializeZoomWindow() {
 }
 
 function fullSizeMinimap() {
+    $("#zoom").animate({
+        height: screenHeight - 250 - $('#header').height()
+    }, 500);
+
     $('#phylogenyContainer').animate({
         'width': 30
-    }, 1000, function() {
+    }, 1000, function () {
         zoom(1, 0);
         screenResize();
     });

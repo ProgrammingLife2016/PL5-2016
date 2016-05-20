@@ -41,7 +41,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.pl.tagc.tagcwebap.Main</mainClass>
+                            <mainClass>com.pl.tagc.tagcwebapp.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptor>depmerge.xml</descriptor>
