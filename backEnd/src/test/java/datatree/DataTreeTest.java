@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class to test DataTree.
@@ -149,5 +150,14 @@ public class DataTreeTest {
     public void testGetDataNodesForGenome() throws Exception {
         assertEquals(tree.getDataNodesForGenome("1", 0).size(), 1);
         assertEquals(tree.getDataNodesForGenome("1", 1).size(), 2);
+    }
+    
+    /**
+     * Test if the DC has nodes that are in all the genomes.
+     */
+    @Test
+    public void testAddingStrands() {
+    	DataTree tree = controller.Controller.DC.getDataTree();
+    	assertTrue(tree.getRoot().getStrands().size() > 0);
     }
 }

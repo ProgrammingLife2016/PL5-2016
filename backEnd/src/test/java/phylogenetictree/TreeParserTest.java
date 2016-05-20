@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -25,7 +26,8 @@ public class TreeParserTest {
     @Before
     public void setUp() {
         tree = new PhylogeneticTree();
-        tree.parseTree("testFile");
+        String[] leafs = {"A.fasta", "C.fasta", "D.fasta"};
+        tree.parseTree("testFile", new ArrayList<String>(Arrays.asList(leafs)));
     }
 
     /**
@@ -33,7 +35,7 @@ public class TreeParserTest {
      */
     @Test
     public void testRootSize() {
-        assertEquals(tree.getRoot().getChildren().size(), 3);
+        assertEquals(tree.getRoot().getChildren().size(), 2);
     }
 
     /**
@@ -57,7 +59,7 @@ public class TreeParserTest {
      */
     @Test
     public void testGetNodeEnd() {
-        assertEquals(tree.getRoot().getNode(8).getDistance(), 0.4, 0.001);
+        assertEquals(tree.getRoot().getNode(2).getDistance(), 0.5, 0.001);
 
     }
 
@@ -66,7 +68,7 @@ public class TreeParserTest {
      */
     @Test
     public void testGetNodeMiddle() {
-        assertEquals(tree.getRoot().getNode(3).getDistance(), 0.5, 0.001);
+        assertEquals(tree.getRoot().getNode(1).getDistance(), 0.1, 0.001);
     }
 
     /**
@@ -75,7 +77,7 @@ public class TreeParserTest {
      */
     @Test
     public void testParent() throws Exception {
-        assertEquals(tree.getRoot(), tree.getRoot().getNode(1).getParent());
+        assertEquals(tree.getRoot(), tree.getRoot().getChildren().get(0).getParent());
         assertEquals(null, tree.getRoot().getParent());
     }
 
@@ -89,8 +91,14 @@ public class TreeParserTest {
         testList.add("C.fasta");
         testList.add("D.fasta");
 
-        assertEquals(tree.getRoot().getNode(3).getGenomes(), testList);
+        assertEquals(tree.getRoot().getChildren().get(1).getGenomes(), testList);
     }
     
-
+    /**
+     * Test if the tree has the right amount of leaves.
+     */
+    @Test
+    public void testLeafsize() {
+    	assertEquals(tree.getLeaves(tree.getRoot(), new ArrayList<>()).size(), 3);
+    }
 }

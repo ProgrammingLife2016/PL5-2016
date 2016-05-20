@@ -31,7 +31,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      * Default constructor.
      *
      * @param parent      T
-     * @param childNumber
+     * @param childNumber The childnumber.
      */
     public PhylogeneticNode(PhylogeneticNode parent, int childNumber) {
         super(parent, childNumber);
@@ -117,7 +117,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
     /**
      * set the label of this node.
      *
-     * @return the node name label
+     * @param nameLabel the node name label
      */
     public void setNameLabel(String nameLabel) {
         this.nameLabel = nameLabel;
@@ -161,6 +161,14 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
         if (this.getParent() != null) {
             this.getParent().addGenome(genome);
         }
+    }
+    
+    /**
+     * Set the genomes passing through the node.
+     * @param genomes Genomes paasing through.
+     */
+    public void setGenomes(ArrayList<String> genomes) {
+    	this.genomes = genomes;
     }
 
 

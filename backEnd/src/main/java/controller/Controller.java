@@ -55,15 +55,14 @@ public class Controller {
     public Controller() {
         strandNodes = new HashMap<>();
         strandEdges = new HashMap<>();
-        activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
+        activeGenomes = Parser.getPresentGenomes("data/TB10.gfa");
         phylogeneticTree = new PhylogeneticTree();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
-        //phylogeneticTree.parseTree("testGenomeNwk");
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk", activeGenomes);
+
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
         newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");
-
     }
 
     /**
@@ -235,7 +234,7 @@ public class Controller {
     public PhylogeneticTree loadPhylogeneticTree(int treeId) {
 		if (treeId == 0) {
 			phylogeneticTree = new PhylogeneticTree();
-			phylogeneticTree.parseTree("testGenomeNwk");
+			phylogeneticTree.parseTree("testGenomeNwk", activeGenomes);
 			return phylogeneticTree;
 		} else {
 			return phylogeneticTree;

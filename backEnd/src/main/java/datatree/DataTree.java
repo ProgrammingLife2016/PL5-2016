@@ -31,7 +31,6 @@ public class DataTree extends TreeStructure<DataNode> {
 
     public void addStrands(ArrayList<Genome> genomes) {
 
-
         //add all strands to the leafs.
         for (Genome genome : genomes) {
             DataNode leaf = getRoot().getGenomeLeaf(genome.getId());
@@ -40,7 +39,6 @@ public class DataTree extends TreeStructure<DataNode> {
             }
 
         }
-
         addStrands(getRoot());
 
 
@@ -53,35 +51,23 @@ public class DataTree extends TreeStructure<DataNode> {
      */
     @SuppressWarnings("checkstyle:methodlength")
     public void addStrands(DataNode currentNode) {
-        if (currentNode.getChildren().size() > 0) {
-            DataNode child1 = currentNode.getChildren().get(0);
-            DataNode child2 = currentNode.getChildren().get(1);
-            if (child1.getStrands().size() == 0) {
-                addStrands(child1);
-            }
-            if (child2.getStrands().size() == 0) {
-                addStrands(child2);
-            }
-            if (child1.getStrands().size() == 0) {
-                if (child2.getStrands().size() != 0) {
-                    currentNode.setStrands((ArrayList<Strand>) child2.getStrands().clone());
-                    child2.getStrands().removeAll(child2.getStrands());
-                }
-            }
-            else if (child2.getStrands().size() == 0) {
-                if (child1.getStrands().size() != 0) {
-                    currentNode.setStrands((ArrayList<Strand>) child1.getStrands().clone());
-                    child1.getStrands().removeAll(child1.getStrands());
-                }
-            }
-            else if (child1.getStrands().size() != 0 && child2.getStrands().size() != 0) {
-                ArrayList<Strand> parentStrands = (ArrayList<Strand>) child1.getStrands().clone();
-                parentStrands.retainAll(child2.getStrands());
-                currentNode.setStrands(parentStrands);
-                child1.getStrands().removeAll(parentStrands);
-                child2.getStrands().removeAll(parentStrands);
-            }
-        }
+    	ArrayList<DataNode> children = currentNode.getChildren();
+    	if (children.size() == 1) {
+    		addStrands(children.get(0));
+    		currentNode.setStrands(children.get(0).getStrands());
+    	} else if (children.size() == 2) {
+    		addStrands(children.get(0));
+    		addStrands(children.get(1));
+    		ArrayList<Strand> strands1 = children.get(0).getStrands();
+    		ArrayList<Strand> strands2 = children.get(1).getStrands();
+    		ArrayList<Strand> current = new ArrayList<>(strands1);
+    		current.retainAll(strands2);
+    		currentNode.setStrands(current);
+    		strands1.removeAll(current);
+    		strands2.removeAll(current);
+    		children.get(0).setStrands(strands1);
+    		children.get(1).setStrands(strands2);
+    	}
     }
 
     /**
