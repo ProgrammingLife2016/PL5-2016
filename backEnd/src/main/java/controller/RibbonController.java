@@ -93,6 +93,9 @@ public final class RibbonController {
 					}
 
 				}
+				else{
+					tempResult.get(strand.getId()).getEdges().get(0).incrementWeight();
+				}
 				if (tempResult.containsKey(strand.getId())) {
 					x = tempResult.get(strand.getId()).getX();
 				}
