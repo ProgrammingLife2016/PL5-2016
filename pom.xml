@@ -10,6 +10,7 @@
 		<module>tagcwebapp</module>
 	</modules>
 	<name>PL5-2016</name>
+	<url>http://www.foo.com/</url>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -40,11 +41,16 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
 				<inherited>true</inherited>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.7</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -74,9 +80,17 @@
 	</build>
 	<properties>
 		<jersey-version>1.19.1</jersey-version>
+		<dependency.locations.enabled>false</dependency.locations.enabled>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<reporting>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -96,6 +110,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.17</version>
 				<configuration>
 					<configLocation>${basedir}/checkstyle.xml</configLocation>
 					<includeTestSourceDirectory>true</includeTestSourceDirectory>
@@ -104,6 +119,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.6</version>
 				<configuration>
 					<skipEmptyReport>false</skipEmptyReport>
 					<includeTests>true</includeTests>
@@ -171,6 +187,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.3</version>
 				<configuration>
 					<xmlOutput>true</xmlOutput>
 					<includeTests>true</includeTests>
