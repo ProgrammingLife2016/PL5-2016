@@ -199,6 +199,7 @@ function draw(points, c, translate) {
                 ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
                 ctx.lineWidth = edge.weight;
                 ctx.stroke();
+                ctx.lineWidth = 1;
             }
         });
     });
