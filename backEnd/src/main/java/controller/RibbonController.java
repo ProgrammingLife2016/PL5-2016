@@ -71,33 +71,34 @@ public final class RibbonController {
 			} else {
 				y = (activeGenomes.indexOf(reference2) + 1) * -10;
 			}
-			Genome genome = genomes.get(reference2);
-			x = 0;
-			for (int i = 0; i < genome.getStrands().size(); i++) {
-				Strand strand = genome.getStrands().get(i);
-				if (!tempResult.containsKey(strand.getId())) {
-					x += 10;
-					while (!tempResult.containsKey(strand.getId())) {
-						if (i + 1 == genome.getStrands().size()) {
-							break;
+			if (genomes.containsKey(reference2)) {
+				Genome genome = genomes.get(reference2);
+				x = 0;
+				for (int i = 0; i < genome.getStrands().size(); i++) {
+					Strand strand = genome.getStrands().get(i);
+					if (!tempResult.containsKey(strand.getId())) {
+						x += 10;
+						while (!tempResult.containsKey(strand.getId())) {
+							if (i + 1 == genome.getStrands().size()) {
+								break;
+							}
+							Strand temp = genome.getStrands().get(i + 1);
+							RibbonNode ribbon = new RibbonNode(strand.getId(), strand.getGenomes());
+							ribbon.setX(x);
+							ribbon.setY(y);
+							ribbon.addEdge(new RibbonEdge(ribbon.getId(), temp.getId()));
+							i++;
+							tempResult.put(ribbon.getId(), ribbon);
+							result.add(ribbon);
+							strand = genome.getStrands().get(i);
 						}
-						Strand temp = genome.getStrands().get(i + 1);
-						RibbonNode ribbon = new RibbonNode(strand.getId(), strand.getGenomes());
-						ribbon.setX(x);
-						ribbon.setY(y);
-						ribbon.addEdge(new RibbonEdge(ribbon.getId(), temp.getId()));
-						i++;
-						tempResult.put(ribbon.getId(), ribbon);
-						result.add(ribbon);
-						strand = genome.getStrands().get(i);
-					}
 
-				}
-				else{
-					tempResult.get(strand.getId()).getEdges().get(0).incrementWeight();
-				}
-				if (tempResult.containsKey(strand.getId())) {
-					x = tempResult.get(strand.getId()).getX();
+					} else {
+						tempResult.get(strand.getId()).getEdges().get(0).incrementWeight();
+					}
+					if (tempResult.containsKey(strand.getId())) {
+						x = tempResult.get(strand.getId()).getX();
+					}
 				}
 			}
 		}
