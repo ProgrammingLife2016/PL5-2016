@@ -49,21 +49,30 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         TreeParser tp = new TreeParser(reader);
         tree = tp.tokenize("");  
         this.setRoot(new PhylogeneticNode(tree.getRoot(), null, 0., 0));
+    	System.out.println("hier");
+
         removeEmptyLeaves(currentGenomes);
+        System.out.println("terug");
         removeRedundantNodes(currentGenomes);
+        System.out.println("verder");
         generateId(getRoot());
-        updateGenomesPassingThrough(getRoot());        
+        System.out.println("en hier");
+        updateGenomesPassingThrough(getRoot());   
+        System.out.println("last");
     }
 	
     private void updateGenomesPassingThrough(PhylogeneticNode node) {
+    	System.out.println(node.getChildren().size());
     	if (node.getChildren().size() == 0) {
     		String genome = node.getGenomes().get(0);
     		node.setGenomes(new ArrayList<String>());
     		node.addGenome(genome);
+    		System.out.println("deze");
     	} else {
     		node.setGenomes(new ArrayList<String>());
-    		updateGenomesPassingThrough(node.getChildren().get(0));
-    		updateGenomesPassingThrough(node.getChildren().get(1));
+    		for (PhylogeneticNode temp : node.getChildren()) {
+    			updateGenomesPassingThrough(temp);
+    		}
     	}
 	}
 
@@ -75,6 +84,9 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
 		ArrayList<PhylogeneticNode> leaves = getLeaves(getRoot(), 
 				new ArrayList<PhylogeneticNode>());
 		while (leaves.size() != currentGenomes.size()) {
+			if (leaves.size() == 1) {
+				break;
+			}
 			for (PhylogeneticNode leaf : leaves) {
 				if (!currentGenomes.contains(leaf.getNameLabel())) {
 					leaf.getParent().removeChild(leaf);
@@ -111,16 +123,18 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
     	PhylogeneticNode rootNode = getRoot();
     	for (String genome : currentGenomes) {
     		PhylogeneticNode leaf = rootNode.getNodeWithLabel(genome);
-    		PhylogeneticNode parent = leaf.getParent();
-    		while (!parent.equals(rootNode)) {
-    			if (parent.getChildren().size() == 2) {
-    				leaf = parent;
-    				parent = parent.getParent();
-    			} else {
-    				parent.getParent().removeChild(parent);
-    				parent.getParent().addChild(leaf);
-    				leaf.setParent(parent.getParent());
-    				parent = leaf.getParent();
+    		if (leaf != null) {
+    			PhylogeneticNode parent = leaf.getParent();
+    			while (!parent.equals(rootNode)) {
+    				if (parent.getChildren().size() == 2) {
+    					leaf = parent;
+    					parent = parent.getParent();
+    				} else {
+    					parent.getParent().removeChild(parent);
+    					parent.getParent().addChild(leaf);
+    					leaf.setParent(parent.getParent());
+    					parent = leaf.getParent();
+    				}
     			}
     		}
     	}
