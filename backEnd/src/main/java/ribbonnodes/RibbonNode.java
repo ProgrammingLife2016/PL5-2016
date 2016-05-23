@@ -15,7 +15,8 @@ public class RibbonNode {
     private ArrayList<RibbonEdge> outEdges; // The edges going out of the node.
     private ArrayList<String> genomes; //The genomes that go through this node.
     private ArrayList<Strand> strands; // The strands contained in this node.
-    private String label; // The entire strand contained in this node (if zoomlevel is above a certain threshold).
+    private String label; // The entire strand contained in this node 
+    					  // (if zoomlevel is above a certain threshold).
 
     /**
      * Constructor for the RibbonNode.

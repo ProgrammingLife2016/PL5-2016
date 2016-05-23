@@ -1,10 +1,11 @@
 package datatree;
 
-import abstractDataStructure.AbstractTreeNode;
 import genome.Strand;
 import phylogenetictree.PhylogeneticNode;
 
 import java.util.ArrayList;
+
+import abstractdatastructure.AbstractTreeNode;
 
 /**
  * A Node in the DataTree.

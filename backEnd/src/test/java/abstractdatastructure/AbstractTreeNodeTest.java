@@ -1,4 +1,4 @@
-package abstractDataStructure;
+package abstractdatastructure;
 
 import org.junit.Before;
 import org.junit.Test;

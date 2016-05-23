@@ -28,11 +28,13 @@ public class ParserTest {
      */
 	@Test
 	public void testEmptyParserConstructor() throws Exception {
-		try{
-			Parser parser = new Parser();
+		Exception exception = null;
+		try {
+			new Parser();
 		}
-		catch  (UnsupportedOperationException e){
-			assertNotNull(e);
+		catch  (UnsupportedOperationException e) {
+			exception = e;
 		}
+		assertNotNull(exception);
 	}
 }

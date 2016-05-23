@@ -1,8 +1,8 @@
 package ribbonnodes;
 
-import abstractDataStructure.Edge;
+import java.awt.Color;
 
-import java.awt.*;
+import abstractdatastructure.Edge;
 
 /**
  * The Edges between the Ribbon Nodes.
@@ -19,7 +19,7 @@ public class RibbonEdge extends Edge {
      */
     public RibbonEdge(int startId, int endId) {
         super(startId, endId);
-        color= Color.black;
+        color = Color.black;
     }
 
     /**

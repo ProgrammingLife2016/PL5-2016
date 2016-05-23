@@ -1,4 +1,4 @@
-package abstractDataStructure;
+package abstractdatastructure;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -68,7 +68,7 @@ public class EdgeTest {
 
 
     /**
-     * Test the setStartID
+     * Test the setStartID.
      *
      * @throws Exception if fail.
      */
@@ -81,7 +81,7 @@ public class EdgeTest {
 
 
     /**
-     * Test the setStartID
+     * Test the setStartID.
      *
      * @throws Exception if fail.
      */
