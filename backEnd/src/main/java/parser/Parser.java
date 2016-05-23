@@ -1,28 +1,65 @@
 package parser;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import genome.StrandEdge;
 
 import genome.Strand;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import controller.Controller;
 
 /**
  * Created by Jeffrey on 24-4-2016.
  */
 public class Parser {
 
+	private PrintWriter nodes;
+	private PrintWriter edges;
+    private PrintWriter phylo;
+
 	/**
 	 * Constructor to create an Parser.
-	 * This throws an exception because it should not be possible.
+     * @param destPath the destination path
+     * @param currentPath the path of the files
 	 */
-	protected Parser() {
-        throw new UnsupportedOperationException();
+	public Parser(String destPath, String currentPath) {
+        new File(destPath).mkdir();
+        File nodeFile = new File(destPath + "/nodes.csv");
+		File edgeFile = new File(destPath + "/edges.csv");
+        File phyloFile = new File(destPath + "/phylo.csv");
+		// creates the files
+		try {
+            //dir.createNewFile();
+			nodeFile.createNewFile();
+			edgeFile.createNewFile();
+            phyloFile.createNewFile();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			edges = new PrintWriter(destPath + "/edges.csv", "UTF-8");
+            edges.println("start,end");
+            nodes = new PrintWriter(destPath + "/nodes.csv", "UTF-8");
+            nodes.println("id,sequence,genomes,refGenome,refCoor");
+            phylo = new PrintWriter(destPath + "/phylo.csv", "UTF-8");
+            phylo.println("parent,child,dist");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		parseToCSV(currentPath);
+		edges.close();
+		nodes.close();
+        phylo.close();
     }
 	
 	/**
@@ -30,11 +67,12 @@ public class Parser {
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-	 @SuppressWarnings("checkstyle:methodlength")
-	 public static controller.Controller parse(String file) {
+	public static Controller parse(String file) {
+
 		BufferedReader reader;
 		String line;
-		controller.Controller result = new controller.Controller();
+		controller.Controller result = new controller.Controller("data/TB10.gfa",
+                "data/340tree.rooted.TKK.nwk");
 		try {
 			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
 			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
@@ -90,4 +128,87 @@ public class Parser {
 
 		return new Strand(nodeId, sequence, genomes, referenceGenome, referenceCoordinate);
 	}
+
+    /**
+     * Reads the file as a graph in to an Controller.
+     * @param file The file that is read.
+     * @return The graph in the file.
+     */
+    private void parseToCSV(String file) {
+        BufferedReader reader;
+        String line;
+        try {
+            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            reader.readLine();
+            reader.readLine();
+            line = reader.readLine();
+            while (line != null) {
+                String[] splittedLine = line.split("\t");
+                String temp = splittedLine[0];
+                if (temp.equals("S")) {
+                    writeNode(splittedLine);
+                } else if (temp.equals("L")) {
+                    writeEdge(splittedLine);
+                }
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Writes an edge to the CSV-file.
+     * @param splittedLine the line from the GFA-file
+     */
+	private void writeEdge(String[] splittedLine) {
+		edges.println(splittedLine[1] + "," + splittedLine[3]);
+	}
+
+    /**
+     * Writes a node to the CSV-file.
+     * @param splittedLine the line from the GFA-file
+     */
+	private void writeNode(String[] splittedLine) {
+        String id = splittedLine[1];
+        String sequence = splittedLine[2];
+        String genomes = splittedLine[4].substring(6, splittedLine[4].length());
+        String referenceGenome = splittedLine[5].substring(6, splittedLine[5].length());
+        String refCoor = splittedLine[8].substring(8, splittedLine[8].length());
+
+        nodes.println(String.format("%s,%s,%s,%s,%s", id, sequence, genomes,
+                referenceGenome, refCoor));
+	}
+
+    /**
+     * Get all the genomes that are in the file.
+     * @param file The file.
+     * @return The genomes.
+     */
+    public static ArrayList<String> getPresentGenomes(String file) {
+        BufferedReader reader;
+        String line = null;
+        try {
+            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            reader.readLine();
+            line = reader.readLine();
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (line != null) {
+            String[] splitted = line.split("\t");
+            String[] genomes = splitted[1].split(";");
+
+            genomes = Arrays.copyOfRange(genomes, 1, genomes.length);
+            return new ArrayList<String>(Arrays.asList(genomes));
+        }
+        return null;
+    }
 }

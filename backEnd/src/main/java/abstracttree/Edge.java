@@ -8,8 +8,8 @@ package abstracttree;
  * data container class that stores the start and end of an edge, as well as its weight.
  */
 public class Edge {
-    private int startId;
-    private int endId;
+    protected int startId;
+    protected int endId;
     private int weight;
 
     /**

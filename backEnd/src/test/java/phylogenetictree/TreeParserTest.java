@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -26,6 +27,7 @@ public class TreeParserTest {
     public void setUp() {
         tree = new PhylogeneticTree();
         tree.parseTree("testFile");
+
     }
 
     /**
@@ -57,7 +59,7 @@ public class TreeParserTest {
      */
     @Test
     public void testGetNodeEnd() {
-        assertEquals(tree.getRoot().getNode(8).getDistance(), 0.4, 0.001);
+        assertEquals(tree.getRoot().getNode(2).getDistance(), 0.2, 0.001);
 
     }
 
@@ -66,7 +68,7 @@ public class TreeParserTest {
      */
     @Test
     public void testGetNodeMiddle() {
-        assertEquals(tree.getRoot().getNode(3).getDistance(), 0.5, 0.001);
+        assertEquals(tree.getRoot().getNode(1).getDistance(), 0.1, 0.001);
     }
 
     /**
@@ -75,7 +77,7 @@ public class TreeParserTest {
      */
     @Test
     public void testParent() throws Exception {
-        assertEquals(tree.getRoot(), tree.getRoot().getNode(1).getParent());
+        assertEquals(tree.getRoot(), tree.getRoot().getChildren().get(0).getParent());
         assertEquals(null, tree.getRoot().getParent());
     }
 
@@ -89,7 +91,7 @@ public class TreeParserTest {
         testList.add("C.fasta");
         testList.add("D.fasta");
 
-        assertEquals(tree.getRoot().getNode(3).getGenomes(), testList);
+        assertEquals(tree.getRoot().getChildren().get(2).getGenomes(), testList);
     }
     
 

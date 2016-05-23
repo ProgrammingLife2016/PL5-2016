@@ -4,7 +4,11 @@ import datatree.DataNode;
 import datatree.DataTree;
 import genome.Genome;
 import genome.Strand;
+import genome.StrandEdge;
 import parser.Parser;
+import phylogenetictree.PhylogeneticNode;
+import phylogenetictree.PhylogeneticTree;
+import ribbonnodes.RibbonNode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,9 +19,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import phylogenetictree.PhylogeneticNode;
-import phylogenetictree.PhylogeneticTree;
-import ribbonnodes.RibbonNode;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -44,12 +45,15 @@ public class Controller {
     /**
      * Datacontainer Singleton, starts with empty hashmaps.
      */
-    public static final controller.Controller DC = Parser.parse("data/TB10.gfa");
+    //public static final controller.Controller DC = Parser.parse("data/TB10.gfa");
+    public static final Controller DC = Parser.parse("data/TB10.gfa");
 
     /**
      * Constructor.
+     * @param dataFile where the datafile is stored.
+     * @param phyloTree where the phylogenetic tree file is stored.
      */
-    public Controller() {
+    public Controller(String dataFile, String phyloTree) {
         strandNodes = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
@@ -59,7 +63,7 @@ public class Controller {
         //phylogeneticTree.parseTree("testGenomeNwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
-        newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");
+        newickString = loadRawFileData(phyloTree);
 
     }
 
@@ -73,6 +77,14 @@ public class Controller {
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
         return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, 
         		dataTree, activeGenomes, temp);
+    }
+
+    /**
+     * Add an outgoing edge to the correct Strand.
+     * @param edge The edge to add.
+     */
+    public void addEdge(StrandEdge edge){
+        getStrandNodes().get(edge.getStart()).addEdge(edge);
     }
 
     /**
@@ -105,7 +117,6 @@ public class Controller {
      */
     public HashMap<Integer, Strand> getStrandNodes() {
         return strandNodes;
-
     }
 
     /**
@@ -219,8 +230,8 @@ public class Controller {
 
     /**
      * Load rar file data.
-     * @param fileName The file.
-     * @return String.
+     * @param fileName The file to be loaded.
+     * @return String return the raw data file.
      */
 	public String loadRawFileData(String fileName) {
 
@@ -236,6 +247,7 @@ public class Controller {
 				rawFileData = rawFileData + line;
 				line = reader.readLine();
 			}
+            reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

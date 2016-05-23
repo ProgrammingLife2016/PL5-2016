@@ -35,7 +35,7 @@ public class AllMutationstest {
      */
     @Before
     public void setUp() {
-        dc = new Controller();
+        dc = new Controller("data/TB10.gfa", "data/340tree.rooted.TKK.nwk");
         g1 = new Genome("ref1");
         g2 = new Genome("ref2");
         n1 = new Strand(1, "A", new String[1], "ref1", 1);

@@ -3,6 +3,7 @@ package genome;
  * Created by Matthijs on 24-4-2016.
  */
 
+import org.neo4j.graphdb.Node;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -40,6 +41,19 @@ public class Strand {
         this.weight = genomes.length;
         this.edges = new ArrayList<>();
     }
+
+	/**
+	 * Constructor to create a new strand.
+	 * @param o The Object (returned by the Cypherquery) from which a strand should be created.
+	 */
+	public Strand(Object o) {
+		Node no = (Node) o;
+		this.id = java.lang.Math.toIntExact((long) no.getProperty("id"));
+		this.sequence = (String) no.getProperty("sequence");
+		//String genomes = (String) no.getProperty("genomes");
+		this.referenceGenome = (String) no.getProperty("refGenome");
+		this.referenceCoordinate = java.lang.Math.toIntExact((long) no.getProperty("refCoor"));
+	}
 
 
     /**
