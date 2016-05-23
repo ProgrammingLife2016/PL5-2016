@@ -1,4 +1,4 @@
-package abstracttree;
+package abstractDataStructure;
 
 /**
  * Created by Matthijs on 24-4-2016.

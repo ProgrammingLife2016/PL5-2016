@@ -1,6 +1,6 @@
 package datatree;
 
-import abstracttree.TreeStructure;
+import abstractDataStructure.TreeStructure;
 import genome.Genome;
 import genome.Strand;
 

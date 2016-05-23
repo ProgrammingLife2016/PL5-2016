@@ -1,4 +1,4 @@
-package abstracttree;
+package abstractDataStructure;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -64,5 +64,31 @@ public class EdgeTest {
     @Test
     public void testGetWeight() throws Exception {
         assertEquals(1, edge.getWeight());
+    }
+
+
+    /**
+     * Test the setStartID
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testSetStartId() throws Exception {
+        assertEquals(1, edge.getStart());
+        edge.setStartId(4);
+        assertEquals(4, edge.getStart());
+    }
+
+
+    /**
+     * Test the setStartID
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testSetEndId() throws Exception {
+        assertEquals(2, edge.getEnd());
+        edge.setEndId(4);
+        assertEquals(4, edge.getEnd());
     }
 }

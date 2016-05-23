@@ -1,7 +1,7 @@
 package phylogenetictree;
 
 
-import abstracttree.AbstractTreeNode;
+import abstractDataStructure.AbstractTreeNode;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.util.ArrayList;

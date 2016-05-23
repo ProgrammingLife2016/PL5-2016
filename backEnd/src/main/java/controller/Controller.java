@@ -26,7 +26,7 @@ import ribbonnodes.RibbonNode;
 /**
  * Controller returns the ribbon nodes based on a UI request.
  */
-public class Controller {
+public class Controller implements FrontEndBackEndInterface {
 
     //Todo move strand graph and genomes to seperate class.
     private HashMap<Integer, Strand> strandNodes;
