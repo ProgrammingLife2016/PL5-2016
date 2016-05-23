@@ -68,6 +68,7 @@ public class Parser {
 	 * @return The graph in the file.
 	 */
 	public static Controller parse(String file) {
+
 		BufferedReader reader;
 		String line;
 		controller.Controller result = new controller.Controller("data/TB10.gfa",
@@ -85,7 +86,8 @@ public class Parser {
 					Strand strand = createNode(splittedLine);
 					result.addStrand(strand);
 				} else if (temp.equals("L")) {
-					result.addEdge(createEdge(splittedLine));
+					StrandEdge edge = createEdge(splittedLine);
+					result.getStrandNodes().get(edge.getStart()).addEdge(edge);
 				}
 				line = reader.readLine();
 			}

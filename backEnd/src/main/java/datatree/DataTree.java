@@ -46,6 +46,8 @@ public class DataTree extends TreeStructure<DataNode> {
 
     }
 
+
+
     /**
      * Recursive method for going through the tree and adding the strands top down.
      *
@@ -145,8 +147,9 @@ public class DataTree extends TreeStructure<DataNode> {
             node.setGenomes(genomes);
             ArrayList<Strand> newStrands = new ArrayList<>();
             for (Strand strand : node.getStrands()) {
-                if (strand.getId() > xMax + 10 || strand.getId() < xMin - 10) {
+                if (strand.getId() > xMax + 10 || strand.getId() < xMin - 100) {
                     newStrands.add(strand);
+                    strand.retainGenomes(genomes);
                 }
             }
             node.setStrands(newStrands);
@@ -193,6 +196,8 @@ public class DataTree extends TreeStructure<DataNode> {
 
 
     }
+
+
 
 
 }

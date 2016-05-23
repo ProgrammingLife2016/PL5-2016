@@ -54,4 +54,20 @@ public class Edge {
     public int getWeight() {
         return weight;
     }
+
+    /**
+     * Set the startId.
+     * @param startId New startId. 
+     */
+    public void setStartId(int startId) {
+        this.startId = startId;
+    }
+
+    /**
+     * Set the endId.
+     * @param endId New endId.
+     */
+    public void setEndId(int endId) {
+        this.endId = endId;
+    }
 }
