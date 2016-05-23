@@ -6,6 +6,7 @@ import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
 /**
  * Created by Matthijs on 4-5-2016.
  * A node in the phylogenetic tree. Stores a name if the node is a leaf.
@@ -27,11 +28,12 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      */
     private double distance;
 
+   
     /**
-     * Default constructor.
+     * Instantiates a new phylogenetic node.
      *
-     * @param parent      T.
-     * @param childNumber Child number.
+     * @param parent the parent
+     * @param childNumber the child number
      */
     public PhylogeneticNode(PhylogeneticNode parent, int childNumber) {
         super(parent, childNumber);
@@ -114,10 +116,11 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
         return null;
     }
 
+   
     /**
-     * set the label of this node.
+     * Sets the name label.
      *
-     * @param nameLabel New label.
+     * @param nameLabel the new name label
      */
     public void setNameLabel(String nameLabel) {
         this.nameLabel = nameLabel;
