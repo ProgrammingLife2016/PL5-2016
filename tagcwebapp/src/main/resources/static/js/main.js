@@ -10,7 +10,7 @@ var screenWidth = $(window).width();
 var screenHeight = $(window).height();
 var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
-var cachedNodes;
+var minimapNodes;
 var currentMousePos = { x: -1, y: -1 };
 var counter = 1;
 
@@ -174,9 +174,9 @@ var drawZoom = function(nodes) {
  */
 var drawMinimap = function(nodes) {
     if (nodes == null) {
-        nodes = cachedNodes;
+        nodes = minimapNodes;
     } else {
-        cachedNodes = nodes;
+        minimapNodes = nodes;
     }
     var ratio = $('#minimap').width() / Object.keys(nodes).length;
 
@@ -199,8 +199,6 @@ function draw(points, c, translate) {
     var ctx = c.getContext("2d");
     ctx.clearRect(0, 0, c.width, c.height);
 
-    var count = 20;
-    var counter = 0;
     var nodeHeight = c.height / 2;
 
     var yTranslate = (c.height < 200)?c.height / 2 / 110 : 1;
@@ -211,17 +209,21 @@ function draw(points, c, translate) {
         ctx.stroke();
 
         $.each(point.edges, function(key, edge) {
-            var target = points[edge.endId];
-            //if (edge.start == id) {
-            //    target = cachedNodes[edge.endId];
-            //}
+            //Todo: Matthijs, alles hieronder uncommenten.
+
+            var target = points[edge.startId];
+            if (edge.startId == id) {
+                target = points[edge.endId];
+            }
             if (target) {
-                //ctx.beginPath();
-                //ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
-                //ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
-                //ctx.lineWidth = edge.weight;
-                //ctx.stroke();
-                //ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
+                ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
+                ctx.lineWidth = edge.weight;
+                ctx.strokeStyle = '#'+ edge.color;
+                ctx.stroke();
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = '#000000';
             }
         });
     });
@@ -279,43 +281,28 @@ function zoom(direction, zoomAmount) {
  */
 function updatezoomWindow()
 {
-    var slider = $('#minimap .slider');
-    var totalWidth = $('#minimap').width();
-    var left = pxToInt(slider.css('left'));
-    var width = slider.width();
-    //var boundingBox = computeBoundingBox(x, width);
-    //getNodes(boundingBox, drawZoom);
-    //Temp:
-    if (cachedNodes) {
-        var nodeSize = Object.keys(cachedNodes).length;
-
-        var start = Math.ceil(left / totalWidth * nodeSize);
-        var end = start + Math.ceil(width / totalWidth * nodeSize);
-
-        var nodeList = {};
-        var count = 0;
-        $.each(cachedNodes, function(key, value) {
-            if (count++ >= start) {
-                nodeList[key] = value;
-            }
-            if (count > end) {
-                return false;
-            }
-        });
-
-        drawZoom(nodeList);
+    if (minimapNodes) {
+        var slider = $('#minimap .slider');
+        var totalWidth = $('#minimap').width();
+        var sliderLeft = pxToInt(slider.css('left'));
+        var minimapNodeSize = Object.keys(minimapNodes).length;
+        var left = Math.floor(sliderLeft / totalWidth * minimapNodeSize);
+        var width = Math.floor(slider.width() / totalWidth * minimapNodeSize);
+        var zoom = Math.round(totalWidth / slider.width());
+        var boundingBox = computeBoundingBox(left, width, zoom);
+        getNodes(boundingBox, drawZoom);
     }
 }
 
 // This function translates from one representation of a bounding box in gui coordinates to
 // coordinates expected by the REST api. It takes x, y, width and height arguments and returns
 // an object with left right top and bottom properties.
-function computeBoundingBox(x, width)
+function computeBoundingBox(left, width, zoom)
 {
     return {
-        'xleft': x,
-        'xright': (x + width),
-        zoom: 3
+        'xleft': left,
+        'xright': (left + width),
+        zoom: zoom
     }
 }
 
@@ -331,7 +318,7 @@ function parseNodeData(nodes) {
     var ratio = $('#minimap').width() / (nodes[nodes.length-1].x - left);
 
     $.each(nodes, function(key, value) {
-        result[key] = {
+        result[value.id] = {
             x: value.x - left,
             y: value.y,
             strands: value.strands,
@@ -378,7 +365,7 @@ function initializeMinimap() {
     minimap.find('.canvasContainer').html(
         $('<canvas/>', {'class':'genomeCanvas', Width: minimap.width(), Height: minimap.height() })
     );
-    var boundingBox = computeBoundingBox(0, 10000000);
+    var boundingBox = computeBoundingBox(0, 10000000, 1);
     getNodes(boundingBox, drawMinimap);
     zoom(-1, 1);
 }
