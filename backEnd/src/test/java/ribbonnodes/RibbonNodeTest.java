@@ -26,7 +26,7 @@ public class RibbonNodeTest {
      */
     @Before
     public void setUp() throws Exception {
-        String[] genomes = {"genome1","genome2"};
+        String[] genomes = {"genome1", "genome2"};
         node1 = new RibbonNode(0, genomes);
         node2 = new RibbonNode(1, genomes);
         edge = new RibbonEdge(0, 1);
@@ -159,4 +159,55 @@ public class RibbonNodeTest {
 
 
     }
+
+    /**
+     * Test the getter of Y.
+     *
+     * @throws Exception if fail.
+     */
+
+    @Test
+    public void testGetY() throws Exception {
+        assertEquals(0, node1.getY());
+    }
+
+    /**
+     * Test the getter of X.
+     *
+     * @throws Exception if fail.
+     */
+
+    @Test
+    public void testGetX() throws Exception {
+        assertEquals(0, node1.getX());
+    }
+
+    /**
+     * Test the setter of Y.
+     *
+     * @throws Exception if fail.
+     */
+
+    @Test
+    public void testSetY() throws Exception {
+        assertEquals(0, node1.getY());
+        node1.setY(1);
+        assertEquals(1, node1.getY());
+    }
+
+    /**
+     * Test the setter of X.
+     *
+     * @throws Exception if fail.
+     */
+
+    @Test
+    public void testSetX() throws Exception {
+        assertEquals(0, node1.getX());
+        node1.setX(1);
+        assertEquals(1, node1.getX());
+    }
+
+
+
 }

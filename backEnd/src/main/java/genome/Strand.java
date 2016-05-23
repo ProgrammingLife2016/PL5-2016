@@ -14,7 +14,7 @@ public class Strand {
     private String sequence; //dna in node
     private String[] genomes; //genomes that contain this node
     private String referenceGenome; // the refrence genome of this node
-    private ArrayList<StrandEdge> edges;
+    private ArrayList<StrandEdge> edges; //The outgoing edges of this strand.
     private int referenceCoordinate; //coordinate of this node in the refr genome
     private int weight; // amount of genomes that contain this node
 

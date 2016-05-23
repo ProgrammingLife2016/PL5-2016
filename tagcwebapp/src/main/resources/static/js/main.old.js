@@ -152,7 +152,7 @@ function updatezoomWindow()
     var y = Math.floor(slider.position().top - slider.parent().position().top);
     var width = slider.width();
     var height = slider.height();
-    var boundingBox = computeBoundingBox(x, y, width, height)
+    var boundingBox = computeBoundingBox(x, y, width, height);
     getNodes(boundingBox, drawZoom);
 }
 

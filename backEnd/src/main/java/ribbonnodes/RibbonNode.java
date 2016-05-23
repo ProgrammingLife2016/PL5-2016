@@ -25,6 +25,8 @@ public class RibbonNode {
         edges = new ArrayList<>();
         this.genomes = new ArrayList<>(Arrays.asList(genomes));
         this.id = id;
+        this.x=0;
+        this.y=0;
         this.color= Color.black;
     }
 

@@ -58,7 +58,7 @@ public class Controller {
         phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         //phylogeneticTree.parseTree("testGenomeNwk");
-        dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
+        dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
         		null, 0));
         newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");
 
