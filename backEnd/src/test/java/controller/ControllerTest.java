@@ -21,21 +21,6 @@ public class ControllerTest {
     @Before
     public void setUp() {
     	data = new Controller();
-    	String[] genomes = {"ref1", "ref2"};
-    	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
-    	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
-    	
-    	data.addStrand(strand1);
-    	data.addStrand(strand2);
-    }
-    
-    /**
-     * Tests adding a Strand.
-     */
-    @Test
-    public void testAddStrand() {
-    	assertEquals(data.getStrandNodes().get(strand1.getId()), strand1);
-    	assertEquals(data.getStrandNodes().get(strand2.getId()), strand2);
     }
     
     /**
@@ -43,7 +28,7 @@ public class ControllerTest {
      */
     @Test
     public void testDataWidth() {
-    	data.setDataWidth(5.0);
+    	//data.setDataWidth(5.0);
     	assertEquals(data.getDataWidth(), 5.0, 0.001);
     }
 }

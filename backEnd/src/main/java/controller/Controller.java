@@ -82,7 +82,7 @@ public class Controller implements FrontEndBackEndInterface {
      *
      * @param dataWidth New data width.
      */
-    public void setDataWidth(double dataWidth) {
+    public void setDataWifdth(double dataWidth) {
         this.dataWidth = dataWidth;
     }
 
