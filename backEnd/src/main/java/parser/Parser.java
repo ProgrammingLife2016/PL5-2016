@@ -30,7 +30,8 @@ public class Parser {
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-	public static controller.Controller parse(String file) {
+	 @SuppressWarnings("checkstyle:methodlength")
+	 public static controller.Controller parse(String file) {
 		BufferedReader reader;
 		String line;
 		controller.Controller result = new controller.Controller();
@@ -47,7 +48,8 @@ public class Parser {
 					Strand strand = createNode(splittedLine);
 					result.addStrand(strand);
 				} else if (temp.equals("L")) {
-					result.addEdge(createEdge(splittedLine));
+					StrandEdge edge = createEdge(splittedLine);
+					result.getStrandNodes().get(edge.getStart()).addEdge(edge);
 				}
 				line = reader.readLine();
 			}

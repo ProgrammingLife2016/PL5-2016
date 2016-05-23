@@ -27,8 +27,8 @@
 	</dependencies>
 
 	<distributionManagement>
-		<!-- We must specify this minimal site distribution to enable site deployment 
-			to a staging location. Staging the site enables us to test the links between 
+		<!-- We must specify this minimal site distribution to enable site deployment
+			to a staging location. Staging the site enables us to test the links between
 			maven modules. This configuration below will deploy the site to ./target/staging -->
 		<site>
 			<id>site</id>

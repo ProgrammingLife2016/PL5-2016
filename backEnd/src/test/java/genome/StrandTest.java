@@ -45,12 +45,12 @@ public class StrandTest {
      */
     @Test
     public void testGetGenomes() {
-    	assertEquals(strand.getGenomes()[0], "ref1");
-    	assertEquals(strand.getGenomes()[1], "ref2");
+    	assertEquals(strand.getGenomes().get(0), "ref1");
+    	assertEquals(strand.getGenomes().get(1), "ref2");
     	String[] temp = {"ref3", "ref4" };
     	strand.setGenomes(temp);
-    	assertEquals(strand.getGenomes()[0], "ref3");
-    	assertEquals(strand.getGenomes()[1], "ref4");
+    	assertEquals(strand.getGenomes().get(0), "ref3");
+    	assertEquals(strand.getGenomes().get(1), "ref4");
     }
     
     /**

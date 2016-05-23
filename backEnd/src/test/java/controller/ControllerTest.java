@@ -1,7 +1,6 @@
 package controller;
-import controller.Controller;
+
 import genome.Strand;
-import genome.StrandEdge;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +14,6 @@ public class ControllerTest {
 	private Controller data;
 	private Strand strand1;
 	private Strand strand2;
-	private StrandEdge edge;
 	
 	/**
 	 * Setting up the Controller.
@@ -26,11 +24,9 @@ public class ControllerTest {
     	String[] genomes = {"ref1", "ref2"};
     	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
     	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
-    	edge = new StrandEdge(1, 2);
     	
     	data.addStrand(strand1);
     	data.addStrand(strand2);
-    	data.addEdge(edge);
     }
     
     /**
@@ -38,19 +34,10 @@ public class ControllerTest {
      */
     @Test
     public void testAddStrand() {
-    	assertEquals(data.getstrandNodes().get(strand1.getId()), strand1);
-    	assertEquals(data.getstrandNodes().get(strand2.getId()), strand2);
+    	assertEquals(data.getStrandNodes().get(strand1.getId()), strand1);
+    	assertEquals(data.getStrandNodes().get(strand2.getId()), strand2);
     }
     
-    /**
-     * Tests adding a Edge.
-     */
-    @Test
-    public void testAddEdge() {
-    	assertEquals(data.getEdges().get(edge.getStart() + "|" + edge.getEnd()), edge);
-    }
-    
-
     /**
      * Test data width.
      */

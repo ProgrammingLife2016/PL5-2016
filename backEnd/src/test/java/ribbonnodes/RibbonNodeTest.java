@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test class to test the ribbonNodes.
@@ -13,9 +13,9 @@ import static org.junit.Assert.*;
  */
 public class RibbonNodeTest {
 
-    RibbonNode node1;
-    RibbonNode node2;
-    RibbonEdge edge;
+    private RibbonNode node1;
+    private RibbonNode node2;
+    private RibbonEdge edge;
 
     /**
      * Set up the tests.
@@ -49,15 +49,15 @@ public class RibbonNodeTest {
     }
 
     /**
-     * Test the getEdge method
+     * Test the getEdge method.
      *
      * @throws Exception if fail.
      */
     @Test
     public void testGetEdge() throws Exception {
-        assertEquals(node1.getEdge(0, 1), edge);
-        assertEquals(node2.getEdge(0, 1), edge);
-        assertEquals(node1.getEdge(1, 0), null);
+        assertEquals(node1.getOutEdge(0, 1), edge);
+        assertEquals(node2.getInEdge(0, 1), edge);
+        assertEquals(node1.getInEdge(1, 0), null);
 
     }
 
@@ -106,8 +106,8 @@ public class RibbonNodeTest {
         RibbonEdge edge2 = new RibbonEdge(1, 0);
         assertEquals(node1.getEdges().size(), 1);
         node1.addEdge(edge2);
-        assertEquals(node1.getEdges().size(), 2);
-        assertEquals(node1.getEdges().get(1), edge2);
+        assertEquals(node1.getEdges().size(), 1);
+        assertEquals(node1.getInEdges().get(0), edge2);
     }
 
     /**
@@ -120,15 +120,17 @@ public class RibbonNodeTest {
         RibbonEdge edge2 = new RibbonEdge(0, 1);
         RibbonEdge edge3 = new RibbonEdge(0, 4);
         RibbonEdge edge4 = new RibbonEdge(0, 2);
-        ArrayList<RibbonEdge> edges = new ArrayList<>();
-        edges.add(edge2);
-        edges.add(edge3);
-        edges.add(edge4);
-        node1.setEdges(edges);
-        assertEquals(node1.getEdges().size(), 3);
-        assertEquals(node1.getEdges().get(2), edge4);
+        node1.addEdge(edge2);
+        node1.addEdge(edge3);
+        node1.addEdge(edge4);
+        assertEquals(node1.getEdges().size(), 4);
+        assertEquals(node1.getEdges().get(3), edge4);
     }
 
+    /**
+     * Test the get genomes method.
+     * @throws Exception If fail.
+     */
     @Test
     public void testGetGenomes() throws Exception {
         assertEquals(node1.getGenomes().size(), 2);

@@ -12,6 +12,7 @@ var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
 var cachedNodes;
 var currentMousePos = { x: -1, y: -1 };
+var counter = 1;
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -30,11 +31,16 @@ function screenResize() {
         screenHeight = $(window).height();
     }
 
+    if ($("#zoom").height() + $("#header").height() > (screenHeight - 25)) {
+        $("#zoom").height(screenHeight - 25 - $("#header").height());
+    }
+
     //Update the height of the sub panel after change of the zoom panel.
     //The sub panel becomes the height of the screen, minus the height of the zoom and header bar.
     var borderHeight = parseInt($("#zoom").css("border-bottom-width").replace('px', ''));
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
+    $('#minimap').height($('#sub').height());
     if ($('#zoom').find('canvas').length) { //Update the canvas height and width in the zoom panel
         $('#zoom').find('canvas')[0].height = $('#zoom').height();
         $('#zoom').find('canvas')[0].width = $('#zoom').width();
@@ -72,9 +78,15 @@ $('document').ready(function() {
     $("#phylogenyContainer").resizable({
         handles: 'e'
     });
+
     //Trigger screenResize when a resizable panel is resized
     $('#zoom, #phylogenyContainer').resize(function() {
-        screenResize();
+        if (screenResizeTimeout) {
+            clearTimeout(screenResizeTimeout);
+        }
+        screenResizeTimeout = setTimeout(function() {
+            screenResize();
+        }, 500);
     });
 
     //Trigger screenResize after a real screen resize
@@ -84,7 +96,7 @@ $('document').ready(function() {
         }
         screenResizeTimeout = setTimeout(function() {
             screenResize();
-        }, 100);
+        }, 500);
     });
 
 
@@ -108,9 +120,13 @@ $('document').ready(function() {
     $(slider)
         .draggable({
             containment: "parent",
-            stop: function() {
-                clearTimeout(zoomTimeout);
-                zoomTimeout = setTimeout(function() { updatezoomWindow() }, 500);
+            drag: function() {
+                //Temp, to make it look smooth, can be done if lazy loading is implemented
+                updatezoomWindow();
+
+                //Should be this when we have specific zoomData
+                //clearTimeout(zoomTimeout);
+                //zoomTimeout = setTimeout(function() { updatezoomWindow() }, 50);
             }
         });
 
@@ -187,22 +203,25 @@ function draw(points, c, translate) {
     var counter = 0;
     var nodeHeight = c.height / 2;
 
+    var yTranslate = (c.height < 200)?c.height / 2 / 110 : 1;
+
     $.each(points, function(id, point) {
         ctx.beginPath();
-        ctx.arc(translate(point.x), nodeHeight, 5, 0, 2 * Math.PI);
+        ctx.arc(translate(point.x), nodeHeight + point.y * yTranslate, 5, 0, 2 * Math.PI);
         ctx.stroke();
 
         $.each(point.edges, function(key, edge) {
-            var target = points[edge.start];
-            if (edge.start == id) {
-                target = cachedNodes[edge.end];
-            }
+            var target = points[edge.endId];
+            //if (edge.start == id) {
+            //    target = cachedNodes[edge.endId];
+            //}
             if (target) {
-                ctx.beginPath();
-                ctx.moveTo(translate(point.x), nodeHeight);
-                ctx.lineTo(translate(target.x), nodeHeight);
-                ctx.lineWidth = edge.weight;
-                ctx.stroke();
+                //ctx.beginPath();
+                //ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
+                //ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
+                //ctx.lineWidth = edge.weight;
+                //ctx.stroke();
+                //ctx.lineWidth = 1;
             }
         });
     });
@@ -309,11 +328,13 @@ function parseNodeData(nodes) {
     var result = {};
 
     var left = nodes[0].id;
-    var ratio = $('#minimap').width() / (nodes[nodes.length-1].id - left);
+    var ratio = $('#minimap').width() / (nodes[nodes.length-1].x - left);
 
     $.each(nodes, function(key, value) {
-        result[value.id] = {
-            x: value.id - left,
+        result[key] = {
+            x: value.x - left,
+            y: value.y,
+            strands: value.strands,
             edges: value.edges,
             genomes: value.genomes
         }
@@ -376,9 +397,13 @@ function initializeZoomWindow() {
  * Make the phylogney Panel small, and the minimap Panel big
  */
 function fullSizeMinimap() {
+    $("#zoom").animate({
+        height: screenHeight - 250 - $('#header').height()
+    }, 500);
+
     $('#phylogenyContainer').animate({
         'width': 30
-    }, 1000, function() {
+    }, 1000, function () {
         zoom(1, 0);
         screenResize();
     });

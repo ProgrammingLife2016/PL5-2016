@@ -22,6 +22,8 @@ public class AdaptedRibbonNode {
     
     /** The label. */
     private String label;
+	private int x;
+	private int y;
 
 	/**
 	 * Gets the label.
@@ -93,6 +95,39 @@ public class AdaptedRibbonNode {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * Gets the x coordinate
+	 * @return the x coordinate
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * Sets the x coordinate
+	 * @param x The x coordinate
+	 */
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	/**
+	 * Gets the y coordinate
+	 * @return the y coordinate
+	 */
+	public int getY() {
+		return y;
+	}
+
+
+	/**
+	 * Sets the y coordinate
+	 * @param y The y coordinate
+	 */
+	public void setY(int y) {
+		this.y = y;
 	}
 
 }

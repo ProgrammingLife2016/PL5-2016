@@ -16,7 +16,7 @@ public class AdaptedRibbonEdge {
     private int endId;
     
     /** The weight. */
-    private int weight;
+	private int weight;
 
     /**
      * Increment the weight.
