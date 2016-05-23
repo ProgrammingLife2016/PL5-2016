@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import controller.Controller;
+import controller.GenomeGraph;
 
 /**
  * 
@@ -13,17 +14,17 @@ import controller.Controller;
  */
 public class AllMutations {
 
-	private Controller dc;
+	private GenomeGraph genomeGraph;
 	private HashMap<String, ArrayList<MutationWillBeDeleted>> mutations;
 		
 	/**
 	 * Constructor to create.
 	 * @param dc The given data container.
 	 */
-	public AllMutations(Controller dc) {
-		this.dc = dc;
+	public AllMutations(GenomeGraph genomeGraph) {
+		this.genomeGraph = genomeGraph;
 		mutations = new HashMap<>();
-		setKeys(dc.getGenomes().keySet());
+		setKeys(genomeGraph.getGenomes().keySet());
 		checkMutations();
 	}
 	
@@ -34,12 +35,12 @@ public class AllMutations {
 	}
 	
 	private void checkMutations() {
-		Set<String> keys = dc.getGenomes().keySet();
+		Set<String> keys = genomeGraph.getGenomes().keySet();
 		for (String base : keys) {
 			for (String other : keys) {
 				if (!base.equals(other)) {
-					ComputeMutation.compute(dc.getGenomes().get(base), 
-							dc.getGenomes().get(other), this);
+					ComputeMutation.compute(genomeGraph.getGenomes().get(base), 
+							genomeGraph.getGenomes().get(other), this);
 				}
 			}
 		}

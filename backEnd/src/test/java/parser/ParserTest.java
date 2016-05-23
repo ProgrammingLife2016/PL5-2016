@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import controller.GenomeGraph;
+
 
 /**
  *
@@ -18,8 +20,8 @@ public class ParserTest {
 	 */
 	@Test
 	public void test() {
-		controller.Controller controller = Parser.parse("data/TB10.gfa");
-		assertEquals(controller.getStrandNodes().get(1).getId(), 1);
+		GenomeGraph genomeGraph = Parser.parse("data/TB10.gfa");
+		assertEquals(genomeGraph.getStrandNodes().get(1).getId(), 1);
 	}
 
 	/**

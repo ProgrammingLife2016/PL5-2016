@@ -27,15 +27,9 @@ import ribbonnodes.RibbonNode;
  * Controller returns the ribbon nodes based on a UI request.
  */
 public class Controller implements FrontEndBackEndInterface {
-
-    //Todo move strand graph and genomes to seperate class.
-    private HashMap<Integer, Strand> strandNodes;
-    private HashMap<String, Genome> genomes;
-    private HashMap<String, Genome> temp;
-
+    
+    private GenomeGraph genomeGraph;
     private String newickString;
-
-    private ArrayList<String> activeGenomes; //The current genomes selected in the GUI.
     private double dataWidth; // The with of the Data.
     private PhylogeneticTree phylogeneticTree; //The phylogenetic tree parsed from the dataFile.
     private DataTree dataTree; //The dataTree containing the Strands.
@@ -44,16 +38,14 @@ public class Controller implements FrontEndBackEndInterface {
     /**
      * Datacontainer Singleton, starts with empty hashmaps.
      */
-    public static final controller.Controller DC = Parser.parse("data/TB10.gfa");
+    public static final controller.Controller DC = new Controller();
+    		
 
     /**
      * Constructor.
      */
     public Controller() {
-        strandNodes = new HashMap<>();
-        activeGenomes = new ArrayList<>();
-        genomes = new HashMap<>();
-        temp = new HashMap<>();
+    	genomeGraph = Parser.parse("data/TB10.gfa");
         phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         //phylogeneticTree.parseTree("testGenomeNwk");
@@ -73,40 +65,7 @@ public class Controller implements FrontEndBackEndInterface {
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
         return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, 
         		dataTree, activeGenomes, temp);
-    }
-
-    /**
-     * Adding a strand to the data.
-     *
-     * @param strand The added strand.
-     */
-    public void addStrand(Strand strand) {
-        strandNodes.put(strand.getId(), strand);
-
-        for (String genomeID : strand.getGenomes()) {
-            if (!genomes.containsKey(genomeID)) {
-                genomes.put(genomeID, new Genome(genomeID));
-                temp.put(genomeID, new Genome(genomeID));
-                //HARDCODED ACTIVE GENOMES
-                if (!genomeID.equals("MT_H37RV_BRD_V5.ref.fasta")) {
-                    activeGenomes.add(genomeID);
-                }
-            } else {
-                genomes.get(genomeID).addStrand(strand);
-                temp.get(genomeID).addStrand(strand);
-            }
-        }
-    }
-
-    /**
-     * Get all the Strand in the data.
-     *
-     * @return strandNodes.
-     */
-    public HashMap<Integer, Strand> getStrandNodes() {
-        return strandNodes;
-
-    }
+    }    
 
     /**
      * Get the data width.
@@ -172,40 +131,13 @@ public class Controller implements FrontEndBackEndInterface {
         this.dataTree = dataTree;
     }
 
-    /**
-     * Getter for the genomes.
-     *
-     * @return the genomes.
-     */
-    public HashMap<String, Genome> getGenomes() {
-        return genomes;
-    }
-
-    /**
-     * Setter for the genomes.
-     *
-     * @param genomes The genomes.
-     */
-    public void setGenomes(HashMap<String, Genome> genomes) {
-        this.genomes = genomes;
-    }
-
-    /**
-     * The active genomes in the Gui.
-     *
-     * @return the active genomeIDS.
-     */
-    public ArrayList<String> getActiveGenomes() {
-        return activeGenomes;
-    }
-
 
     /** 
      * Setter for the activeGenomes.
      * @param activeGenomes The genomeIDS.
      */
     public void setActiveGenomes(ArrayList<String> activeGenomes) {
-        this.activeGenomes = activeGenomes;
+        genomeGraph.setActiveGenomes(activeGenomes);
     }
     
     /**

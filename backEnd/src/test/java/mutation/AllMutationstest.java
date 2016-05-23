@@ -6,7 +6,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import controller.Controller;
+import controller.GenomeGraph;
 import genome.Strand;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +21,7 @@ import genome.Genome;
  */
 public class AllMutationstest {
 
-    private Controller dc;
+    private GenomeGraph dc;
     private Genome g1;
     private Genome g2;
     private Strand n1;
@@ -35,7 +37,7 @@ public class AllMutationstest {
      */
     @Before
     public void setUp() {
-        dc = new Controller();
+        dc = new GenomeGraph();
         g1 = new Genome("ref1");
         g2 = new Genome("ref2");
         n1 = new Strand(1, "A", new String[1], "ref1", 1);

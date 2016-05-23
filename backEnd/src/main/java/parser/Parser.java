@@ -5,12 +5,13 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import genome.StrandEdge;
-
 import genome.Strand;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import controller.GenomeGraph;
 
 /**
  * Created by Jeffrey on 24-4-2016.
@@ -31,10 +32,10 @@ public class Parser {
 	 * @return The graph in the file.
 	 */
 	 @SuppressWarnings("checkstyle:methodlength")
-	 public static controller.Controller parse(String file) {
+	 public static GenomeGraph parse(String file) {
 		BufferedReader reader;
 		String line;
-		controller.Controller result = new controller.Controller();
+		GenomeGraph result = new GenomeGraph();
 		try {
 			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
 			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
@@ -59,7 +60,7 @@ public class Parser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		result.getDataTree().addStrands(new ArrayList<>(result.getGenomes().values()));
+		//result.getDataTree().addStrands(new ArrayList<>(result.getGenomes().values()));
 		return result;
 	}
 
