@@ -6,14 +6,27 @@ import java.util.HashMap;
 import genome.Genome;
 import genome.Strand;
 
+/**
+ * The Class GenomeGraph.
+ */
 public class GenomeGraph {
 
+	/** The strand nodes. */
 	private HashMap<Integer, Strand> strandNodes;
+    
+    /** The genomes. */
     private HashMap<String, Genome> genomes;
+    
+    /** The temp. */
     private HashMap<String, Genome> temp;
+    
+    /** The active genomes. */
     private ArrayList<String> activeGenomes; //The current genomes selected in the GUI.
 	
 
+    /**
+     * Instantiates a new genome graph.
+     */
     public GenomeGraph() {
         strandNodes = new HashMap<>();
         activeGenomes = new ArrayList<>();

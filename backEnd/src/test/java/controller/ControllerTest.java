@@ -1,6 +1,5 @@
 package controller;
 
-import genome.Strand;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,8 +11,6 @@ import static org.junit.Assert.assertEquals;
 public class ControllerTest {
 
 	private Controller data;
-	private Strand strand1;
-	private Strand strand2;
 	
 	/**
 	 * Setting up the Controller.

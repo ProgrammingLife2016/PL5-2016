@@ -6,15 +6,22 @@ import genome.Strand;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * The Class GenomeGraphTest.
+ */
 public class GenomeGraphTest {
 
-
+	/** The data. */
 	private GenomeGraph data;
+	
+	/** The strand1. */
 	private Strand strand1;
+	
+	/** The strand2. */
 	private Strand strand2;
 	
 	/**
-	 * Setting up the Controller.
+	 * Setting up the GenomeGraph.
 	 */
     @Before
     public void setUp() {

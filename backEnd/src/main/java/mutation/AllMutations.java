@@ -4,22 +4,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-import controller.Controller;
 import controller.GenomeGraph;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class AllMutations.
+ *
  * @author Jeffrey Helgers.
- * This class computes all the mutations in the given dataset. 
+ * This class computes all the mutations in the given dataset.
  */
 public class AllMutations {
 
+	/** The genome graph. */
 	private GenomeGraph genomeGraph;
+	
+	/** The mutations. */
 	private HashMap<String, ArrayList<MutationWillBeDeleted>> mutations;
 		
 	/**
 	 * Constructor to create.
-	 * @param dc The given data container.
+	 *
+	 * @param genomeGraph the genome graph
 	 */
 	public AllMutations(GenomeGraph genomeGraph) {
 		this.genomeGraph = genomeGraph;
@@ -28,12 +33,20 @@ public class AllMutations {
 		checkMutations();
 	}
 	
+	/**
+	 * Sets the keys.
+	 *
+	 * @param keys the new keys
+	 */
 	private void setKeys(Set<String> keys) {
 		for (String key : keys) {
 			mutations.put(key, new ArrayList<MutationWillBeDeleted>());
 		}
 	}
 	
+	/**
+	 * Check mutations.
+	 */
 	private void checkMutations() {
 		Set<String> keys = genomeGraph.getGenomes().keySet();
 		for (String base : keys) {

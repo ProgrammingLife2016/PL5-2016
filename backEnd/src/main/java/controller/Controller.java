@@ -2,8 +2,6 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
-import genome.Genome;
-import genome.Strand;
 import parser.Parser;
 
 import java.io.BufferedReader;
@@ -13,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
@@ -34,12 +31,11 @@ public class Controller implements FrontEndBackEndInterface {
     private PhylogeneticTree phylogeneticTree; //The phylogenetic tree parsed from the dataFile.
     private DataTree dataTree; //The dataTree containing the Strands.
 
-
     /**
      * Datacontainer Singleton, starts with empty hashmaps.
      */
     public static final controller.Controller DC = new Controller();
-    		
+    
 
     /**
      * Constructor.
@@ -55,6 +51,7 @@ public class Controller implements FrontEndBackEndInterface {
 
     }
 
+    
     /**
      * Wrapper method that returns a list of filtered node for the particular query.
      * @param minX The minimal X of the nodes.
@@ -63,8 +60,7 @@ public class Controller implements FrontEndBackEndInterface {
      * @return The list of ribbonNodes.
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
-        return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, 
-        		dataTree, activeGenomes, temp);
+        return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, genomeGraph);
     }    
 
     /**
