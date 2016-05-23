@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public class TreeParserTest {
 
-	/**
-	 * The tested tree.
-	 */
+    /**
+     * The tested tree.
+     */
     private PhylogeneticTree tree;
 
     /**
@@ -26,6 +26,20 @@ public class TreeParserTest {
     public void setUp() {
         tree = new PhylogeneticTree();
         tree.parseTree("testFile");
+    }
+
+    /**
+     * Test the default contructor.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testDefaultConstructor() throws Exception {
+        PhylogeneticNode node = new PhylogeneticNode(null, 1);
+        PhylogeneticTree tree = new PhylogeneticTree(node);
+        assertEquals(tree.getRoot(), node);
+
+
     }
 
     /**
@@ -71,6 +85,7 @@ public class TreeParserTest {
 
     /**
      * Test if Parent is set correctly.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -81,6 +96,7 @@ public class TreeParserTest {
 
     /**
      * Test if the nodes contain the correct genomes.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -91,6 +107,6 @@ public class TreeParserTest {
 
         assertEquals(tree.getRoot().getNode(3).getGenomes(), testList);
     }
-    
+
 
 }

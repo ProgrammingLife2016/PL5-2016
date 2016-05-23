@@ -1,8 +1,11 @@
 package ribbonnodes;
 
+import genome.Strand;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.theories.suppliers.TestedOn;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -24,9 +27,7 @@ public class RibbonNodeTest {
      */
     @Before
     public void setUp() throws Exception {
-        ArrayList<String> genomes = new ArrayList<>();
-        genomes.add("genome1");
-        genomes.add("genome2");
+        String[] genomes = {"genome1", "genome2"};
         node1 = new RibbonNode(0, genomes);
         node2 = new RibbonNode(1, genomes);
         edge = new RibbonEdge(0, 1);
@@ -129,9 +130,110 @@ public class RibbonNodeTest {
         assertEquals(node1.getEdges().get(2), edge4);
     }
 
+    /**
+     * Test the getter of genomes.
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testGetGenomes() throws Exception {
         assertEquals(node1.getGenomes().size(), 2);
         assertEquals(node1.getGenomes().get(0), "genome1");
+    }
+
+    /**
+     * Test the getter of Color.
+     */
+    @Test
+    public void testGetColor() {
+        assertEquals(node1.getColor(), Color.black);
+    }
+
+    /**
+     * Test the setter of COlor.
+     */
+    @Test
+    public void testSetColor() {
+        assertEquals(node1.getColor(), Color.black);
+        node1.setColor(Color.red);
+        assertEquals(node1.getColor(), Color.red);
+
+
+    }
+
+    /**
+     * Test the getter of Y.
+     *
+     * @throws Exception if fail.
+     */
+
+    @Test
+    public void testGetY() throws Exception {
+        assertEquals(0, node1.getY());
+    }
+
+    /**
+     * Test the getter of X.
+     *
+     * @throws Exception if fail.
+     */
+
+    @Test
+    public void testGetX() throws Exception {
+        assertEquals(0, node1.getX());
+    }
+
+    /**
+     * Test the setter of Y.
+     *
+     * @throws Exception if fail.
+     */
+
+    @Test
+    public void testSetY() throws Exception {
+        assertEquals(0, node1.getY());
+        node1.setY(1);
+        assertEquals(1, node1.getY());
+    }
+
+    /**
+     * Test the setter of X.
+     *
+     * @throws Exception if fail.
+     */
+
+    @Test
+    public void testSetX() throws Exception {
+        assertEquals(0, node1.getX());
+        node1.setX(1);
+        assertEquals(1, node1.getX());
+    }
+
+    /**
+     * Test the getter of strand.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testGetStrands() throws Exception {
+        String[] genomes = {"ref1", "ref2"};
+        Strand strand = new Strand(1, "AA", genomes, "ref1", 0);
+        node1.addStrand(strand);
+        assertEquals(node1.getStrands().get(0), strand);
+    }
+
+    /**
+     * Test the addition of a strand.
+     *
+     * @throws Exception if fail.
+     */
+
+    @Test
+    public void testAddStrand() throws Exception {
+        assertTrue(node1.getStrands().isEmpty());
+        String[] genomes = {"ref1", "ref2"};
+        Strand strand = new Strand(1, "AA", genomes, "ref1", 0);
+        node1.addStrand(strand);
+        assertEquals(node1.getStrands().get(0), strand);
     }
 }

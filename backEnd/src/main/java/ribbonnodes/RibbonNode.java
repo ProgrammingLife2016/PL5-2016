@@ -1,25 +1,39 @@
 package ribbonnodes;
 
+import genome.Strand;
+
+import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Matthijs on 12-5-2016.
  */
 public class RibbonNode {
-    private int id;
-    private ArrayList<RibbonEdge> edges;
-    private ArrayList<String> genomes;
-    private String label;
+    private int id; // The id of this ribbon.
+    private int x; //The x value of this ribbon Node.
+    private int y; //The y value of this ribbon Node.
+    private ArrayList<RibbonEdge> edges; //The edges attached to this ribbonNode.
+    private ArrayList<String> genomes; // The genomes that have this node.
+    private ArrayList<Strand> strands; //The strands contained in this RibbonNode.
+    private String label; //The label of this node.
+    private Color color; //The color of this node.
 
     /**
      * Constructor for the RibbonNode.
      * @param id The id.
      * @param genomes The genomes.
      */
-    public RibbonNode(int id, ArrayList<String> genomes) {
+    public RibbonNode(int id, String[] genomes) {
         edges = new ArrayList<>();
-        this.genomes = genomes;
+        this.genomes = new ArrayList<>(Arrays.asList(genomes));
+        this.strands = new ArrayList<>();
         this.id = id;
+        this.x=0;
+        this.y=0;
+        this.color= Color.black;
+
     }
 
     /**
@@ -93,5 +107,63 @@ public class RibbonNode {
         return genomes;
     }
 
+    /**
+     * The color this ribbon has.
+     * @return the color of this ribbon.
+     */
+    public Color getColor() {
+        return color;
+    }
 
+    /**
+     * Set the color of this ribbon.
+     * @param color the color.
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    /**
+     * The getter of the x of this node.
+     * @return the x value .
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * The setter of the x of this node.
+     * @param x the x value.
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * The getter of the y value of this node.
+     * @return The y value.
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * The setter of the y value of this node.
+     * @param y the y value.
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * The getter of strands.
+     * @return The strands contained in this node.
+     */
+    public ArrayList<Strand> getStrands(){return strands;}
+
+    /**
+     * Add a strand to this RibbonNode.
+     * @param strand the strands contained in this node.
+     */
+    public void addStrand(Strand strand){strands.add(strand);}
 }
