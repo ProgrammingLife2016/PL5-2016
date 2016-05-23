@@ -2,12 +2,15 @@ package ribbonnodes;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Matthijs on 12-5-2016.
  */
 public class RibbonNode {
     private int id; // The id of this ribbon.
+    private int x; //The x value of this ribbon Node.
+    private int y; //The y value of this ribbon Node.
     private ArrayList<RibbonEdge> edges; //The edges attached to this ribbonNode.
     private ArrayList<String> genomes; // The genomes that have this node.
     private String label; //The label of this node.
@@ -18,9 +21,9 @@ public class RibbonNode {
      * @param id The id.
      * @param genomes The genomes.
      */
-    public RibbonNode(int id, ArrayList<String> genomes) {
+    public RibbonNode(int id, String[] genomes) {
         edges = new ArrayList<>();
-        this.genomes = genomes;
+        this.genomes = new ArrayList<>(Arrays.asList(genomes));
         this.id = id;
         this.color= Color.black;
     }
@@ -110,5 +113,37 @@ public class RibbonNode {
      */
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    /**
+     * The getter of the x of this node.
+     * @return the x value .
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * The setter of the x of this node.
+     * @param x the x value.
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * The getter of the y value of this node.
+     * @return The y value.
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * The setter of the y value of this node.
+     * @param y the y value.
+     */
+    public void setY(int y) {
+        this.y = y;
     }
 }

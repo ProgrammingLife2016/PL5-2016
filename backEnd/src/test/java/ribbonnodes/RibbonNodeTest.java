@@ -26,9 +26,7 @@ public class RibbonNodeTest {
      */
     @Before
     public void setUp() throws Exception {
-        ArrayList<String> genomes = new ArrayList<>();
-        genomes.add("genome1");
-        genomes.add("genome2");
+        String[] genomes = {"genome1","genome2"};
         node1 = new RibbonNode(0, genomes);
         node2 = new RibbonNode(1, genomes);
         edge = new RibbonEdge(0, 1);

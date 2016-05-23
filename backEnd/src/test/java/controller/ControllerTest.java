@@ -47,8 +47,12 @@ public class ControllerTest {
      */
     @Test
     public void testAddEdge() {
-    	assertEquals(data.getEdges().get(edge.getStart() + "|" + edge.getEnd()), edge);
-    }
+		assertEquals(strand1.getEdges().size(),1);
+		StrandEdge edge2 = new StrandEdge(1, 5);
+		data.addEdge(edge2);
+		assertEquals(strand1.getEdges().size(),2);
+
+	}
     
 
     /**

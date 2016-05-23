@@ -19,7 +19,6 @@ public class ParserTest {
 	public void test() {
 		controller.Controller controller = Parser.parse("data/TB10.gfa");
 		assertEquals(controller.getstrandNodes().get(1).getId(), 1);
-		assertEquals(controller.getEdges().get("1|2").getStart(), 1);
-		assertEquals(controller.getEdges().get("1|2").getEnd(), 2);
+
 	}
 }
