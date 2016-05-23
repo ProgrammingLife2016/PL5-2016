@@ -8,7 +8,7 @@ import genome.Strand;
  * @author Jeffrey Helgers.
  * This class creates inserion mutations.
  */
-public class Insertion extends Mutation {
+public class Insertion extends MutationWillBeDeleted {
 
 	private Strand start;
 	private Strand end;
