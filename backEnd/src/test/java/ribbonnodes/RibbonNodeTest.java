@@ -1,5 +1,6 @@
 package ribbonnodes;
 
+import genome.Strand;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.theories.suppliers.TestedOn;
@@ -208,6 +209,31 @@ public class RibbonNodeTest {
         assertEquals(1, node1.getX());
     }
 
+    /**
+     * Test the getter of strand.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testGetStrands() throws Exception {
+        String[] genomes = {"ref1", "ref2"};
+        Strand strand = new Strand(1, "AA", genomes, "ref1", 0);
+        node1.addStrand(strand);
+        assertEquals(node1.getStrands().get(0), strand);
+    }
 
+    /**
+     * Test the addition of a strand.
+     *
+     * @throws Exception if fail.
+     */
 
+    @Test
+    public void testAddStrand() throws Exception {
+        assertTrue(node1.getStrands().isEmpty());
+        String[] genomes = {"ref1", "ref2"};
+        Strand strand = new Strand(1, "AA", genomes, "ref1", 0);
+        node1.addStrand(strand);
+        assertEquals(node1.getStrands().get(0), strand);
+    }
 }
