@@ -1,6 +1,9 @@
 package genome;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;;
 
@@ -9,15 +12,15 @@ import static org.junit.Assert.assertEquals;;
  */
 public class StrandTest {
 
-	private Strand strand;
-	
-	/**
-	 * Sets up a strand with whom we test.
-	 */
+    private Strand strand;
+
+    /**
+     * Sets up a strand with whom we test.
+     */
     @Before
     public void setUp() {
-    	String[] genomes = {"ref1", "ref2"};
-    	strand = new Strand(1, "AA", genomes, "ref1", 0);
+        String[] genomes = {"ref1", "ref2"};
+        strand = new Strand(1, "AA", genomes, "ref1", 0);
     }
 
     /**
@@ -25,64 +28,87 @@ public class StrandTest {
      */
     @Test
     public void testGetId() {
-    	assertEquals(strand.getId(), 1);
-    	strand.setId(2);
-    	assertEquals(strand.getId(), 2);
+        assertEquals(strand.getId(), 1);
+        strand.setId(2);
+        assertEquals(strand.getId(), 2);
     }
-    
+
     /**
      * Tests getting the sequence of the strand.
      */
     @Test
     public void testGetSequence() {
-    	assertEquals(strand.getSequence(), "AA");
-    	strand.setSequence("AC");
-    	assertEquals(strand.getSequence(), "AC");
+        assertEquals(strand.getSequence(), "AA");
+        strand.setSequence("AC");
+        assertEquals(strand.getSequence(), "AC");
     }
-    
+
     /**
      * Tests getting the genomes of the strand.
      */
     @Test
     public void testGetGenomes() {
-    	assertEquals(strand.getGenomes().get(0), "ref1");
-    	assertEquals(strand.getGenomes().get(1), "ref2");
-    	String[] temp = {"ref3", "ref4" };
-    	strand.setGenomes(temp);
-    	assertEquals(strand.getGenomes().get(0), "ref3");
-    	assertEquals(strand.getGenomes().get(1), "ref4");
+        assertEquals(strand.getGenomes().get(0), "ref1");
+        assertEquals(strand.getGenomes().get(1), "ref2");
+        String[] temp = {"ref3", "ref4"};
+        strand.setGenomes(temp);
+        assertEquals(strand.getGenomes().get(0), "ref3");
+        assertEquals(strand.getGenomes().get(1), "ref4");
     }
-    
+
     /**
      * Tests getting the reference genome of the strand.
      */
     @Test
     public void testGetReferenceGenome() {
-    	assertEquals(strand.getReferenceGenome(), "ref1");
-    	strand.setReferenceGenome("ref2");
-    	assertEquals(strand.getReferenceGenome(), "ref2");
+        assertEquals(strand.getReferenceGenome(), "ref1");
+        strand.setReferenceGenome("ref2");
+        assertEquals(strand.getReferenceGenome(), "ref2");
     }
-    
+
     /**
      * Tests getting the reference coordinate of the strand.
      */
     @Test
     public void testGetReferenceCoordinate() {
-    	assertEquals(strand.getReferenceCoordinate(), 0);
-    	strand.setReferenceCoordinate(10);
-    	assertEquals(strand.getReferenceCoordinate(), 10);
+        assertEquals(strand.getReferenceCoordinate(), 0);
+        strand.setReferenceCoordinate(10);
+        assertEquals(strand.getReferenceCoordinate(), 10);
     }
-    
+
     /**
      * Tests getting the weight of the strand.
      */
     @Test
     public void testGetWeight() {
-    	assertEquals(strand.getWeight(), 2);
-    	strand.setWeight(4);
-    	assertEquals(strand.getWeight(), 4);
+        assertEquals(strand.getWeight(), 2);
+        strand.setWeight(4);
+        assertEquals(strand.getWeight(), 4);
     }
-    
 
-    
+    /**
+     * Test the retainGenomes method.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testRetainGenomes() throws Exception {
+        assertEquals(strand.getGenomes().size(), 2);
+        ArrayList<String> testArray = new ArrayList<>();
+        testArray.add("ref1");
+        strand.retainGenomes(testArray);
+        assertEquals(strand.getGenomes().size(), 1);
+    }
+
+    /**
+     * Test the getter of Edges.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testGetEdges() throws Exception {
+        StrandEdge edge = new StrandEdge(1,2);
+        strand.addEdge(edge);
+        assertEquals(strand.getEdges().get(0),edge);
+    }
 }

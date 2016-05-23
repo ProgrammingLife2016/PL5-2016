@@ -168,13 +168,7 @@ public class Strand {
     	edges.add(edge);
     }
     
-    /**
-     * Set the edges.
-     * @param edges New edges.
-     */
-    public void setEdges(ArrayList<StrandEdge> edges) {
-    	this.edges = edges;
-    }
+
     
     /**
      * Get the edges.

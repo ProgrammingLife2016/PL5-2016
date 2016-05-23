@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 /**
+ * Class to test the genomes.
  * @author Jeffrey Helgers.
  */
 public class GenomesTest {
@@ -51,5 +52,17 @@ public class GenomesTest {
         genome.addStrand(strand);
         assertEquals(genome.getStrands(), res);
     }
+
+	/**
+	 * Test the setter of id.
+	 * @throws Exception if fail.
+     */
+	@Test
+	public void testSetId() throws Exception {
+		assertEquals("GenomeIDTest", genome.getId());
+		genome.setId("testId");
+		assertEquals("testId", genome.getId());
+
+	}
 }
 
