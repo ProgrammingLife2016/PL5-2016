@@ -211,17 +211,17 @@ function draw(points, c, translate) {
         ctx.stroke();
 
         $.each(point.edges, function(key, edge) {
-            var target = points[edge.start];
-            if (edge.start == id) {
-                target = cachedNodes[edge.end];
-            }
+            var target = points[edge.endId];
+            //if (edge.start == id) {
+            //    target = cachedNodes[edge.endId];
+            //}
             if (target) {
-                ctx.beginPath();
-                ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
-                ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
-                ctx.lineWidth = edge.weight;
-                ctx.stroke();
-                ctx.lineWidth = 1;
+                //ctx.beginPath();
+                //ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
+                //ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
+                //ctx.lineWidth = edge.weight;
+                //ctx.stroke();
+                //ctx.lineWidth = 1;
             }
         });
     });
@@ -331,7 +331,7 @@ function parseNodeData(nodes) {
     var ratio = $('#minimap').width() / (nodes[nodes.length-1].x - left);
 
     $.each(nodes, function(key, value) {
-        result[value.id] = {
+        result[key] = {
             x: value.x - left,
             y: value.y,
             strands: value.strands,
