@@ -14,7 +14,7 @@ import controller.Controller;
 public class AllMutations {
 
 	private Controller dc;
-	private HashMap<String, ArrayList<Mutation>> mutations;
+	private HashMap<String, ArrayList<MutationWillBeDeleted>> mutations;
 		
 	/**
 	 * Constructor to create.
@@ -29,7 +29,7 @@ public class AllMutations {
 	
 	private void setKeys(Set<String> keys) {
 		for (String key : keys) {
-			mutations.put(key, new ArrayList<Mutation>());
+			mutations.put(key, new ArrayList<MutationWillBeDeleted>());
 		}
 	}
 	
@@ -50,7 +50,7 @@ public class AllMutations {
 	 * @param key The key from the reference genome.
 	 * @param mutation The mutation.
 	 */
-	public void addMutation(String key, Mutation mutation) {
+	public void addMutation(String key, MutationWillBeDeleted mutation) {
 		mutations.get(key).add(mutation);
 	}
 	
@@ -59,7 +59,7 @@ public class AllMutations {
 	 * @param genome The compared genome.
 	 * @return The mutations.
 	 */
-	public ArrayList<Mutation> getGenomeMutations(String genome) {
+	public ArrayList<MutationWillBeDeleted> getGenomeMutations(String genome) {
 		return mutations.get(genome);
 	}
 

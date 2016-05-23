@@ -10,7 +10,7 @@ import genome.Strand;
  * @author Jeffrey Helgers.
  * This class creates deletion mutations.
  */
-public class Deletion extends Mutation {
+public class Deletion extends MutationWillBeDeleted {
 
 	private ArrayList<Strand> missingNodes;
 	
