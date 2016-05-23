@@ -209,8 +209,6 @@ function draw(points, c, translate) {
         ctx.stroke();
 
         $.each(point.edges, function(key, edge) {
-            //Todo: Matthijs, alles hieronder uncommenten.
-
             var target = points[edge.startId];
             if (edge.startId == id) {
                 target = points[edge.endId];
