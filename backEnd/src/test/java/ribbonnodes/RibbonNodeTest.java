@@ -2,7 +2,9 @@ package ribbonnodes;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.theories.suppliers.TestedOn;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -129,9 +131,34 @@ public class RibbonNodeTest {
         assertEquals(node1.getEdges().get(2), edge4);
     }
 
+    /**
+     * Test the getter of genomes.
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testGetGenomes() throws Exception {
         assertEquals(node1.getGenomes().size(), 2);
         assertEquals(node1.getGenomes().get(0), "genome1");
+    }
+
+    /**
+     * Test the getter of Color.
+     */
+    @Test
+    public void testGetColor() {
+        assertEquals(node1.getColor(), Color.black);
+    }
+
+    /**
+     * Test the setter of COlor.
+     */
+    @Test
+    public void testSetColor() {
+        assertEquals(node1.getColor(), Color.black);
+        node1.setColor(Color.red);
+        assertEquals(node1.getColor(), Color.red);
+
+
     }
 }

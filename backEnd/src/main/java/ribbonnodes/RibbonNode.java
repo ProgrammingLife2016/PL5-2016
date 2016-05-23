@@ -1,15 +1,17 @@
 package ribbonnodes;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * Created by Matthijs on 12-5-2016.
  */
 public class RibbonNode {
-    private int id;
-    private ArrayList<RibbonEdge> edges;
-    private ArrayList<String> genomes;
-    private String label;
+    private int id; // The id of this ribbon.
+    private ArrayList<RibbonEdge> edges; //The edges attached to this ribbonNode.
+    private ArrayList<String> genomes; // The genomes that have this node.
+    private String label; //The label of this node.
+    private Color color; //The color of this node.
 
     /**
      * Constructor for the RibbonNode.
@@ -20,6 +22,7 @@ public class RibbonNode {
         edges = new ArrayList<>();
         this.genomes = genomes;
         this.id = id;
+        this.color= Color.black;
     }
 
     /**
@@ -93,5 +96,19 @@ public class RibbonNode {
         return genomes;
     }
 
+    /**
+     * The color this ribbon has.
+     * @return the color of this ribbon.
+     */
+    public Color getColor() {
+        return color;
+    }
 
+    /**
+     * Set the color of this ribbon.
+     * @param color the color.
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }
