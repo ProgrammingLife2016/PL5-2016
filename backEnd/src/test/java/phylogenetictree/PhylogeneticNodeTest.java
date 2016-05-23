@@ -4,16 +4,16 @@ import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * A class to test the PhylogeneticNode class.
  * Created by Matthijs on 17-5-2016.
  */
 public class PhylogeneticNodeTest {
-    PhylogeneticNode node; //The node to test.
-    PhylogeneticNode child1; //The first child of node;
-    PhylogeneticNode child2; //The second child of node;
+    private PhylogeneticNode node; //The node to test.
+    private PhylogeneticNode child1; //The first child of node;
+    private PhylogeneticNode child2; //The second child of node;
 
 
     /**

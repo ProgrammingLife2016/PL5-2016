@@ -8,7 +8,6 @@ import genome.StrandEdge;
 import parser.Parser;
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
-import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 import java.io.BufferedReader;
@@ -18,8 +17,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
+
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -32,8 +31,8 @@ public class Controller {
 
     //Todo move strand graph and genomes to seperate class.
     private HashMap<Integer, Strand> strandNodes;
-    private HashMap<String, StrandEdge> strandEdges;
     private HashMap<String, Genome> genomes;
+    private HashMap<String, Genome> temp;
 
     private String newickString;
 
@@ -47,7 +46,7 @@ public class Controller {
      * Datacontainer Singleton, starts with empty hashmaps.
      */
     //public static final controller.Controller DC = Parser.parse("data/TB10.gfa");
-    public static final controller.Controller DC = Parser.parse("data/TB10.gfa");
+    public static final Controller DC = Parser.parse("data/TB10.gfa");
 
     /**
      * Constructor.
@@ -56,106 +55,36 @@ public class Controller {
      */
     public Controller(String dataFile, String phyloTree) {
         strandNodes = new HashMap<>();
-        strandEdges = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
-        ArrayList<String> currentGenomes = Parser.getPresentGenomes("data/TB10.gfa");
+        temp = new HashMap<>();
         phylogeneticTree = new PhylogeneticTree();
-        phylogeneticTree.parseTree(phyloTree, currentGenomes);
-        dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(),
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
+        //phylogeneticTree.parseTree("testGenomeNwk");
+        dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
         newickString = loadRawFileData(phyloTree);
 
     }
 
     /**
-     * Get the ribbon nodes with edges for a certain view in the GUI.
-     *
-     * @param minX      the minx of the view.
-     * @param maxX      the maxx of the view.
-     * @param zoomLevel the zoomlevel of the view.
+     * Wrapper method that returns a list of filtered node for the particular query.
+     * @param minX The minimal X of the nodes.
+     * @param maxX The maximal X of the nodes.
+     * @param zoomLevel The zoomlevel to filter to.
      * @return The list of ribbonNodes.
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
-        ArrayList<RibbonNode> result = new ArrayList<>();
-        ArrayList<DataNode> filteredNodes = 
-        		dataTree.getDataNodes(minX, maxX, activeGenomes, zoomLevel);
-
-        for (DataNode node : filteredNodes) {
-            for (Strand strand : node.getStrands()) {
-                //Here the nodes are placed in order 
-            	//(notice node.getgenomes and not ribbon.getgenomes).
-                RibbonNode ribbonNode = new RibbonNode(strand.getId(), node.getGenomes());
-                result.add(ribbonNode);
-            }
-        }
-
-        addRibbonEdges(result, activeGenomes);
-
-        return result;
-
+        return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, 
+        		dataTree, activeGenomes, temp);
     }
 
     /**
-     * Calculate and add the edges between the ribbon nodes.
-     *
-     * @param nodes   The ribbonnodes to connect.
-     * @param genomes The active Genomes.
+     * Add an outgoing edge to the correct Strand.
+     * @param edge The edge to add.
      */
-
-    public void addRibbonEdges(ArrayList<RibbonNode> nodes, ArrayList<String> genomes) {
-        nodes.sort(new Comparator<RibbonNode>() {
-            @Override
-            public int compare(RibbonNode o1, RibbonNode o2) {
-                if (o1.getId() > o2.getId()) {
-                    return 1;
-                }
-                else if (o1.getId() < o2.getId()) {
-                    return -1;
-                }
-                return 0;
-            }
-        });
-        for (String genome : genomes) {
-            for (int i = 0; i < nodes.size(); i++) {
-                RibbonNode startNode = nodes.get(i);
-
-                if (startNode.getGenomes().contains(genome)) {
-                    i++;
-                    RibbonNode endNode = nodes.get(i);
-                    while (!checkEdge(startNode, endNode, genome) && i < nodes.size()) {
-                        i++;
-                        endNode = nodes.get(i);
-                    }
-                }
-            }
-        }
-    }
-
-
-    /**
-     * Check if an edge should exist between two ribbon nodes, and add it if it should.
-     *
-     * @param startNode The start node.
-     * @param endNode   The end node.
-     * @param genomeID  The Genome of this path.
-     * @return True if edge was found.
-     */
-
-    public boolean checkEdge(RibbonNode startNode, RibbonNode endNode, String genomeID) {
-        if (endNode.getGenomes().contains(genomeID)) {
-            if (startNode.getEdge(startNode.getId(), endNode.getId()) == null) {
-                RibbonEdge edge = new RibbonEdge(startNode.getId(), endNode.getId());
-                startNode.addEdge(edge);
-                endNode.addEdge(edge);
-
-            } else {
-                startNode.getEdge(startNode.getId(), endNode.getId()).incrementWeight();
-            }
-            return true;
-
-        }
-        return false;
+    public void addEdge(StrandEdge edge){
+        getStrandNodes().get(edge.getStart()).addEdge(edge);
     }
 
     /**
@@ -166,27 +95,19 @@ public class Controller {
     public void addStrand(Strand strand) {
         strandNodes.put(strand.getId(), strand);
 
-
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome(genomeID));
-
+                temp.put(genomeID, new Genome(genomeID));
                 //HARDCODED ACTIVE GENOMES
-                if (!(activeGenomes.size() > 2)) {
+                if (!genomeID.equals("MT_H37RV_BRD_V5.ref.fasta")) {
                     activeGenomes.add(genomeID);
                 }
+            } else {
+                genomes.get(genomeID).addStrand(strand);
+                temp.get(genomeID).addStrand(strand);
             }
-            genomes.get(genomeID).addStrand(strand);
         }
-    }
-
-    /**
-     * Adding an StrandEdge to the data.
-     *
-     * @param strandEdge The added StrandEdge.
-     */
-    public void addEdge(StrandEdge strandEdge) {
-        strandEdges.put(strandEdge.getStart() + "|" + strandEdge.getEnd(), strandEdge);
     }
 
     /**
@@ -194,19 +115,9 @@ public class Controller {
      *
      * @return strandNodes.
      */
-    public HashMap<Integer, Strand> getstrandNodes() {
+    public HashMap<Integer, Strand> getStrandNodes() {
         return strandNodes;
     }
-
-    /**
-     * Get all the edges in the data.
-     *
-     * @return Edges.
-     */
-    public HashMap<String, StrandEdge> getEdges() {
-        return strandEdges;
-    }
-
 
     /**
      * Get the data width.
@@ -231,11 +142,18 @@ public class Controller {
     /**
      * Getter for the phylogenicTree.
      *
+     * @param treeId the tree id
      * @return The tree.
      */
-    public PhylogeneticTree getPhylogeneticTree() {
-        return phylogeneticTree;
-    }
+    public PhylogeneticTree loadPhylogeneticTree(int treeId) {
+		if (treeId == 0) {
+			phylogeneticTree = new PhylogeneticTree();
+			phylogeneticTree.parseTree("testGenomeNwk");
+			return phylogeneticTree;
+		} else {
+			return phylogeneticTree;
+		}
+	}
 
     /**
      * Setter for the phylogenicTree.

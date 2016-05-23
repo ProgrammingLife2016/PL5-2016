@@ -1,5 +1,5 @@
 var color_scheme = d3.scale.category10();
-var cacheNewickString;
+var cached_json_data;
 var tree = d3.layout.phylotree("body").separation(
     function(a, b) {
         return 0;
@@ -11,33 +11,72 @@ var svgPanZoomObject;
 $(document).ready(function() {
     addCompareGenomeButtonBindings();
     set_default_tree_settings();
-    makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
+    //makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
+    makeRestAPIcall('getphylogenetictree','JSON', 'GET', {'treeId' : 1}, drawTree);
 });
 
-function drawTree(newickStringJSONObject) {
-    if (newickStringJSONObject != null) {
-        var newickString = newickStringJSONObject.newickString;
-        cacheNewickString = newickString;
-    } else {
-        var newickString = cacheNewickString;
-    }
+function drawTree(json) {
+	var json = refreshCache(json);	 
+	var isJSONtree = containsJSONtree(json);
+	var tree_data = getTreeData(json, isJSONtree);
+	
     var width = $("#treeViewPort").width();
     var height = $("#treeViewPort").height();
     var svg = d3.select(container_id).append("svg").attr("width", width).attr(
         "height", height);
-    tree.size([height, width])(newickString).svg(svg).layout();
-    philoSVG = $("#tree_container svg");
-    philoSVG.attr("width", width);
-    philoSVG.attr("height", height);
-    philoSVG.attr("viewBox", "0 0 " + width + " " + height);
-    svgPanZoomObject = svgPanZoom(philoSVG.get(0) ,{
-        controlIconsEnabled: true,
-        minZoom:0,
-        maxZoom:100,
-        zoomScaleSensitivity:0.8
-    });
+    tree.size([height, width])(tree_data, isJSONtree).svg(svg).layout();
+    enablePanZoom();
+}
+function refreshCache(json)
+{
+	if(json == null)
+		{
+		return cached_json_data;
+		}
+	else {
+		cached_json_data = json;
+		return json;
+	}
 }
 
+function containsJSONtree(obj)
+{
+	if(obj == null)
+	{
+		return false;	
+	}
+	else
+	{	
+		return obj.name != null && obj.name == "root";
+	}
+}
+
+function getTreeData(json, isJSONtree)
+{
+	if(isJSONtree)
+	{		
+		return json;	
+	}
+	else if(json != null )
+	{
+		return json.newickString;
+	}
+}
+
+function enablePanZoom(){
+	var width = $("#treeViewPort").width();
+	var height = $("#treeViewPort").height();
+	var philoSVG = $("#tree_container svg");
+	philoSVG.attr("width", width);
+	philoSVG.attr("height", height);
+	philoSVG.attr("viewBox", "0 0 " + width + " " + height);
+	svgPanZoomObject = svgPanZoom(philoSVG.get(0),{
+		controlIconsEnabled: true, 
+		minZoom:0,
+		maxZoom:100,
+		zoomScaleSensitivity:0.8
+			});
+	}
 
 function addCompareGenomeButtonBindings() {
 
@@ -45,8 +84,10 @@ function addCompareGenomeButtonBindings() {
         var selectedNodeObjects = tree.get_selection();
         var names = [];
         selectedNodeObjects.forEach(function(d) {
+            console.log('test');
+            console.log(d);
             if (d.name) {
-                names.push(d.name);
+            	names.push(d.name);
             }
         });
         console.log(names);

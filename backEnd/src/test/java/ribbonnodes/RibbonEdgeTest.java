@@ -3,7 +3,7 @@ package ribbonnodes;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Matthijs on 17-5-2016.
@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  */
 public class RibbonEdgeTest {
 
-    RibbonEdge edge; //the edge to test.
+    private RibbonEdge edge; //the edge to test.
 
     /**
      * Set up the tests.

@@ -1,0 +1,40 @@
+package mutation;
+
+import genome.Genome;
+
+/**
+ * 
+ * @author Jeffrey Helgers
+ * Abstract class the instantiates the mutations.
+ */
+public abstract class MutationWillBeDeleted {
+
+	private Genome reference;
+	private Genome other;
+	
+	/**
+	 * Constructor to create a mutation.
+	 * @param reference The reference genome.
+	 * @param other The other genome.
+	 */
+	public MutationWillBeDeleted(Genome reference, Genome other) {
+		this.reference = reference;
+		this.other = other;
+	}
+	
+	/**
+	 * Get the reference genome.
+	 * @return The reference.
+	 */
+	public Genome getReference() {
+		return reference;
+	}
+	
+	/**
+	 * Get the other genome.
+	 * @return The other.
+	 */
+	public Genome getOther() {
+		return other;
+	}
+}

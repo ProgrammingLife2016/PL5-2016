@@ -26,7 +26,7 @@ public class AllMutationstest {
     private Strand n2;
     private Strand n3;
     private Strand n4;
-    private ArrayList<Mutation> result;
+    private ArrayList<MutationWillBeDeleted> result;
 
     /**
      * Set up the Strands, gemomes and data container that are used.
