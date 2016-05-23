@@ -17,7 +17,7 @@ public class Strand {
     private String referenceGenome; // the refrence genome of this node
     private int referenceCoordinate; //coordinate of this node in the refr genome
     private int weight; // amount of genomes that contain this node
-    private ArrayList<StrandEdge> edges;
+    private ArrayList<StrandEdge> edges; // The edges going out of this strand.
 
     /**
      * Constructor to create a node.
@@ -168,13 +168,7 @@ public class Strand {
     	edges.add(edge);
     }
     
-    /**
-     * Set the edges.
-     * @param edges New edges.
-     */
-    public void setEdges(ArrayList<StrandEdge> edges) {
-    	this.edges = edges;
-    }
+
     
     /**
      * Get the edges.

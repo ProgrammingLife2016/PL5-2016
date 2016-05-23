@@ -8,7 +8,6 @@ import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -94,7 +93,7 @@ public final class RibbonController {
 						}
 
 					} else {
-						tempResult.get(strand.getId()).getEdges().get(0).incrementWeight();
+						tempResult.get(strand.getId()).getOutEdges().get(0).incrementWeight();
 					}
 					if (tempResult.containsKey(strand.getId())) {
 						x = tempResult.get(strand.getId()).getX();

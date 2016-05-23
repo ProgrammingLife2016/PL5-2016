@@ -10,7 +10,7 @@ import genome.Strand;
  * @author Jefrrey Helgers
  * Interface for mutations, the frontend can use this interface.
  */
-public abstract class Mutation {
+public abstract class AbstractMutation {
 	
 	private Genome reference;
 	private Genome other;
@@ -28,8 +28,8 @@ public abstract class Mutation {
 	 * @param end				The end Strand, if any.
 	 * @param mutatedStrands	The mutated Strands.
 	 */
-	public Mutation(MutationType mutationType, Genome reference, Genome other,
-			Strand start, Strand end, ArrayList<Strand> mutatedStrands) {
+	public AbstractMutation(MutationType mutationType, Genome reference, Genome other,
+							Strand start, Strand end, ArrayList<Strand> mutatedStrands) {
 		this.mutationType = mutationType;
 		this.reference = reference;
 		this.other = other;

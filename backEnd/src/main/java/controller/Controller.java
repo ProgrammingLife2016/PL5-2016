@@ -26,7 +26,7 @@ import ribbonnodes.RibbonNode;
 /**
  * Controller returns the ribbon nodes based on a UI request.
  */
-public class Controller {
+public class Controller implements FrontEndBackEndInterface {
 
     //Todo move strand graph and genomes to seperate class.
     private HashMap<Integer, Strand> strandNodes;
@@ -224,22 +224,30 @@ public class Controller {
      */
 	public String loadRawFileData(String fileName) {
 
-		String rawFileData = "";
-
+		StringBuffer rawFileData = new StringBuffer();
+		BufferedReader reader = null;
+		
 		try {
-			BufferedReader reader;
 			InputStream in = PhylogeneticTree.class.getClassLoader().getResourceAsStream(fileName);
 			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
 			reader = new BufferedReader(r);
 			String line = reader.readLine();
 			while (line != null) {
-				rawFileData = rawFileData + line;
+				rawFileData.append(line);
 				line = reader.readLine();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (reader != null) {
+					reader.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
-		return rawFileData;
+		return rawFileData.toString();
 	}
 }

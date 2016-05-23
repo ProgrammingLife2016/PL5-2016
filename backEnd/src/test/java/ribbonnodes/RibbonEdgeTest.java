@@ -3,6 +3,8 @@ package ribbonnodes;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.Color;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -34,5 +36,17 @@ public class RibbonEdgeTest {
         assertEquals(1, edge.getWeight());
         edge.incrementWeight();
         assertEquals(2, edge.getWeight());
+    }
+
+    /**
+     * Test the color getter and setter.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testColor() throws Exception {
+        assertEquals(Color.black, edge.getColor());
+        edge.setColor(Color.red);
+        assertEquals(Color.red, edge.getColor());
     }
 }
