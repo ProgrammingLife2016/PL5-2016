@@ -8,19 +8,27 @@ import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
 
+// TODO: Auto-generated Javadoc
 /**
  * Created by Matthijs on 24-4-2016.
  */
 
 /**
- * Controller returns the ribbon nodes based on a UI request.
+ * Controller. This class connects the classes together.
  */
 public class Controller implements FrontEndBackEndInterface {
     
+    /** The genome graph. */
     private GenomeGraph genomeGraph;
-    private double dataWidth; // The with of the Data.
+    
+    /** The data width. */
+    private double dataWidth; 
+    
+    /** The phylogenetic tree. */
     private PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
-    private DataTree dataTree; //The dataTree containing the Strands.
+    
+    /** The data tree. */
+    private DataTree dataTree;
 
     /**
      * Datacontainer Singleton, starts with empty hashmaps.
