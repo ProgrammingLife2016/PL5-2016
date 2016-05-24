@@ -90,17 +90,5 @@ public class RestApi {
 			@DefaultValue("1") @QueryParam("treeId") int treeId) {
 		return new PhylogeneticTreeObject(Controller.DC.loadPhylogeneticTree(treeId).getRoot());
 	}
-	
-	/**
-	 * Gets the newick string.
-	 *
-	 * @return the newick string
-	 */
-	@GET
-	@Path("/getnewickstring")
-	@Produces("application/json")
-	public NewickStringObject getNewickString() {
-		return new NewickStringObject(Controller.DC.getNewickString());
-	}
 
 }

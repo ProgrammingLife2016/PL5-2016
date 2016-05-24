@@ -3,15 +3,7 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import parser.Parser;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
@@ -26,9 +18,8 @@ import ribbonnodes.RibbonNode;
 public class Controller implements FrontEndBackEndInterface {
     
     private GenomeGraph genomeGraph;
-    private String newickString;
     private double dataWidth; // The with of the Data.
-    private PhylogeneticTree phylogeneticTree; //The phylogenetic tree parsed from the dataFile.
+    private PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
     private DataTree dataTree; //The dataTree containing the Strands.
 
     /**
@@ -42,12 +33,9 @@ public class Controller implements FrontEndBackEndInterface {
      */
     public Controller() {
     	genomeGraph = Parser.parse("data/TB10.gfa");
-        phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
-        //phylogeneticTree.parseTree("testGenomeNwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
-        newickString = loadRawFileData("data/340tree.rooted.TKK.nwk");
 
     }
 
@@ -78,7 +66,7 @@ public class Controller implements FrontEndBackEndInterface {
      *
      * @param dataWidth New data width.
      */
-    public void setDataWifdth(double dataWidth) {
+    public void setDataWidth(double dataWidth) {
         this.dataWidth = dataWidth;
     }
 
@@ -136,46 +124,4 @@ public class Controller implements FrontEndBackEndInterface {
         genomeGraph.setActiveGenomes(activeGenomes);
     }
     
-    /**
-     * Get the newick string.
-     * @return String.
-     */
-    public String getNewickString() {
-		return newickString;
-	}
-    
-
-    /**
-     * Load rar file data.
-     * @param fileName The file.
-     * @return String.
-     */
-	public String loadRawFileData(String fileName) {
-
-		StringBuffer rawFileData = new StringBuffer();
-		BufferedReader reader = null;
-		
-		try {
-			InputStream in = PhylogeneticTree.class.getClassLoader().getResourceAsStream(fileName);
-			Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
-			reader = new BufferedReader(r);
-			String line = reader.readLine();
-			while (line != null) {
-				rawFileData.append(line);
-				line = reader.readLine();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return rawFileData.toString();
-	}
 }
