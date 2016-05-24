@@ -6,8 +6,9 @@ import static org.junit.Assert.fail;
 import junit.framework.Assert;
 import org.junit.Test;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -34,7 +35,9 @@ public class ParserTest {
 
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader("temp/nodes.csv"));
+			reader = new BufferedReader(
+					new InputStreamReader(
+							new FileInputStream("temp/nodes.csv"), "UTF8"));
 			Assert.assertEquals("id,sequence,genomes,refGenome,refCoor", reader.readLine());
 			Assert.assertEquals("1,AAAAAAAA,AA,AA,371", reader.readLine());
 			Assert.assertEquals("2,A,AA,AA,371", reader.readLine());
@@ -55,8 +58,9 @@ public class ParserTest {
 
 		BufferedReader reader;
 		try {
-			//InputStream in = Parser.class.getClassLoader().getResourceAsStream("temp/edges.csv");
-			reader = new BufferedReader(new FileReader("temp/edges.csv"));
+			reader = new BufferedReader(
+					new InputStreamReader(
+							new FileInputStream("temp/edges.csv"), "UTF8"));
 			Assert.assertEquals("start,end", reader.readLine());
 			Assert.assertEquals("1,2", reader.readLine());
 			Assert.assertEquals("2,3", reader.readLine());
@@ -76,7 +80,9 @@ public class ParserTest {
 
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader("temp/phylo.csv"));
+			reader = new BufferedReader(
+					new InputStreamReader(
+							new FileInputStream("temp/phylo.csv"), "UTF8"));
 			Assert.assertEquals("parent,child,dist,pc", reader.readLine());
 			Assert.assertEquals("0,1,0,parent", reader.readLine());
 			Assert.assertEquals("1,AA,0,child", reader.readLine());

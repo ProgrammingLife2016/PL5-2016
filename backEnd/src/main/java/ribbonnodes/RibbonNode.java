@@ -15,7 +15,8 @@ public class RibbonNode {
     private ArrayList<RibbonEdge> outEdges; // The edges going out of the node.
     private ArrayList<String> genomes; //The genomes that go through this node.
     private ArrayList<Strand> strands; // The strands contained in this node.
-    private String label; // The textLabel of this node.
+    private String label; // The entire strand contained in this node 
+    					  // (if zoomlevel is above a certain threshold).
 
     /**
      * Constructor for the RibbonNode.
@@ -99,12 +100,13 @@ public class RibbonNode {
      *
      * @return Edges.
      */
-    public ArrayList<RibbonEdge> getEdges() {
+    public ArrayList<RibbonEdge> getOutEdges() {
         return outEdges;
     }
 
     /**
      * Get the incoming edges.
+     *
      * @return InEdges.
      */
     public ArrayList<RibbonEdge> getInEdges() {
@@ -113,6 +115,7 @@ public class RibbonNode {
 
     /**
      * Set the outgoing edges.
+     *
      * @param outEdges New outgoing edges.
      */
     public void setOutEdges(ArrayList<RibbonEdge> outEdges) {
@@ -121,6 +124,7 @@ public class RibbonNode {
 
     /**
      * Set the incoming edges.
+     *
      * @param inEdges The new incoming edges.
      */
     public void setInEdges(ArrayList<RibbonEdge> inEdges) {
@@ -152,6 +156,7 @@ public class RibbonNode {
 
     /**
      * Get x coordinate.
+     *
      * @return X.
      */
     public int getX() {
@@ -160,6 +165,7 @@ public class RibbonNode {
 
     /**
      * Set x coordinate.
+     *
      * @param x New x.
      */
     public void setX(int x) {
@@ -168,6 +174,7 @@ public class RibbonNode {
 
     /**
      * Get y coordinate.
+     *
      * @return Y.
      */
     public int getY() {
@@ -176,6 +183,7 @@ public class RibbonNode {
 
     /**
      * Set the y coordinate.
+     *
      * @param y New y.
      */
     public void setY(int y) {
@@ -184,6 +192,7 @@ public class RibbonNode {
 
     /**
      * Get the strands.
+     *
      * @return Strands.
      */
     public ArrayList<Strand> getStrands() {
@@ -192,6 +201,7 @@ public class RibbonNode {
 
     /**
      * Add a multiple strands.
+     *
      * @param strands Added strands.
      */
     public void addStrands(ArrayList<Strand> strands) {
@@ -200,6 +210,7 @@ public class RibbonNode {
 
     /**
      * Add a strand.
+     *
      * @param strand Added strand.
      */
     public void addStrand(Strand strand) {

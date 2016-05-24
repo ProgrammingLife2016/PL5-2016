@@ -3,8 +3,16 @@ package database;
 import genome.Genome;
 import genome.Strand;
 import genome.StrandEdge;
-import org.junit.*;
-import org.neo4j.graphdb.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.neo4j.graphdb.DynamicLabel;
+import org.neo4j.graphdb.DynamicRelationshipType;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.ResourceIterator;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.tooling.GlobalGraphOperations;
 
 import java.io.File;
@@ -158,6 +166,7 @@ public class DatabaseTest {
      * Test if the phylogenetic tree gets inserted correctly in the database.
      */
     @Test
+    @SuppressWarnings("checkstyle:methodlength")
     public void testPhyloStructure() {
         Iterable<Relationship> allRelas;
         Set<String> strands = new HashSet<>();

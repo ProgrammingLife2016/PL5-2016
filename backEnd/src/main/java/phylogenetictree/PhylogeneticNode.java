@@ -1,10 +1,11 @@
 package phylogenetictree;
 
 
-import abstracttree.AbstractTreeNode;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.util.ArrayList;
+
+import abstractdatastructure.AbstractTreeNode;
 
 // TODO: Auto-generated Javadoc
 /**

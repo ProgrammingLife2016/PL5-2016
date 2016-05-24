@@ -1,12 +1,16 @@
 package ribbonnodes;
 
-import abstracttree.Edge;
+import java.awt.Color;
+
+import abstractdatastructure.Edge;
 
 /**
- * RibbonEdge class for later extension.
+ * The Edges between the Ribbon Nodes.
  * Created by Matthijs on 12-5-2016.
  */
 public class RibbonEdge extends Edge {
+
+    private Color color;
     /**
      * Constructor to create an edge.
      *
@@ -15,6 +19,7 @@ public class RibbonEdge extends Edge {
      */
     public RibbonEdge(int startId, int endId) {
         super(startId, endId);
+        color = Color.black;
     }
 
     /**
@@ -22,5 +27,21 @@ public class RibbonEdge extends Edge {
      */
     public void incrementWeight() {
         this.setWeight(this.getWeight() + 1);
+    }
+
+    /**
+     * The getter of color.
+     * @return The color of this Ribbon.
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * The setter of color.
+     * @param color The color to set.
+     */
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

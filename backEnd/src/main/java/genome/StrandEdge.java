@@ -4,8 +4,8 @@ package genome;
  * Created by Matthijs on 24-4-2016.
  */
 
-import abstracttree.Edge;
 import org.neo4j.graphdb.Relationship;
+import abstractdatastructure.Edge;
 
 /***
  * data container class that stores the start and end of an edge, as well as its weight.

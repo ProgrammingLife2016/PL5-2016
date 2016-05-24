@@ -6,18 +6,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
  * Created by Matthijs on 4-5-2016.
  * Test tree: https://en.wikipedia.org/wiki/File:NewickExample.svg
  */
-public class TreeParserTest {
+public class PylogeneticTreeTest {
 
-	/**
-	 * The tested tree.
-	 */
+    /**
+     * The tested tree.
+     */
     private PhylogeneticTree tree;
 
     /**
@@ -73,6 +72,7 @@ public class TreeParserTest {
 
     /**
      * Test if Parent is set correctly.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -83,6 +83,7 @@ public class TreeParserTest {
 
     /**
      * Test if the nodes contain the correct genomes.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -93,6 +94,16 @@ public class TreeParserTest {
 
         assertEquals(tree.getRoot().getChildren().get(2).getGenomes(), testList);
     }
-    
 
+    /**
+     * Test the default constructor.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testPylogeneticTreeConstructor() throws Exception {
+        PhylogeneticNode testRoot = new PhylogeneticNode(null, 0);
+        PhylogeneticTree testTree = new PhylogeneticTree(testRoot);
+        assertEquals(testRoot, testTree.getRoot());
+    }
 }

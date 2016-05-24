@@ -31,18 +31,18 @@ public class Parser {
 	 * Constructor to create an Parser.
      * @param destPath the destination path
      * @param currentPath the path of the files
+     * @param phyloTree path of the phylogenetic tree file
 	 */
 	public Parser(String destPath, String currentPath, String phyloTree) {
-        new File(destPath).mkdir();
+        boolean problem = new File(destPath).mkdir();
         File nodeFile = new File(destPath + "/nodes.csv");
 		File edgeFile = new File(destPath + "/edges.csv");
         File phyloFile = new File(destPath + "/phylo.csv");
 		// creates the files
 		try {
-            //dir.createNewFile();
-			nodeFile.createNewFile();
-			edgeFile.createNewFile();
-            phyloFile.createNewFile();
+			problem = nodeFile.createNewFile();
+			problem = edgeFile.createNewFile();
+            problem = phyloFile.createNewFile();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,6 +69,7 @@ public class Parser {
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
+    @SuppressWarnings("checkstyle:methodlength")
 	public static Controller parse(String file) {
 
 		BufferedReader reader;
@@ -220,7 +221,7 @@ public class Parser {
      */
     public void getPhyloFile(String file) {
         BufferedReader reader;
-        String line = null;
+        String line = "";
         try {
             InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
             reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
@@ -230,12 +231,15 @@ public class Parser {
             e.printStackTrace();
         }
 
+        assert line != null;
+
         parsePhyloTree(line.substring(0, line.length() - 1), 0);
     }
 
     /**
      * Recursively parses the inputted Newick tree (assumed binary).
      * @param tree the path of the file
+     * @param parent the id of the parent for recursion (root is 0)
      */
     public void parsePhyloTree(String tree, int parent) {
         int parCount = 0;
@@ -256,7 +260,7 @@ public class Parser {
             }
         }
 
-        if(!isParent) {
+        if (!isParent) {
             phylo.println(parent + "," + tree.split(":")[0] + ",0,child");
         }
     }

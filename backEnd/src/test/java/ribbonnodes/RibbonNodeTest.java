@@ -16,6 +16,8 @@ public class RibbonNodeTest {
     private RibbonNode node1;
     private RibbonNode node2;
     private RibbonEdge edge;
+    private RibbonEdge edge2;
+
 
     /**
      * Set up the tests.
@@ -30,7 +32,9 @@ public class RibbonNodeTest {
         node1 = new RibbonNode(0, genomes);
         node2 = new RibbonNode(1, genomes);
         edge = new RibbonEdge(0, 1);
+        edge2 = new RibbonEdge(0, 6);
         node1.addEdge(edge);
+        node1.addEdge(edge2);
         node2.addEdge(edge);
         node1.setLabel("node1");
         node2.setLabel("node2");
@@ -56,8 +60,9 @@ public class RibbonNodeTest {
     @Test
     public void testGetEdge() throws Exception {
         assertEquals(node1.getOutEdge(0, 1), edge);
+        assertEquals(node1.getOutEdge(0, 5), null);
         assertEquals(node2.getInEdge(0, 1), edge);
-        assertEquals(node1.getInEdge(1, 0), null);
+        assertEquals(node2.getInEdge(1, 0), null);
 
     }
 
@@ -92,8 +97,8 @@ public class RibbonNodeTest {
      */
     @Test
     public void testGetEdges() throws Exception {
-        assertEquals(node1.getEdges().size(), 1);
-        assertEquals(node1.getEdges().get(0), edge);
+        assertEquals(node1.getOutEdges().size(), 2);
+        assertEquals(node1.getOutEdges().get(0), edge);
     }
 
     /**
@@ -104,9 +109,9 @@ public class RibbonNodeTest {
     @Test
     public void testAddEdge() throws Exception {
         RibbonEdge edge2 = new RibbonEdge(1, 0);
-        assertEquals(node1.getEdges().size(), 1);
+        assertEquals(node1.getOutEdges().size(), 2);
         node1.addEdge(edge2);
-        assertEquals(node1.getEdges().size(), 1);
+        assertEquals(node1.getOutEdges().size(), 2);
         assertEquals(node1.getInEdges().get(0), edge2);
     }
 
@@ -116,24 +121,67 @@ public class RibbonNodeTest {
      * @throws Exception if fail.
      */
     @Test
-    public void testSetEdges() throws Exception {
+    public void testAddEdges() throws Exception {
         RibbonEdge edge2 = new RibbonEdge(0, 1);
         RibbonEdge edge3 = new RibbonEdge(0, 4);
         RibbonEdge edge4 = new RibbonEdge(0, 2);
         node1.addEdge(edge2);
         node1.addEdge(edge3);
         node1.addEdge(edge4);
-        assertEquals(node1.getEdges().size(), 4);
-        assertEquals(node1.getEdges().get(3), edge4);
+        assertEquals(node1.getOutEdges().size(), 5);
+        assertEquals(node1.getOutEdges().get(4), edge4);
     }
 
     /**
      * Test the get genomes method.
+     *
      * @throws Exception If fail.
      */
     @Test
     public void testGetGenomes() throws Exception {
         assertEquals(node1.getGenomes().size(), 2);
         assertEquals(node1.getGenomes().get(0), "genome1");
+    }
+
+    /**
+     * Test the getter and setter of x.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testGetSetX() throws Exception {
+        assertEquals(0, node1.getX());
+        node1.setX(3);
+        assertEquals(3, node1.getX());
+    }
+
+    /**
+     * Test the getter and setter of y.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testGetSetY() throws Exception {
+        assertEquals(0, node1.getY());
+        node1.setY(3);
+        assertEquals(3, node1.getY());
+    }
+
+    /**
+     * Test the setters for the in and out edges.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testInOutSetters() {
+        RibbonEdge edge3 = new RibbonEdge(0, 6);
+        RibbonEdge edge4 = new RibbonEdge(7, 0);
+        ArrayList<RibbonEdge> testEdges = new ArrayList<>();
+        testEdges.add(edge3);
+        testEdges.add(edge4);
+        node1.setInEdges(testEdges);
+        node1.setOutEdges(testEdges);
+        assertEquals(node1.getInEdges(), testEdges);
+        assertEquals(node1.getOutEdges(), testEdges);
     }
 }

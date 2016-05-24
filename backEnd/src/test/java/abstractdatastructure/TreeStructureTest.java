@@ -1,4 +1,4 @@
-package abstracttree;
+package abstractdatastructure;
 
 import org.junit.Before;
 import org.junit.Test;
