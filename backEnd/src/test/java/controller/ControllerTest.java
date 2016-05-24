@@ -25,7 +25,7 @@ public class ControllerTest {
      */
     @Test
     public void testDataWidth() {
-    	//data.setDataWidth(5.0);
+    	data.setDataWidth(5.0);
     	assertEquals(data.getDataWidth(), 5.0, 0.001);
     }
 }
