@@ -55,6 +55,10 @@ public class Parser {
 			e.printStackTrace();
 		}
 
+        if (problem) {
+            System.out.println("Something went wrong creating /temp");
+        }
+
 		parseToCSV(currentPath);
         getPhyloFile(phyloTree);
 		edges.close();

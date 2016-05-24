@@ -86,6 +86,7 @@ public class Database {
     private void deleteDirectory(File dir) {
         assert dir != null;
 
+        boolean deleted = false;
         if (dir.exists()) {
             File[] files = dir.listFiles();
             assert files != null;
@@ -97,13 +98,13 @@ public class Database {
                 }
                 else {
                     //delete file otherwise
-                    boolean deleted = f.delete();
+                    deleted = f.delete();
                 }
             }
         }
 
         //delete the current directory
-        if (!dir.delete()) {
+        if (!dir.delete() || deleted) {
             System.out.println("Something went wrong deleting the directory " + dir);
         }
     }

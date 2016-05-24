@@ -20,14 +20,6 @@ public class Genome {
     }
 
     /**
-     * Constructor to create a new genome.
-     * @param o The Object (returned by the Cypherquery) from which a genome should be created.
-     */
-    public Genome(Object o) {
-        strands = new ArrayList<>();
-    }
-
-    /**
      * Add a strand to the genome.
      *
      * @param strand The added strand.

@@ -3,7 +3,6 @@ package parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import junit.framework.Assert;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -40,10 +39,10 @@ public class ParserTest {
 			reader = new BufferedReader(
 					new InputStreamReader(
 							new FileInputStream("temp/nodes.csv"), "UTF8"));
-			Assert.assertEquals("id,sequence,genomes,refGenome,refCoor", reader.readLine());
-			Assert.assertEquals("1,AAAAAAAA,AA,AA,371", reader.readLine());
-			Assert.assertEquals("2,A,AA,AA,371", reader.readLine());
-			Assert.assertEquals("3,C,AA;BB,AA,371", reader.readLine());
+			assertEquals("id,sequence,genomes,refGenome,refCoor", reader.readLine());
+			assertEquals("1,AAAAAAAA,AA,AA,371", reader.readLine());
+			assertEquals("2,A,AA,AA,371", reader.readLine());
+			assertEquals("3,C,AA;BB,AA,371", reader.readLine());
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,9 +62,9 @@ public class ParserTest {
 			reader = new BufferedReader(
 					new InputStreamReader(
 							new FileInputStream("temp/edges.csv"), "UTF8"));
-			Assert.assertEquals("start,end", reader.readLine());
-			Assert.assertEquals("1,2", reader.readLine());
-			Assert.assertEquals("2,3", reader.readLine());
+			assertEquals("start,end", reader.readLine());
+			assertEquals("1,2", reader.readLine());
+			assertEquals("2,3", reader.readLine());
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,14 +84,14 @@ public class ParserTest {
 			reader = new BufferedReader(
 					new InputStreamReader(
 							new FileInputStream("temp/phylo.csv"), "UTF8"));
-			Assert.assertEquals("parent,child,dist,pc", reader.readLine());
-			Assert.assertEquals("0,1,0,parent", reader.readLine());
-			Assert.assertEquals("1,AA,0,child", reader.readLine());
-			Assert.assertEquals("1,2,0,parent", reader.readLine());
-			Assert.assertEquals("2,3,0,parent", reader.readLine());
-			Assert.assertEquals("3,BB,0,child", reader.readLine());
-			Assert.assertEquals("3,CC,0,child", reader.readLine());
-			Assert.assertEquals("2,DD,0,child", reader.readLine());
+			assertEquals("parent,child,dist,pc", reader.readLine());
+			assertEquals("0,1,0,parent", reader.readLine());
+			assertEquals("1,AA,0,child", reader.readLine());
+			assertEquals("1,2,0,parent", reader.readLine());
+			assertEquals("2,3,0,parent", reader.readLine());
+			assertEquals("3,BB,0,child", reader.readLine());
+			assertEquals("3,CC,0,child", reader.readLine());
+			assertEquals("2,DD,0,child", reader.readLine());
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
