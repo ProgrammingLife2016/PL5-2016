@@ -1,4 +1,9 @@
 package parser;
+
+import controller.GenomeGraph;
+import genome.Strand;
+import genome.StrandEdge;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,15 +12,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-
-import genome.StrandEdge;
-
-import genome.Strand;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import controller.Controller;
 
 /**
  * Created by Jeffrey on 24-4-2016.
@@ -69,13 +67,11 @@ public class Parser {
 	 * @param file The file that is read.
 	 * @return The graph in the file.
 	 */
-    @SuppressWarnings("checkstyle:methodlength")
-	public static Controller parse(String file) {
-
+	 @SuppressWarnings("checkstyle:methodlength")
+	 public static GenomeGraph parse(String file) {
 		BufferedReader reader;
 		String line;
-		controller.Controller result = new controller.Controller("data/TB10.gfa",
-                "data/340tree.rooted.TKK.nwk");
+		GenomeGraph result = new GenomeGraph();
 		try {
 			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
 			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
@@ -100,7 +96,7 @@ public class Parser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		result.getDataTree().addStrands(new ArrayList<>(result.getGenomes().values()));
+		//result.getDataTree().addStrands(new ArrayList<>(result.getGenomes().values()));
 		return result;
 	}
 

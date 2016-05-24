@@ -1,6 +1,5 @@
 package database;
 
-import controller.Controller;
 import genome.Genome;
 import genome.Strand;
 import genome.StrandEdge;
@@ -52,21 +51,6 @@ public class Database {
             insertEdges("temp/edges.csv");
             insertPhyloTree("temp/phylo.csv");
         }
-    }
-
-    /**
-     * Create a controller class from the database.
-     * @return the controller to be used.
-     */
-    public Controller createController() {
-        Controller c = new Controller("data/TB10.gfa", "data/340tree.rooted.TKK.nwk");
-        for (Strand s : returnNodes("SELECT s RETURN s")) {
-            c.addStrand(s);
-        }
-        for (StrandEdge se : returnEdges("MATCH (a)-[b:GENOME]->(c) RETURN b")) {
-            c.addEdge(se);
-        }
-        return c;
     }
 
     /**

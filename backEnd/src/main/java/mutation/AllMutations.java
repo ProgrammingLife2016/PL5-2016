@@ -4,42 +4,56 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-import controller.Controller;
+import controller.GenomeGraph;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class AllMutations.
+ *
  * @author Jeffrey Helgers.
- * This class computes all the mutations in the given dataset. 
+ * This class computes all the mutations in the given dataset.
  */
 public class AllMutations {
 
-	private Controller dc;
+	/** The genome graph. */
+	private GenomeGraph genomeGraph;
+	
+	/** The mutations. */
 	private HashMap<String, ArrayList<MutationWillBeDeleted>> mutations;
 		
 	/**
 	 * Constructor to create.
-	 * @param dc The given data container.
+	 *
+	 * @param genomeGraph the genome graph
 	 */
-	public AllMutations(Controller dc) {
-		this.dc = dc;
+	public AllMutations(GenomeGraph genomeGraph) {
+		this.genomeGraph = genomeGraph;
 		mutations = new HashMap<>();
-		setKeys(dc.getGenomes().keySet());
+		setKeys(genomeGraph.getGenomes().keySet());
 		checkMutations();
 	}
 	
+	/**
+	 * Sets the keys.
+	 *
+	 * @param keys the new keys
+	 */
 	private void setKeys(Set<String> keys) {
 		for (String key : keys) {
 			mutations.put(key, new ArrayList<MutationWillBeDeleted>());
 		}
 	}
 	
+	/**
+	 * Check mutations.
+	 */
 	private void checkMutations() {
-		Set<String> keys = dc.getGenomes().keySet();
+		Set<String> keys = genomeGraph.getGenomes().keySet();
 		for (String base : keys) {
 			for (String other : keys) {
 				if (!base.equals(other)) {
-					ComputeMutation.compute(dc.getGenomes().get(base), 
-							dc.getGenomes().get(other), this);
+					ComputeMutation.compute(genomeGraph.getGenomes().get(base), 
+							genomeGraph.getGenomes().get(other), this);
 				}
 			}
 		}

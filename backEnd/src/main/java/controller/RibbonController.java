@@ -1,6 +1,5 @@
 package controller;
 
-import datatree.DataTree;
 import genome.Strand;
 import genome.StrandEdge;
 import genome.Genome;
@@ -26,24 +25,18 @@ public final class RibbonController {
 	/**
 	 * Get the ribbon nodes with edges for a certain view in the GUI.
 	 *
-	 * @param minX
-	 *            the minx of the view.
-	 * @param maxX
-	 *            the maxx of the view.
-	 * @param zoomLevel
-	 *            the zoomlevel of the view.
-	 * @param dataTree
-	 *            the filled and processed tree of the data.
-	 * @param activeGenomes
-	 *            the genomes to filter for.
-	 * @param genomes
-	 * 			  All the genomes in the data.
+	 * @param minX            the minx of the view.
+	 * @param maxX            the maxx of the view.
+	 * @param zoomLevel            the zoomlevel of the view.
+	 * @param genomeGraph the genome graph
 	 * @return The list of ribbonNodes.
 	 */
 	 @SuppressWarnings("checkstyle:methodlength")
 	public static ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel, 
-			DataTree dataTree, ArrayList<String> activeGenomes, 
-			HashMap<String, Genome> genomes) {
+			GenomeGraph genomeGraph) {
+		ArrayList<String> activeGenomes =  genomeGraph.getActiveGenomes();
+		HashMap<String, Genome> genomes = genomeGraph.getGenomes();
+		 
 		ArrayList<RibbonNode> result = new ArrayList<>();
 		HashMap<Integer, RibbonNode> tempResult = new HashMap<>();
 		//ArrayList<DataNode> filteredNodes = dataTree.getDataNodes(minX, maxX, activeGenomes, 100);

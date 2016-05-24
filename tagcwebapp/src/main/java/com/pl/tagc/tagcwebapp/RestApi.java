@@ -46,8 +46,8 @@ public class RestApi {
 	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
 			@DefaultValue("100") @QueryParam("xright") int xright,
 			@DefaultValue("1") @QueryParam("zoom") int zoom) {
-		return new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(0, 5000,
-				5)));
+		return new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(xleft, xright,
+				zoom)));
 	}
 
 	/**
@@ -87,18 +87,6 @@ public class RestApi {
 	public PhylogeneticTreeObject requestPhylogeneticTree(
 			@DefaultValue("1") @QueryParam("treeId") int treeId) {
 		return new PhylogeneticTreeObject(Controller.DC.loadPhylogeneticTree(treeId).getRoot());
-	}
-	
-	/**
-	 * Gets the newick string.
-	 *
-	 * @return the newick string
-	 */
-	@GET
-	@Path("/getnewickstring")
-	@Produces("application/json")
-	public NewickStringObject getNewickString() {
-		return new NewickStringObject(Controller.DC.getNewickString());
 	}
 
 }

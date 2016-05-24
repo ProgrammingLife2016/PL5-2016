@@ -9,6 +9,8 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import controller.GenomeGraph;
+
 
 /**
  *
@@ -22,8 +24,8 @@ public class ParserTest {
 	 */
 	@Test
 	public void test() {
-		controller.Controller controller = Parser.parse("data/TB10.gfa");
-		assertEquals(controller.getStrandNodes().get(1).getId(), 1);
+		GenomeGraph genomeGraph = Parser.parse("data/TB10.gfa");
+		assertEquals(genomeGraph.getStrandNodes().get(1).getId(), 1);
 	}
 
 	/**

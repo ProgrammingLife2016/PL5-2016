@@ -1,5 +1,7 @@
 package com.pl.tagc.tagcwebapp;
 
+import java.awt.*;
+
 /**
  * RibbonEdge class for later extension.
  * Created by Matthijs on 12-5-2016.
@@ -17,6 +19,8 @@ public class AdaptedRibbonEdge {
     
     /** The weight. */
 	private int weight;
+
+	private String color;
 
     /**
      * Increment the weight.
@@ -77,5 +81,23 @@ public class AdaptedRibbonEdge {
 	 */
 	public void setWeight(int weight) {
 		this.weight = weight;
+	}
+
+	/**
+	 * Gets the color.
+	 *
+	 * @return the color
+	 */
+	public String getColor() {
+		return color;
+	}
+
+	/**
+	 * Sets the color.
+	 *
+	 * @param color the new weight
+	 */
+	public void setColor(String color) {
+		this.color = color;
 	}
 }
