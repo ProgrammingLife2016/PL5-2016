@@ -48,8 +48,8 @@ public class RestApi {
 	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
 			@DefaultValue("100") @QueryParam("xright") int xright,
 			@DefaultValue("1") @QueryParam("zoom") int zoom) {
-		return new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(0, 5000,
-				5)));
+		return new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(xleft, xright,
+				zoom)));
 	}
 
 	/**
