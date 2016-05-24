@@ -15,9 +15,9 @@ public abstract class AbstractMutation {
 	private Genome reference;
 	private Genome other;
 	private Strand start;
-	private Strand end;
 	private MutationType mutationType;
 	private ArrayList<Strand> mutatedStrands;
+	private Strand end;
 	
 	/**
 	 * Create a mutation.
@@ -25,22 +25,15 @@ public abstract class AbstractMutation {
 	 * @param reference			The reference Genome.
 	 * @param other				The other Genome.
 	 * @param start				The start Strand.
-	 * @param end				The end Strand, if any.
 	 * @param mutatedStrands	The mutated Strands.
 	 */
 	public AbstractMutation(MutationType mutationType, Genome reference, Genome other,
-							Strand start, Strand end, ArrayList<Strand> mutatedStrands) {
+							Strand start) {
 		this.mutationType = mutationType;
 		this.reference = reference;
 		this.other = other;
 		this.start = start;
-		if (mutationType.getBetween()) {
-			this.end = end;
-		} else {
-			String[] temp = {};
-			this.end = new Strand(0, "", temp, "", 0);
-		}
-		this.mutatedStrands = mutatedStrands;
+		this.mutatedStrands = new ArrayList<>();
 	}
 	
 	
@@ -69,11 +62,23 @@ public abstract class AbstractMutation {
 	}
 	
 	/**
-	 * Get the end Strand, if this mutation has one.
+	 * Get the end Strand from where the mutation starts.
 	 * @return The end Strand.
 	 */
 	public Strand getEndStrand() {
-		return end;
+		if (mutationType.getBetween()) {
+			return end;
+		} else {
+			throw new UnsupportedOperationException();
+		}
+	}
+	
+	/**
+	 * Set the end Strand from where the mutation starts.
+	 * @return The end Strand.
+	 */
+	public void setEndStrand(Strand end) {
+		this.end = end;
 	}
 	
 	/**
@@ -90,6 +95,14 @@ public abstract class AbstractMutation {
 	 */
 	public ArrayList<Strand> getMutatedStrands() {
 		return mutatedStrands;
+	}
+	
+	/**
+	 * Set the mutated Strands.
+	 * @param mutatedStrands Mutated strands.
+	 */
+	public void setMutatedStrands(ArrayList<Strand> mutatedStrands) {
+		this.mutatedStrands = mutatedStrands;
 	}
 	
 }
