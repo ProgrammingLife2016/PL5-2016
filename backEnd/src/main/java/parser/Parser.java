@@ -9,7 +9,6 @@ import genome.Strand;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import controller.GenomeGraph;
 

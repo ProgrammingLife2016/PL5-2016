@@ -1,6 +1,6 @@
 package controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import genome.Strand;
 
 import org.junit.Before;
