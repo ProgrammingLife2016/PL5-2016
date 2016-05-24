@@ -15,8 +15,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import phylogenetictree.PhylogeneticTree;
-
 //The Java class will be hosted at the URI path "/api"
 /**
  * The Class RestApi. The Java class will be hosted at the URI path "/api". The

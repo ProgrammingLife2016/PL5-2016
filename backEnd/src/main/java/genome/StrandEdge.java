@@ -1,5 +1,10 @@
 package genome;
 
+/**
+ * Created by Matthijs on 24-4-2016.
+ */
+
+import org.neo4j.graphdb.Relationship;
 import abstractdatastructure.Edge;
 
 /***
@@ -18,5 +23,15 @@ public class StrandEdge extends Edge {
 
     }
 
+    /**
+     * Constructor to create a new genome.
+     * @param o The Object (returned by the Cypherquery) from which a StrandEdge should be made.
+     */
+    public StrandEdge(Object o) {
+        super(0, 0);
+        Relationship rela = (Relationship) o;
+        this.startId = java.lang.Math.toIntExact((long) rela.getStartNode().getProperty("id"));
+        this.endId = java.lang.Math.toIntExact((long) rela.getEndNode().getProperty("id"));
+    }
 
 }

@@ -17,7 +17,14 @@ public class Genome {
     public Genome(String id) {
         this.id = id;
         strands = new ArrayList<>();
-        this.id = id;
+    }
+
+    /**
+     * Constructor to create a new genome.
+     * @param o The Object (returned by the Cypherquery) from which a genome should be created.
+     */
+    public Genome(Object o) {
+        strands = new ArrayList<>();
     }
 
     /**
