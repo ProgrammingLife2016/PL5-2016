@@ -13,7 +13,7 @@ import controller.GenomeGraph;
  * @author Jeffrey Helgers.
  * This class computes all the mutations in the given dataset.
  */
-public class AllMutations {
+public class Mutations {
 
 	/** The genome graph. */
 	private GenomeGraph genomeGraph;
@@ -26,11 +26,10 @@ public class AllMutations {
 	 *
 	 * @param genomeGraph the genome graph
 	 */
-	public AllMutations(GenomeGraph genomeGraph) {
+	public Mutations(GenomeGraph genomeGraph) {
 		this.genomeGraph = genomeGraph;
 		mutations = new HashMap<>();
 		setKeys(genomeGraph.getGenomes().keySet());
-		checkMutations();
 	}
 	
 	/**
@@ -53,7 +52,7 @@ public class AllMutations {
 	 * Check mutations.
 	 */
 	private void checkMutations() {
-		Set<String> keys = genomeGraph.getGenomes().keySet();
+		Set<String> keys = mutations.keySet();
 		for (String base : keys) {
 			for (String other : keys) {
 				if (!base.equals(other)) {
