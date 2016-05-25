@@ -49,21 +49,6 @@ public class Mutations {
 	}
 	
 	/**
-	 * Check mutations.
-	 */
-	private void checkMutations() {
-		Set<String> keys = mutations.keySet();
-		for (String base : keys) {
-			for (String other : keys) {
-				if (!base.equals(other)) {
-					ComputeMutation.compute(genomeGraph.getGenomes().get(base), 
-							genomeGraph.getGenomes().get(other), this);
-				}
-			}
-		}
-	}
-	
-	/**
 	 * Add a mutation between two genomes.
 	 * @param reference The key from the reference genome.
 	 * @param other The key from the other geneme.

@@ -31,6 +31,7 @@ public class MutationSNP extends AbstractMutation {
 			mutatedStrands.add(fromReference);
 			mutatedStrands.add(fromOther);
 			setMutatedStrands(mutatedStrands);
+			setEndStrand(end);
 		} else {
 	        throw new UnsupportedOperationException();
 		}
