@@ -1,5 +1,6 @@
 package database;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import genome.Genome;
 import genome.Strand;
 import genome.StrandEdge;
@@ -48,7 +49,7 @@ public class DatabaseTest {
     /**
      * Test if opening an existing database works.
      */
-    @Test
+    @Test @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void testDBOpening() {
         ResourceIterator<Node> allNodes;
         db.getGraphService().shutdown();
