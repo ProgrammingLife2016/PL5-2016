@@ -21,9 +21,6 @@ public class Controller implements FrontEndBackEndInterface {
     /** The genome graph. */
     private GenomeGraph genomeGraph;
     
-    /** The data width. */
-    private double dataWidth; 
-    
     /** The phylogenetic tree. */
     private PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
     
@@ -58,26 +55,7 @@ public class Controller implements FrontEndBackEndInterface {
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
         return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, genomeGraph);
-    }    
-
-    /**
-     * Get the data width.
-     *
-     * @return The data width.
-     */
-    public double getDataWidth() {
-        return this.dataWidth;
-    }
-
-
-    /**
-     * Set the data width.
-     *
-     * @param dataWidth New data width.
-     */
-    public void setDataWidth(double dataWidth) {
-        this.dataWidth = dataWidth;
-    }
+    }  
 
 
     /**

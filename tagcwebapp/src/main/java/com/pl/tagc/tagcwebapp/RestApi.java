@@ -49,19 +49,7 @@ public class RestApi {
 		return new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(xleft, xright,
 				zoom)));
 	}
-
-	/**
-	 * Request dimensions.
-	 *
-	 * @return the dimensions object
-	 */
-	@GET
-	@Path("/getdimensions")
-	@Produces("application/json")
-	public DimensionsObject requestDimensions() {
-		return new DimensionsObject(controller.Controller.DC.getDataWidth());
-
-	}
+	
 
 	/**
 	 * Request ribbon graph.
