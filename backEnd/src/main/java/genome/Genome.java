@@ -17,7 +17,6 @@ public class Genome {
     public Genome(String id) {
         this.id = id;
         strands = new ArrayList<>();
-        this.id = id;
     }
 
     /**
