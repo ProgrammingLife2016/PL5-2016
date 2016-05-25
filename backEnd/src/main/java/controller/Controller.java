@@ -44,7 +44,7 @@ public class Controller implements FrontEndBackEndInterface {
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
-
+        dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
     }
 
     
