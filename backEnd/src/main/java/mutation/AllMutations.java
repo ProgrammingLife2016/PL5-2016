@@ -19,7 +19,7 @@ public class AllMutations {
 	private GenomeGraph genomeGraph;
 	
 	/** The mutations. */
-	private HashMap<String, ArrayList<MutationWillBeDeleted>> mutations;
+	private HashMap<String, HashMap<String, ArrayList<AbstractMutation>>> mutations;
 		
 	/**
 	 * Constructor to create.
@@ -39,8 +39,13 @@ public class AllMutations {
 	 * @param keys the new keys
 	 */
 	private void setKeys(Set<String> keys) {
-		for (String key : keys) {
-			mutations.put(key, new ArrayList<MutationWillBeDeleted>());
+		for (String key1 : keys) {
+			for (String key2 : keys) {
+				mutations.put(key1, new HashMap<>());
+				if (key1 != key2) {
+					mutations.get(key1).put(key2, new ArrayList<>());
+				}
+			}
 		}
 	}
 	
@@ -60,12 +65,13 @@ public class AllMutations {
 	}
 	
 	/**
-	 * Add a mutation.
-	 * @param key The key from the reference genome.
+	 * Add a mutation between two genomes.
+	 * @param reference The key from the reference genome.
+	 * @param other The key from the other geneme.
 	 * @param mutation The mutation.
 	 */
-	public void addMutation(String key, MutationWillBeDeleted mutation) {
-		mutations.get(key).add(mutation);
+	public void addMutation(String reference, String other, AbstractMutation mutation) {
+		mutations.get(reference).get(other).add(mutation);
 	}
 	
 	/**
@@ -73,8 +79,18 @@ public class AllMutations {
 	 * @param genome The compared genome.
 	 * @return The mutations.
 	 */
-	public ArrayList<MutationWillBeDeleted> getGenomeMutations(String genome) {
+	public HashMap<String,ArrayList<AbstractMutation>> getGenomeMutations(String genome) {
 		return mutations.get(genome);
+	}
+	
+	/**
+	 * Get the mutations between to genomes.
+	 * @param reference The reference genome.
+	 * @param other The other genome.
+	 * @return The mutations.
+	 */
+	public ArrayList<AbstractMutation> getMutationBetweenGenomes(String reference, String other) {
+		return mutations.get(reference).get(other);
 	}
 
 }

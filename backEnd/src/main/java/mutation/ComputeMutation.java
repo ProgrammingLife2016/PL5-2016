@@ -88,9 +88,9 @@ public final class ComputeMutation {
 	private static boolean testInsertion(int basePlace) {
 		if (common.contains(baseStrands.get(basePlace + 1))) {
 			System.out.println("insertion");
-			Insertion in = new Insertion(base, other, 
-					baseStrands.get(basePlace), baseStrands.get(basePlace + 1));
-			mutations.addMutation(base.getId(), in);
+			//Insertion in = new Insertion(base, other, 
+			//		baseStrands.get(basePlace), baseStrands.get(basePlace + 1));
+			//mutations.addMutation(base.getId(), in);
 			return true;
 		}
 		return false;
@@ -114,8 +114,8 @@ public final class ComputeMutation {
 				deleted.add(baseStrands.get(basePlace));
 				basePlace++;
 			}
-			Deletion de = new Deletion(base, other, deleted);
-			mutations.addMutation(base.getId(), de);
+			//Deletion de = new Deletion(base, other, deleted);
+			//mutations.addMutation(base.getId(), de);
 		}
 	}
 }
