@@ -31,6 +31,7 @@ public class Parser {
      * @param currentPath the path of the files
      * @param phyloTree path of the phylogenetic tree file
 	 */
+    @SuppressWarnings("checkstyle:methodlength")
 	public Parser(String destPath, String currentPath, String phyloTree) {
         boolean problem = new File(destPath).mkdir();
         File nodeFile = new File(destPath + "/nodes.csv");

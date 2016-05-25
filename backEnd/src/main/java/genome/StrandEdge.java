@@ -30,8 +30,8 @@ public class StrandEdge extends Edge {
     public StrandEdge(Object o) {
         super(0, 0);
         Relationship rela = (Relationship) o;
-        this.startId = java.lang.Math.toIntExact((long) rela.getStartNode().getProperty("id"));
-        this.endId = java.lang.Math.toIntExact((long) rela.getEndNode().getProperty("id"));
+        setStartId(java.lang.Math.toIntExact((long) rela.getStartNode().getProperty("id")));
+        setEndId(java.lang.Math.toIntExact((long) rela.getEndNode().getProperty("id")));
     }
 
 }
