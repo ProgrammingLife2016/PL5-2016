@@ -17,9 +17,6 @@ public class GenomeGraph {
     /** The genomes. */
     private HashMap<String, Genome> genomes;
     
-    /** The temp. */
-    private HashMap<String, Genome> temp;
-    
     /** The active genomes. */
     private ArrayList<String> activeGenomes; //The current genomes selected in the GUI.
 	
@@ -31,7 +28,6 @@ public class GenomeGraph {
         strandNodes = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
-        temp = new HashMap<>();
 	}
     
     /**
@@ -55,14 +51,12 @@ public class GenomeGraph {
         for (String genomeID : strand.getGenomes()) {
             if (!genomes.containsKey(genomeID)) {
                 genomes.put(genomeID, new Genome(genomeID));
-                temp.put(genomeID, new Genome(genomeID));
                 //HARDCODED ACTIVE GENOMES
                 if (!genomeID.equals("MT_H37RV_BRD_V5.ref.fasta")) {
                     activeGenomes.add(genomeID);
                 }
             } else {
                 genomes.get(genomeID).addStrand(strand);
-                temp.get(genomeID).addStrand(strand);
             }
         }
     }
