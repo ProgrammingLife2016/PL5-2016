@@ -10,30 +10,21 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.ServerConfiguration;
 
+
+
 /**
- * Instructions:
- * 
- * http://localhost:9998/app/index.htm Can be used to access the static file
- * index.htm.
- * 
- * http://localhost:9998/api/<apicall> Can be used to make api calls to the
- * server. For a list of api calls please see RestApi.java.
- * 
+ * The Class RestServer.
  */
-
-final class RestServer {
-
-	private RestServer() {
-	}
+public class RestServer {
 
 	/** The Constant WEB_ROOT. */
-	public static final String WEB_ROOT = "/static/";
+	private String webRoot = "/static/";
 
 	/** The Constant APP_PATH. */
-	public static final String APP_PATH = "/app/";
+	private String appPath = "/app/";
 
 	/** The Constant PORT. */
-	public static final int PORT = 9998;
+	private int port = 9998;
 
 	/**
 	 * Instantiates and configures a HttpServer.
@@ -49,7 +40,7 @@ final class RestServer {
 			}
 		}));
 
-		server.addListener(new NetworkListener("grizzly", "localhost", PORT));
+		server.addListener(new NetworkListener("grizzly", "localhost", port));
 		
 		for (NetworkListener l : server.getListeners()) {
 		    l.getFileCache().setEnabled(false);
@@ -57,8 +48,8 @@ final class RestServer {
 		
 		final ServerConfiguration config = server.getServerConfiguration();
 		// add handler for serving static content
-		config.addHttpHandler(new CLStaticHttpHandler(RestServer.class.getClassLoader(), WEB_ROOT),
-				APP_PATH);
+		config.addHttpHandler(new CLStaticHttpHandler(RestServer.class.getClassLoader(), webRoot),
+				appPath);
 
 		// add handler for serving JAX-RS resources
 		config.addHttpHandler(
@@ -84,8 +75,8 @@ final class RestServer {
 	 *
 	 * @return the app uri
 	 */
-	public static String getAppUri() {
-		return String.format("http://localhost:%s%s", PORT, APP_PATH);
+	public String getAppUri() {
+		return String.format("http://localhost:%s%s", port, appPath);
 	}
 
 	/**

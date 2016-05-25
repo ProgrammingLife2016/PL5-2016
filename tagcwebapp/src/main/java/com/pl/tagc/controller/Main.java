@@ -1,12 +1,18 @@
-package com.pl.tagc.tagcwebapp;
+package com.pl.tagc.controller;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import controller.Controller;
-
 /**
  * The Class Main.
+ * Instructions:
+ * 
+ * http://localhost:9998/app/index.htm Can be used to access the static file
+ * index.htm.
+ * 
+ * http://localhost:9998/api/<apicall> Can be used to make api calls to the
+ * server. For a list of api calls please see RestApi.java.
+ * 
  */
 final class Main {
 

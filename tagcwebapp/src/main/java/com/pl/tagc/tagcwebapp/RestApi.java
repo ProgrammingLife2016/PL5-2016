@@ -2,9 +2,6 @@ package com.pl.tagc.tagcwebapp;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import controller.Controller;
-
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.ws.rs.DefaultValue;
@@ -14,6 +11,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+
+import com.pl.tagc.controller.Controller;
 
 //The Java class will be hosted at the URI path "/api"
 /**

@@ -1,14 +1,20 @@
-package controller;
+package com.pl.tagc.controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
 import parser.Parser;
+
 import java.util.ArrayList;
+
+import com.pl.tagc.tagcwebapp.RestServer;
+
+import controller.FrontEndBackEndInterface;
+import controller.GenomeGraph;
+import controller.RibbonController;
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
 
-// TODO: Auto-generated Javadoc
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -27,10 +33,12 @@ public class Controller implements FrontEndBackEndInterface {
     /** The data tree. */
     private DataTree dataTree;
 
+    private RestServer restServer;
+    
     /**
      * Datacontainer Singleton, starts with empty hashmaps.
      */
-    public static final controller.Controller DC = new Controller();
+    public static final com.pl.tagc.controller.Controller DC = new Controller();
     
 
     /**
