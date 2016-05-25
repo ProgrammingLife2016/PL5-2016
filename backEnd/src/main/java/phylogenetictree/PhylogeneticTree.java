@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 import abstractdatastructure.TreeStructure;
 
@@ -46,15 +47,32 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         Reader r = new InputStreamReader(in, StandardCharsets.UTF_8);
         reader = new BufferedReader(r);
         TreeParser tp = new TreeParser(reader);
-        tree = tp.tokenize("");
+        tree = tp.tokenize("");  
         this.setRoot(new PhylogeneticNode(tree.getRoot(), null, 0., 0));
+
+        
     }
+	
 
-
-
-
-
-
-
+	/**
+	 * Recursive algorithm to get all the leaves in a tree.
+	 * @param node The current node.
+	 * @param result The result.
+	 * @return All the leaves.
+	 */
+	private ArrayList<PhylogeneticNode> getLeaves(PhylogeneticNode node, 
+			ArrayList<PhylogeneticNode> result) {
+		if (node.getChildren().size() == 0) {
+			result.add(node);
+		} else {
+			result = getLeaves(node.getChildren().get(0), result);
+			if (node.getChildren().size() > 1) {
+				result = getLeaves(node.getChildren().get(1), result);
+			}
+		}
+		return result;
+	}
+	
 
 }
+

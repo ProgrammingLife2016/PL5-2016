@@ -24,6 +24,10 @@ local.properties
 .settings/
 .loadpath
 
+# Database: temporary csv files.
+temp
+backEnd/temp
+
 # External tool builders
 .externalToolBuilders/
 
