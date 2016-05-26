@@ -120,13 +120,13 @@ $('document').ready(function() {
     $(slider)
         .draggable({
             containment: "parent",
-            drag: function() {
+            stop: function() {
                 //Temp, to make it look smooth, can be done if lazy loading is implemented
-                updatezoomWindow();
+                //updatezoomWindow();
 
                 //Should be this when we have specific zoomData
-                //clearTimeout(zoomTimeout);
-                //zoomTimeout = setTimeout(function() { updatezoomWindow() }, 50);
+                clearTimeout(zoomTimeout);
+                zoomTimeout = setTimeout(function() { updatezoomWindow() }, 50);
             }
         });
 
@@ -178,7 +178,7 @@ var drawMinimap = function(nodes) {
     } else {
         minimapNodes = nodes;
     }
-    var ratio = $('#minimap').width() / Object.keys(nodes).length;
+    var ratio = $('#minimap').width() / nodes[Object.keys(nodes).length - 1].x;
 
     draw(nodes, $('#minimap canvas')[0], function(x) {
         return x * ratio;
@@ -285,9 +285,15 @@ function updatezoomWindow()
         var sliderLeft = pxToInt(slider.css('left'));
         var minimapNodeSize = Object.keys(minimapNodes).length;
         var left = Math.floor(sliderLeft / totalWidth * minimapNodeSize);
+        var leftX = minimapNodes[left].x;
         var width = Math.floor(slider.width() / totalWidth * minimapNodeSize);
+        if (minimapNodes[left + width]) {
+            var rightX = minimapNodes[left + width].x;
+        } else {
+            var rightX = minimapNodes[Object.keys(minimapNodes).length].x;
+        }
         var zoom = Math.round(totalWidth / slider.width());
-        var boundingBox = computeBoundingBox(left, width, zoom);
+        var boundingBox = {xleft: leftX, xright: rightX, zoom: zoom};
         getNodes(boundingBox, drawZoom);
     }
 }
