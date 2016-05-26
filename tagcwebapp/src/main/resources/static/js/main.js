@@ -8,7 +8,7 @@ var screenWidth = $(window).width();
 var screenHeight = $(window).height();
 var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
-var minimapNodes;
+var minimapNodes, cachedZoomNodes;
 var currentMousePos = { x: -1, y: -1 };
 var zoomLeft = 0;
 var zoomRight = 0;
@@ -55,7 +55,7 @@ function screenResize() {
         $('#minimap').find('canvas')[0].width = $('#minimap').width();
         $('#minimap').find('canvas')[0].height = $('#minimap').height();
         drawMinimap(null); //Update the canvas
-        zoom(1, 0);
+        zoom(1, 0, 1);
         if (treeRedrawTimeout) {
             clearTimeout(treeRedrawTimeout);
         }
@@ -100,17 +100,24 @@ $('document').ready(function() {
 
 
     $('#zoomoutbtn').on('click', function() {
-        zoom(-1, 10);
+        zoom(-1, 10, 1);
     });
     $('#zoominbtn').on('click', function() {
-        zoom(1, 10);
+        zoom(1, 10, 1);
     });
 
     //Bind the mouseScroll to trigger zooming on the miniMap
     $('body').bind('mousewheel DOMMouseScroll', function(e) {
         if ($(currentHover).is('#minimap')) {
             e.preventDefault();
-            zoom(e.originalEvent.wheelDelta, 1);
+            zoom(e.originalEvent.wheelDelta, 1, Math.floor(currentMousePos.x - $(currentHover).position().left));
+        } else if($(currentHover).is('#zoomWindow')) {
+            var ratio = $('#minimap').width() / $('#zoom').width();
+            e.preventDefault();
+            console.log(currentMousePos.x);
+            zoom(e.originalEvent.wheelDelta, 1, Math.floor((currentMousePos.x - $(currentHover).position().left) * ratio));
+            updateZoomValues();
+            drawZoom(null);
         }
     });
 
@@ -137,7 +144,7 @@ $('document').ready(function() {
     });
 
     //Constantly check where the mouse is, to let the zooming work better.
-    $('#minimapContainer').mousemove(function(event) {
+    $('#minimapContainer, #zoom').mousemove(function(event) {
         currentMousePos.x = event.pageX;
         currentMousePos.y = event.pageY;
     });
@@ -159,7 +166,14 @@ function pxToInt(css) {
  * @param nodes
  */
 var drawZoom = function(nodes) {
+    if (nodes == null) {
+        nodes = cachedZoomNodes;
+    } else {
+        cachedZoomNodes = nodes;
+    }
     var ratio = $('#zoomWindow').width() / (zoomRight - zoomLeft);
+    console.log("test"+ zoomRight);
+    console.log("test"+ zoomLeft);
     if (Object.keys(nodes).length > 0) {
         draw(nodes, $('#zoomWindow canvas')[0], function(x) {
             return (x) * ratio;
@@ -205,11 +219,9 @@ function draw(points, c, translate) {
     var nodeHeight = c.height / 2;
 
     var yTranslate = (c.height < 200)?c.height / 2 / 110 : 1;
-
+    console.log(c);
 
     $.each(points, function(id, point) {
-
-        console.log(point.x + '---'+ translate(point.x));
         ctx.beginPath();
         ctx.arc(translate(point.x), nodeHeight + point.y * yTranslate, 5, 0, 2 * Math.PI);
         ctx.stroke();
@@ -237,9 +249,10 @@ function draw(points, c, translate) {
  * The method that does the zooming, based on your mouse position, the zooming is applied.
  * @param direction
  * @param zoomAmount
+ * @param xMousePos
  */
-function zoom(direction, zoomAmount) {
-    var slider = $('.slider', currentHover);
+function zoom(direction, zoomAmount, xMousePos) {
+    var slider = $('.slider', '#minimap');
     var minimap = $('#minimap');
     var zoomWindow = $('#zoomWindow');
     var maxWidth = minimap.width();
@@ -254,7 +267,7 @@ function zoom(direction, zoomAmount) {
 
     //If zooming in the zoomField should zoom towards the cursor
     if (direction > 0) {
-        var mouseX = currentMousePos.x - minimap.position().left;
+        var mouseX = xMousePos;
         var leftSide = mouseX - left;
         var rightSide = left + currentWidth - mouseX;
         var dif = Math.min(difference, leftSide - rightSide);
@@ -286,16 +299,21 @@ function zoom(direction, zoomAmount) {
 function updatezoomWindow()
 {  
     if (minimapNodes) {
+        var zoom = updateZoomValues();
+        var boundingBox = {xleft: zoomLeft, xright: zoomRight, zoom: zoom};
+        getNodes(boundingBox, drawZoom);
+    }
+}
+
+function updateZoomValues()
+{
         var slider = $('#minimap .slider');
         var totalWidth = $('#minimap').width();
         var sliderLeft = pxToInt(slider.css('left'));
         var xWidth = minimapNodes[Object.keys(minimapNodes).length - 1].x;
         zoomLeft = Math.max(0, Math.floor(sliderLeft / totalWidth * xWidth));
         zoomRight =  Math.floor((sliderLeft + slider.width()) / totalWidth * xWidth);
-        var zoom = Math.round(totalWidth / slider.width());
-        var boundingBox = {xleft: zoomLeft, xright: zoomRight, zoom: zoom};
-        getNodes(boundingBox, drawZoom);
-    }
+        return Math.round(totalWidth / slider.width());
 }
 
 // This function translates from one representation of a bounding box in gui coordinates to
@@ -373,7 +391,7 @@ function initializeMinimap() {
     );
     var boundingBox = computeBoundingBox(0, 10000000, 1);
     getNodes(boundingBox, drawMinimap);
-    zoom(-1, 1);
+    zoom(-1, 1, 1);
 }
 
 /**
@@ -397,7 +415,7 @@ function fullSizeMinimap() {
     $('#phylogenyContainer').animate({
         'width': 30
     }, 1000, function () {
-        zoom(1, 0);
+        zoom(1, 0, 1);
         screenResize();
     });
 }
