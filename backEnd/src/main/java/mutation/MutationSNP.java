@@ -19,7 +19,6 @@ public class MutationSNP extends AbstractMutation {
 	 * @param other				The other Genome.
 	 * @param start				The start Strand.
 	 * @param end				The end Strand.
-	 * @param mutatedStrands	The mutated Strands.
 	 * @param fromReference		The changed Strand form the reference Genome.
 	 * @param fromOther			The changed Strand form the other Genome.
 	 */

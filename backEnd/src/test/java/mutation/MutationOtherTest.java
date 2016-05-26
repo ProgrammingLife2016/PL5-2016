@@ -11,8 +11,6 @@ import org.mockito.Mockito;
 
 import genome.Genome;
 import genome.Strand;
-import mutation.MutationOther;
-import mutation.MutationType;
 
 /**
  * 
@@ -29,7 +27,7 @@ public class MutationOtherTest {
 	private ArrayList<Strand> mutatedStrands;
 	
 	/**
-	 * Setup the MutationOther object
+	 * Setup the MutationOther object.
 	 */
 	@Before
 	public void setUp() {
@@ -74,8 +72,7 @@ public class MutationOtherTest {
 	 */
 	@Test(expected = UnsupportedOperationException.class)
 	public void testWrongType() {
-		@SuppressWarnings("unused")
-		MutationOther wrongTye = new MutationOther(MutationType.INSERTION, reference, 
+		new MutationOther(MutationType.INSERTION, reference, 
 				other, start, mutatedStrands);
 	}
 

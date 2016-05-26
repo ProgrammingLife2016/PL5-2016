@@ -25,7 +25,6 @@ public abstract class AbstractMutation {
 	 * @param reference			The reference Genome.
 	 * @param other				The other Genome.
 	 * @param start				The start Strand.
-	 * @param mutatedStrands	The mutated Strands.
 	 */
 	public AbstractMutation(MutationType mutationType, Genome reference, Genome other,
 							Strand start) {
@@ -75,7 +74,7 @@ public abstract class AbstractMutation {
 	
 	/**
 	 * Set the end Strand from where the mutation starts.
-	 * @return The end Strand.
+	 * @param The new end Strand.
 	 */
 	public void setEndStrand(Strand end) {
 		this.end = end;

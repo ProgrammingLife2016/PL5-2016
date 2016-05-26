@@ -2,9 +2,13 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import genome.Genome;
 import genome.Strand;
+import genome.StrandEdge;
 
 /**
  * The Class GenomeGraph.
@@ -103,5 +107,24 @@ public class GenomeGraph {
         this.activeGenomes = activeGenomes;
     }
     
-    
+    /**
+     * Get all the Strands that don't have an ingoing edge.
+     * @return The selected Strands.
+     */
+    public ArrayList<Strand> getStrartStrands() {
+    	ArrayList<Strand> result = new ArrayList<>();
+    	Set<Integer> allStrandIDs = new HashSet<>(strandNodes.keySet());
+    	TreeSet<Integer> keysWithInEdge = new TreeSet<>();
+    	for (Strand strand : strandNodes.values()) {
+    		for (StrandEdge edge : strand.getEdges()) {
+    			keysWithInEdge.add(edge.getEnd());
+    		}
+    	}
+    	
+    	allStrandIDs.removeAll(keysWithInEdge);
+    	for (Integer id : allStrandIDs) {
+    		result.add(strandNodes.get(id));
+    	}
+    	return result;
+    }
 }

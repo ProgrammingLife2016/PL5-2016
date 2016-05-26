@@ -11,8 +11,6 @@ import org.mockito.Mockito;
 
 import genome.Genome;
 import genome.Strand;
-import mutation.MutationIndel;
-import mutation.MutationType;
 
 /**
  * 
@@ -40,7 +38,8 @@ public class MutationIndelTest {
 		Strand mutate = Mockito.mock(Strand.class);
 		mutatedStrands = new ArrayList<>();
 		mutatedStrands.add(mutate);
-		mutation = new MutationIndel(MutationType.DELETION, reference, other, start, end, mutatedStrands);
+		mutation = new MutationIndel(MutationType.DELETION, 
+				reference, other, start, end, mutatedStrands);
 	}
 
 	/**
@@ -65,8 +64,7 @@ public class MutationIndelTest {
 	 */
 	@Test(expected = UnsupportedOperationException.class)
 	public void testWrongType() {
-		@SuppressWarnings("unused")
-		MutationIndel wrongType = new MutationIndel(MutationType.TRANSLOCATION, reference, 
+		new MutationIndel(MutationType.TRANSLOCATION, reference, 
 				other, start, end, mutatedStrands);
 	}
 

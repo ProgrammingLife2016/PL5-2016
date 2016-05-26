@@ -2,16 +2,12 @@ package mutation;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import genome.Genome;
 import genome.Strand;
-import mutation.MutationSNP;
-import mutation.MutationType;
 
 /**
  * 
@@ -64,10 +60,8 @@ public class MutationSNPTest {
 	 * This will throw an exception.
 	 */
 	@Test(expected = UnsupportedOperationException.class)
-	public void testWrongType() {
-		@SuppressWarnings("unused")
-		MutationSNP wrongType = new MutationSNP(MutationType.INVERSION, reference, other, 
+	public void testWrongType1() {
+		new MutationSNP(MutationType.INVERSION, reference, other, 
 				start, end, mutateReference, mutateOther);
 	}
-
 }
