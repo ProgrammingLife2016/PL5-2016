@@ -33,13 +33,13 @@ public class Controller implements FrontEndBackEndInterface {
     /** The data tree. */
     private DataTree dataTree;
 
-    private RestServer restServer;
+    /** The rest server. */
+    private RestServer restServer = new RestServer();
     
     /**
-     * Datacontainer Singleton, starts with empty hashmaps.
+     * Controller Singleton.
      */
-    public static final com.pl.tagc.controller.Controller DC = new Controller();
-    
+    public static com.pl.tagc.controller.Controller DC;
 
     /**
      * Constructor.
@@ -51,6 +51,8 @@ public class Controller implements FrontEndBackEndInterface {
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+        restServer.startServer();
+        DC = this;
     }
 
     
