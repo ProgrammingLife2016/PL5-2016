@@ -39,9 +39,8 @@ public class Mutations {
 	 */
 	public void getMutations() {
 		HashMap<Integer, Strand> strands = genomeGraph.getStrandNodes();
-		ArrayList<Strand> startingStrands = genomeGraph.getStrartStrands();
-		for (Strand start : startingStrands) {
-			mutationsOnStrand(start, strands, new ArrayList<Strand>());
+		for (Strand strand : strands.values()){
+			mutationsOnStrand(strand, strands);
 		}
 	}
 	
@@ -49,19 +48,10 @@ public class Mutations {
 	 * Compute mutations that can appear form a start Strand.
 	 * @param start The start Strand.
 	 * @param strands All the Strands in the graph.
-	 * @param visited The Strands that are already visited, to prevent loops.
 	 */
-	public void mutationsOnStrand(Strand start, HashMap<Integer, 
-			Strand> strands, ArrayList<Strand> visited) {
-		visited.add(start);
+	public void mutationsOnStrand(Strand start, HashMap<Integer, Strand> strands) {
 		if (start.getEdges().size() > 1) {
 			checkIndel(start, strands);
-		}
-		for (StrandEdge edge : start.getEdges()) {
-			Strand newStart = strands.get(edge.getEnd());
-			if (!visited.contains(newStart)) {
-				mutationsOnStrand(newStart, strands, visited);
-			}
 		}
 	}
 	
