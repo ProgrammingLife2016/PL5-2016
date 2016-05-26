@@ -3,16 +3,15 @@ var animationSpeed = 1000;
 var currentHover = null;
 var zoomTimeout = null;
 var url = 'http://localhost:9998/';
-var ratio = 0;
 var minHeight = 300;
-var yZoom = 1;
 var screenWidth = $(window).width();
 var screenHeight = $(window).height();
 var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
 var minimapNodes;
 var currentMousePos = { x: -1, y: -1 };
-var counter = 1;
+var zoomLeft = 0;
+var zoomRight = 0;
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -160,12 +159,17 @@ function pxToInt(css) {
  * @param nodes
  */
 var drawZoom = function(nodes) {
-    var ratio = $('#zoomWindow').width() / Object.keys(nodes).length;
-    var left = nodes[Object.keys(nodes)[0]].x - 1;
+    var ratio = $('#zoomWindow').width() / zoomRight - zoomLeft;
+    if (Object.keys(nodes).length > 0) {
 
-    draw(nodes, $('#zoomWindow canvas')[0], function(x) {
-        return (x - left) * ratio;
-    });
+        draw(nodes, $('#zoomWindow canvas')[0], function(x) {
+            return (x - zoomLeft) * ratio;
+        });
+    } else {
+        var c = $('#zoomWindow canvas')[0];
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, c.width, c.height);
+    }
 };
 
 /**
@@ -278,22 +282,16 @@ function zoom(direction, zoomAmount) {
  * Update the window that shows the zoomed genome
  */
 function updatezoomWindow()
-{
+{  
     if (minimapNodes) {
         var slider = $('#minimap .slider');
         var totalWidth = $('#minimap').width();
         var sliderLeft = pxToInt(slider.css('left'));
-        var minimapNodeSize = Object.keys(minimapNodes).length;
-        var left = Math.floor(sliderLeft / totalWidth * minimapNodeSize);
-        var leftX = minimapNodes[left].x;
-        var width = Math.floor(slider.width() / totalWidth * minimapNodeSize);
-        if (minimapNodes[left + width]) {
-            var rightX = minimapNodes[left + width].x;
-        } else {
-            var rightX = minimapNodes[Object.keys(minimapNodes).length].x;
-        }
+        var xWidth = minimapNodes[Object.keys(minimapNodes).length - 1].x;
+        zoomLeft = Math.max(0, Math.floor(sliderLeft / totalWidth * xWidth));
+        zoomRight =  Math.floor((sliderLeft + slider.width()) / totalWidth * xWidth);
         var zoom = Math.round(totalWidth / slider.width());
-        var boundingBox = {xleft: leftX, xright: rightX, zoom: zoom};
+        var boundingBox = {xleft: zoomLeft, xright: zoomRight, zoom: zoom};
         getNodes(boundingBox, drawZoom);
     }
 }
@@ -318,6 +316,9 @@ function computeBoundingBox(left, width, zoom)
 function parseNodeData(nodes) {
     var result = {};
 
+    if (typeof nodes == 'undefined' || nodes.length == 0) {
+        return result;
+    }
     var left = nodes[0].id;
     var ratio = $('#minimap').width() / (nodes[nodes.length-1].x - left);
 
