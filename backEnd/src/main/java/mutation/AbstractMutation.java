@@ -74,7 +74,7 @@ public abstract class AbstractMutation {
 	
 	/**
 	 * Set the end Strand from where the mutation starts.
-	 * @param The new end Strand.
+	 * @param end The new end Strand.
 	 */
 	public void setEndStrand(Strand end) {
 		this.end = end;

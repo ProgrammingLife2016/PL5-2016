@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Set;
 
 import controller.GenomeGraph;
-import genome.Genome;
 import genome.Strand;
 import genome.StrandEdge;
 
@@ -28,7 +27,7 @@ public class Mutations {
 	/**
 	 * Constructor to create.
 	 *
-	 * @param genomeGraph the genome graph
+	 * @param graph The genome graph.
 	 */
 	public Mutations(GenomeGraph graph) {
 		mutations = new HashMap<>();
@@ -82,33 +81,46 @@ public class Mutations {
 		return mutations.get(reference).get(other);
 	}
 	
+	/**
+	 * Compute all the mutations in the graph.
+	 */
 	public void getMutations() {
 		HashMap<Integer, Strand> strands = genomeGraph.getStrandNodes();
-		System.out.println(strands.size());
 		ArrayList<Strand> startingStrands = genomeGraph.getStrartStrands();
 		for (Strand start : startingStrands) {
-			System.out.println(strands.size());
-			test(start, strands, new ArrayList<Strand>());
+			mutationsOnStrand(start, strands, new ArrayList<Strand>());
 		}
 	}
 	
-	public void test(Strand start, HashMap<Integer, Strand> strands, ArrayList<Strand> visited) {
+	/**
+	 * Compute mutations that can appear form a start Strand.
+	 * @param start The start Strand.
+	 * @param strands All the Strands in the graph.
+	 * @param visited The Strands that are already visited, to prevent loops.
+	 */
+	public void mutationsOnStrand(Strand start, HashMap<Integer, 
+			Strand> strands, ArrayList<Strand> visited) {
 		visited.add(start);
-		System.out.println(strands.size());
+		System.out.println("nieuw check");
 		if (start.getEdges().size() == 2) {
 			checkIndel(start, strands);
 		}
 		for (StrandEdge edge : start.getEdges()) {
 			Strand newStart = strands.get(edge.getEnd());
 			if (!visited.contains(newStart)) {
-				test(newStart, strands, visited);
+				mutationsOnStrand(newStart, strands, visited);
 			}
 		}
 	}
 	
+	/**
+	 * Check if a indel appears on the Strand.
+	 * @param start The Strand.
+	 * @param strands All the Strands.
+	 */
 	public void checkIndel(Strand start, HashMap<Integer, Strand> strands) {
 		Strand nextEdge1 = strands.get(start.getEdges().get(0).getEnd());
-		Strand nextEdge2 = strands.get(start.getEdges().get(0).getEnd());
+		Strand nextEdge2 = strands.get(start.getEdges().get(1).getEnd());
 		for (StrandEdge edge : nextEdge1.getEdges()) {
 			if (edge.getEnd() == nextEdge2.getId()) {
 				MutationIndel indel = new MutationIndel(MutationType.DELETION, null,
@@ -125,6 +137,10 @@ public class Mutations {
 		}
 	}
 	
+	/**
+	 * Get the mutations.
+	 * @return Mutations.
+	 */
 	public ArrayList<AbstractMutation> getMutation() {
 		return mutation;
 	}
