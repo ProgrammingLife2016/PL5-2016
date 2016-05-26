@@ -6,6 +6,7 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
 
+import controller.Controller;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -35,16 +36,17 @@ public class RestApiTest extends JerseyTest {
 	 */
 	@Test
 	public void testGetPhylogeneticTree() throws Exception {
-		assertTrue(true);
+//		Controller controller = new Controller();
 //		final String expectedResponse = IOUtils.toString(
 //				Thread.currentThread().getContextClassLoader()
 //				.getResourceAsStream("testGenomeNwkResponse"),
 //			      "UTF-8"
 //			    );
-//
+//		
 //		final String response = target().path("api/getphylogenetictree").queryParam("treeId", 0)
 //				.request().get(String.class);
 //		assertEquals(expectedResponse, response);
+		assertTrue(true);
 	}
 
 }

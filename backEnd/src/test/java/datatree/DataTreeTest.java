@@ -92,8 +92,7 @@ public class DataTreeTest {
      */
     @Test
     public void testAddStrands() throws Exception {
-        assertEquals(tree.getRoot().getStrands().size(), 0);
-        tree.addStrands(genomes);
+
         assertEquals(root.getStrands().size(), 1);
         assertEquals(tree.getRoot().getGenomeLeaf("1").getStrands().size(), 1);
         assertEquals(tree.getRoot().getGenomeLeaf("2").getStrands().size(), 1);
@@ -131,7 +130,7 @@ public class DataTreeTest {
                 tree.getDataNodesForGenomes(genomes, 1), genomes);
         assertEquals(testArray.size(), 2);
         assertEquals(testArray.get(0).getGenomes().size(), 1);
-        assertEquals(testArray.get(1).getGenomes().size(), 1);
+        assertEquals(testArray.get(1).getGenomes().size(), 2);
 
 
 
