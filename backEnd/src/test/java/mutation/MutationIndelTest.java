@@ -33,8 +33,8 @@ public class MutationIndelTest {
 	public void setUp() {
 		reference = Mockito.mock(Genome.class);
 		other = Mockito.mock(Genome.class);
-		Strand start = Mockito.mock(Strand.class);
-		Strand end = Mockito.mock(Strand.class);
+		start = Mockito.mock(Strand.class);
+		end = Mockito.mock(Strand.class);
 		Strand mutate = Mockito.mock(Strand.class);
 		mutatedStrands = new ArrayList<>();
 		mutatedStrands.add(mutate);

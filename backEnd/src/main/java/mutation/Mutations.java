@@ -2,7 +2,6 @@ package mutation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import controller.GenomeGraph;
 import genome.Strand;
@@ -19,9 +18,9 @@ public class Mutations {
 	/** The genome graph. */
 	private GenomeGraph genomeGraph;
 	
-	/** The mutations. */
-	private HashMap<String, HashMap<String, ArrayList<AbstractMutation>>> mutations;
-		
+	/** The mutations. 
+	 * For now all the mutations will be stored in a ArrayList.
+	 */
 	private ArrayList<AbstractMutation> mutation;
 	
 	/**
@@ -30,59 +29,13 @@ public class Mutations {
 	 * @param graph The genome graph.
 	 */
 	public Mutations(GenomeGraph graph) {
-		mutations = new HashMap<>();
 		mutation = new ArrayList<>();
 		this.genomeGraph = graph;
-		setKeys(genomeGraph.getGenomes().keySet());
-	}
-	
-	/**
-	 * Sets the keys.
-	 *
-	 * @param keys the new keys
-	 */
-	private void setKeys(Set<String> keys) {
-		for (String key1 : keys) {
-			for (String key2 : keys) {
-				mutations.put(key1, new HashMap<>());
-				if (!key1.equals(key2)) {
-					mutations.get(key1).put(key2, new ArrayList<>());
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Add a mutation between two genomes.
-	 * @param reference The key from the reference genome.
-	 * @param other The key from the other geneme.
-	 * @param mutation The mutation.
-	 */
-	public void addMutation(String reference, String other, AbstractMutation mutation) {
-		mutations.get(reference).get(other).add(mutation);
-	}
-	
-	/**
-	 * Get the mutations with a genome as compared to.
-	 * @param genome The compared genome.
-	 * @return The mutations.
-	 */
-	public HashMap<String, ArrayList<AbstractMutation>> getGenomeMutations(String genome) {
-		return mutations.get(genome);
-	}
-	
-	/**
-	 * Get the mutations between to genomes.
-	 * @param reference The reference genome.
-	 * @param other The other genome.
-	 * @return The mutations.
-	 */
-	public ArrayList<AbstractMutation> getMutationBetweenGenomes(String reference, String other) {
-		return mutations.get(reference).get(other);
 	}
 	
 	/**
 	 * Compute all the mutations in the graph.
+	 * From all the start Strands.
 	 */
 	public void getMutations() {
 		HashMap<Integer, Strand> strands = genomeGraph.getStrandNodes();
@@ -101,8 +54,7 @@ public class Mutations {
 	public void mutationsOnStrand(Strand start, HashMap<Integer, 
 			Strand> strands, ArrayList<Strand> visited) {
 		visited.add(start);
-		System.out.println("nieuw check");
-		if (start.getEdges().size() == 2) {
+		if (start.getEdges().size() > 1) {
 			checkIndel(start, strands);
 		}
 		for (StrandEdge edge : start.getEdges()) {
@@ -119,20 +71,24 @@ public class Mutations {
 	 * @param strands All the Strands.
 	 */
 	public void checkIndel(Strand start, HashMap<Integer, Strand> strands) {
-		Strand nextEdge1 = strands.get(start.getEdges().get(0).getEnd());
-		Strand nextEdge2 = strands.get(start.getEdges().get(1).getEnd());
-		for (StrandEdge edge : nextEdge1.getEdges()) {
-			if (edge.getEnd() == nextEdge2.getId()) {
-				MutationIndel indel = new MutationIndel(MutationType.DELETION, null,
-						null, start, nextEdge2, new ArrayList<Strand>());
-				mutation.add(indel);
-			}
-		}
-		for (StrandEdge edge : nextEdge2.getEdges()) {
-			if (edge.getEnd() == nextEdge1.getId()) {
-				MutationIndel indel = new MutationIndel(MutationType.INSERTION, null,
-						null, start, nextEdge1, new ArrayList<Strand>());
-				mutation.add(indel);
+		for (int i = 0; i < start.getEdges().size() - 1; i++) {
+			Strand nextEdge1 = strands.get(start.getEdges().get(i).getEnd());
+			for (int j = i + 1; j < start.getEdges().size(); j++) {
+				Strand nextEdge2 = strands.get(start.getEdges().get(j).getEnd());
+				for (StrandEdge edge : nextEdge1.getEdges()) {
+					if (edge.getEnd() == nextEdge2.getId()) {
+						MutationIndel indel = new MutationIndel(MutationType.DELETION, null,
+								null, start, nextEdge2, new ArrayList<Strand>());
+						mutation.add(indel);
+					}
+				}
+				for (StrandEdge edge : nextEdge2.getEdges()) {
+					if (edge.getEnd() == nextEdge1.getId()) {
+						MutationIndel indel = new MutationIndel(MutationType.INSERTION, null,
+								null, start, nextEdge1, new ArrayList<Strand>());
+						mutation.add(indel);
+					}
+				}
 			}
 		}
 	}
