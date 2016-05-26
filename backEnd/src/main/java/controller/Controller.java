@@ -8,7 +8,6 @@ import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
 
-// TODO: Auto-generated Javadoc
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -26,12 +25,11 @@ public class Controller implements FrontEndBackEndInterface {
     
     /** The data tree. */
     private DataTree dataTree;
-
-    /**
-     * Datacontainer Singleton, starts with empty hashmaps.
-     */
-    public static final controller.Controller DC = new Controller();
     
+    /**
+     * Controller Singleton.
+     */
+    public static controller.Controller DC;
 
     /**
      * Constructor.
@@ -43,6 +41,7 @@ public class Controller implements FrontEndBackEndInterface {
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+        DC = this;
     }
 
     
