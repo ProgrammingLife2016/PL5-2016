@@ -159,11 +159,10 @@ function pxToInt(css) {
  * @param nodes
  */
 var drawZoom = function(nodes) {
-    var ratio = $('#zoomWindow').width() / zoomRight - zoomLeft;
+    var ratio = $('#zoomWindow').width() / (zoomRight - zoomLeft);
     if (Object.keys(nodes).length > 0) {
-
         draw(nodes, $('#zoomWindow canvas')[0], function(x) {
-            return (x - zoomLeft) * ratio;
+            return (x) * ratio;
         });
     } else {
         var c = $('#zoomWindow canvas')[0];
@@ -207,7 +206,10 @@ function draw(points, c, translate) {
 
     var yTranslate = (c.height < 200)?c.height / 2 / 110 : 1;
 
+
     $.each(points, function(id, point) {
+
+        console.log(point.x + '---'+ translate(point.x));
         ctx.beginPath();
         ctx.arc(translate(point.x), nodeHeight + point.y * yTranslate, 5, 0, 2 * Math.PI);
         ctx.stroke();
@@ -218,14 +220,14 @@ function draw(points, c, translate) {
                 target = points[edge.endId];
             }
             if (target) {
-                ctx.beginPath();
-                ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
-                ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
-                ctx.lineWidth = edge.weight;
-                ctx.strokeStyle = '#'+ edge.color;
-                ctx.stroke();
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = '#000000';
+                //ctx.beginPath();
+                //ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
+                //ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
+                //ctx.lineWidth = edge.weight;
+                //ctx.strokeStyle = '#'+ edge.color;
+                //ctx.stroke();
+                //ctx.lineWidth = 1;
+                //ctx.strokeStyle = '#000000';
             }
         });
     });
@@ -319,12 +321,11 @@ function parseNodeData(nodes) {
     if (typeof nodes == 'undefined' || nodes.length == 0) {
         return result;
     }
-    var left = nodes[0].id;
-    var ratio = $('#minimap').width() / (nodes[nodes.length-1].x - left);
+    var left = nodes[0].x;
 
     $.each(nodes, function(key, value) {
         result[value.id] = {
-            x: value.x - left,
+            x: value.x - zoomLeft,
             y: value.y,
             strands: value.strands,
             edges: value.edges,

@@ -69,7 +69,7 @@ public final class RibbonController {
 
         calcYcoordinates(result);
         addEdges(result,activeGenomes);
-        result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(new Integer(o1.getX())));
+        result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
 
 
         return result;
