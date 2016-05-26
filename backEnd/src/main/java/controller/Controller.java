@@ -39,10 +39,13 @@ public class Controller implements FrontEndBackEndInterface {
     public Controller() {
     	genomeGraph = Parser.parse("data/TB10.gfa");
     	genomeGraph.generateGenomes();
+        genomeGraph.calculateXStrands();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+
+
     }
 
     
@@ -54,7 +57,7 @@ public class Controller implements FrontEndBackEndInterface {
      * @return The list of ribbonNodes.
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
-        return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, genomeGraph);
+        return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, genomeGraph, dataTree);
     }  
 
 

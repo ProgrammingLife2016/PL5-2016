@@ -48,7 +48,17 @@ public class GenomeGraph {
     public void addStrand(Strand strand) {
         strandNodes.put(strand.getId(), strand);        
     }
-    
+
+
+    /**
+     * Method that calculates the X coordinates for strands in all genomes.
+     */
+    public void calculateXStrands(){
+        for(Genome genome:genomes.values()){
+            genome.calculateStrandXCoordinates();
+        }
+    }
+
     /**
      * Generates the genomes from the the information contained within the strand nodes.
      */
