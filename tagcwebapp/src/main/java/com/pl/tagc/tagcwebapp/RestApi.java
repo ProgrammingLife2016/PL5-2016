@@ -14,6 +14,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 
 //The Java class will be hosted at the URI path "/api"
 /**
@@ -43,11 +44,16 @@ public class RestApi {
 	@GET
 	@Path("/getnodes")
 	@Produces("application/json")
-	public NodeListObject requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
+	public Response requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
 			@DefaultValue("100") @QueryParam("xright") int xright,
 			@DefaultValue("1") @QueryParam("zoom") int zoom) {
-		return new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(xleft, xright,
-				zoom)));
+		NodeListObject nodeList =
+				new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(xleft, xright, zoom)));
+		return Response.ok() //200
+				.entity(nodeList)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.allow("OPTIONS").build();
 	}
 	
 
@@ -72,9 +78,15 @@ public class RestApi {
 	@GET
 	@Path("/getphylogenetictree")
 	@Produces("application/json")
-	public PhylogeneticTreeObject requestPhylogeneticTree(
+	public Response requestPhylogeneticTree(
 			@DefaultValue("1") @QueryParam("treeId") int treeId) {
-		return new PhylogeneticTreeObject(Controller.DC.loadPhylogeneticTree(treeId).getRoot());
+		PhylogeneticTreeObject result =
+				new PhylogeneticTreeObject(Controller.DC.loadPhylogeneticTree(treeId).getRoot());
+		return Response.ok() //200
+				.entity(result)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.allow("OPTIONS").build();
 	}
 
 }
