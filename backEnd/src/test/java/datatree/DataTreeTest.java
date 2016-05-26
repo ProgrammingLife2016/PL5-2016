@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,6 +24,7 @@ public class DataTreeTest {
 
     /**
      * Set up the tests.
+     *
      * @throws Exception if fail.
      */
     @SuppressWarnings("checkstyle:methodlength")
@@ -70,10 +72,12 @@ public class DataTreeTest {
         root.setGenomes(parentGenomes);
 
         tree = new DataTree(root);
+        tree.addStrands(genomes);
     }
 
     /**
      * Test getting the genome leaf.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -83,6 +87,7 @@ public class DataTreeTest {
 
     /**
      * Test adding a starnd.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -97,6 +102,7 @@ public class DataTreeTest {
 
     /**
      * Test combining method and see if margin works.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -104,32 +110,58 @@ public class DataTreeTest {
         ArrayList<String> genomes = new ArrayList<>();
         genomes.add("1");
 
-        assertEquals(tree.getDataNodes(0, 10, genomes, 0).size(), 1);
-        assertEquals(tree.getDataNodes(4, 4, genomes, 0).size(), 1);
-        assertEquals(tree.getDataNodes(5, 10, genomes, 0).size(), 1);
-        assertEquals(tree.getDataNodes(1, 11, genomes, 1).size(), 2);
+        assertEquals(tree.getStrands(0, 10, genomes, 0).size(), 1);
+        assertEquals(tree.getStrands(4, 4, genomes, 0).size(), 1);
+        assertEquals(tree.getStrands(5, 10, genomes, 0).size(), 1);
+        assertEquals(tree.getStrands(1, 11, genomes, 1).size(), 2);
     }
 
     /**
      * Test if a list of nodes is stripped from irrelevant information.
+     *
      * @throws Exception if fail.
      */
     @Test
-    public void testFilterNodes() throws Exception {
+    public void testFilterStrandsFromNodes() throws Exception {
         ArrayList<String> genomes = new ArrayList<>();
         genomes.add("2");
         assertEquals(tree.getDataNodesForGenomes(genomes, 0).size(), 1);
         assertEquals(tree.getDataNodesForGenomes(genomes, 1).size(), 2);
-        ArrayList<DataNode> testArray = tree.filterNodes(5, 5, 
-        		tree.getDataNodesForGenomes(genomes, 1), genomes);
+        ArrayList<Strand> testArray = tree.filterStrandsFromNodes(0, 1,
+                tree.getDataNodesForGenomes(genomes, 1), genomes);
         assertEquals(testArray.size(), 2);
         assertEquals(testArray.get(0).getGenomes().size(), 1);
         assertEquals(testArray.get(1).getGenomes().size(), 1);
 
+
+
+
     }
 
     /**
-     *Test if nodes are returned multiple genomes, and test if level works.
+     * Test if a list of nodes that is requested multiple times does not delete strands.
+     *
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testFilterStrandsFromNodesMultiple() throws Exception {
+        ArrayList<String> genomes = new ArrayList<>();
+        genomes.add("1");
+        genomes.add("2");
+
+        for (int i = 1; i < 5; i++) {
+            ArrayList<Strand> testArray = tree.filterStrandsFromNodes(5, 5,
+                    tree.getDataNodesForGenomes(genomes, i), genomes);
+
+            assertEquals(testArray.size(), 3);
+        }
+
+
+    }
+
+    /**
+     * Test if nodes are returned multiple genomes, and test if level works.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -139,10 +171,19 @@ public class DataTreeTest {
         genomes.add("2");
         assertEquals(tree.getDataNodesForGenomes(genomes, 0).size(), 1);
         assertEquals(tree.getDataNodesForGenomes(genomes, 1).size(), 3);
+
+        for (int i = 1; i < 5; i++) {
+            Set<DataNode> testArray = tree.getDataNodesForGenomes(genomes, i);
+            assertEquals(testArray.size(),3);
+            for (DataNode node : testArray) {
+                assertEquals(node.getStrands().size(), 1);
+            }
+        }
     }
 
     /**
      * Test if nodes are returned of a specific genome, and test if level works.
+     *
      * @throws Exception if fail.
      */
     @Test

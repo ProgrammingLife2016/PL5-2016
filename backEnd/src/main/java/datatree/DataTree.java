@@ -6,6 +6,7 @@ import genome.Strand;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import abstractdatastructure.TreeStructure;
 
@@ -17,6 +18,7 @@ public class DataTree extends TreeStructure<DataNode> {
 
     /**
      * Default constructor.
+     *
      * @param root The root.
      */
     public DataTree(DataNode root) {
@@ -48,7 +50,6 @@ public class DataTree extends TreeStructure<DataNode> {
     }
 
 
-
     /**
      * Recursive method for going through the tree and adding the strands top down.
      *
@@ -72,14 +73,12 @@ public class DataTree extends TreeStructure<DataNode> {
                     currentNode.setStrands((ArrayList<Strand>) child2.getStrands().clone());
                     child2.getStrands().removeAll(child2.getStrands());
                 }
-            }
-            else if (child2.getStrands().size() == 0) {
+            } else if (child2.getStrands().size() == 0) {
                 if (child1.getStrands().size() != 0) {
                     currentNode.setStrands((ArrayList<Strand>) child1.getStrands().clone());
                     child1.getStrands().removeAll(child1.getStrands());
                 }
-            }
-            else if (child1.getStrands().size() != 0 && child2.getStrands().size() != 0) {
+            } else if (child1.getStrands().size() != 0 && child2.getStrands().size() != 0) {
                 ArrayList<Strand> parentStrands = (ArrayList<Strand>) child1.getStrands().clone();
                 parentStrands.retainAll(child2.getStrands());
                 currentNode.setStrands(parentStrands);
@@ -90,7 +89,7 @@ public class DataTree extends TreeStructure<DataNode> {
     }
 
     /**
-     * Get the data nodes within the given parameters.
+     * Get the strands within the given parameters.
      *
      * @param xMin    The minimal x value.
      * @param xMax    The maximal x value.
@@ -98,14 +97,14 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param level   The maximum tree level to zoom to.
      * @return A list of datanodes that pertain to the parameters.
      */
-    public ArrayList<DataNode> getDataNodes(int xMin, int xMax,
-    		ArrayList<String> genomes, int level) {
-        return filterNodes(xMin, xMax, getDataNodesForGenomes(genomes, level), genomes);
+    public ArrayList<Strand> getStrands(int xMin, int xMax,
+                                            ArrayList<String> genomes, int level) {
+        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomes, level), genomes);
 
     }
 
     /**
-     * Remove unwanted strands and genomes from the nodes.
+     * Remove unwanted strands from the nodes.
      *
      * @param xMin    the minimal id of the strands.
      * @param xMax    the maximal id of the strands.
@@ -113,22 +112,20 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param genomes The genomes to retain.
      * @return A filtered list of nodes.
      */
-    public ArrayList<DataNode> filterNodes(int xMin, int xMax, Set<DataNode> nodes,
-    		ArrayList<String> genomes) {
-        ArrayList<DataNode> result = new ArrayList<>();
-        result.addAll(nodes);
-        result = (ArrayList<DataNode>) result.clone();
-        for (DataNode node : result) {
-            node.setGenomes(genomes);
+    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes,
+                                           ArrayList<String> genomes) {
+        ArrayList<Strand> result = new ArrayList<>();
+
+        for (DataNode node : nodes) {
             ArrayList<Strand> newStrands = new ArrayList<>();
             for (Strand strand : node.getStrands()) {
                 if (strand.getX() < xMax + 10 && strand.getX() > xMin - 10) {
                     newStrands.add(strand);
-                    strand.retainGenomes(genomes);
                 }
             }
-            node.setStrands(newStrands);
+            result.addAll(newStrands);
         }
+
         return result;
 
 
@@ -171,8 +168,6 @@ public class DataTree extends TreeStructure<DataNode> {
 
 
     }
-
-
 
 
 }

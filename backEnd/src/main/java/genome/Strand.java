@@ -177,20 +177,7 @@ public class Strand {
         this.weight = weight;
     }
 
-    /**
-     * Retains all the genomes contained in retainGenomes.
-     *
-     * @param retainGenomes the Genomes to retain.
-     */
-    public void retainGenomes(ArrayList<String> retainGenomes) {
-        ArrayList<String> newGenomes = new ArrayList<>(Arrays.asList(genomes));
-        newGenomes.retainAll(retainGenomes);
-        genomes = new String[newGenomes.size()];
-        for (int i = 0; i < genomes.length; i++) {
-            genomes[i] = newGenomes.get(i);
-        }
-        this.weight = genomes.length;
-    }
+
 
     /**
      * Add an edge to the edges.

@@ -9,6 +9,7 @@ import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -38,32 +39,41 @@ public final class RibbonController {
                                                        GenomeGraph genomeGraph, DataTree dataTree) {
         ArrayList<String> activeGenomes = genomeGraph.getActiveGenomes();
 
-        activeGenomes.add("TKK_02_0010.fasta");
-        activeGenomes.add("TKK_02_0006.fasta");
-        activeGenomes.add("TKK_02_0007.fasta");
-        activeGenomes.add("TKK_02_0001.fasta");
+        if (activeGenomes.size() < 4) {
+            activeGenomes.add("TKK_02_0010.fasta");
+            activeGenomes.add("TKK_02_0006.fasta");
+            activeGenomes.add("TKK_02_0007.fasta");
+            activeGenomes.add("TKK_02_0001.fasta");
+        }
 
 
         ArrayList<RibbonNode> result = new ArrayList<>();
-        ArrayList<DataNode> filteredNodes = dataTree.getDataNodes(minX, maxX, activeGenomes, 100);
+        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, activeGenomes, 100);
 
-        int id=0;
-        for (DataNode dataNode : filteredNodes) {
-            for (Strand strand : dataNode.getStrands()) {
-                RibbonNode ribbon = new RibbonNode(id, strand.getGenomes());
-                ribbon.setX(strand.getX());
-                ribbon.setY(ribbon.getGenomes().size());
-                for (StrandEdge strandEdge : strand.getEdges()) {
-                    RibbonEdge edge = new RibbonEdge(strandEdge.getStart(), strandEdge.getEnd());
-                    ribbon.addEdge(edge);
-                }
-                result.add(ribbon);
-                id++;
-
+        for (Strand strand : filteredNodes) {
+            RibbonNode ribbon = new RibbonNode(strand.getId(), strand.getGenomes());
+            ribbon.setX(strand.getX());
+            ribbon.setY(ribbon.getGenomes().size() * 10);
+            for (StrandEdge strandEdge : strand.getEdges()) {
+                RibbonEdge edge = new RibbonEdge(strandEdge.getStart(), strandEdge.getEnd());
+                ribbon.addEdge(edge);
             }
-
+            result.add(ribbon);
 
         }
+
+
+        result.sort(new Comparator<RibbonNode>() {
+            @Override
+            public int compare(RibbonNode o1, RibbonNode o2) {
+                if (o1.getX() > o2.getX()) {
+                    return 1;
+                } else if (o1.getX() < o2.getX()) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
 
 
         return result;
