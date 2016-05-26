@@ -1,7 +1,11 @@
-package com.pl.tagc.controller;
+package com.pl.tagc.Main;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.pl.tagc.tagcwebapp.RestServer;
+
+import controller.Controller;
 
 /**
  * The Class Main.
@@ -34,6 +38,8 @@ final class Main {
 		try {
 			@SuppressWarnings("unused")
 			Controller controller = new Controller();
+		    RestServer restServer = new RestServer();
+	        restServer.startServer();
 			Thread.currentThread().join();
 		} catch (InterruptedException ex) {
 			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

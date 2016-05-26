@@ -6,6 +6,7 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
 
+import controller.Controller;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -34,7 +35,7 @@ public class RestApiTest extends JerseyTest {
 	 */
 	@Test
 	public void testGetPhylogeneticTree() throws Exception {
-		
+		Controller controller = new Controller();
 		final String expectedResponse = IOUtils.toString(
 				Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream("testGenomeNwkResponse"),

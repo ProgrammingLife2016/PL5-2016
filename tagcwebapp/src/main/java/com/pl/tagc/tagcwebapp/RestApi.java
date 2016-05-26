@@ -12,7 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import com.pl.tagc.controller.Controller;
+import controller.Controller;
 
 //The Java class will be hosted at the URI path "/api"
 /**
