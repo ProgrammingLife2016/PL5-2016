@@ -47,9 +47,10 @@ public final class RibbonController {
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<DataNode> filteredNodes = dataTree.getDataNodes(minX, maxX, activeGenomes, 100);
 
+        int id=0;
         for (DataNode dataNode : filteredNodes) {
             for (Strand strand : dataNode.getStrands()) {
-                RibbonNode ribbon = new RibbonNode(0, strand.getGenomes());
+                RibbonNode ribbon = new RibbonNode(id, strand.getGenomes());
                 ribbon.setX(strand.getX());
                 ribbon.setY(ribbon.getGenomes().size());
                 for (StrandEdge strandEdge : strand.getEdges()) {
@@ -57,7 +58,7 @@ public final class RibbonController {
                     ribbon.addEdge(edge);
                 }
                 result.add(ribbon);
-
+                id++;
 
             }
 
