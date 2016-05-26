@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class to test DataTree.
@@ -21,6 +22,9 @@ public class DataTreeTest {
     private DataNode child1; //child of the tree;
     private DataNode child2; //child of the tree;
     private ArrayList<Genome> genomes; //genomes contained in the tree;
+    private Strand strand1; //a strand to test data return.
+    private Strand strand2;//a strand to test data return.
+    private Strand strand12;//a strand to test data return.
 
     /**
      * Set up the tests.
@@ -36,13 +40,13 @@ public class DataTreeTest {
 
 
         String[] strand1Genomes = {"1"};
-        Strand strand1 = new Strand(1, "tagc", strand1Genomes, "1", 0);
+        strand1 = new Strand(1, "tagc", strand1Genomes, "1", 0);
 
         String[] strand2Genomes = {"2"};
-        Strand strand2 = new Strand(10, "tagc", strand2Genomes, "2", 0);
+        strand2 = new Strand(10, "tagc", strand2Genomes, "2", 0);
 
         String[] strand12Genomes = {"1", "2"};
-        Strand strand12 = new Strand(5, "tagc", strand12Genomes, "2", 0);
+        strand12 = new Strand(5, "tagc", strand12Genomes, "2", 0);
 
         genome1.addStrand(strand1);
         genome1.addStrand(strand12);
@@ -129,9 +133,8 @@ public class DataTreeTest {
         ArrayList<Strand> testArray = tree.filterStrandsFromNodes(0, 1,
                 tree.getDataNodesForGenomes(genomes, 1), genomes);
         assertEquals(testArray.size(), 2);
-        assertEquals(testArray.get(0).getGenomes().size(), 1);
-        assertEquals(testArray.get(1).getGenomes().size(), 2);
-
+        assertTrue(testArray.contains(strand2));
+        assertTrue(testArray.contains(strand12));
 
 
 
@@ -173,7 +176,7 @@ public class DataTreeTest {
 
         for (int i = 1; i < 5; i++) {
             Set<DataNode> testArray = tree.getDataNodesForGenomes(genomes, i);
-            assertEquals(testArray.size(),3);
+            assertEquals(testArray.size(), 3);
             for (DataNode node : testArray) {
                 assertEquals(node.getStrands().size(), 1);
             }

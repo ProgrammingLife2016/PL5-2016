@@ -53,7 +53,7 @@ public final class RibbonController {
         int id=0;
         for (Strand strand : filteredNodes) {
             RibbonNode ribbon = new RibbonNode(id, strand.getGenomes());
-            ribbon.setX(strand.getX());
+            ribbon.setX(strand.getX()*10);
             ribbon.setY(ribbon.getGenomes().size() * 10);
             for (StrandEdge strandEdge : strand.getEdges()) {
                 RibbonEdge edge = new RibbonEdge(strandEdge.getStart(), strandEdge.getEnd());
