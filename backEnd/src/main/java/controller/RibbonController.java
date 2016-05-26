@@ -55,7 +55,7 @@ public final class RibbonController {
 
 
         ArrayList<RibbonNode> result = new ArrayList<>();
-        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, activeGenomes, zoomLevel);
+        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, activeGenomes, 1);
 
         int id = 0;
         for (Strand strand : filteredNodes) {
@@ -66,10 +66,9 @@ public final class RibbonController {
             result.add(ribbon);
 
         }
-
+        result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(new Integer(o2.getX())));
         calcYcoordinates(result);
         addEdges(result,activeGenomes);
-        result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(new Integer(o1.getX())));
 
 
         return result;
@@ -113,7 +112,6 @@ public final class RibbonController {
                     if (currentNode.getOutEdge(currentNode.getId(), nextNode.getId()) == null) {
                         RibbonEdge edge = new RibbonEdge(currentNode.getId(), nextNode.getId());
                         currentNode.addEdge(edge);
-                        nextNode.addEdge(edge);
                     } else {
                         currentNode.getOutEdge(currentNode.getId(), nextNode.getId()).incrementWeight();
                     }
