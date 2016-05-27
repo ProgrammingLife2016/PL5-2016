@@ -12,6 +12,8 @@ var minimapNodes, cachedZoomNodes;
 var currentMousePos = { x: -1, y: -1 };
 var zoomLeft = 0;
 var zoomRight = 0;
+var zoomHeight = 0;
+var minimapHeight = 0;
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -169,10 +171,12 @@ var drawZoom = function(nodes) {
         nodes = cachedZoomNodes;
     } else {
         cachedZoomNodes = nodes;
+        zoomHeight = calcHeight(nodes);
     }
     var ratio = $('#zoomWindow').width() / (zoomRight - zoomLeft);
     if (Object.keys(nodes).length > 0) {
-        draw(nodes, $('#zoomWindow canvas')[0], function(x) {
+        var canvas = $('#zoomWindow canvas')[0];
+        draw(nodes, canvas, canvas.height / zoomHeight, function(x) {
             return (x) * ratio;
         });
     } else {
@@ -183,6 +187,21 @@ var drawZoom = function(nodes) {
 };
 
 /**
+ * Calculate the difference in y amounts in the nodeSet
+ * @param nodes The nodes
+ * @returns {number} The max difference in y
+ */
+function calcHeight(nodes) {
+    var minHeight = nodes[Object.keys(nodes)[0]].y;
+    var maxHeight = minHeight;
+    $.each(nodes, function(key, node) {
+        minHeight = Math.min(minHeight, node.y);
+        maxHeight = Math.max(maxHeight, node.y);
+    });
+    return maxHeight - minHeight;
+}
+
+/**
  * Draw the minimap
  * @param nodes
  */
@@ -191,10 +210,12 @@ var drawMinimap = function(nodes) {
         nodes = minimapNodes;
     } else {
         minimapNodes = nodes;
+        minimapHeight = calcHeight(nodes);
     }
     var ratio = $('#minimap').width() / nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
 
-    draw(nodes, $('#minimap canvas')[0], function(x) {
+    var canvas = $('#minimap canvas')[0];
+    draw(nodes, canvas, canvas.height / minimapHeight, function(x) {
         return x * ratio;
     });
 };
@@ -206,7 +227,7 @@ var drawMinimap = function(nodes) {
  * @param c
  * @param translate
  */
-function draw(points, c, translate) {
+function draw(points, c, yTranslate, xTranslate) {
     if (typeof c == "undefined") {
         return;
     }
@@ -215,11 +236,9 @@ function draw(points, c, translate) {
 
     var nodeHeight = c.height / 2;
 
-    var yTranslate = (c.height < 200)?c.height / 2 / 110 : 1;
-
     $.each(points, function(id, point) {
         ctx.beginPath();
-        ctx.arc(translate(point.x), nodeHeight + point.y * yTranslate, 5, 0, 2 * Math.PI);
+        ctx.arc(xTranslate(point.x), nodeHeight + point.y * yTranslate * 0.3, 5, 0, 2 * Math.PI);
         ctx.stroke();
 
         $.each(point.edges, function(key, edge) {
@@ -229,8 +248,8 @@ function draw(points, c, translate) {
             }
             if (target) {
                 ctx.beginPath();
-                ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
-                ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
+                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y * yTranslate * 0.3);
+                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y * yTranslate * 0.3);
                 ctx.lineWidth = edge.weight;
                 ctx.strokeStyle = '#'+ edge.color;
                 ctx.stroke();
