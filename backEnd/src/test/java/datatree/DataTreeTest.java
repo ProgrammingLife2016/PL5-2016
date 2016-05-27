@@ -131,7 +131,7 @@ public class DataTreeTest {
         assertEquals(tree.getDataNodesForGenomes(genomes, 0).size(), 1);
         assertEquals(tree.getDataNodesForGenomes(genomes, 1).size(), 2);
         ArrayList<Strand> testArray = tree.filterStrandsFromNodes(0, 1,
-                tree.getDataNodesForGenomes(genomes, 1), genomes);
+                tree.getDataNodesForGenomes(genomes, 1));
         assertEquals(testArray.size(), 2);
         assertTrue(testArray.contains(strand2));
         assertTrue(testArray.contains(strand12));
@@ -153,7 +153,7 @@ public class DataTreeTest {
 
         for (int i = 1; i < 5; i++) {
             ArrayList<Strand> testArray = tree.filterStrandsFromNodes(5, 5,
-                    tree.getDataNodesForGenomes(genomes, i), genomes);
+                    tree.getDataNodesForGenomes(genomes, i));
 
             assertEquals(testArray.size(), 3);
         }

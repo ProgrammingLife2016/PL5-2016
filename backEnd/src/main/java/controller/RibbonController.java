@@ -44,6 +44,11 @@ public final class RibbonController {
         if (activeGenomes.size() < 2) {
             activeGenomes.add("TKK_02_0010.fasta");
             activeGenomes.add("TKK_02_0006.fasta");
+            activeGenomes.add("TKK_02_0025.fasta");
+            activeGenomes.add("TKK_02_0005.fasta");
+            activeGenomes.add("TKK_02_0008.fasta");
+            activeGenomes.add("TKK_02_0004.fasta");
+
 
 
         }
@@ -61,7 +66,10 @@ public final class RibbonController {
             id++;
             result.add(ribbon);
 
+
         }
+
+
         result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
         calcYcoordinates(result);
         addEdges(result);

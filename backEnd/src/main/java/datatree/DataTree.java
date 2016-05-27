@@ -58,7 +58,6 @@ public class DataTree extends TreeStructure<DataNode> {
     @SuppressWarnings("checkstyle:methodlength")
     public void addStrands(DataNode currentNode) {
 
-
         if (currentNode.getChildren().size() > 0) {
             DataNode child1 = currentNode.getChildren().get(0);
             DataNode child2 = currentNode.getChildren().get(1);
@@ -98,32 +97,28 @@ public class DataTree extends TreeStructure<DataNode> {
      * @return A list of datanodes that pertain to the parameters.
      */
     public ArrayList<Strand> getStrands(int xMin, int xMax,
-                                            ArrayList<String> genomes, int level) {
-        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomes, level), genomes);
+                                        ArrayList<String> genomes, int level) {
+        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomes, level));
 
     }
 
     /**
      * Remove unwanted strands from the nodes.
      *
-     * @param xMin    the minimal id of the strands.
-     * @param xMax    the maximal id of the strands.
-     * @param nodes   the nodes to filter.
-     * @param genomes The genomes to retain.
+     * @param xMin  the minimal id of the strands.
+     * @param xMax  the maximal id of the strands.
+     * @param nodes the nodes to filter.
      * @return A filtered list of nodes.
      */
-    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes,
-                                           ArrayList<String> genomes) {
+    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes) {
         ArrayList<Strand> result = new ArrayList<>();
 
         for (DataNode node : nodes) {
-            ArrayList<Strand> newStrands = new ArrayList<>();
             for (Strand strand : node.getStrands()) {
                 if (strand.getX() < xMax + 10 && strand.getX() > xMin - 10) {
-                    newStrands.add(strand);
+                    result.add(strand);
                 }
             }
-            result.addAll(newStrands);
         }
 
         return result;
