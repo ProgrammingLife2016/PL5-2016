@@ -106,25 +106,4 @@ public class GenomeGraph {
     public void setActiveGenomes(ArrayList<String> activeGenomes) {
         this.activeGenomes = activeGenomes;
     }
-    
-    /**
-     * Get all the Strands that don't have an ingoing edge.
-     * @return The selected Strands.
-     */
-    public ArrayList<Strand> getStrartStrands() {
-    	ArrayList<Strand> result = new ArrayList<>();
-    	Set<Integer> allStrandIDs = new HashSet<>(strandNodes.keySet());
-    	TreeSet<Integer> keysWithInEdge = new TreeSet<>();
-    	for (Strand strand : strandNodes.values()) {
-    		for (StrandEdge edge : strand.getEdges()) {
-    			keysWithInEdge.add(edge.getEnd());
-    		}
-    	}
-    	
-    	allStrandIDs.removeAll(keysWithInEdge);
-    	for (Integer id : allStrandIDs) {
-    		result.add(strandNodes.get(id));
-    	}
-    	return result;
-    }
 }
