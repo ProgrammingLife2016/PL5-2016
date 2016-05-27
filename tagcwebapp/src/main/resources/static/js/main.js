@@ -114,7 +114,6 @@ $('document').ready(function() {
         } else if($(currentHover).is('#zoomWindow')) {
             var ratio = $('#minimap').width() / $('#zoom').width();
             e.preventDefault();
-            console.log(currentMousePos.x);
             zoom(e.originalEvent.wheelDelta, 1, Math.floor((currentMousePos.x - $(currentHover).position().left) * ratio));
             updateZoomValues();
             drawZoom(null);
@@ -172,8 +171,6 @@ var drawZoom = function(nodes) {
         cachedZoomNodes = nodes;
     }
     var ratio = $('#zoomWindow').width() / (zoomRight - zoomLeft);
-    console.log("test"+ zoomRight);
-    console.log("test"+ zoomLeft);
     if (Object.keys(nodes).length > 0) {
         draw(nodes, $('#zoomWindow canvas')[0], function(x) {
             return (x) * ratio;
@@ -195,7 +192,7 @@ var drawMinimap = function(nodes) {
     } else {
         minimapNodes = nodes;
     }
-    var ratio = $('#minimap').width() / nodes[Object.keys(nodes).length - 1].x;
+    var ratio = $('#minimap').width() / nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
 
     draw(nodes, $('#minimap canvas')[0], function(x) {
         return x * ratio;
@@ -219,7 +216,6 @@ function draw(points, c, translate) {
     var nodeHeight = c.height / 2;
 
     var yTranslate = (c.height < 200)?c.height / 2 / 110 : 1;
-    console.log(c);
 
     $.each(points, function(id, point) {
         ctx.beginPath();
@@ -310,7 +306,7 @@ function updateZoomValues()
         var slider = $('#minimap .slider');
         var totalWidth = $('#minimap').width();
         var sliderLeft = pxToInt(slider.css('left'));
-        var xWidth = minimapNodes[Object.keys(minimapNodes).length - 1].x;
+        var xWidth = minimapNodes[Object.keys(minimapNodes)[Object.keys(minimapNodes).length - 1]].x;
         zoomLeft = Math.max(0, Math.floor(sliderLeft / totalWidth * xWidth));
         zoomRight =  Math.floor((sliderLeft + slider.width()) / totalWidth * xWidth);
         return Math.round(totalWidth / slider.width());
