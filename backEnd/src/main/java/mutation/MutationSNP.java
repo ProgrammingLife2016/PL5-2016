@@ -22,8 +22,9 @@ public class MutationSNP extends AbstractMutation {
 	 * @param fromReference		The changed Strand form the reference Genome.
 	 * @param fromOther			The changed Strand form the other Genome.
 	 */
-	public MutationSNP(MutationType mutationType, Genome reference, Genome other, Strand start, 
-			Strand end, Strand fromReference, Strand fromOther) {
+	public MutationSNP(MutationType mutationType, ArrayList<String> reference, 
+			ArrayList<String> other, Strand start, Strand end, 
+			Strand fromReference, Strand fromOther) {
 		super(mutationType, reference, other, start);
 		if (mutationType.equals(MutationType.SNP)) {
 			ArrayList<Strand> mutatedStrands = new ArrayList<>();

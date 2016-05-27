@@ -53,10 +53,10 @@ public class Mutations {
 	private void mutationsOnStrand(Strand start, HashMap<Integer, Strand> strands) {
 		if (start.getEdges().size() > 1) {
 			for (int i = 0; i < start.getEdges().size() - 1; i++) {
-				Strand nextEdge1 = strands.get(start.getEdges().get(i).getEnd());
+				Strand next1 = strands.get(start.getEdges().get(i).getEnd());
 				for (int j = i + 1; j < start.getEdges().size(); j++) {
-					Strand nextEdge2 = strands.get(start.getEdges().get(j).getEnd());
-					checkMutation(start, nextEdge1, nextEdge2);
+					Strand next2 = strands.get(start.getEdges().get(j).getEnd());
+					checkMutation(start, next1, next2);
 				}
 			}
 		}
@@ -69,20 +69,29 @@ public class Mutations {
 	 * @param next2		The Strand on the second edge.
 	 * @param strands	All the strands.
 	 */
-	private void checkMutation(Strand start, Strand nextEdge1, Strand nextEdge2) {
-		for (StrandEdge edge1 : nextEdge1.getEdges()) {
-			if (edge1.getEnd() == nextEdge2.getId()) {
-				MutationIndel indel = new MutationIndel(MutationType.DELETION, null,
-						null, start, nextEdge2, new ArrayList<Strand>());
+	private void checkMutation(Strand start, Strand next1, Strand next2) {
+		for (StrandEdge edge1 : next1.getEdges()) {
+			if (edge1.getEnd() == next2.getId()) {
+				ArrayList<String> genomesInBothStrands = new ArrayList<>(start.getGenomes());
+				genomesInBothStrands.retainAll(next2.getGenomes());
+				ArrayList<String> genomesInOriginal = new ArrayList<>(next1.getGenomes());
+				genomesInOriginal.retainAll(genomesInBothStrands);
+				genomesInBothStrands.removeAll(genomesInOriginal);
+				MutationIndel indel = new MutationIndel(MutationType.DELETION, genomesInOriginal,
+						genomesInBothStrands, start, next2, new ArrayList<Strand>());
 				mutation.add(indel);
 				return;
 			}
 		}
-		for (StrandEdge edge2 : nextEdge2.getEdges()) {
-			System.out.println("hier");
-			if (edge2.getEnd() == nextEdge1.getId()) {
-				MutationIndel indel = new MutationIndel(MutationType.INSERTION, null,
-						null, start, nextEdge1, new ArrayList<Strand>());
+		for (StrandEdge edge2 : next2.getEdges()) {
+			if (edge2.getEnd() == next1.getId()) {
+				ArrayList<String> genomesInBothStrands = new ArrayList<>(start.getGenomes());
+				genomesInBothStrands.retainAll(next2.getGenomes());
+				ArrayList<String> genomesInMutation = new ArrayList<>(next1.getGenomes());
+				genomesInMutation.retainAll(genomesInBothStrands);
+				genomesInBothStrands.removeAll(genomesInMutation);
+				MutationIndel indel = new MutationIndel(MutationType.INSERTION, genomesInBothStrands,
+						genomesInMutation, start, next1, new ArrayList<Strand>());
 				mutation.add(indel);
 				return;
 			} 

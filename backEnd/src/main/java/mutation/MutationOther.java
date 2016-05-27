@@ -21,8 +21,8 @@ public class MutationOther extends AbstractMutation {
 	 * @param start				The start Strand.
 	 * @param mutatedStrands	The mutated Strands.
 	 */
-	public MutationOther(MutationType mutationType, Genome reference, Genome other, Strand start, 
-			ArrayList<Strand> mutatedStrands) {
+	public MutationOther(MutationType mutationType, ArrayList<String> reference,
+			ArrayList<String> other, Strand start, ArrayList<Strand> mutatedStrands) {
 		super(mutationType, reference, other, start);
 		if (!mutationType.getBetween()) {
 			setMutatedStrands(mutatedStrands);

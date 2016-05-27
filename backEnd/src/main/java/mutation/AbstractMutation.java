@@ -2,7 +2,6 @@ package mutation;
 
 import java.util.ArrayList;
 
-import genome.Genome;
 import genome.Strand;
 
 /**
@@ -12,8 +11,8 @@ import genome.Strand;
  */
 public abstract class AbstractMutation {
 	
-	private Genome reference;
-	private Genome other;
+	private ArrayList<String> reference;
+	private ArrayList<String> other;
 	private Strand start;
 	private MutationType mutationType;
 	private ArrayList<Strand> mutatedStrands;
@@ -26,8 +25,8 @@ public abstract class AbstractMutation {
 	 * @param other				The other Genome.
 	 * @param start				The start Strand.
 	 */
-	public AbstractMutation(MutationType mutationType, Genome reference, Genome other,
-							Strand start) {
+	public AbstractMutation(MutationType mutationType, ArrayList<String> reference, 
+			ArrayList<String> other, Strand start) {
 		this.mutationType = mutationType;
 		this.reference = reference;
 		this.other = other;
@@ -40,7 +39,7 @@ public abstract class AbstractMutation {
 	 * Get the reference genome.
 	 * @return The reference.
 	 */
-	public Genome getReferenceGenome() {
+	public ArrayList<String> getReferenceGenome() {
 		return reference;
 	}
 	
@@ -48,7 +47,7 @@ public abstract class AbstractMutation {
 	 * Get the other genome.
 	 * @return The other genome.
 	 */
-	public Genome getOtherGenome() {
+	public ArrayList<String> getOtherGenomes() {
 		return other;
 	}
 	

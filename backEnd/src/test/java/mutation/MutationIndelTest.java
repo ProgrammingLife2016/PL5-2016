@@ -3,6 +3,7 @@ package mutation;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,8 +21,8 @@ import genome.Strand;
 public class MutationIndelTest {
 
 	private MutationIndel mutation;
-	private Genome reference;
-	private Genome other;
+	private ArrayList<String> reference;
+	private ArrayList<String> other;
 	private Strand start;
 	private Strand end;
 	private ArrayList<Strand> mutatedStrands;
@@ -31,8 +32,8 @@ public class MutationIndelTest {
 	 */
 	@Before
 	public void setUp() {
-		reference = Mockito.mock(Genome.class);
-		other = Mockito.mock(Genome.class);
+		reference = new ArrayList<>(Arrays.asList("Genome1"));
+		other = new ArrayList<>(Arrays.asList("Genome2"));
 		start = Mockito.mock(Strand.class);
 		end = Mockito.mock(Strand.class);
 		Strand mutate = Mockito.mock(Strand.class);
@@ -55,7 +56,7 @@ public class MutationIndelTest {
 	 */
 	@Test
 	public void testGetOther() {
-		assertEquals(mutation.getOtherGenome(), other);
+		assertEquals(mutation.getOtherGenomes(), other);
 	}
 	
 	/**
