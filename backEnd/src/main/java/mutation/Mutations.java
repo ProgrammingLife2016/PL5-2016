@@ -37,49 +37,55 @@ public class Mutations {
 	 * Compute all the mutations in the graph.
 	 * From all the start Strands.
 	 */
-	public void getMutations() {
+	public void computeAllMutations() {
 		HashMap<Integer, Strand> strands = genomeGraph.getStrandNodes();
-		for (Strand strand : strands.values()){
+		for (Strand strand : strands.values()) {
 			mutationsOnStrand(strand, strands);
 		}
 	}
 	
 	/**
 	 * Compute mutations that can appear form a start Strand.
+	 * When there is only one edge, there can't be a mutation.
 	 * @param start The start Strand.
 	 * @param strands All the Strands in the graph.
 	 */
-	public void mutationsOnStrand(Strand start, HashMap<Integer, Strand> strands) {
+	private void mutationsOnStrand(Strand start, HashMap<Integer, Strand> strands) {
 		if (start.getEdges().size() > 1) {
-			checkIndel(start, strands);
+			for (int i = 0; i < start.getEdges().size() - 1; i++) {
+				Strand nextEdge1 = strands.get(start.getEdges().get(i).getEnd());
+				for (int j = i + 1; j < start.getEdges().size(); j++) {
+					Strand nextEdge2 = strands.get(start.getEdges().get(j).getEnd());
+					checkMutation(start, nextEdge1, nextEdge2);
+				}
+			}
 		}
 	}
 	
 	/**
-	 * Check if a indel appears on the Strand.
-	 * @param start The Strand.
-	 * @param strands All the Strands.
+	 * Checks if there is a mutation from the start Strand using these two edges.
+	 * @param start		The start Strand.
+	 * @param next1		The Strand on the first edge.
+	 * @param next2		The Strand on the second edge.
+	 * @param strands	All the strands.
 	 */
-	public void checkIndel(Strand start, HashMap<Integer, Strand> strands) {
-		for (int i = 0; i < start.getEdges().size() - 1; i++) {
-			Strand nextEdge1 = strands.get(start.getEdges().get(i).getEnd());
-			for (int j = i + 1; j < start.getEdges().size(); j++) {
-				Strand nextEdge2 = strands.get(start.getEdges().get(j).getEnd());
-				for (StrandEdge edge : nextEdge1.getEdges()) {
-					if (edge.getEnd() == nextEdge2.getId()) {
-						MutationIndel indel = new MutationIndel(MutationType.DELETION, null,
-								null, start, nextEdge2, new ArrayList<Strand>());
-						mutation.add(indel);
-					}
-				}
-				for (StrandEdge edge : nextEdge2.getEdges()) {
-					if (edge.getEnd() == nextEdge1.getId()) {
-						MutationIndel indel = new MutationIndel(MutationType.INSERTION, null,
-								null, start, nextEdge1, new ArrayList<Strand>());
-						mutation.add(indel);
-					}
-				}
+	private void checkMutation(Strand start, Strand nextEdge1, Strand nextEdge2) {
+		for (StrandEdge edge1 : nextEdge1.getEdges()) {
+			if (edge1.getEnd() == nextEdge2.getId()) {
+				MutationIndel indel = new MutationIndel(MutationType.DELETION, null,
+						null, start, nextEdge2, new ArrayList<Strand>());
+				mutation.add(indel);
+				return;
 			}
+		}
+		for (StrandEdge edge2 : nextEdge2.getEdges()) {
+			System.out.println("hier");
+			if (edge2.getEnd() == nextEdge1.getId()) {
+				MutationIndel indel = new MutationIndel(MutationType.INSERTION, null,
+						null, start, nextEdge1, new ArrayList<Strand>());
+				mutation.add(indel);
+				return;
+			} 
 		}
 	}
 	
