@@ -232,14 +232,14 @@ function draw(points, c, translate) {
                 target = points[edge.endId];
             }
             if (target) {
-                //ctx.beginPath();
-                //ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
-                //ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
-                //ctx.lineWidth = edge.weight;
-                //ctx.strokeStyle = '#'+ edge.color;
-                //ctx.stroke();
-                //ctx.lineWidth = 1;
-                //ctx.strokeStyle = '#000000';
+                ctx.beginPath();
+                ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
+                ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
+                ctx.lineWidth = edge.weight;
+                ctx.strokeStyle = '#'+ edge.color;
+                ctx.stroke();
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = '#000000';
             }
         });
     });

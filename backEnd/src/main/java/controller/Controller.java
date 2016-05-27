@@ -25,6 +25,8 @@ public class Controller implements FrontEndBackEndInterface {
     
     /** The data tree. */
     private DataTree dataTree;
+
+    private RibbonController ribbonController;
     
     /**
      * Controller Singleton.
@@ -39,9 +41,10 @@ public class Controller implements FrontEndBackEndInterface {
     	genomeGraph.generateGenomes();
         genomeGraph.calculateXStrands();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
-        dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
+        dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
         		null, 0));
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+        ribbonController= new RibbonController(genomeGraph,dataTree);
         DC = this;
     }
 
@@ -54,7 +57,7 @@ public class Controller implements FrontEndBackEndInterface {
      * @return The list of ribbonNodes.
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
-        return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, genomeGraph, dataTree);
+        return ribbonController.getRibbonNodes(minX, maxX, zoomLevel);
     }  
 
 

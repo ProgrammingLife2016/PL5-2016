@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import genome.Genome;
 import genome.Strand;
+import genome.StrandEdge;
 
 /**
  * The Class GenomeGraph.
@@ -54,8 +55,25 @@ public class GenomeGraph {
      * Method that calculates the X coordinates for strands in all genomes.
      */
     public void calculateXStrands(){
-        for(Genome genome:genomes.values()){
-            genome.calculateStrandXCoordinates();
+        for(int i=1; i<strandNodes.size();i++){
+            Strand start = strandNodes.get(i);
+            if(start.getX()==0){
+                start.setX(1);
+                recurseThroughGraphCalculateX(start);
+            }
+
+        }
+
+
+    }
+
+    public void recurseThroughGraphCalculateX(Strand currentStrand){
+        for (StrandEdge edge: currentStrand.getEdges()){
+            Strand nextStrand= strandNodes.get(edge.getEnd());
+            if(nextStrand.getX()<currentStrand.getX()+1){
+                nextStrand.setX(currentStrand.getX()+1);
+                recurseThroughGraphCalculateX(nextStrand);
+            }
         }
     }
 

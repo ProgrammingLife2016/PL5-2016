@@ -20,16 +20,7 @@ public class Genome {
         strands = new ArrayList<>();
     }
 
-    public void calculateStrandXCoordinates() {
-        for (int i = 0; i < strands.size(); i++) {
-            Strand strand = strands.get(i);
-            if(strand.getX()<i){
-                strand.setX(i);
-            }
-        }
 
-
-    }
 
     /**
      * Add a strand to the genome.
