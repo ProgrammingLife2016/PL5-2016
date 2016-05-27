@@ -256,8 +256,8 @@ public class Parser {
                 parentID++; //global id counter
                 int temp = parentID; //keep current value so it doesn't change in recursive calls.
                 String[] splitted = tree.split(":");
-                phylo.println(parent + "," + temp + "," + splitted[splitted.length - 1] + ",parent");
-                System.out.println(tree + " -> " + parent + "," + temp + "," + splitted[splitted.length - 1] + ",parent");
+                phylo.println(parent + "," + temp + "," + splitted[splitted.length - 1]
+                        + ",parent");
                 parsePhyloTree(tree.substring(1, i), temp);
                 parsePhyloTree(tree.substring(i + 1, tree.lastIndexOf(')')), temp);
                 isParent = true;
@@ -265,7 +265,6 @@ public class Parser {
         }
 
         if (!isParent) {
-            System.out.println(tree);
             phylo.println(parent + "," + tree.split(":")[0] + "," + tree.split(":")[1] + ",child");
         }
     }
