@@ -16,7 +16,7 @@ public class RibbonNode {
     private ArrayList<String> genomes; //The genomes that go through this node.
     private ArrayList<Strand> strands; // The strands contained in this node.
     private String label; // The entire strand contained in this node 
-    					  // (if zoomlevel is above a certain threshold).
+    // (if zoomlevel is above a certain threshold).
 
     /**
      * Constructor for the RibbonNode.
@@ -94,6 +94,16 @@ public class RibbonNode {
     public int getId() {
         return id;
     }
+
+    /**
+     * Set the id.
+     * @param id the id to set.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    ;
 
     /**
      * Get the out edges.

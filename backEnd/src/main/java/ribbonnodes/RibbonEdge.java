@@ -22,6 +22,21 @@ public class RibbonEdge extends Edge {
         color = Color.black;
     }
 
+    public void updateColor(Color color){
+        int newBlue = (int)(this.color.getBlue()+color.getBlue())/2;
+        int newRed = (int)(this.color.getRed()+color.getRed())/2;
+        int newGreen = (int)(this.color.getGreen()+color.getGreen())/2;
+
+        this.color= new Color(newRed,newGreen,newBlue);
+
+
+    }
+
+    public void addGenomeToEdge(Color genomeColor){
+        updateColor(genomeColor);
+        incrementWeight();
+    }
+
     /**
      * Increment the weight.
      */

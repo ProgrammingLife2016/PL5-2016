@@ -6,6 +6,7 @@ import genome.Strand;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -40,15 +41,10 @@ public final class RibbonController {
         System.out.println(minX + ", " + maxX);
         ArrayList<String> activeGenomes = genomeGraph.getActiveGenomes();
 
-        if (activeGenomes.size() < 8) {
+        if (activeGenomes.size() < 2) {
             activeGenomes.add("TKK_02_0010.fasta");
             activeGenomes.add("TKK_02_0006.fasta");
-            activeGenomes.add("TKK_02_0007.fasta");
-            activeGenomes.add("TKK_02_0001.fasta");
-            activeGenomes.add("TKK_02_0008.fasta");
-            activeGenomes.add("TKK_02_0010.fasta");
-            activeGenomes.add("TKK_02_0018.fasta");
-            activeGenomes.add("TKK_02_0025.fasta");
+
 
         }
 
@@ -60,6 +56,7 @@ public final class RibbonController {
         for (Strand strand : filteredNodes) {
             RibbonNode ribbon = new RibbonNode(id, strand.getGenomes());
             ribbon.setX(strand.getX());
+            ribbon.addStrand(strand);
 
             id++;
             result.add(ribbon);
@@ -68,11 +65,43 @@ public final class RibbonController {
         result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
         calcYcoordinates(result);
         addEdges(result);
+    //    collapseRibbons(result);
 
 
         return result;
 
     }
+
+    public void collapseRibbons(ArrayList<RibbonNode> nodes) {
+        for (int i = 0; i < nodes.size(); i++) {
+            RibbonNode node = nodes.get(i);
+            if (node != null) {
+                if (node.getOutEdges().size() == 1) {
+                    RibbonNode other = getNodeWithId(node.getOutEdges().get(0).getEnd(), nodes);
+                    if (other.getInEdges().size() == 1) {
+                        node.addStrands(other.getStrands());
+                        for(RibbonEdge edge:other.getOutEdges()){
+                            edge.setStartId(node.getId());
+                        }
+                        node.setOutEdges(other.getOutEdges());
+                        nodes.remove(other);
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    public RibbonNode getNodeWithId(int id, ArrayList<RibbonNode> nodes) {
+        for (RibbonNode node : nodes) {
+            if (node.getId() == id) {
+                return node;
+            }
+        }
+        return null;
+    }
+
 
     public void calcYcoordinates(ArrayList<RibbonNode> nodes) {
         int currentX = 0;
@@ -102,8 +131,8 @@ public final class RibbonController {
     public void addEdges(ArrayList<RibbonNode> nodes) {
         for (String genomeID : genomeGraph.getActiveGenomes()) {
             RibbonNode currentNode = findNextNodeWithGenome(nodes, genomeID, -1);
-            while (currentNode!=null){
-                currentNode=addEdgeReturnNext(nodes,currentNode,genomeID);
+            while (currentNode != null) {
+                currentNode = addEdgeReturnNext(nodes, currentNode, genomeID);
             }
 
         }
@@ -115,10 +144,15 @@ public final class RibbonController {
         RibbonNode next = findNextNodeWithGenome(nodes, genomeID, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {
-                currentNode.addEdge(new RibbonEdge(currentNode.getId(), next.getId()));
+                RibbonEdge edge = new RibbonEdge(currentNode.getId(), next.getId());
+                edge.setColor(getColorForGenomeID(genomeID));
+                currentNode.addEdge(edge);
+                next.addEdge(edge);
             } else {
-                currentNode.getOutEdge(currentNode.getId(), next.getId()).incrementWeight();
+                currentNode.getOutEdge(currentNode.getId(), next.getId()).addGenomeToEdge(getColorForGenomeID(genomeID));
             }
+
+
         }
         return next;
 
@@ -131,6 +165,21 @@ public final class RibbonController {
             }
         }
         return null;
+
+    }
+
+    public Color getColorForGenomeID(String GenomeID) {
+        Color[] colors = {new Color(0, 0, 255),
+                new Color(0, 255, 0),
+                new Color(255, 0, 0),
+                new Color(0, 255, 255),
+                new Color(255, 0, 255),
+                new Color(255, 255, 0),
+                new Color(0, 0, 128),
+                new Color(0, 128, 0),
+                new Color(128, 0, 0)};
+
+        return colors[genomeGraph.getActiveGenomes().indexOf(GenomeID)];
 
     }
 
