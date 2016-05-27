@@ -61,7 +61,7 @@ public class GenomeGraph {
     			
     			if (!genomes.containsKey(genomeID)) {
     				Genome genome = new Genome(genomeID);
-    				genome = new Genome(genomeID);
+    				genome.addStrand(strand);
     				genomes.put(genomeID, genome);
     			} else {
     				genomes.get(genomeID).addStrand(strand);

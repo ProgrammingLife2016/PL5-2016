@@ -104,6 +104,8 @@ function addCompareGenomeButtonBindings() {
 
 function makeRestAPIcall(apiCall, dataType, requestType, reqData, callback) {
     var url = 'http://localhost:9998/api/';
+    //Temp:
+    url = 'http://localhost:9998/app/';
     $.ajax({
         url : url + apiCall,
         dataType : dataType,
