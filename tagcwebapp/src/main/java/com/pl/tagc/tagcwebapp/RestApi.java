@@ -47,7 +47,8 @@ public class RestApi {
 			@DefaultValue("100") @QueryParam("xright") int xright,
 			@DefaultValue("1") @QueryParam("zoom") int zoom) {
 		NodeListObject nodeList =
-				new NodeListObject(new CopyOnWriteArrayList<>(Controller.DC.getRibbonNodes(xleft, xright, zoom)));
+				new NodeListObject(new CopyOnWriteArrayList<>(
+						Controller.DC.getRibbonNodes(xleft, xright, zoom)));
 		return Response.ok() //200
 				.entity(nodeList)
 				.header("Access-Control-Allow-Origin", "*")
