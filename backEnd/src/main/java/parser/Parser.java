@@ -61,6 +61,7 @@ public class Parser {
         }
 
 		parseToCSV(currentPath);
+
         getPhyloFile(phyloTree);
 		edges.close();
 		nodes.close();
@@ -234,7 +235,7 @@ public class Parser {
 
         assert line != null;
 
-        parsePhyloTree(line.substring(0, line.length() - 1), 0);
+        parsePhyloTree(line.substring(0, line.length() - 1) + ":0", 0);
     }
 
     /**
@@ -242,7 +243,7 @@ public class Parser {
      * @param tree the path of the file
      * @param parent the id of the parent for recursion (root is 0)
      */
-    public void parsePhyloTree(String tree, int parent) {
+    private void parsePhyloTree(String tree, int parent) {
         int parCount = 0;
         boolean isParent = false;
 
@@ -254,15 +255,17 @@ public class Parser {
             } else if (tree.charAt(i) == ',' && parCount == 1) {
                 parentID++; //global id counter
                 int temp = parentID; //keep current value so it doesn't change in recursive calls.
-                phylo.println(parent + "," + temp + ",0,parent");
+                String[] splitted = tree.split(":");
+                phylo.println(parent + "," + temp + "," + splitted[splitted.length - 1]
+                        + ",parent");
                 parsePhyloTree(tree.substring(1, i), temp);
-                parsePhyloTree(tree.substring(i + 1, tree.length() - 1), temp);
+                parsePhyloTree(tree.substring(i + 1, tree.lastIndexOf(')')), temp);
                 isParent = true;
             }
         }
 
         if (!isParent) {
-            phylo.println(parent + "," + tree.split(":")[0] + ",0,child");
+            phylo.println(parent + "," + tree.split(":")[0] + "," + tree.split(":")[1] + ",child");
         }
     }
 }
