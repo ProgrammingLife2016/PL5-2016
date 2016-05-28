@@ -6,7 +6,7 @@ var url = 'http://localhost:9998/';
 var minHeight = 300;
 var screenWidth = $(window).width();
 var screenHeight = $(window).height();
-var screenResizeTimeout, treeRedrawTimeout;
+var screenResizeTimeout, treeRedrawTimeout, zoomMouseTimeout;
 var zoomWidth = 100;
 var minimapNodes, cachedZoomNodes;
 var currentMousePos = { x: -1, y: -1 };
@@ -14,6 +14,8 @@ var zoomLeft = 0;
 var zoomRight = 0;
 var zoomHeight = 0;
 var minimapHeight = 0;
+var zoomNodeLocations = [];
+var currentHoverNode = null;
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -145,9 +147,35 @@ $('document').ready(function() {
     });
 
     //Constantly check where the mouse is, to let the zooming work better.
-    $('#minimapContainer, #zoom').mousemove(function(event) {
+    $('#minimapContainer').mousemove(function(event) {
         currentMousePos.x = event.pageX;
         currentMousePos.y = event.pageY;
+    });
+
+    $('#zoom').mousemove(function(event) {
+        var that = this;
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+        var x = currentMousePos.x - $(this).position().left;
+        var y = currentMousePos.y - $(this).position().top;
+        var found = false;
+        $.each(zoomNodeLocations, function(key, node) {
+            if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
+                found = true;
+                if (node.id != currentHoverNode) {
+                    currentHoverNode = node.id;
+                    var dialog = $('#nodeDialog');
+                    dialog.show().find('.message').html(node.label);
+                    dialog
+                        .css('top', node.y + $(that).position().top - (dialog.height() + 15) +'px')
+                        .css('left', node.x + $(that).position().left - (dialog.width() / 2) +'px');
+                }
+                return false;
+            }
+        });
+        if (!found) {
+            currentHoverNode = -1;
+        } 
     });
 
     initialize();
@@ -167,6 +195,7 @@ function pxToInt(css) {
  * @param nodes
  */
 var drawZoom = function(nodes) {
+    $('#nodeDialog').hide();
     if (nodes == null) {
         nodes = cachedZoomNodes;
     } else {
@@ -176,7 +205,7 @@ var drawZoom = function(nodes) {
     var ratio = $('#zoomWindow').width() / (zoomRight - zoomLeft);
     if (Object.keys(nodes).length > 0) {
         var canvas = $('#zoomWindow canvas')[0];
-        draw(nodes, canvas, canvas.height / zoomHeight, function(x) {
+        draw(nodes, canvas, true, canvas.height / zoomHeight, function(x) {
             return (x) * ratio;
         });
     } else {
@@ -215,7 +244,7 @@ var drawMinimap = function(nodes) {
     var ratio = $('#minimap').width() / nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
 
     var canvas = $('#minimap canvas')[0];
-    draw(nodes, canvas, canvas.height / minimapHeight, function(x) {
+    draw(nodes, canvas, false, canvas.height / minimapHeight, function(x) {
         return x * ratio;
     });
 };
@@ -227,7 +256,7 @@ var drawMinimap = function(nodes) {
  * @param c
  * @param translate
  */
-function draw(points, c, yTranslate, xTranslate) {
+function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     if (typeof c == "undefined") {
         return;
     }
@@ -235,11 +264,19 @@ function draw(points, c, yTranslate, xTranslate) {
     ctx.clearRect(0, 0, c.width, c.height);
 
     var nodeHeight = c.height / 2;
+    if (saveRealCoordinates) {
+        zoomNodeLocations = [];
+    }
 
     $.each(points, function(id, point) {
         ctx.beginPath();
-        ctx.arc(xTranslate(point.x), nodeHeight + point.y * yTranslate * 0.3, 5, 0, 2 * Math.PI);
+        var xPos = xTranslate(point.x);
+        var yPos = nodeHeight + point.y * yTranslate * 0.3;
+        ctx.arc(xPos, yPos, 5, 0, 2 * Math.PI);
         ctx.stroke();
+        if (saveRealCoordinates) {
+            zoomNodeLocations.push({x: xPos, y: yPos, label: point.label, id: point.id});
+        }
 
         $.each(point.edges, function(key, edge) {
             var target = points[edge.startId];
@@ -360,6 +397,8 @@ function parseNodeData(nodes) {
         result[value.id] = {
             x: value.x - zoomLeft,
             y: value.y,
+            id: value.id,
+            label: value.label,
             strands: value.strands,
             edges: value.edges,
             genomes: value.genomes
