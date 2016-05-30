@@ -2,7 +2,6 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
-import genome.Genome;
 import genome.Strand;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,13 +20,13 @@ public class RibbonControllerTest {
 
     /**
      * Set up the test.
+     *
      * @throws Exception if fail.
      */
     @SuppressWarnings("checkstyle:methodlength")
     @Before
     public void setUp() throws Exception {
-        GenomeGraph genomeGraph= new GenomeGraph();
-
+        GenomeGraph genomeGraph = new GenomeGraph();
 
 
         String[] strand1Genomes = {"1"};
@@ -39,7 +38,7 @@ public class RibbonControllerTest {
         String[] strand12Genomes = {"1", "2"};
         Strand stand12 = new Strand(5, "tagc", strand12Genomes, "2", 0);
 
-       DataNode root = new DataNode(null, 0);
+        DataNode root = new DataNode(null, 0);
         DataNode child1 = new DataNode(root, 0);
         DataNode child2 = new DataNode(root, 1);
         ArrayList<String> child1Genomes = new ArrayList<>();
@@ -55,9 +54,8 @@ public class RibbonControllerTest {
         root.addChild(child2);
         root.setGenomes(parentGenomes);
 
-        DataTree dataTree= new DataTree(root);
-        controller= new RibbonController(genomeGraph,dataTree);
-
+        DataTree dataTree = new DataTree(root);
+        controller = new RibbonController(genomeGraph, dataTree);
 
 
         genomeGraph.addStrand(strand1);
@@ -67,56 +65,25 @@ public class RibbonControllerTest {
         genomeGraph.generateGenomes();
         genomeGraph.findStartAndCalculateX();
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
-        genomeGraph.setActiveGenomes(new ArrayList<>(genomeGraph.getGenomes().keySet())); // add all genomes to active genomes.
+        // add all genomes to active genomes.
+        genomeGraph.setActiveGenomes(new ArrayList<>(genomeGraph.getGenomes().keySet()));
 
     }
 
     /**
      * Test if the getRibbonNodes method returns the right ribbonNodes.
+     *
      * @throws Exception if fail.
      */
     @Test
     public void testGetRibbonNodes() throws Exception {
 
-        assertEquals(3, controller.getRibbonNodes(0,1,2).size());
-        assertEquals(3, controller.getRibbonNodes(0,1,0).size());
-        assertEquals(0, controller.getRibbonNodes(100,1000,0).size());
+        assertEquals(3, controller.getRibbonNodes(0, 1, 2).size());
+        assertEquals(3, controller.getRibbonNodes(0, 1, 0).size());
+        assertEquals(0, controller.getRibbonNodes(100, 1000, 0).size());
 
 
     }
 
-    @Test
-    public void testCollapseRibbons() throws Exception {
 
-    }
-
-    @Test
-    public void testGetNodeWithId() throws Exception {
-
-    }
-
-    @Test
-    public void testCalcYcoordinates() throws Exception {
-
-    }
-
-    @Test
-    public void testAddEdges() throws Exception {
-
-    }
-
-    @Test
-    public void testAddEdgeReturnEnd() throws Exception {
-
-    }
-
-    @Test
-    public void testFindNextNodeWithGenome() throws Exception {
-
-    }
-
-    @Test
-    public void testGetColorForGenomeID() throws Exception {
-
-    }
 }

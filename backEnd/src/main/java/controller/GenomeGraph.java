@@ -6,7 +6,6 @@ import java.util.HashMap;
 import genome.Genome;
 import genome.Strand;
 import genome.StrandEdge;
-import org.neo4j.cypher.internal.compiler.v2_2.functions.Str;
 
 /**
  * The Class GenomeGraph.

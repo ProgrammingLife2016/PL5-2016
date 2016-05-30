@@ -10,7 +10,8 @@ import abstractdatastructure.Edge;
  */
 public class RibbonEdge extends Edge {
 
-    private Color color;
+    private Color color;//The color of this edge
+
     /**
      * Constructor to create an edge.
      *
@@ -22,17 +23,27 @@ public class RibbonEdge extends Edge {
         color = Color.black;
     }
 
-    public void updateColor(Color color){
-        int newBlue = (int)(this.color.getBlue()+color.getBlue())/2;
-        int newRed = (int)(this.color.getRed()+color.getRed())/2;
-        int newGreen = (int)(this.color.getGreen()+color.getGreen())/2;
+    /**
+     * Update the color of this edge by averaging it with color.
+     *
+     * @param color The color to average by.
+     */
+    public void updateColor(Color color) {
+        int newBlue = (int) (this.color.getBlue() + color.getBlue()) / 2;
+        int newRed = (int) (this.color.getRed() + color.getRed()) / 2;
+        int newGreen = (int) (this.color.getGreen() + color.getGreen()) / 2;
 
-        this.color= new Color(newRed,newGreen,newBlue);
+        this.color = new Color(newRed, newGreen, newBlue);
 
 
     }
 
-    public void addGenomeToEdge(Color genomeColor){
+    /**
+     * Add a genome by updating the color and weight of this edge.
+     *
+     * @param genomeColor the color of the new genome.
+     */
+    public void addGenomeToEdge(Color genomeColor) {
         updateColor(genomeColor);
         incrementWeight();
     }
@@ -46,6 +57,7 @@ public class RibbonEdge extends Edge {
 
     /**
      * The getter of color.
+     *
      * @return The color of this Ribbon.
      */
     public Color getColor() {
@@ -54,6 +66,7 @@ public class RibbonEdge extends Edge {
 
     /**
      * The setter of color.
+     *
      * @param color The color to set.
      */
     public void setColor(Color color) {

@@ -5,12 +5,14 @@ import genome.Strand;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
-import java.awt.*;
+
+import java.awt.Color;
 import java.util.ArrayList;
 
 
 /**
- * Class that calculates and returns the Ribbons and Edges to be drawn on the screen, based on the data stored in genomeGraph and dataTree.
+ * Class that calculates and returns the Ribbons and Edges to be drawn on the screen,
+ * based on the data stored in genomeGraph and dataTree.
  */
 public final class RibbonController {
 
@@ -19,6 +21,9 @@ public final class RibbonController {
 
     /**
      * Create ribbonController object.
+     *
+     * @param genomeGraph the graph that contains the geographic information of the stands.
+     * @param dataTree    datatree that contains the phylogenetic information of the strands
      */
     public RibbonController(GenomeGraph genomeGraph, DataTree dataTree) {
         this.genomeGraph = genomeGraph;
@@ -33,27 +38,28 @@ public final class RibbonController {
      * @param zoomLevel the zoomlevel of the view.
      * @return The list of ribbonNodes.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
 
         System.out.println(minX + ", " + maxX);
-        ArrayList<String> activeGenomes = genomeGraph.getActiveGenomes();
+        ArrayList<String> actGen = genomeGraph.getActiveGenomes();
 
 
         //HARD CODED ACTIVE GENOMES.
-        if (activeGenomes.size() < 2) {
-            activeGenomes.add("TKK_02_0010.fasta");
-            activeGenomes.add("TKK_02_0006.fasta");
-            activeGenomes.add("TKK_02_0025.fasta");
-            activeGenomes.add("TKK_02_0005.fasta");
-            activeGenomes.add("TKK_02_0008.fasta");
-            activeGenomes.add("TKK_02_0004.fasta");
+        if (actGen.size() < 2) {
+            actGen.add("TKK_02_0010.fasta");
+            actGen.add("TKK_02_0006.fasta");
+            actGen.add("TKK_02_0025.fasta");
+            actGen.add("TKK_02_0005.fasta");
+            actGen.add("TKK_02_0008.fasta");
+            actGen.add("TKK_02_0004.fasta");
 
 
         }
 
 
         ArrayList<RibbonNode> result = new ArrayList<>();
-        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, activeGenomes, zoomLevel + 1);
+        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);
 
         int id = 0;
         for (Strand strand : filteredNodes) {

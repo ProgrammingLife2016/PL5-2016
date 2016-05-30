@@ -137,7 +137,6 @@ public class DataTreeTest {
         assertTrue(testArray.contains(strand12));
 
 
-
     }
 
     /**
