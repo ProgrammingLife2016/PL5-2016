@@ -71,7 +71,6 @@ public final class RibbonController {
         result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
         calcYcoordinates(result);
         addEdges(result);
-        collapseRibbons(result);
 
 
         return result;

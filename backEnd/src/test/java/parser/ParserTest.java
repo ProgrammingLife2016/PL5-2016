@@ -24,7 +24,7 @@ public class ParserTest {
 	@Test
 	public void test() {
 		GenomeGraph genomeGraph = Parser.parse("data/TB10.gfa");
-		assertEquals(genomeGraph.getStrandNodes().get(1).getId(), 1);
+		assertEquals(genomeGraph.getStrandNodes().get(1).getId(), 2);
 	}
 
 	/**
