@@ -1,0 +1,345 @@
+2016-05-30 14:04:47.822+0000 INFO  [o.n.k.i.f.CommunityFacadeFactory] No locking implementation specified, defaulting to 'community'
+2016-05-30 14:04:47.904+0000 INFO  [o.n.k.AvailabilityGuard] Requirement makes database unavailable: Database available
+2016-05-30 14:04:47.913+0000 INFO  [o.n.k.i.DiagnosticsManager] --- INITIALIZED diagnostics START ---
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] Neo4j Kernel properties:
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] ephemeral=false
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] edition=Community
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] Diagnostics providers:
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] org.neo4j.kernel.configuration.Config
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] org.neo4j.kernel.info.DiagnosticsManager
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] SYSTEM_MEMORY
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] JAVA_MEMORY
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] OPERATING_SYSTEM
+2016-05-30 14:04:47.914+0000 INFO  [o.n.k.i.DiagnosticsManager] JAVA_VIRTUAL_MACHINE
+2016-05-30 14:04:47.915+0000 INFO  [o.n.k.i.DiagnosticsManager] CLASSPATH
+2016-05-30 14:04:47.915+0000 INFO  [o.n.k.i.DiagnosticsManager] LIBRARY_PATH
+2016-05-30 14:04:47.915+0000 INFO  [o.n.k.i.DiagnosticsManager] SYSTEM_PROPERTIES
+2016-05-30 14:04:47.915+0000 INFO  [o.n.k.i.DiagnosticsManager] NETWORK
+2016-05-30 14:04:47.915+0000 INFO  [o.n.k.i.DiagnosticsManager] System memory information:
+2016-05-30 14:04:47.918+0000 INFO  [o.n.k.i.DiagnosticsManager] Total Physical memory: 15,85 GB
+2016-05-30 14:04:47.918+0000 INFO  [o.n.k.i.DiagnosticsManager] Free Physical memory: 9,44 GB
+2016-05-30 14:04:47.918+0000 INFO  [o.n.k.i.DiagnosticsManager] Committed virtual memory: 531,59 MB
+2016-05-30 14:04:47.918+0000 INFO  [o.n.k.i.DiagnosticsManager] Total swap space: 31,85 GB
+2016-05-30 14:04:47.919+0000 INFO  [o.n.k.i.DiagnosticsManager] Free swap space: 22,62 GB
+2016-05-30 14:04:47.919+0000 INFO  [o.n.k.i.DiagnosticsManager] JVM memory information:
+2016-05-30 14:04:47.919+0000 INFO  [o.n.k.i.DiagnosticsManager] Free  memory: 174,92 MB
+2016-05-30 14:04:47.919+0000 INFO  [o.n.k.i.DiagnosticsManager] Total memory: 243,50 MB
+2016-05-30 14:04:47.919+0000 INFO  [o.n.k.i.DiagnosticsManager] Max   memory: 3,52 GB
+2016-05-30 14:04:47.920+0000 INFO  [o.n.k.i.DiagnosticsManager] Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+2016-05-30 14:04:47.920+0000 INFO  [o.n.k.i.DiagnosticsManager] Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen]
+2016-05-30 14:04:47.920+0000 INFO  [o.n.k.i.DiagnosticsManager] Memory Pool: Code Cache (Non-heap memory): committed=4,19 MB, used=4,17 MB, max=240,00 MB, threshold=0,00 B
+2016-05-30 14:04:47.921+0000 INFO  [o.n.k.i.DiagnosticsManager] Memory Pool: Metaspace (Non-heap memory): committed=10,13 MB, used=9,93 MB, max=-1,00 B, threshold=0,00 B
+2016-05-30 14:04:47.921+0000 INFO  [o.n.k.i.DiagnosticsManager] Memory Pool: Compressed Class Space (Non-heap memory): committed=1,38 MB, used=1,30 MB, max=1,00 GB, threshold=0,00 B
+2016-05-30 14:04:47.921+0000 INFO  [o.n.k.i.DiagnosticsManager] Memory Pool: PS Eden Space (Heap memory): committed=63,50 MB, used=39,30 MB, max=1,30 GB, threshold=?
+2016-05-30 14:04:47.921+0000 INFO  [o.n.k.i.DiagnosticsManager] Memory Pool: PS Survivor Space (Heap memory): committed=10,50 MB, used=10,50 MB, max=10,50 MB, threshold=?
+2016-05-30 14:04:47.921+0000 INFO  [o.n.k.i.DiagnosticsManager] Memory Pool: PS Old Gen (Heap memory): committed=169,50 MB, used=18,79 MB, max=2,64 GB, threshold=0,00 B
+2016-05-30 14:04:47.921+0000 INFO  [o.n.k.i.DiagnosticsManager] Operating system information:
+2016-05-30 14:04:47.922+0000 INFO  [o.n.k.i.DiagnosticsManager] Operating System: Windows 10; version: 10.0; arch: amd64; cpus: 8
+2016-05-30 14:04:47.930+0000 INFO  [o.n.k.i.DiagnosticsManager] Process id: 9032@Matthijs-PC
+2016-05-30 14:04:47.930+0000 INFO  [o.n.k.i.DiagnosticsManager] Byte order: LITTLE_ENDIAN
+2016-05-30 14:04:47.930+0000 INFO  [o.n.k.i.DiagnosticsManager] Local timezone: Europe/Berlin
+2016-05-30 14:04:47.930+0000 INFO  [o.n.k.i.DiagnosticsManager] JVM information:
+2016-05-30 14:04:47.931+0000 INFO  [o.n.k.i.DiagnosticsManager] VM Name: Java HotSpot(TM) 64-Bit Server VM
+2016-05-30 14:04:47.931+0000 INFO  [o.n.k.i.DiagnosticsManager] VM Vendor: Oracle Corporation
+2016-05-30 14:04:47.931+0000 INFO  [o.n.k.i.DiagnosticsManager] VM Version: 25.74-b02
+2016-05-30 14:04:47.931+0000 INFO  [o.n.k.i.DiagnosticsManager] JIT compiler: HotSpot 64-Bit Tiered Compilers
+2016-05-30 14:04:47.932+0000 INFO  [o.n.k.i.DiagnosticsManager] VM Arguments: [-ea, -Didea.launcher.port=7534, -Didea.launcher.bin.path=C:\Program Files (x86)\JetBrains\IntelliJ IDEA 15.0.3\bin, -Didea.junit.sm_runner, -Dfile.encoding=UTF-8]
+2016-05-30 14:04:47.932+0000 INFO  [o.n.k.i.DiagnosticsManager] Java classpath:
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/pegdown/pegdown/1.2.1/pegdown-1.2.1.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\cldrdata.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/sonatype/sisu/sisu-guice/2.1.7/sisu-guice-2.1.7-noaop.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/codehaus/plexus/plexus-velocity/1.2/plexus-velocity-1.2.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [bootstrap + classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\jsse.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/sonatype/sisu/sisu-inject-bean/1.4.2/sisu-inject-bean-1.4.2.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/sonatype/plexus/plexus-sec-dispatcher/1.3/plexus-sec-dispatcher-1.3.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-consistency-check/2.3.3/neo4j-consistency-check-2.3.3.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/sonatype/sisu/sisu-inject-plexus/1.4.2/sisu-inject-plexus-1.4.2.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-io/2.3.3/neo4j-io-2.3.3.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/commons/commons-compress/1.9/commons-compress-1.9.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/rt.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/com/github/qurben/libnewicktree/1.0/libnewicktree-1.0.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-lucene-index/2.3.3/neo4j-lucene-index-2.3.3.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/javaws.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/httpcomponents/httpclient/4.0.2/httpclient-4.0.2.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/sunec.jar
+2016-05-30 14:04:47.967+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/codehaus/plexus/plexus-component-annotations/1.5.5/plexus-component-annotations-1.5.5.jar
+2016-05-30 14:04:47.968+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/com/sun/jersey/jersey-core/1.19.1/jersey-core-1.19.1.jar
+2016-05-30 14:04:47.968+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/jaxen/jaxen/1.1.6/jaxen-1.1.6.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-model-builder/3.0/maven-model-builder-3.0.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\jfxswt.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/shared/maven-shared-utils/0.3/maven-shared-utils-0.3.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/sonatype/aether/aether-util/1.7/aether-util-1.7.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/junit/junit/4.8.2/junit-4.8.2.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-artifact/3.0/maven-artifact-3.0.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/mortbay/jetty/jetty/6.1.25/jetty-6.1.25.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-cypher-frontend-2.3/2.3.3/neo4j-cypher-frontend-2.3-2.3.3.jar
+2016-05-30 14:04:47.969+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/sslext/sslext/1.2-0/sslext-1.2-0.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/commons-logging/commons-logging/1.1/commons-logging-1.1.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/com/googlecode/concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.4.2/concurrentlinkedhashmap-lru-1.4.2.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-repository-metadata/3.0/maven-repository-metadata-3.0.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\localedata.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [bootstrap + classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\resources.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/sunpkcs11.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\sunec.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/sunmscapi.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\deploy.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\management-agent.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\jaccess.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-cypher-compiler-2.2_2.11/2.2.6/neo4j-cypher-compiler-2.2_2.11-2.2.6.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/sonatype/aether/aether-impl/1.7/aether-impl-1.7.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/javax/ws/rs/jsr311-api/1.1.1/jsr311-api-1.1.1.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [bootstrap + classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\charsets.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/parboiled/parboiled-scala_2.11/1.1.7/parboiled-scala_2.11-1.1.7.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-model/3.0/maven-model-3.0.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/ow2/asm/asm/5.0.2/asm-5.0.2.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/lucene/lucene-core/3.6.2/lucene-core-3.6.2.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-decoration-model/1.7.1/doxia-decoration-model-1.7.1.jar
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [bootstrap] C:\Program Files\Java\jdk1.8.0_74\jre\classes
+2016-05-30 14:04:47.970+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/com/google/code/findbugs/jFormatString/2.0.1/jFormatString-2.0.1.jar
+2016-05-30 14:04:47.971+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/com/apple/AppleJavaExtensions/1.4/AppleJavaExtensions-1.4.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/commons-digester/commons-digester/1.8/commons-digester-1.8.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [bootstrap + classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\jce.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/struts/struts-tiles/1.3.8/struts-tiles-1.3.8.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/plugin.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/com/google/code/findbugs/findbugs/3.0.1/findbugs-3.0.1.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/eclipse/aether/aether-util/0.9.0.M2/aether-util-0.9.0.M2.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [bootstrap + classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\rt.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/Documents/TagC/PL5-2016/backEnd/target/test-classes/
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/com/google/code/findbugs/jsr305/2.0.1/jsr305-2.0.1.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/scala-lang/modules/scala-parser-combinators_2.11/1.0.4/scala-parser-combinators_2.11-1.0.4.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-settings-builder/3.0/maven-settings-builder-3.0.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-30/plexus-container-default-1.0-alpha-30.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\sunmscapi.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-primitive-collections/2.3.3/neo4j-primitive-collections-2.3.3.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/codehaus/plexus/plexus-i18n/1.0-beta-7/plexus-i18n-1.0-beta-7.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/deploy.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/management-agent.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-jmx/2.3.3/neo4j-jmx-2.3.3.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/com/sun/jersey/jersey-client/1.19.1/jersey-client-1.19.1.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/sonatype/aether/aether-api/1.7/aether-api-1.7.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/httpcomponents/httpcore/4.0.1/httpcore-4.0.1.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/oro/oro/2.0.8/oro-2.0.8.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/zipfs.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/ow2/asm/asm-analysis/4.1/asm-analysis-4.1.jar
+2016-05-30 14:04:47.972+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/nashorn.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-graph-matching/2.3.3/neo4j-graph-matching-2.3.3.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/com/google/code/findbugs/bcel-findbugs/6.0/bcel-findbugs-6.0.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/sonatype/aether/aether-spi/1.7/aether-spi-1.7.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/access-bridge-64.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-unsafe/2.3.3/neo4j-unsafe-2.3.3.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files (x86)\JetBrains\IntelliJ IDEA 15.0.3\plugins\junit\lib\junit-rt.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-core/3.0/maven-core-3.0.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/wagon/wagon-provider-api/1.0/wagon-provider-api-1.0.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/parboiled/parboiled-core/1.1.7/parboiled-core-1.1.7.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-aether-provider/3.0/maven-aether-provider-3.0.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-module-xdoc/1.7/doxia-module-xdoc-1.7.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-settings/3.0/maven-settings-3.0.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/jaccess.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-archiver/2.5/maven-archiver-2.5.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-function/2.3.3/neo4j-function-2.3.3.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/struts/struts-core/1.3.8/struts-core-1.3.8.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-graph-algo/2.3.3/neo4j-graph-algo-2.3.3.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files%20(x86)/JetBrains/IntelliJ%20IDEA%2015.0.3/lib/idea_rt.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/ow2/asm/asm-tree/5.0.2/asm-tree-5.0.2.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/jfxrt.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files%20(x86)/JetBrains/IntelliJ%20IDEA%2015.0.3/plugins/junit/lib/junit-rt.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/maven-plugin-api/3.0/maven-plugin-api-3.0.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-skin-model/1.7.1/doxia-skin-model-1.7.1.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-udc/2.3.3/neo4j-udc-2.3.3.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-consistency-check-legacy/2.3.3/neo4j-consistency-check-legacy-2.3.3.jar
+2016-05-30 14:04:47.973+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/net/jcip/jcip-annotations/1.0/jcip-annotations-1.0.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/jsse.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/charsets.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/sonatype/plexus/plexus-cipher/1.4/plexus-cipher-1.4.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j/2.3.3/neo4j-2.3.3.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/codehaus/plexus/plexus-utils/3.0.20/plexus-utils-3.0.20.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-site-renderer/1.7.1/doxia-site-renderer-1.7.1.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/resources.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-core/1.7/doxia-core-1.7.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-cypher/2.3.3/neo4j-cypher-2.3.3.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\sunjce_provider.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/cldrdata.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/codehaus/plexus/plexus-classworlds/2.2.3/plexus-classworlds-2.2.3.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\nashorn.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-cypher-compiler-2.3/2.3.3/neo4j-cypher-compiler-2.3-2.3.3.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-module-xhtml/1.7/doxia-module-xhtml-1.7.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-integration-tools/1.7.1/doxia-integration-tools-1.7.1.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/codehaus/plexus/plexus-io/2.4/plexus-io-2.4.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/antlr/antlr/2.7.2/antlr-2.7.2.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/jfxswt.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-module-apt/1.7/doxia-module-apt-1.7.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\jfxrt.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-codegen/2.3.3/neo4j-codegen-2.3.3.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/codehaus/plexus/plexus-archiver/2.9/plexus-archiver-2.9.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/ow2/asm/asm-util/4.1/asm-util-4.1.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\javaws.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\sunpkcs11.jar
+2016-05-30 14:04:47.974+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-cypher-compiler-1.9_2.11/2.0.5/neo4j-cypher-compiler-1.9_2.11-2.0.5.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/plugins/maven-site-plugin/3.5.1/maven-site-plugin-3.5.1.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/velocity/velocity/1.7/velocity-1.7.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-module-markdown/1.7/doxia-module-markdown-1.7.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/parboiled/parboiled-java/1.1.4/parboiled-java-1.1.4.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/dnsns.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-sink-api/1.7/doxia-sink-api-1.7.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/ow2/asm/asm-debug-all/5.0.2/asm-debug-all-5.0.2.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/mortbay/jetty/servlet-api/2.5-20081211/servlet-api-2.5-20081211.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/struts/struts-taglib/1.3.8/struts-taglib-1.3.8.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files (x86)\JetBrains\IntelliJ IDEA 15.0.3\lib\idea_rt.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-kernel/2.3.3/neo4j-kernel-2.3.3.jar
+2016-05-30 14:04:47.975+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/reporting/maven-reporting-exec/1.2/maven-reporting-exec-1.2.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\plugin.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/scala-lang/scala-reflect/2.11.7/scala-reflect-2.11.7.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-logging-api/1.7/doxia-logging-api-1.7.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\zipfs.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/jfr.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-csv/2.3.3/neo4j-csv-2.3.3.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/commons-chain/commons-chain/1.1/commons-chain-1.1.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/mockito/mockito-all/1.8.0-rc2/mockito-all-1.8.0-rc2.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/sunjce_provider.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\access-bridge-64.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.1] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/ext/localedata.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [loader.0] file:/C:/Program%20Files/Java/jdk1.8.0_74/jre/lib/jce.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/xmlunit/xmlunit/1.5/xmlunit-1.5.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/mortbay/jetty/jetty-util/6.1.25/jetty-util-6.1.25.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.14/plexus-interpolation-1.14.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [bootstrap] C:\Program Files\Java\jdk1.8.0_74\jre\lib\sunrsasign.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/scala-lang/scala-library/2.11.7/scala-library-2.11.7.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/neo4j/neo4j-logging/2.3.3/neo4j-logging-2.3.3.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/commons-codec/commons-codec/1.3/commons-codec-1.3.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/Documents/TagC/PL5-2016/backEnd/target/classes/
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\ext\dnsns.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/net/sf/opencsv/opencsv/2.3/opencsv-2.3.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/ow2/asm/asm-commons/5.0.2/asm-commons-5.0.2.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/C:/Users/Matthijs/.m2/repository/org/apache/maven/doxia/doxia-module-fml/1.7/doxia-module-fml-1.7.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager]  [bootstrap + classpath] C:\Program Files\Java\jdk1.8.0_74\jre\lib\jfr.jar
+2016-05-30 14:04:47.976+0000 INFO  [o.n.k.i.DiagnosticsManager] Library path:
+2016-05-30 14:04:47.977+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files\Java\jdk1.8.0_74\bin
+2016-05-30 14:04:47.977+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows\Sun\Java\bin
+2016-05-30 14:04:47.977+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows\System32
+2016-05-30 14:04:47.977+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows
+2016-05-30 14:04:47.978+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\ProgramData\Oracle\Java\javapath
+2016-05-30 14:04:47.978+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files (x86)\Intel\iCLS Client
+2016-05-30 14:04:47.978+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files\Intel\iCLS Client
+2016-05-30 14:04:47.978+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows\System32
+2016-05-30 14:04:47.978+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows
+2016-05-30 14:04:47.978+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows\System32\wbem
+2016-05-30 14:04:47.979+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows\System32\WindowsPowerShell\v1.0
+2016-05-30 14:04:47.979+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files\Intel\WiFi\bin
+2016-05-30 14:04:47.979+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files\Common Files\Intel\WirelessCommon
+2016-05-30 14:04:47.980+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL
+2016-05-30 14:04:47.980+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files\Intel\Intel(R) Management Engine Components\DAL
+2016-05-30 14:04:47.980+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT
+2016-05-30 14:04:47.980+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files\Intel\Intel(R) Management Engine Components\IPT
+2016-05-30 14:04:47.980+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
+2016-05-30 14:04:47.980+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows\System32
+2016-05-30 14:04:47.981+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows
+2016-05-30 14:04:47.981+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows\System32\wbem
+2016-05-30 14:04:47.981+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Windows\System32\WindowsPowerShell\v1.0
+2016-05-30 14:04:47.981+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files (x86)\Windows Live\Shared
+2016-05-30 14:04:47.981+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Users\Matthijs\AppData\Local\GitHub\PortableGit_25d850739bc178b2eb13c3e2a9faafea2f9143c0\cmd\git.exe
+2016-05-30 14:04:47.982+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files\Git\cmd
+2016-05-30 14:04:47.983+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files\Git\cmd\git.exe
+2016-05-30 14:04:47.983+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files (x86)\Gource\cmd
+2016-05-30 14:04:47.983+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files (x86)\Livestreamer
+2016-05-30 14:04:47.983+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files (x86)\apache-maven-3.3.9\bin
+2016-05-30 14:04:47.983+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Program Files\Git\cmd
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] C:\Users\Matthijs\Documents\TagC\PL5-2016\backEnd
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] System.properties:
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.boot.library.path = C:\Program Files\Java\jdk1.8.0_74\jre\bin
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.country.format = NL
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] path.separator = ;
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] idea.launcher.port = 7534
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] file.encoding.pkg = sun.io
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.country = US
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.script = 
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.java.launcher = SUN_STANDARD
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.os.patch.level = 
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.dir = C:\Users\Matthijs\Documents\TagC\PL5-2016\backEnd
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.variant = 
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.jnu.encoding = Cp1252
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.home = C:\Users\Matthijs
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.timezone = Europe/Berlin
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] file.encoding = UTF-8
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] idea.launcher.bin.path = C:\Program Files (x86)\JetBrains\IntelliJ IDEA 15.0.3\bin
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.name = Matthijs
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.java.command = com.intellij.rt.execution.application.AppMain com.intellij.rt.execution.junit.JUnitStarter -ideVersion5 @w@C:\Users\Matthijs\AppData\Local\Temp\idea_working_dirs_junit0.tmp @C:\Users\Matthijs\AppData\Local\Temp\idea_junit0.tmp -socket50068
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.arch.data.model = 64
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.language = en
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] user.language.format = nl
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] awt.toolkit = sun.awt.windows.WToolkit
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] idea.junit.sm_runner = 
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] file.separator = \
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.io.unicode.encoding = UnicodeLittle
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.cpu.endian = little
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.desktop = windows
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] sun.cpu.isalist = amd64
+2016-05-30 14:04:47.984+0000 INFO  [o.n.k.i.DiagnosticsManager] Network information:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Software Loopback Interface 1:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: 127.0.0.1
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: 0:0:0:0:0:0:0:1
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Virtual WiFi Miniport Adapter #2:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft ISATAP Adapter #2:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Kernel Debug Network Adapter:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Hosted Network Virtual Adapter:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: fe80:0:0:0:5161:10ee:bcb9:aa5e%wlan1
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft ISATAP Adapter:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Virtual WiFi Miniport Adapter #3:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: fe80:0:0:0:44fd:2ed7:be5c:840%wlan2
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft ISATAP Adapter #6:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft ISATAP Adapter #7:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: fe80:0:0:0:0:5efe:c0a8:3801%net3
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Intel(R) Dual Band Wireless-AC 8260:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: 192.168.2.28
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: fe80:0:0:0:504:2599:cc4c:89e4%wlan3
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface VirtualBox Host-Only Ethernet Adapter:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: 192.168.56.1
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: fe80:0:0:0:2093:72b2:ab5d:79de%eth1
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft ISATAP Adapter #5:
+2016-05-30 14:04:48.044+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: fe80:0:0:0:0:5efe:c0a8:21c%net4
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft ISATAP Adapter #3:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Virtual WiFi Miniport Adapter:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft 6to4 Adapter:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Realtek USB GbE Family Controller:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Teredo Tunneling Pseudo-Interface:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: 2001:0:9d38:6ab8:1030:2295:a9a2:97f1
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager]     address: fe80:0:0:0:1030:2295:a9a2:97f1%net7
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft ISATAP Adapter #4:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface VirtualBox Host-Only Ethernet Adapter-WFP Native MAC Layer LightWeight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface VirtualBox Host-Only Ethernet Adapter-VirtualBox NDIS Light-Weight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface VirtualBox Host-Only Ethernet Adapter-QoS Packet Scheduler-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface VirtualBox Host-Only Ethernet Adapter-WFP 802.3 MAC Layer LightWeight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Intel(R) Dual Band Wireless-AC 8260-WFP Native MAC Layer LightWeight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Intel(R) Dual Band Wireless-AC 8260-Virtual WiFi Filter Driver-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Intel(R) Dual Band Wireless-AC 8260-Native WiFi Filter Driver-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Intel(R) Dual Band Wireless-AC 8260-VirtualBox NDIS Light-Weight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Intel(R) Dual Band Wireless-AC 8260-QoS Packet Scheduler-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Intel(R) Dual Band Wireless-AC 8260-WFP 802.3 MAC Layer LightWeight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Hosted Network Virtual Adapter-WFP Native MAC Layer LightWeight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Hosted Network Virtual Adapter-Native WiFi Filter Driver-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Hosted Network Virtual Adapter-VirtualBox NDIS Light-Weight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Hosted Network Virtual Adapter-QoS Packet Scheduler-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Hosted Network Virtual Adapter-WFP 802.3 MAC Layer LightWeight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Virtual WiFi Miniport Adapter #3-WFP Native MAC Layer LightWeight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Virtual WiFi Miniport Adapter #3-Native WiFi Filter Driver-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Virtual WiFi Miniport Adapter #3-VirtualBox NDIS Light-Weight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Virtual WiFi Miniport Adapter #3-QoS Packet Scheduler-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] Interface Microsoft Virtual WiFi Miniport Adapter #3-WFP 802.3 MAC Layer LightWeight Filter-0000:
+2016-05-30 14:04:48.045+0000 INFO  [o.n.k.i.DiagnosticsManager] --- INITIALIZED diagnostics END ---
+2016-05-30 14:04:48.976+0000 INFO  [o.n.k.a.i.i.LuceneLabelScanStore] No lucene scan store index found, this might just be first use. Preparing to rebuild.
+2016-05-30 14:04:49.032+0000 INFO  [o.n.k.NeoStoreDataSource] Opened logical log [C:\Users\Matthijs\Documents\TagC\PL5-2016\backEnd\test.db\neostore.transaction.db.0] version=0, lastTxId=1 (clean)
+2016-05-30 14:04:49.042+0000 WARN  [o.n.k.i.s.MetaDataStore] Missing counts store, rebuilding it.
+2016-05-30 14:04:49.149+0000 INFO  [o.n.k.a.i.i.LuceneLabelScanStore] Rebuilding lucene scan store, this may take a while
+2016-05-30 14:04:49.153+0000 INFO  [o.n.k.a.i.i.LuceneLabelScanStore] Lucene scan store rebuilt (roughly -1 nodes)
+2016-05-30 14:04:49.163+0000 INFO  [o.n.k.KernelHealth] Kernel health set to OK

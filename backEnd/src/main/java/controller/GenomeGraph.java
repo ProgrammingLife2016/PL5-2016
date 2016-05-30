@@ -16,7 +16,7 @@ public class GenomeGraph {
     /**
      * The strand nodes.
      */
-    private ArrayList<Strand> strandNodes;
+    private HashMap<Integer, Strand> strandNodes;
 
     /**
      * The genomes.
@@ -33,7 +33,7 @@ public class GenomeGraph {
      * Instantiates a new genome graph.
      */
     public GenomeGraph() {
-        strandNodes = new ArrayList<>();
+        strandNodes = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
     }
@@ -43,7 +43,7 @@ public class GenomeGraph {
      *
      * @return strandNodes.
      */
-    public ArrayList<Strand> getStrandNodes() {
+    public HashMap<Integer, Strand> getStrandNodes() {
         return strandNodes;
 
     }
@@ -54,7 +54,7 @@ public class GenomeGraph {
      * @param strand The added strand.
      */
     public void addStrand(Strand strand) {
-        strandNodes.add(strand);
+        strandNodes.put(strand.getId(), strand);
     }
 
 
@@ -62,8 +62,7 @@ public class GenomeGraph {
      * Method that finds the starting nodes and calculates the x coordinates for the graphnodes.
      */
     public void findStartAndCalculateX() {
-        for (int i = 1; i < strandNodes.size(); i++) {
-            Strand start = strandNodes.get(i);
+        for (Strand start : strandNodes.values()) {
             if (start.getX() == 0) {
                 start.setX(1);
                 calculateXfromStart(start);
@@ -76,6 +75,7 @@ public class GenomeGraph {
 
     /**
      * Calculate the x coordinates for the graph nodes starting at start.
+     *
      * @param start the graph node to start at.
      */
     public void calculateXfromStart(Strand start) {
@@ -107,7 +107,7 @@ public class GenomeGraph {
 
         genomes = new HashMap<String, Genome>();
 
-        for (Strand strand : strandNodes) {
+        for (Strand strand : strandNodes.values()) {
             for (String genomeID : strand.getGenomes()) {
 
                 if (!genomes.containsKey(genomeID)) {
