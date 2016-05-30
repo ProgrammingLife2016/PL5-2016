@@ -1,4 +1,4 @@
-package com.pl.tagc.Main;
+package com.pl.tagc.main;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,14 +1,11 @@
 package com.pl.tagc.tagcwebapp;
 
-import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
 
-import controller.Controller;
 import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Tests the tagcwebapp. Tests that the resource is reachable and returns data
