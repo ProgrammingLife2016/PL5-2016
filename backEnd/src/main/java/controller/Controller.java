@@ -8,7 +8,6 @@ import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
 
-// TODO: Auto-generated Javadoc
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -21,30 +20,28 @@ public class Controller implements FrontEndBackEndInterface {
     /** The genome graph. */
     private GenomeGraph genomeGraph;
     
-    /** The data width. */
-    private double dataWidth; 
-    
     /** The phylogenetic tree. */
     private PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
     
     /** The data tree. */
     private DataTree dataTree;
-
-    /**
-     * Datacontainer Singleton, starts with empty hashmaps.
-     */
-    public static final controller.Controller DC = new Controller();
     
+    /**
+     * Controller Singleton.
+     */
+    public static controller.Controller DC;
 
     /**
      * Constructor.
      */
     public Controller() {
     	genomeGraph = Parser.parse("data/TB10.gfa");
+    	genomeGraph.generateGenomes();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
-
+        dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+        DC = this;
     }
 
     
@@ -57,26 +54,7 @@ public class Controller implements FrontEndBackEndInterface {
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
         return RibbonController.getRibbonNodes(minX, maxX, zoomLevel, genomeGraph);
-    }    
-
-    /**
-     * Get the data width.
-     *
-     * @return The data width.
-     */
-    public double getDataWidth() {
-        return this.dataWidth;
-    }
-
-
-    /**
-     * Set the data width.
-     *
-     * @param dataWidth New data width.
-     */
-    public void setDataWidth(double dataWidth) {
-        this.dataWidth = dataWidth;
-    }
+    }  
 
 
     /**

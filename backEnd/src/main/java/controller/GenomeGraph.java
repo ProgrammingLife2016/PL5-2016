@@ -21,9 +21,6 @@ public class GenomeGraph {
     /** The genomes. */
     private HashMap<String, Genome> genomes;
     
-    /** The temp. */
-    private HashMap<String, Genome> temp;
-    
     /** The active genomes. */
     private ArrayList<String> activeGenomes; //The current genomes selected in the GUI.
 	
@@ -35,7 +32,6 @@ public class GenomeGraph {
         strandNodes = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
-        temp = new HashMap<>();
 	}
     
     /**
@@ -54,21 +50,29 @@ public class GenomeGraph {
      * @param strand The added strand.
      */
     public void addStrand(Strand strand) {
-        strandNodes.put(strand.getId(), strand);
-
-        for (String genomeID : strand.getGenomes()) {
-            if (!genomes.containsKey(genomeID)) {
-                genomes.put(genomeID, new Genome(genomeID));
-                temp.put(genomeID, new Genome(genomeID));
-                //HARDCODED ACTIVE GENOMES
-                if (!genomeID.equals("MT_H37RV_BRD_V5.ref.fasta")) {
-                    activeGenomes.add(genomeID);
-                }
-            } else {
-                genomes.get(genomeID).addStrand(strand);
-                temp.get(genomeID).addStrand(strand);
-            }
-        }
+        strandNodes.put(strand.getId(), strand);        
+    }
+    
+    /**
+     * Generates the genomes from the the information contained within the strand nodes.
+     */
+    public void generateGenomes() {
+    	
+    	genomes = new HashMap<String, Genome>();
+    	
+    	for (Strand strand : strandNodes.values()) {
+    		for (String genomeID : strand.getGenomes()) {
+    			
+    			if (!genomes.containsKey(genomeID)) {
+    				Genome genome = new Genome(genomeID);
+    				genome.addStrand(strand);
+    				genomes.put(genomeID, genome);
+    			} else {
+    				genomes.get(genomeID).addStrand(strand);
+    			}
+    			
+    		}
+    	}
     }
     
     /**
