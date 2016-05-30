@@ -159,5 +159,4 @@ public class GenomeGraph {
         this.activeGenomes = activeGenomes;
     }
 
-
 }
