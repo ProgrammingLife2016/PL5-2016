@@ -41,7 +41,7 @@ public class DataTree extends TreeStructure<DataNode> {
             }
 
         }
-
+        
         addCommonStrandsToParent(getRoot());
 
 

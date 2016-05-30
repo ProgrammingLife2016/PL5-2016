@@ -37,7 +37,7 @@ public class Controller implements FrontEndBackEndInterface {
     public Controller() {
     	genomeGraph = Parser.parse("data/TB10.gfa");
     	genomeGraph.generateGenomes();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk", genomeGraph.getActiveGenomes());
         dataTree = new DataTree(new DataNode((PhylogeneticNode) phylogeneticTree.getRoot(), 
         		null, 0));
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
@@ -66,7 +66,7 @@ public class Controller implements FrontEndBackEndInterface {
     public PhylogeneticTree loadPhylogeneticTree(int treeId) {
 		if (treeId == 0) {
 			phylogeneticTree = new PhylogeneticTree();
-			phylogeneticTree.parseTree("testGenomeNwk");
+			phylogeneticTree.parseTree("testGenomeNwk", genomeGraph.getActiveGenomes());
 			return phylogeneticTree;
 		} else {
 			return phylogeneticTree;

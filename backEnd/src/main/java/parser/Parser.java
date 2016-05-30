@@ -82,7 +82,7 @@ public class Parser {
 			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
 			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 			reader.readLine();
-			reader.readLine();
+			result.setActiveGenomes(getPresentGenomes(reader.readLine()));
 			line = reader.readLine();
 			while (line != null) {
 				String[] splittedLine = line.split("\t");
@@ -105,6 +105,15 @@ public class Parser {
 		//result.getDataTree().addStrands(new ArrayList<>(result.getGenomes().values()));
 		return result;
 	}
+	 
+	 private static ArrayList<String> getPresentGenomes(String line) {
+		 
+		 String[] splitted = line.split("\t");
+         String[] genomes = splitted[1].split(";");
+
+         genomes = Arrays.copyOfRange(genomes, 1, genomes.length);
+         return new ArrayList<String>(Arrays.asList(genomes));
+	 }
 
 	/**
 	 * Creates an StrandEdge from input data.
@@ -188,34 +197,6 @@ public class Parser {
         nodes.println(String.format("%s,%s,%s,%s,%s", id, sequence, genomes,
                 referenceGenome, refCoor));
 	}
-
-    /**
-     * Get all the genomes that are in the file.
-     * @param file The file.
-     * @return The genomes.
-     */
-    public static ArrayList<String> getPresentGenomes(String file) {
-        BufferedReader reader;
-        String line = null;
-        try {
-            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
-            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            reader.readLine();
-            line = reader.readLine();
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (line != null) {
-            String[] splitted = line.split("\t");
-            String[] genomes = splitted[1].split(";");
-
-            genomes = Arrays.copyOfRange(genomes, 1, genomes.length);
-            return new ArrayList<String>(Arrays.asList(genomes));
-        }
-        return null;
-    }
 
     /**
      * Get the content from the phylogenetic tree.
