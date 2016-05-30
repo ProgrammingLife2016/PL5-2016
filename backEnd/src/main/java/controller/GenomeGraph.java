@@ -106,6 +106,4 @@ public class GenomeGraph {
     public void setActiveGenomes(ArrayList<String> activeGenomes) {
         this.activeGenomes = activeGenomes;
     }
-    
-    
 }

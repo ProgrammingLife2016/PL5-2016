@@ -8,8 +8,13 @@ package mutation;
  * And is false when the mutation start from one Strand.
  */
 public enum MutationType {
-	SNP(true), DELETION(true), INSERTION(true), TANDEMDUPLICATION(false), 
-	INTERSPERSEDDUPLICATION(false), INVERSION(false), TRANSLOCATION(false);
+	SNP(true), 
+	DELETION(true), 
+	INSERTION(true), 
+	TANDEMDUPLICATION(false), 
+	INTERSPERSEDDUPLICATION(false), 
+	INVERSION(false), 
+	TRANSLOCATION(false);
 	
 	private boolean between;
 	
