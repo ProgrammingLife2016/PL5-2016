@@ -6,6 +6,7 @@ import java.util.HashMap;
 import genome.Genome;
 import genome.Strand;
 import genome.StrandEdge;
+import org.neo4j.cypher.internal.compiler.v2_2.functions.Str;
 
 /**
  * The Class GenomeGraph.
@@ -15,7 +16,7 @@ public class GenomeGraph {
     /**
      * The strand nodes.
      */
-    private HashMap<Integer, Strand> strandNodes;
+    private ArrayList<Strand> strandNodes;
 
     /**
      * The genomes.
@@ -32,7 +33,7 @@ public class GenomeGraph {
      * Instantiates a new genome graph.
      */
     public GenomeGraph() {
-        strandNodes = new HashMap<>();
+        strandNodes = new ArrayList<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
     }
@@ -42,7 +43,7 @@ public class GenomeGraph {
      *
      * @return strandNodes.
      */
-    public HashMap<Integer, Strand> getStrandNodes() {
+    public ArrayList<Strand> getStrandNodes() {
         return strandNodes;
 
     }
@@ -53,19 +54,19 @@ public class GenomeGraph {
      * @param strand The added strand.
      */
     public void addStrand(Strand strand) {
-        strandNodes.put(strand.getId(), strand);
+        strandNodes.add(strand);
     }
 
 
     /**
-     * Method that calculates the X coordinates for strands in all genomes.
+     * Method that finds the starting nodes and calculates the x coordinates for the graphnodes.
      */
-    public void calculateXStrands() {
+    public void findStartAndCalculateX() {
         for (int i = 1; i < strandNodes.size(); i++) {
             Strand start = strandNodes.get(i);
             if (start.getX() == 0) {
                 start.setX(1);
-                recurseThroughGraphCalculateX(start);
+                calculateXfromStart(start);
             }
 
         }
@@ -73,7 +74,11 @@ public class GenomeGraph {
 
     }
 
-    public void recurseThroughGraphCalculateX(Strand start) {
+    /**
+     * Calculate the x coordinates for the graph nodes starting at start.
+     * @param start the graph node to start at.
+     */
+    public void calculateXfromStart(Strand start) {
         ArrayList<Strand> currentStrands = new ArrayList<>();
         ArrayList<Strand> nextStrands = new ArrayList<>();
         currentStrands.add(start);
@@ -102,7 +107,7 @@ public class GenomeGraph {
 
         genomes = new HashMap<String, Genome>();
 
-        for (Strand strand : strandNodes.values()) {
+        for (Strand strand : strandNodes) {
             for (String genomeID : strand.getGenomes()) {
 
                 if (!genomes.containsKey(genomeID)) {

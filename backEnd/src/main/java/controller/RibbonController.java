@@ -1,7 +1,6 @@
 package controller;
 
 import datatree.DataTree;
-import genome.Genome;
 import genome.Strand;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
@@ -11,16 +10,15 @@ import java.util.ArrayList;
 
 
 /**
- * Created by Matthijs on 18-5-2016.
+ * Class that calculates and returns the Ribbons and Edges to be drawn on the screen, based on the data stored in genomeGraph and dataTree.
  */
 public final class RibbonController {
 
-    private GenomeGraph genomeGraph;
-    private DataTree dataTree;
+    private GenomeGraph genomeGraph; //The graph that contains the geographic information of the stands.
+    private DataTree dataTree; //The tree that contains the phylogenetic information of the strands.
 
     /**
      * Create ribbonController object.
-     * This should not be possible, throw an exception.
      */
     public RibbonController(GenomeGraph genomeGraph, DataTree dataTree) {
         this.genomeGraph = genomeGraph;
@@ -35,12 +33,13 @@ public final class RibbonController {
      * @param zoomLevel the zoomlevel of the view.
      * @return The list of ribbonNodes.
      */
-    @SuppressWarnings("checkstyle:methodlength")
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
 
         System.out.println(minX + ", " + maxX);
         ArrayList<String> activeGenomes = genomeGraph.getActiveGenomes();
 
+
+        //HARD CODED ACTIVE GENOMES.
         if (activeGenomes.size() < 2) {
             activeGenomes.add("TKK_02_0010.fasta");
             activeGenomes.add("TKK_02_0006.fasta");
@@ -48,7 +47,6 @@ public final class RibbonController {
             activeGenomes.add("TKK_02_0005.fasta");
             activeGenomes.add("TKK_02_0008.fasta");
             activeGenomes.add("TKK_02_0004.fasta");
-
 
 
         }
@@ -80,7 +78,13 @@ public final class RibbonController {
 
     }
 
-    public void collapseRibbons(ArrayList<RibbonNode> nodes) {
+    /**
+     * Collapses the ribbon Nodes and edges in nodes.
+     *
+     * @param nodes The ribbonNode Graph to collapse.
+     * @return A collapsed graph.
+     */
+    public ArrayList<RibbonNode> collapseRibbons(ArrayList<RibbonNode> nodes) {
         for (int i = 0; i < nodes.size(); i++) {
             RibbonNode node = nodes.get(i);
             if (node != null) {
@@ -88,7 +92,7 @@ public final class RibbonController {
                     RibbonNode other = getNodeWithId(node.getOutEdges().get(0).getEnd(), nodes);
                     if (other.getInEdges().size() == 1) {
                         node.addStrands(other.getStrands());
-                        for(RibbonEdge edge:other.getOutEdges()){
+                        for (RibbonEdge edge : other.getOutEdges()) {
                             edge.setStartId(node.getId());
                         }
                         node.setOutEdges(other.getOutEdges());
@@ -97,9 +101,18 @@ public final class RibbonController {
                 }
             }
         }
+        return nodes;
 
 
     }
+
+    /**
+     * Return a node with a certain id contained in a Ribbon Graph.
+     *
+     * @param id    The id to return for.
+     * @param nodes The RibbonGraph.
+     * @return null if that id is not found.
+     */
 
     public RibbonNode getNodeWithId(int id, ArrayList<RibbonNode> nodes) {
         for (RibbonNode node : nodes) {
@@ -111,7 +124,13 @@ public final class RibbonController {
     }
 
 
-    public void calcYcoordinates(ArrayList<RibbonNode> nodes) {
+    /**
+     * Calculate the Y coordinates for the nodes in a ribbonGraph.
+     *
+     * @param nodes The ribbonGraph to calculate y cooridnates for.
+     * @return The ribbonGraph with added y coordinates.
+     */
+    public ArrayList<RibbonNode> calcYcoordinates(ArrayList<RibbonNode> nodes) {
         int currentX = 0;
         ArrayList<RibbonNode> currentXNodes = new ArrayList<>();
         for (int i = 0; i < nodes.size(); i++) {
@@ -133,22 +152,38 @@ public final class RibbonController {
 
         }
 
+        return nodes;
     }
 
 
-    public void addEdges(ArrayList<RibbonNode> nodes) {
+    /**
+     * Calculate and add edges to a ribbonGraph.
+     *
+     * @param nodes the RibbinGraph to calculate edges for.
+     * @return The ribbonGraph with added edges.
+     */
+    public ArrayList<RibbonNode> addEdges(ArrayList<RibbonNode> nodes) {
         for (String genomeID : genomeGraph.getActiveGenomes()) {
             RibbonNode currentNode = findNextNodeWithGenome(nodes, genomeID, -1);
             while (currentNode != null) {
-                currentNode = addEdgeReturnNext(nodes, currentNode, genomeID);
+                currentNode = addEdgeReturnEnd(nodes, currentNode, genomeID);
             }
 
         }
+        return nodes;
 
 
     }
 
-    public RibbonNode addEdgeReturnNext(ArrayList<RibbonNode> nodes, RibbonNode currentNode, String genomeID) {
+    /**
+     * Finds the next node that contains a certain genome, creates an edge between the two nodes and returns the end Node of the edge.
+     *
+     * @param nodes       The RibbonGraph.
+     * @param currentNode The start node of the edge.
+     * @param genomeID    The genome id to find an edge for.
+     * @return The end node of the edge.
+     */
+    public RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes, RibbonNode currentNode, String genomeID) {
         RibbonNode next = findNextNodeWithGenome(nodes, genomeID, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {
@@ -166,6 +201,14 @@ public final class RibbonController {
 
     }
 
+    /**
+     * Finds the next node in a ribbongraph that contains a certain genome.
+     *
+     * @param nodes        The ribbonGraph to search through.
+     * @param genome       The genome to find the next edge for.
+     * @param currentIndex The current node index to start searching.
+     * @return The next node that contains genome.
+     */
     public RibbonNode findNextNodeWithGenome(ArrayList<RibbonNode> nodes, String genome, int currentIndex) {
         for (int i = currentIndex + 1; i < nodes.size(); i++) {
             if (nodes.get(i).getGenomes().contains(genome)) {
@@ -176,6 +219,12 @@ public final class RibbonController {
 
     }
 
+    /**
+     * Return the color associated with a genome.
+     *
+     * @param GenomeID The genome to return the color for.
+     * @return The color that is associated with this genomeid.
+     */
     public Color getColorForGenomeID(String GenomeID) {
         Color[] colors = {new Color(0, 0, 255),
                 new Color(0, 255, 0),

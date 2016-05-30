@@ -39,7 +39,7 @@ public class Controller implements FrontEndBackEndInterface {
     public Controller() {
     	genomeGraph = Parser.parse("data/TB10.gfa");
     	genomeGraph.generateGenomes();
-        genomeGraph.calculateXStrands();
+        genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
         		null, 0));
