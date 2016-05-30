@@ -1,10 +1,10 @@
 package com.pl.tagc.tagcwebapp;
 
+import java.awt.Color;
+
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import ribbonnodes.RibbonEdge;
-
-import java.awt.*;
 
 /**
  * The Class RibbonEdgeAdapter.
@@ -33,7 +33,7 @@ public class RibbonEdgeAdapter extends XmlAdapter<AdaptedRibbonEdge, RibbonEdge>
     }
 
     /**
-     * Returns the hexadecimal string of a color
+     * Returns the hexadecimal string of a color.
      * @param color The color object
      * @return A string containing the hexadecimal of the color
      */

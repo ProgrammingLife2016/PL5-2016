@@ -77,34 +77,6 @@ public class Controller implements FrontEndBackEndInterface {
 		}
 	}
 
-    /**
-     * Setter for the phylogenicTree.
-     *
-     * @param phylogeneticTree The tree.
-     */
-    public void setPhylogeneticTree(PhylogeneticTree phylogeneticTree) {
-        this.phylogeneticTree = phylogeneticTree;
-    }
-
-
-    /**
-     * Getter for the dataTree.
-     *
-     * @return the datatree.
-     */
-    public DataTree getDataTree() {
-        return dataTree;
-    }
-
-    /**
-     * Setter for the datatree.
-     *
-     * @param dataTree the datatree.
-     */
-    public void setDataTree(DataTree dataTree) {
-        this.dataTree = dataTree;
-    }
-
 
     /** 
      * Setter for the activeGenomes.

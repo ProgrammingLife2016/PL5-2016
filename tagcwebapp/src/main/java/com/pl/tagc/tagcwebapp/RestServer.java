@@ -31,6 +31,7 @@ public class RestServer {
 	 *
 	 * @return the http server
 	 */
+	@SuppressWarnings("checkstyle:methodlength")
 	public HttpServer startServer() {
 		final HttpServer server = new HttpServer();
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {

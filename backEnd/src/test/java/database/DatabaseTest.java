@@ -53,7 +53,7 @@ public class DatabaseTest {
     public void testDBOpening() {
         ResourceIterator<Node> allNodes;
         db.getGraphService().shutdown();
-        db = new Database("test.db", "data/test1.gfa", "", true);
+        db = new Database("test.db", "data/test1.gfa", "data/testPhylo.nwk", true);
 
         int i = 1;
         try (Transaction tx = db.getGraphService().beginTx()) {

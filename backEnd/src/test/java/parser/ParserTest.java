@@ -77,6 +77,7 @@ public class ParserTest {
 	 */
 	@Test
 	public void testPhyloFile() {
+		//new Parser("temp", "data/test1.gfa", "data/testPhylo.nwk");
 		new Parser("temp", "data/test1.gfa", "data/testPhylo.nwk");
 
 		BufferedReader reader;
@@ -86,11 +87,11 @@ public class ParserTest {
 							new FileInputStream("temp/phylo.csv"), "UTF8"));
 			assertEquals("parent,child,dist,pc", reader.readLine());
 			assertEquals("0,1,0,parent", reader.readLine());
-			assertEquals("1,AA,0,child", reader.readLine());
-			assertEquals("1,2,0,parent", reader.readLine());
-			assertEquals("2,3,0,parent", reader.readLine());
-			assertEquals("3,BB,0,child", reader.readLine());
-			assertEquals("3,CC,0,child", reader.readLine());
+			assertEquals("1,AA,1,child", reader.readLine());
+			assertEquals("1,2,5,parent", reader.readLine());
+			assertEquals("2,3,2,parent", reader.readLine());
+			assertEquals("3,BB,2,child", reader.readLine());
+			assertEquals("3,CC,3,child", reader.readLine());
 			assertEquals("2,DD,0,child", reader.readLine());
 			reader.close();
 		} catch (Exception e) {
