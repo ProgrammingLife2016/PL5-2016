@@ -17,6 +17,7 @@ public class DataTree extends TreeStructure<DataNode> {
 
     /**
      * Default constructor.
+     *
      * @param root The root.
      */
     public DataTree(DataNode root) {
@@ -48,7 +49,6 @@ public class DataTree extends TreeStructure<DataNode> {
     }
 
 
-
     /**
      * Recursive method for going through the tree and adding the strands top down.
      *
@@ -56,67 +56,38 @@ public class DataTree extends TreeStructure<DataNode> {
      */
     @SuppressWarnings("checkstyle:methodlength")
     public void addStrands(DataNode currentNode) {
-    	ArrayList<DataNode> children = currentNode.getChildren();
-    	if (children.size() == 1) {
-    		addStrands(children.get(0));
-    		currentNode.setStrands(children.get(0).getStrands());
-    	} else if (children.size() == 2) {
-    		addStrands(children.get(0));
-    		addStrands(children.get(1));
-    		ArrayList<Strand> strands1 = children.get(0).getStrands();
-    		ArrayList<Strand> strands2 = children.get(1).getStrands();
-    		ArrayList<Strand> current = new ArrayList<>(strands1);
-    		current.retainAll(strands2);
-    		currentNode.setStrands(current);
-    		strands1.removeAll(current);
-    		strands2.removeAll(current);
-    		children.get(0).setStrands(strands1);
-    		children.get(1).setStrands(strands2);
-    	}
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-//        if (currentNode.getChildren().size() > 0) {
-//            DataNode child1 = currentNode.getChildren().get(0);
-//            DataNode child2 = currentNode.getChildren().get(1);
-//            if (child1.getStrands().size() == 0) {
-//                addStrands(child1);
-//            }
-//            if (child2.getStrands().size() == 0) {
-//                addStrands(child2);
-//            }
-//            if (child1.getStrands().size() == 0) {
-//                if (child2.getStrands().size() != 0) {
-//                    currentNode.setStrands((ArrayList<Strand>) child2.getStrands().clone());
-//                    child2.getStrands().removeAll(child2.getStrands());
-//                }
-//            }
-//            else if (child2.getStrands().size() == 0) {
-//                if (child1.getStrands().size() != 0) {
-//                    currentNode.setStrands((ArrayList<Strand>) child1.getStrands().clone());
-//                    child1.getStrands().removeAll(child1.getStrands());
-//                }
-//            }
-//            else if (child1.getStrands().size() != 0 && child2.getStrands().size() != 0) {
-//                ArrayList<Strand> parentStrands = (ArrayList<Strand>) child1.getStrands().clone();
-//                parentStrands.retainAll(child2.getStrands());
-//                currentNode.setStrands(parentStrands);
-//                child1.getStrands().removeAll(parentStrands);
-//                child2.getStrands().removeAll(parentStrands);
-//            }
-//        }
+
+        if (currentNode.getChildren().size() > 0) {
+            DataNode child1 = currentNode.getChildren().get(0);
+            DataNode child2 = currentNode.getChildren().get(1);
+            if (child1.getStrands().size() == 0) {
+                addStrands(child1);
+            }
+            if (child2.getStrands().size() == 0) {
+                addStrands(child2);
+            }
+            if (child1.getStrands().size() == 0) {
+                if (child2.getStrands().size() != 0) {
+                    currentNode.setStrands((ArrayList<Strand>) child2.getStrands().clone());
+                    child2.getStrands().removeAll(child2.getStrands());
+                }
+            } else if (child2.getStrands().size() == 0) {
+                if (child1.getStrands().size() != 0) {
+                    currentNode.setStrands((ArrayList<Strand>) child1.getStrands().clone());
+                    child1.getStrands().removeAll(child1.getStrands());
+                }
+            } else if (child1.getStrands().size() != 0 && child2.getStrands().size() != 0) {
+                ArrayList<Strand> parentStrands = (ArrayList<Strand>) child1.getStrands().clone();
+                parentStrands.retainAll(child2.getStrands());
+                currentNode.setStrands(parentStrands);
+                child1.getStrands().removeAll(parentStrands);
+                child2.getStrands().removeAll(parentStrands);
+            }
+        }
     }
 
     /**
-     * Get the data nodes within the given parameters.
+     * Get the strands within the given parameters.
      *
      * @param xMin    The minimal x value.
      * @param xMax    The maximal x value.
@@ -124,37 +95,31 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param level   The maximum tree level to zoom to.
      * @return A list of datanodes that pertain to the parameters.
      */
-    public ArrayList<DataNode> getDataNodes(int xMin, int xMax, 
-    		ArrayList<String> genomes, int level) {
-        return filterNodes(xMin, xMax, getDataNodesForGenomes(genomes, level), genomes);
+    public ArrayList<Strand> getStrands(int xMin, int xMax,
+                                        ArrayList<String> genomes, int level) {
+        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomes, level));
 
     }
 
     /**
-     * Remove unwanted strands and genomes from the nodes.
+     * Remove unwanted strands from the nodes.
      *
-     * @param xMin    the minimal id of the strands.
-     * @param xMax    the maximal id of the strands.
-     * @param nodes   the nodes to filter.
-     * @param genomes The genomes to retain.
+     * @param xMin  the minimal id of the strands.
+     * @param xMax  the maximal id of the strands.
+     * @param nodes the nodes to filter.
      * @return A filtered list of nodes.
      */
-    public ArrayList<DataNode> filterNodes(int xMin, int xMax, Set<DataNode> nodes, 
-    		ArrayList<String> genomes) {
-        ArrayList<DataNode> result = new ArrayList<>();
-        result.addAll(nodes);
-        result = (ArrayList<DataNode>) result.clone();
-        for (DataNode node : result) {
-            node.setGenomes(genomes);
-            ArrayList<Strand> newStrands = new ArrayList<>();
+    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes) {
+        ArrayList<Strand> result = new ArrayList<>();
+
+        for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
-                if (strand.getId() > xMax + 10 || strand.getId() < xMin - 100) {
-                    newStrands.add(strand);
-                    strand.retainGenomes(genomes);
+                if (strand.getX() < xMax + 10 && strand.getX() > xMin - 10) {
+                    result.add(strand);
                 }
             }
-            node.setStrands(newStrands);
         }
+
         return result;
 
 
@@ -197,8 +162,6 @@ public class DataTree extends TreeStructure<DataNode> {
 
 
     }
-
-
 
 
 }

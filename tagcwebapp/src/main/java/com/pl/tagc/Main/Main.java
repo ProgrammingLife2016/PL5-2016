@@ -26,7 +26,7 @@ final class Main {
 	private Main() {
 	}
 
-	/** T
+
 	/**
 	 * The main method.
 	 *

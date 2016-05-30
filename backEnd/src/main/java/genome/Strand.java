@@ -4,6 +4,7 @@ package genome;
  */
 
 import org.neo4j.graphdb.Node;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,6 +14,7 @@ import java.util.Arrays;
 public class Strand {
 
     private int id; //node id
+    private int x; //The x coordinate of this Strand.
     private String sequence; //dna in node
     private String[] genomes; //genomes that contain this node
     private String referenceGenome; // the refrence genome of this node
@@ -22,10 +24,11 @@ public class Strand {
 
     /**
      * Constructor to create a node.
-     * @param id The node id.
-     * @param sequence The sequence of the node.
-     * @param newGenomes The genomes id's passing through.
-     * @param referenceGenome The reference genome id.
+     *
+     * @param id                  The node id.
+     * @param sequence            The sequence of the node.
+     * @param newGenomes          The genomes id's passing through.
+     * @param referenceGenome     The reference genome id.
      * @param referenceCoordinate the reference coordinate.
      */
     public Strand(int id, String sequence, String[] newGenomes, String referenceGenome,
@@ -40,24 +43,27 @@ public class Strand {
         this.referenceCoordinate = referenceCoordinate;
         this.weight = genomes.length;
         this.edges = new ArrayList<>();
+        this.x = 0;
     }
 
-	/**
-	 * Constructor to create a new strand.
-	 * @param o The Object (returned by the Cypherquery) from which a strand should be created.
-	 */
-	public Strand(Object o) {
-		Node no = (Node) o;
-		this.id = java.lang.Math.toIntExact((long) no.getProperty("id"));
-		this.sequence = (String) no.getProperty("sequence");
-		//String genomes = (String) no.getProperty("genomes");
-		this.referenceGenome = (String) no.getProperty("refGenome");
-		this.referenceCoordinate = java.lang.Math.toIntExact((long) no.getProperty("refCoor"));
-	}
+    /**
+     * Constructor to create a new strand.
+     *
+     * @param o The Object (returned by the Cypherquery) from which a strand should be created.
+     */
+    public Strand(Object o) {
+        Node no = (Node) o;
+        this.id = java.lang.Math.toIntExact((long) no.getProperty("id"));
+        this.sequence = (String) no.getProperty("sequence");
+        //String genomes = (String) no.getProperty("genomes");
+        this.referenceGenome = (String) no.getProperty("refGenome");
+        this.referenceCoordinate = java.lang.Math.toIntExact((long) no.getProperty("refCoor"));
+    }
 
 
     /**
      * Get the node id.
+     *
      * @return The node id.
      */
     public int getId() {
@@ -66,6 +72,7 @@ public class Strand {
 
     /**
      * Get the sequence from the node.
+     *
      * @return The sequence.
      */
     public String getSequence() {
@@ -75,15 +82,17 @@ public class Strand {
 
     /**
      * Get the genomes passing through the node.
+     *
      * @return The genomes id's.
      */
     public ArrayList<String> getGenomes() {
-	    ArrayList<String> res = new ArrayList<>(Arrays.asList(genomes));   
+        ArrayList<String> res = new ArrayList<>(Arrays.asList(genomes));
         return res;
     }
 
     /**
      * Get the weight of the node.
+     *
      * @return The weight.
      */
     public int getWeight() {
@@ -93,6 +102,7 @@ public class Strand {
 
     /**
      * Get the reference genome.
+     *
      * @return The reference genome id.
      */
     public String getReferenceGenome() {
@@ -101,6 +111,7 @@ public class Strand {
 
     /**
      * Set the reference genome id.
+     *
      * @param referenceGenome The refrence genome id.
      */
     public void setReferenceGenome(String referenceGenome) {
@@ -109,6 +120,7 @@ public class Strand {
 
     /**
      * Get the reference coordinate.
+     *
      * @return The reference coordinate.
      */
     public int getReferenceCoordinate() {
@@ -117,6 +129,7 @@ public class Strand {
 
     /**
      * Set the reference coordinate.
+     *
      * @param referenceCoordinate The reference coordinate.
      */
     public void setReferenceCoordinate(int referenceCoordinate) {
@@ -125,6 +138,7 @@ public class Strand {
 
     /**
      * Set the node id.
+     *
      * @param id The node id.
      */
     public void setId(int id) {
@@ -133,6 +147,7 @@ public class Strand {
 
     /**
      * Set the sequence.
+     *
      * @param sequence The sequence.
      */
     public void setSequence(String sequence) {
@@ -141,6 +156,7 @@ public class Strand {
 
     /**
      * Set the genomes id's passing through.
+     *
      * @param newGenomes The genomes id's.
      */
     public void setGenomes(String[] newGenomes) {
@@ -154,41 +170,49 @@ public class Strand {
 
     /**
      * Set the weight.
+     *
      * @param weight The weight.
      */
     public void setWeight(int weight) {
         this.weight = weight;
     }
 
-    /**
-     * Retains all the genomes contained in retainGenomes.
-     * @param retainGenomes the Genomes to retain.
-     */
-    public void retainGenomes(ArrayList<String> retainGenomes) {
-        ArrayList<String> newGenomes = new ArrayList<>(Arrays.asList(genomes));
-        newGenomes.retainAll(retainGenomes);
-        genomes = new String[newGenomes.size()];
-        for (int i = 0; i < genomes.length; i++) {
-            genomes[i] = newGenomes.get(i);
-        }
-        this.weight = genomes.length;
-    }
-    
+
+
     /**
      * Add an edge to the edges.
+     *
      * @param edge The added edge.
      */
     public void addEdge(StrandEdge edge) {
-    	edges.add(edge);
+        edges.add(edge);
     }
-    
 
-    
+
     /**
      * Get the edges.
+     *
      * @return Edges.
      */
     public ArrayList<StrandEdge> getEdges() {
-    	return edges;
+        return edges;
+    }
+
+    /**
+     * Getter for x.
+     *
+     * @return the x coordinate of this strand.
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * The setter for x.
+     *
+     * @param x The x to set this nodes x coordinate to.
+     */
+    public void setX(int x) {
+        this.x = x;
     }
 }

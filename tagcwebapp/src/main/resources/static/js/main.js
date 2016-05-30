@@ -3,16 +3,17 @@ var animationSpeed = 1000;
 var currentHover = null;
 var zoomTimeout = null;
 var url = 'http://localhost:9998/';
-var ratio = 0;
 var minHeight = 300;
-var yZoom = 1;
 var screenWidth = $(window).width();
 var screenHeight = $(window).height();
 var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
-var minimapNodes;
+var minimapNodes, cachedZoomNodes;
 var currentMousePos = { x: -1, y: -1 };
-var counter = 1;
+var zoomLeft = 0;
+var zoomRight = 0;
+var zoomHeight = 0;
+var minimapHeight = 0;
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -56,7 +57,7 @@ function screenResize() {
         $('#minimap').find('canvas')[0].width = $('#minimap').width();
         $('#minimap').find('canvas')[0].height = $('#minimap').height();
         drawMinimap(null); //Update the canvas
-        zoom(1, 0);
+        zoom(1, 0, 1);
         if (treeRedrawTimeout) {
             clearTimeout(treeRedrawTimeout);
         }
@@ -101,17 +102,23 @@ $('document').ready(function() {
 
 
     $('#zoomoutbtn').on('click', function() {
-        zoom(-1, 10);
+        zoom(-1, 10, 1);
     });
     $('#zoominbtn').on('click', function() {
-        zoom(1, 10);
+        zoom(1, 10, 1);
     });
 
     //Bind the mouseScroll to trigger zooming on the miniMap
     $('body').bind('mousewheel DOMMouseScroll', function(e) {
         if ($(currentHover).is('#minimap')) {
             e.preventDefault();
-            zoom(e.originalEvent.wheelDelta, 1);
+            zoom(e.originalEvent.wheelDelta, 1, Math.floor(currentMousePos.x - $(currentHover).position().left));
+        } else if($(currentHover).is('#zoomWindow')) {
+            var ratio = $('#minimap').width() / $('#zoom').width();
+            e.preventDefault();
+            zoom(e.originalEvent.wheelDelta, 1, Math.floor((currentMousePos.x - $(currentHover).position().left) * ratio));
+            updateZoomValues();
+            drawZoom(null);
         }
     });
 
@@ -120,13 +127,13 @@ $('document').ready(function() {
     $(slider)
         .draggable({
             containment: "parent",
-            drag: function() {
+            stop: function() {
                 //Temp, to make it look smooth, can be done if lazy loading is implemented
-                updatezoomWindow();
+                //updatezoomWindow();
 
                 //Should be this when we have specific zoomData
-                //clearTimeout(zoomTimeout);
-                //zoomTimeout = setTimeout(function() { updatezoomWindow() }, 50);
+                clearTimeout(zoomTimeout);
+                zoomTimeout = setTimeout(function() { updatezoomWindow() }, 50);
             }
         });
 
@@ -138,7 +145,7 @@ $('document').ready(function() {
     });
 
     //Constantly check where the mouse is, to let the zooming work better.
-    $('#minimapContainer').mousemove(function(event) {
+    $('#minimapContainer, #zoom').mousemove(function(event) {
         currentMousePos.x = event.pageX;
         currentMousePos.y = event.pageY;
     });
@@ -160,13 +167,39 @@ function pxToInt(css) {
  * @param nodes
  */
 var drawZoom = function(nodes) {
-    var ratio = $('#zoomWindow').width() / Object.keys(nodes).length;
-    var left = nodes[Object.keys(nodes)[0]].x - 1;
-
-    draw(nodes, $('#zoomWindow canvas')[0], function(x) {
-        return (x - left) * ratio;
-    });
+    if (nodes == null) {
+        nodes = cachedZoomNodes;
+    } else {
+        cachedZoomNodes = nodes;
+        zoomHeight = calcHeight(nodes);
+    }
+    var ratio = $('#zoomWindow').width() / (zoomRight - zoomLeft);
+    if (Object.keys(nodes).length > 0) {
+        var canvas = $('#zoomWindow canvas')[0];
+        draw(nodes, canvas, canvas.height / zoomHeight, function(x) {
+            return (x) * ratio;
+        });
+    } else {
+        var c = $('#zoomWindow canvas')[0];
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, c.width, c.height);
+    }
 };
+
+/**
+ * Calculate the difference in y amounts in the nodeSet
+ * @param nodes The nodes
+ * @returns {number} The max difference in y
+ */
+function calcHeight(nodes) {
+    var minHeight = nodes[Object.keys(nodes)[0]].y;
+    var maxHeight = minHeight;
+    $.each(nodes, function(key, node) {
+        minHeight = Math.min(minHeight, node.y);
+        maxHeight = Math.max(maxHeight, node.y);
+    });
+    return maxHeight - minHeight;
+}
 
 /**
  * Draw the minimap
@@ -177,10 +210,12 @@ var drawMinimap = function(nodes) {
         nodes = minimapNodes;
     } else {
         minimapNodes = nodes;
+        minimapHeight = calcHeight(nodes);
     }
-    var ratio = $('#minimap').width() / Object.keys(nodes).length;
+    var ratio = $('#minimap').width() / nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
 
-    draw(nodes, $('#minimap canvas')[0], function(x) {
+    var canvas = $('#minimap canvas')[0];
+    draw(nodes, canvas, canvas.height / minimapHeight, function(x) {
         return x * ratio;
     });
 };
@@ -192,7 +227,7 @@ var drawMinimap = function(nodes) {
  * @param c
  * @param translate
  */
-function draw(points, c, translate) {
+function draw(points, c, yTranslate, xTranslate) {
     if (typeof c == "undefined") {
         return;
     }
@@ -201,11 +236,9 @@ function draw(points, c, translate) {
 
     var nodeHeight = c.height / 2;
 
-    var yTranslate = (c.height < 200)?c.height / 2 / 110 : 1;
-
     $.each(points, function(id, point) {
         ctx.beginPath();
-        ctx.arc(translate(point.x), nodeHeight + point.y * yTranslate, 5, 0, 2 * Math.PI);
+        ctx.arc(xTranslate(point.x), nodeHeight + point.y * yTranslate * 0.3, 5, 0, 2 * Math.PI);
         ctx.stroke();
 
         $.each(point.edges, function(key, edge) {
@@ -215,8 +248,8 @@ function draw(points, c, translate) {
             }
             if (target) {
                 ctx.beginPath();
-                ctx.moveTo(translate(point.x), nodeHeight + point.y * yTranslate);
-                ctx.lineTo(translate(target.x), nodeHeight + target.y * yTranslate);
+                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y * yTranslate * 0.3);
+                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y * yTranslate * 0.3);
                 ctx.lineWidth = edge.weight;
                 ctx.strokeStyle = '#'+ edge.color;
                 ctx.stroke();
@@ -231,9 +264,10 @@ function draw(points, c, translate) {
  * The method that does the zooming, based on your mouse position, the zooming is applied.
  * @param direction
  * @param zoomAmount
+ * @param xMousePos
  */
-function zoom(direction, zoomAmount) {
-    var slider = $('.slider', currentHover);
+function zoom(direction, zoomAmount, xMousePos) {
+    var slider = $('.slider', '#minimap');
     var minimap = $('#minimap');
     var zoomWindow = $('#zoomWindow');
     var maxWidth = minimap.width();
@@ -248,7 +282,7 @@ function zoom(direction, zoomAmount) {
 
     //If zooming in the zoomField should zoom towards the cursor
     if (direction > 0) {
-        var mouseX = currentMousePos.x - minimap.position().left;
+        var mouseX = xMousePos;
         var leftSide = mouseX - left;
         var rightSide = left + currentWidth - mouseX;
         var dif = Math.min(difference, leftSide - rightSide);
@@ -278,18 +312,23 @@ function zoom(direction, zoomAmount) {
  * Update the window that shows the zoomed genome
  */
 function updatezoomWindow()
-{
+{  
     if (minimapNodes) {
+        var zoom = updateZoomValues();
+        var boundingBox = {xleft: zoomLeft, xright: zoomRight, zoom: zoom};
+        getNodes(boundingBox, drawZoom);
+    }
+}
+
+function updateZoomValues()
+{
         var slider = $('#minimap .slider');
         var totalWidth = $('#minimap').width();
         var sliderLeft = pxToInt(slider.css('left'));
-        var minimapNodeSize = Object.keys(minimapNodes).length;
-        var left = Math.floor(sliderLeft / totalWidth * minimapNodeSize);
-        var width = Math.floor(slider.width() / totalWidth * minimapNodeSize);
-        var zoom = Math.round(totalWidth / slider.width());
-        var boundingBox = computeBoundingBox(left, width, zoom);
-        getNodes(boundingBox, drawZoom);
-    }
+        var xWidth = minimapNodes[Object.keys(minimapNodes)[Object.keys(minimapNodes).length - 1]].x;
+        zoomLeft = Math.max(0, Math.floor(sliderLeft / totalWidth * xWidth));
+        zoomRight =  Math.floor((sliderLeft + slider.width()) / totalWidth * xWidth);
+        return Math.round(totalWidth / slider.width());
 }
 
 // This function translates from one representation of a bounding box in gui coordinates to
@@ -312,12 +351,14 @@ function computeBoundingBox(left, width, zoom)
 function parseNodeData(nodes) {
     var result = {};
 
-    var left = nodes[0].id;
-    var ratio = $('#minimap').width() / (nodes[nodes.length-1].x - left);
+    if (typeof nodes == 'undefined' || nodes.length == 0) {
+        return result;
+    }
+    var left = nodes[0].x;
 
     $.each(nodes, function(key, value) {
         result[value.id] = {
-            x: value.x - left,
+            x: value.x - zoomLeft,
             y: value.y,
             strands: value.strands,
             edges: value.edges,
@@ -365,7 +406,7 @@ function initializeMinimap() {
     );
     var boundingBox = computeBoundingBox(0, 10000000, 1);
     getNodes(boundingBox, drawMinimap);
-    zoom(-1, 1);
+    zoom(-1, 1, 1);
 }
 
 /**
@@ -389,7 +430,7 @@ function fullSizeMinimap() {
     $('#phylogenyContainer').animate({
         'width': 30
     }, 1000, function () {
-        zoom(1, 0);
+        zoom(1, 0, 1);
         screenResize();
     });
 }

@@ -7,17 +7,20 @@ import java.util.ArrayList;
  */
 public class Genome {
 
-    private ArrayList<Strand> strands;
-    private String id;
+    private ArrayList<Strand> strands; //The strands contained in this Genome, parsed starting at the lowest id.
+    private String id; //The id String of this genome.
 
     /**
      * Constructor to create a new genome.
+     *
      * @param id The genome name.
      */
     public Genome(String id) {
         this.id = id;
         strands = new ArrayList<>();
     }
+
+
 
     /**
      * Add a strand to the genome.
@@ -39,6 +42,7 @@ public class Genome {
 
     /**
      * Get the id.
+     *
      * @return Id.
      */
     public String getId() {
@@ -47,6 +51,7 @@ public class Genome {
 
     /**
      * Set the id.
+     *
      * @param id Id.
      */
     public void setId(String id) {
