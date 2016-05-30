@@ -90,8 +90,9 @@ public class Mutations {
 				ArrayList<String> genomesInMutation = new ArrayList<>(next1.getGenomes());
 				genomesInMutation.retainAll(genomesInBothStrands);
 				genomesInBothStrands.removeAll(genomesInMutation);
-				MutationIndel indel = new MutationIndel(MutationType.INSERTION, genomesInBothStrands,
-						genomesInMutation, start, next1, new ArrayList<Strand>());
+				MutationIndel indel = new MutationIndel(MutationType.INSERTION, 
+						genomesInBothStrands, genomesInMutation, 
+						start, next1, new ArrayList<Strand>());
 				mutation.add(indel);
 				return;
 			} 

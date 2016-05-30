@@ -2,7 +2,6 @@ package mutation;
 
 import java.util.ArrayList;
 
-import genome.Genome;
 import genome.Strand;
 
 /**

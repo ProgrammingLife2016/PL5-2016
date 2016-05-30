@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import genome.Genome;
 import genome.Strand;
 
 /**
