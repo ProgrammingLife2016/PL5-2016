@@ -8,6 +8,7 @@ import ribbonnodes.RibbonNode;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -43,8 +44,7 @@ public final class RibbonController {
 
         System.out.println(minX + ", " + maxX);
         ArrayList<String> actGen = genomeGraph.getActiveGenomes();
-
-
+        actGen = new ArrayList<>();
         //HARD CODED ACTIVE GENOMES.
         if (actGen.size() < 2) {
             actGen.add("TKK_02_0010.fasta");
@@ -56,8 +56,7 @@ public final class RibbonController {
 
 
         }
-
-
+        genomeGraph.setActiveGenomes(actGen);
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);
 
@@ -239,7 +238,8 @@ public final class RibbonController {
                 new Color(255, 255, 0),
                 new Color(0, 0, 128),
                 new Color(0, 128, 0),
-                new Color(128, 0, 0)};
+                new Color(128, 0, 0),
+                new Color(128, 128, 128)};
 
         return colors[genomeGraph.getActiveGenomes().indexOf(GenomeID)];
 

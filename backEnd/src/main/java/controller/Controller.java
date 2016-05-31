@@ -38,7 +38,7 @@ public class Controller implements FrontEndBackEndInterface {
     /**
      * Controller Singleton.
      */
-    public static controller.Controller DC;
+    private static controller.Controller DC = null;
 
     /**
      * Constructor.
@@ -52,7 +52,6 @@ public class Controller implements FrontEndBackEndInterface {
                 null, 0));
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
         ribbonController = new RibbonController(genomeGraph, dataTree);
-        DC = this;
     }
 
 
@@ -95,4 +94,12 @@ public class Controller implements FrontEndBackEndInterface {
         genomeGraph.setActiveGenomes(activeGenomes);
     }
 
+    public static Controller getDC() {
+    	if (DC == null) {
+    		DC = new Controller();
+    	}
+    	return DC;
+    }
+    
+    
 }
