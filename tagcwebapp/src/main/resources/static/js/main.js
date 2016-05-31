@@ -198,7 +198,7 @@ function calcHeight(nodes) {
         minHeight = Math.min(minHeight, node.y);
         maxHeight = Math.max(maxHeight, node.y);
     });
-    return maxHeight - minHeight;
+    return (maxHeight - minHeight)+0.00001;
 }
 
 /**

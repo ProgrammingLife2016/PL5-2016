@@ -30,7 +30,7 @@ public class RibbonNode {
         strands = new ArrayList<>();
         this.genomes = genomes;
         this.id = id;
-        this.x = id; //for now
+        this.x = 0; //for now
         this.y = 0;
     }
 

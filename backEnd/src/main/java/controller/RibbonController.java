@@ -75,8 +75,8 @@ public final class RibbonController {
 
 
         result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
-        calcYcoordinates(result);
         addEdges(result);
+        calcYcoordinates(result);
 
 
         return result;
@@ -140,13 +140,24 @@ public final class RibbonController {
         ArrayList<RibbonNode> currentXNodes = new ArrayList<>();
         for (int i = 0; i < nodes.size(); i++) {
             RibbonNode node = nodes.get(i);
-            if (node.getX() == currentX) {
+            if (node.getX() > currentX-1000 && node.getX()<currentX+1000) {
                 currentXNodes.add(node);
             } else {
                 if (currentXNodes.size() > 1) {
                     for (int j = 0; j < currentXNodes.size(); j++) {
+                        RibbonNode currentNode = currentXNodes.get(j);
                         int minY = (currentXNodes.size() / 2) * -10;
-                        currentXNodes.get(j).setY(minY + 15 * j);
+                        int prevY=0;
+                        for(RibbonEdge inEdge: currentNode.getInEdges()){
+                            prevY+=getNodeWithId(inEdge.getStart(),nodes).getY();
+                        }
+                        if(prevY!=0){
+                            prevY=prevY/currentNode.getInEdges().size();
+                            currentNode.setY(prevY);
+                        }
+                        else {
+                            currentNode.setY(minY + 10 * j);
+                        }
                     }
                 }
                 currentXNodes = new ArrayList<>();
