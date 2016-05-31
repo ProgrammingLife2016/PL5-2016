@@ -266,7 +266,7 @@ public class DatabaseTest {
      */
     @Test
     public void testLoadGenomeMetadataFromCSV() {
-        db.loadGenomeMetadataFromCSV("data/metadata.csv");
+        db.loadGenomeMetadataFromResources("data/metadata.csv");
         HashMap<String,GenomeMetadata> metadata = db.getAllGenomeMetadata();
         Assert.assertEquals(metadata.get("TKK-01-0055").getLineage(),"LIN 2");        
     }

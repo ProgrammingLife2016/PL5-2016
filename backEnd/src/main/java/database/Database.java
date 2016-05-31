@@ -14,6 +14,9 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import parser.Parser;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -268,13 +271,37 @@ public class Database {
         return graphDb;
     }
 
+	/**
+	 * Gets the all genome metadata.
+	 *
+	 * @return the all genome metadata
+	 */
 	public HashMap<String, GenomeMetadata> getAllGenomeMetadata() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void loadGenomeMetadataFromCSV(String string) {
-		// TODO Auto-generated method stub
+	/**
+	 * Load genome metadata from resources.
+	 *
+	 * @param filePath the file path
+	 */
+	public void loadGenomeMetadataFromResources(String filePath) {
+		
+		InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
+		File temp = new File("temp/metadata.csv");
+		try {
+			Files.copy(in, temp.toPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try (Transaction tx = graphDb.beginTx()) {
+            graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + temp.toURI()
+                    + "\' AS csvLine\nCREATE (p:Genome { id: csvLine.'Specimen ID', "
+                    + "lineage: csvLine.Lineage})");
+            tx.success();
+        }
 		
 	}
 }
