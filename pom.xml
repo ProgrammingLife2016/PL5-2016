@@ -10,8 +10,12 @@
 		<module>tagcwebapp</module>
 	</modules>
 	<name>PL5-2016</name>
-	<url>http://www.foo.com/</url>
 	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-site-plugin</artifactId>
+			<version>3.5.1</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -27,8 +31,8 @@
 	</dependencies>
 
 	<distributionManagement>
-		<!-- We must specify this minimal site distribution to enable site deployment
-			to a staging location. Staging the site enables us to test the links between
+		<!-- We must specify this minimal site distribution to enable site deployment 
+			to a staging location. Staging the site enables us to test the links between 
 			maven modules. This configuration below will deploy the site to ./target/staging -->
 		<site>
 			<id>site</id>
@@ -58,7 +62,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.pl.tagc.tagcwebap.Main</mainClass>
+							<mainClass>com.pl.tagc.main.Main</mainClass>
 						</manifest>
 					</archive>
 					<descriptor>depmerge.xml</descriptor>
@@ -174,6 +178,7 @@
 					<reportSet>
 						<!-- defines cobertura projects- and aggregate-report -->
 						<id>cobertura</id>
+						<inherited>false</inherited>
 						<reports>
 							<report>cobertura</report>
 						</reports>

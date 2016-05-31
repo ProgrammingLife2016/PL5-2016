@@ -102,7 +102,6 @@ public class Parser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//result.getDataTree().addStrands(new ArrayList<>(result.getGenomes().values()));
 		return result;
 	}
 	 

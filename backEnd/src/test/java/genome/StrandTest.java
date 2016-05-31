@@ -86,19 +86,7 @@ public class StrandTest {
         assertEquals(strand.getWeight(), 4);
     }
 
-    /**
-     * Test the retainGenomes method.
-     *
-     * @throws Exception if fail.
-     */
-    @Test
-    public void testRetainGenomes() throws Exception {
-        assertEquals(strand.getGenomes().size(), 2);
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("ref1");
-        strand.retainGenomes(testArray);
-        assertEquals(strand.getGenomes().size(), 1);
-    }
+
 
     /**
      * Test the getter of Edges.

@@ -98,7 +98,7 @@ public class AdaptedRibbonNode {
 	}
 
 	/**
-	 * Gets the x coordinate
+	 * Gets the x coordinate.
 	 * @return the x coordinate
 	 */
 	public int getX() {
@@ -106,7 +106,7 @@ public class AdaptedRibbonNode {
 	}
 
 	/**
-	 * Sets the x coordinate
+	 * Sets the x coordinate.
 	 * @param x The x coordinate
 	 */
 	public void setX(int x) {
@@ -114,7 +114,7 @@ public class AdaptedRibbonNode {
 	}
 
 	/**
-	 * Gets the y coordinate
+	 * Gets the y coordinate.
 	 * @return the y coordinate
 	 */
 	public int getY() {
@@ -123,7 +123,7 @@ public class AdaptedRibbonNode {
 
 
 	/**
-	 * Sets the y coordinate
+	 * Sets the y coordinate.
 	 * @param y The y coordinate
 	 */
 	public void setY(int y) {

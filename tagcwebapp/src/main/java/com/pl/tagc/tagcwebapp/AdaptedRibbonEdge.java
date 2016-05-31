@@ -1,7 +1,5 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.awt.*;
-
 /**
  * RibbonEdge class for later extension.
  * Created by Matthijs on 12-5-2016.
