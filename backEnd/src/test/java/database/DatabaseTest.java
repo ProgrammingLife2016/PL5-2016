@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import genome.Genome;
 import genome.Strand;
 import genome.StrandEdge;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -17,6 +18,7 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.tooling.GlobalGraphOperations;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -257,6 +259,16 @@ public class DatabaseTest {
         Assert.assertEquals(db.returnDescGenome("3"), wanted);
         wanted.add("DD");
         Assert.assertEquals(db.returnDescGenome("2"), wanted);
+    }
+    
+    /**
+     * Tests if the metadata gets retrieved correctly.
+     */
+    @Test
+    public void testLoadGenomeMetadataFromCSV() {
+        db.loadGenomeMetadataFromCSV("data/metadata.csv");
+        HashMap<String,GenomeMetadata> metadata = db.getAllGenomeMetadata();
+        Assert.assertEquals(metadata.get("TKK-01-0055").getLineage(),"LIN 2");        
     }
 
     /**

@@ -3,16 +3,19 @@ package database;
 import genome.Genome;
 import genome.Strand;
 import genome.StrandEdge;
+
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseBuilder;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+
 import parser.Parser;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -264,4 +267,14 @@ public class Database {
     public GraphDatabaseService getGraphService() {
         return graphDb;
     }
+
+	public HashMap<String, GenomeMetadata> getAllGenomeMetadata() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void loadGenomeMetadataFromCSV(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }
