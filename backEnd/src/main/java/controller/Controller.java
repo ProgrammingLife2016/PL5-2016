@@ -36,8 +36,6 @@ public class Controller implements FrontEndBackEndInterface {
 
     private RibbonController ribbonController;
 
-	private Database db;
-
     /**
      * Controller Singleton.
      */
@@ -55,10 +53,8 @@ public class Controller implements FrontEndBackEndInterface {
                 null, 0));
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
         ribbonController = new RibbonController(genomeGraph, dataTree);
-        DC = this;
-        db = new Database("test.db", "data/test1.gfa", "data/testPhylo.nwk", false);
-        db.loadGenomeMetadataFromResources("data/metadata.csv");
-        genomeGraph.loadMetaData(db.getAllGenomeMetadata());
+        DC = this;     
+        genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
 
 

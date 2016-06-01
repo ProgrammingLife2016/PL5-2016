@@ -51,12 +51,12 @@ public final class RibbonController {
 
         //HARD CODED ACTIVE GENOMES.
         if (actGen.size() < 2) {
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0010.fasta"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0006.fasta"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0025.fasta"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0005.fasta"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0008.fasta"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0004.fasta"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0010"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0006"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0025"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0005"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0008"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0004"));
 
 
         }

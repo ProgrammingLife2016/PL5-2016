@@ -1,6 +1,8 @@
 package parser;
 
 import controller.GenomeGraph;
+import genome.Genome;
+import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
 
@@ -14,6 +16,14 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+
+import org.neo4j.graphdb.DynamicLabel;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.ResourceIterator;
+import org.neo4j.graphdb.Transaction;
+
+import com.opencsv.CSVReader;
 
 /**
  * Created by Jeffrey on 24-4-2016.
@@ -126,6 +136,12 @@ public class Parser {
 		String sequence = splittedLine[2];
 		splittedLine[4] = splittedLine[4].substring(6, splittedLine[4].length());
 		String[] genomes = splittedLine[4].split(";");
+		for (int i = 0; i < genomes.length; i++) {
+			String genomeId = genomes[i];
+			if (genomeId.endsWith(".fasta")) {
+				 genomes[i] = genomeId.substring(0, genomeId.length() - 6);
+				}
+		}
 		String referenceGenome = splittedLine[5].substring(6, splittedLine[5].length());
 		String ref = splittedLine[8].substring(8, splittedLine[8].length());
 		int referenceCoordinate = Integer.parseInt(ref);
@@ -266,5 +282,30 @@ public class Parser {
         if (!isParent) {
             phylo.println(parent + "," + tree.split(":")[0] + "," + tree.split(":")[1] + ",child");
         }
+    }
+    
+    /**
+     * Parses the genome metadata.
+     *
+     * @param filePath the file path
+     * @return the hash map
+     */
+    public static HashMap<String, GenomeMetadata> parseGenomeMetadata(String filePath) {
+    	HashMap<String, GenomeMetadata> hmap = new HashMap<String, GenomeMetadata>(); 
+    	InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
+    	CSVReader reader = new CSVReader(new InputStreamReader(in),';');
+    	String [] nextLine;
+    	try {
+    		while ((nextLine = reader.readNext()) != null) {
+    			String genomeId = nextLine[0];
+    			String lineage = nextLine[21];
+    			hmap.put(genomeId, new GenomeMetadata(genomeId, lineage));
+    		}
+    		reader.close();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+
+    	return hmap;
     }
 }
