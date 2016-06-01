@@ -48,18 +48,17 @@ public final class RibbonController {
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
 
         System.out.println(minX + ", " + maxX);
-        ArrayList<String> actGen = genomeGraph.getActiveGenomes();
+        ArrayList<String> actGen = new ArrayList<>();
         //HARD CODED ACTIVE GENOMES.
         if (actGen.size() < 2) {
             actGen.add("TKK_02_0010.fasta");
-            actGen.add("TKK_02_0006.fasta");
             actGen.add("TKK_02_0025.fasta");
-            actGen.add("TKK_02_0005.fasta");
-            actGen.add("TKK_02_0008.fasta");
-            actGen.add("TKK_02_0004.fasta");
+
 
 
         }
+        genomeGraph.setActiveGenomes(actGen);
+
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);
 
