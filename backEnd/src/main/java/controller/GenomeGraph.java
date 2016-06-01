@@ -8,6 +8,7 @@ import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GenomeGraph.
  */
@@ -151,14 +152,14 @@ public class GenomeGraph {
 
 
     /**
-     * Setter for the activeGenomes.
+     * Sets the genomes as active.
      *
-     * @param activeGenomes The genomeIDS.
+     * @param ids the new genomes as active
      */
     public void setGenomesAsActive(ArrayList<String> ids) {
     	
         this.activeGenomes = new ArrayList<Genome>();
-        for(String genomeId: ids) {
+        for (String genomeId: ids) {
         	activeGenomes.add(genomes.get(genomeId));
         }
         

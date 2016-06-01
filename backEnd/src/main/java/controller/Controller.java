@@ -1,12 +1,9 @@
 package controller;
 
-import database.Database;
 import datatree.DataNode;
 import datatree.DataTree;
 import parser.Parser;
-
 import java.util.ArrayList;
-
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
 

@@ -5,10 +5,6 @@ import genome.Genome;
 import genome.Strand;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
-
-
-
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,9 +16,15 @@ import java.util.HashMap;
  */
 public final class RibbonController {
 
-    private GenomeGraph genomeGraph; //The graph that contains the geographic information of the stands.
-    private DataTree dataTree; //The tree that contains the phylogenetic information of the strands.
-
+    /** The graph that contains the geographic information of the strands. */
+    private GenomeGraph genomeGraph; 
+    
+    /** The tree that contains the phylogenetic information of the strands. */
+    private DataTree dataTree; 
+    
+    /** The color map used to color the genomes. */
+    private HashMap<String, Color> colorMap; 
+    
     /**
      * Create ribbonController object.
      *
@@ -32,9 +34,30 @@ public final class RibbonController {
     public RibbonController(GenomeGraph genomeGraph, DataTree dataTree) {
         this.genomeGraph = genomeGraph;
         this.dataTree = dataTree;
+        colorMap = constructColorMap();
     }
 
     /**
+     * Construct color map.
+     *
+     * @return the hash map
+     */
+    private HashMap<String, Color> constructColorMap() {
+    	HashMap<String, Color> map =  new HashMap<String, Color>();
+    	map.put("LIN 1", Color.decode("0xed00c3"));	 
+    	map.put("LIN 2", Color.decode("0x0000ff"));	 
+    	map.put("LIN 3", Color.decode("0x500079"));	 
+    	map.put("LIN 4", Color.decode("0xff0000"));	 
+    	map.put("LIN 5", Color.decode("0x4e2c00"));	 
+    	map.put("LIN 6", Color.decode("0x69ca00"));	 
+    	map.put("LIN 7", Color.decode("0xff7e00"));	 
+    	map.put("LIN animal", Color.decode("0x00ff9c"));	 
+    	map.put("LIN B", Color.decode("0x00ff9c"));	 
+    	map.put("LIN CANETTII", Color.decode("0x00ffff"));    	
+		return map;
+	}
+
+	/**
      * Get the ribbon nodes with edges for a certain view in the GUI.
      *
      * @param minX      the minx of the view.
@@ -183,16 +206,17 @@ public final class RibbonController {
 
 
     }
-
     /**
-     * Finds the next node that contains a certain genome, creates an edge between the two nodes and returns the end Node of the edge.
+     * Finds the next node that contains a certain genome, creates an 
+     * edge between the two nodes and returns the end Node of the edge.
      *
-     * @param nodes       The RibbonGraph.
-     * @param currentNode The start node of the edge.
-     * @param genomeID    The genome id to find an edge for.
-     * @return The end node of the edge.
+     * @param nodes  		The RibbonGraph.
+     * @param currentNode  	The start node of the edge.
+     * @param genome 		The genome to find an edge for.
+     * @return 				The end node of the edge.
      */
-    public RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes, RibbonNode currentNode, Genome genome) {
+    public RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes, 
+    		RibbonNode currentNode, Genome genome) {
         RibbonNode next = findNextNodeWithGenome(nodes, genome, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {
@@ -201,7 +225,8 @@ public final class RibbonController {
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
             } else {
-                currentNode.getOutEdge(currentNode.getId(), next.getId()).addGenomeToEdge(getColorForGenomeID(genome));
+                RibbonEdge edge = currentNode.getOutEdge(currentNode.getId(), next.getId());
+                edge.addGenomeToEdge(getColorForGenomeID(genome));
             }
 
 
@@ -229,36 +254,20 @@ public final class RibbonController {
     }
 
     /**
-     * Return the color associated with a genome.
+     * Gets the color for genome id.
      *
-     * @param GenomeID The genome to return the color for.
-     * @return The color that is associated with this genomeid.
+     * @param genome the genome
+     * @return the color for genome id
      */
     public Color getColorForGenomeID(Genome genome) {
-    	HashMap<String,Color> colorMap =  new HashMap<String, Color>();
-
-    	colorMap.put("LIN 1", Color.decode("0xed00c3"));	 
-    	colorMap.put("LIN 2", Color.decode("0x0000ff"));	 
-    	colorMap.put("LIN 3", Color.decode("0x500079"));	 
-    	colorMap.put("LIN 4", Color.decode("0xff0000"));	 
-    	colorMap.put("LIN 5", Color.decode("0x4e2c00"));	 
-    	colorMap.put("LIN 6", Color.decode("0x69ca00"));	 
-    	colorMap.put("LIN 7", Color.decode("0xff7e00"));	 
-    	colorMap.put("LIN animal", Color.decode("0x00ff9c"));	 
-    	colorMap.put("LIN B", Color.decode("0x00ff9c"));	 
-    	colorMap.put("LIN CANETTII", Color.decode("0x00ffff"));
-    	
     	Color result;
-    	
     	if (genome.hasMetadata()) {
     		result = colorMap.get(genome.getMetadata().getLineage());
     	}
     	else {
     		result = new Color(100, 100, 100);
     	}
-
         return result;
-
     }
 
 
