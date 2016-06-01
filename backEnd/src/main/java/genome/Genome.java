@@ -76,5 +76,12 @@ public class Genome {
 		this.metadata = metadata;
 	}
 
-
+	/**
+	 * Checks for metadata.
+	 *
+	 * @return true, if successful
+	 */
+	public boolean hasMetadata() {
+		return this.metadata != null;
+	}
 }

@@ -237,19 +237,27 @@ public final class RibbonController {
     public Color getColorForGenomeID(Genome genome) {
     	HashMap<String,Color> colorMap =  new HashMap<String, Color>();
 
-    	colorMap.put("LIN 1",Color.decode("0xed00c3"));	 
-    	colorMap.put("LIN 2",Color.decode("0x0000ff"));	 
-    	colorMap.put("LIN 3",Color.decode("0x500079"));	 
-    	colorMap.put("LIN 4",Color.decode("0xff0000"));	 
-    	colorMap.put("LIN 5",Color.decode("0x4e2c00"));	 
-    	colorMap.put("LIN 6",Color.decode("0x69ca00"));	 
-    	colorMap.put("LIN 7",Color.decode("0xff7e00"));	 
+    	colorMap.put("LIN 1", Color.decode("0xed00c3"));	 
+    	colorMap.put("LIN 2", Color.decode("0x0000ff"));	 
+    	colorMap.put("LIN 3", Color.decode("0x500079"));	 
+    	colorMap.put("LIN 4", Color.decode("0xff0000"));	 
+    	colorMap.put("LIN 5", Color.decode("0x4e2c00"));	 
+    	colorMap.put("LIN 6", Color.decode("0x69ca00"));	 
+    	colorMap.put("LIN 7", Color.decode("0xff7e00"));	 
     	colorMap.put("LIN animal", Color.decode("0x00ff9c"));	 
     	colorMap.put("LIN B", Color.decode("0x00ff9c"));	 
     	colorMap.put("LIN CANETTII", Color.decode("0x00ffff"));
     	
+    	Color result;
+    	
+    	if (genome.hasMetadata()) {
+    		result = colorMap.get(genome.getMetadata().getLineage());
+    	}
+    	else {
+    		result = new Color(100, 100, 100);
+    	}
 
-        return colorMap.get(genome.getMetadata().getLineage());
+        return result;
 
     }
 
