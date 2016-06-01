@@ -221,12 +221,12 @@ public final class RibbonController {
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {
                 RibbonEdge edge = new RibbonEdge(currentNode.getId(), next.getId());
-                edge.setColor(getColorForGenomeID(genome));
+                edge.setColor(getColorForGenome(genome));
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
             } else {
                 RibbonEdge edge = currentNode.getOutEdge(currentNode.getId(), next.getId());
-                edge.addGenomeToEdge(getColorForGenomeID(genome));
+                edge.addGenomeToEdge(getColorForGenome(genome));
             }
 
 
@@ -254,12 +254,12 @@ public final class RibbonController {
     }
 
     /**
-     * Gets the color for genome id.
+     * Gets the color for the genome.
      *
      * @param genome the genome
-     * @return the color for genome id
+     * @return the color for the genome 
      */
-    public Color getColorForGenomeID(Genome genome) {
+    public Color getColorForGenome(Genome genome) {
     	Color result;
     	if (genome.hasMetadata()) {
     		result = colorMap.get(genome.getMetadata().getLineage());

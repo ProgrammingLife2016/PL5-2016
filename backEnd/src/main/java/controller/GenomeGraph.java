@@ -2,13 +2,11 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import genome.Genome;
 import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GenomeGraph.
  */
