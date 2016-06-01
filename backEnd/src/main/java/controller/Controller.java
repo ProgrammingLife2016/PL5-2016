@@ -58,6 +58,7 @@ public class Controller implements FrontEndBackEndInterface {
         DC = this;
         db = new Database("test.db", "data/test1.gfa", "data/testPhylo.nwk", false);
         db.loadGenomeMetadataFromResources("data/metadata.csv");
+        genomeGraph.loadMetaData(db.getAllGenomeMetadata());
     }
 
 

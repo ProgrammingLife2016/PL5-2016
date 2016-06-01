@@ -4,6 +4,9 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import genome.GenomeMetadata;
+
 import java.io.File;
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package database;
+package genome;
 
 public class GenomeMetadata {
 

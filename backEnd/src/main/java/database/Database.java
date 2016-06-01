@@ -1,6 +1,7 @@
 package database;
 
 import genome.Genome;
+import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
 

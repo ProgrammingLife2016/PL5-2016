@@ -9,7 +9,7 @@ public class Genome {
 
     private ArrayList<Strand> strands; //The strands contained in this Genome, parsed starting at the lowest id.
     private String id; //The id String of this genome.
-
+    private GenomeMetadata metadata;
     /**
      * Constructor to create a new genome.
      *
@@ -57,6 +57,24 @@ public class Genome {
     public void setId(String id) {
         this.id = id;
     }
+
+
+
+	/**
+	 * @return the metadata
+	 */
+	public GenomeMetadata getMetadata() {
+		return metadata;
+	}
+
+
+
+	/**
+	 * @param metadata the metadata to set
+	 */
+	public void setMetadata(GenomeMetadata metadata) {
+		this.metadata = metadata;
+	}
 
 
 }

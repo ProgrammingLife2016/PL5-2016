@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import genome.Genome;
+import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
 
@@ -157,5 +158,18 @@ public class GenomeGraph {
     public void setActiveGenomes(ArrayList<String> activeGenomes) {
         this.activeGenomes = activeGenomes;
     }
+
+	/**
+	 * Load meta data.
+	 *
+	 * @param metadata the metadata
+	 */
+	public void loadMetaData(HashMap<String, GenomeMetadata> metadata) {
+		
+		for (Genome g: genomes.values()) {
+			g.setMetadata(metadata.get(g.getId()));
+		}
+		
+	}
 
 }
