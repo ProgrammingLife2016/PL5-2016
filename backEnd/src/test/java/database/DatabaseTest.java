@@ -260,17 +260,6 @@ public class DatabaseTest {
         wanted.add("DD");
         Assert.assertEquals(db.returnDescGenome("2"), wanted);
     }
-    
-    /**
-     * Tests if the metadata gets retrieved correctly.
-     */
-    @Test
-    public void testLoadGenomeMetadataFromCSV() {
-        db.loadGenomeMetadataFromResources("data/metadata.csv");
-        HashMap<String,GenomeMetadata> metadata = db.getAllGenomeMetadata();
-        Assert.assertEquals(metadata.get("TKK-01-0055").getLineage(),"LIN 2");        
-    }
-
     /**
      * Deletes the created database.
      */

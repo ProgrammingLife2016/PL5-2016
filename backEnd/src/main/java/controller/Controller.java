@@ -1,5 +1,6 @@
 package controller;
 
+import database.Database;
 import datatree.DataNode;
 import datatree.DataTree;
 import parser.Parser;
@@ -35,6 +36,8 @@ public class Controller implements FrontEndBackEndInterface {
 
     private RibbonController ribbonController;
 
+	private Database db;
+
     /**
      * Controller Singleton.
      */
@@ -53,6 +56,8 @@ public class Controller implements FrontEndBackEndInterface {
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
         ribbonController = new RibbonController(genomeGraph, dataTree);
         DC = this;
+        db = new Database("test.db", "data/test1.gfa", "data/testPhylo.nwk", false);
+        db.loadGenomeMetadataFromResources("data/metadata.csv");
     }
 
 
