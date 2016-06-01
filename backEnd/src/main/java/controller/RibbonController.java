@@ -1,13 +1,17 @@
 package controller;
 
 import datatree.DataTree;
+import genome.Genome;
 import genome.Strand;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 
+
+
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -42,17 +46,17 @@ public final class RibbonController {
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
 
         System.out.println(minX + ", " + maxX);
-        ArrayList<String> actGen = genomeGraph.getActiveGenomes();
+        ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
 
 
         //HARD CODED ACTIVE GENOMES.
         if (actGen.size() < 2) {
-            actGen.add("TKK_02_0010.fasta");
-            actGen.add("TKK_02_0006.fasta");
-            actGen.add("TKK_02_0025.fasta");
-            actGen.add("TKK_02_0005.fasta");
-            actGen.add("TKK_02_0008.fasta");
-            actGen.add("TKK_02_0004.fasta");
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0010.fasta"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0006.fasta"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0025.fasta"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0005.fasta"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0008.fasta"));
+            actGen.add(genomeGraph.getGenomes().get("TKK_02_0004.fasta"));
 
 
         }
@@ -168,10 +172,10 @@ public final class RibbonController {
      * @return The ribbonGraph with added edges.
      */
     public ArrayList<RibbonNode> addEdges(ArrayList<RibbonNode> nodes) {
-        for (String genomeID : genomeGraph.getActiveGenomes()) {
-            RibbonNode currentNode = findNextNodeWithGenome(nodes, genomeID, -1);
+        for (Genome genome : genomeGraph.getActiveGenomes()) {
+            RibbonNode currentNode = findNextNodeWithGenome(nodes, genome, -1);
             while (currentNode != null) {
-                currentNode = addEdgeReturnEnd(nodes, currentNode, genomeID);
+                currentNode = addEdgeReturnEnd(nodes, currentNode, genome);
             }
 
         }
@@ -188,16 +192,16 @@ public final class RibbonController {
      * @param genomeID    The genome id to find an edge for.
      * @return The end node of the edge.
      */
-    public RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes, RibbonNode currentNode, String genomeID) {
-        RibbonNode next = findNextNodeWithGenome(nodes, genomeID, nodes.indexOf(currentNode));
+    public RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes, RibbonNode currentNode, Genome genome) {
+        RibbonNode next = findNextNodeWithGenome(nodes, genome, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {
                 RibbonEdge edge = new RibbonEdge(currentNode.getId(), next.getId());
-                edge.setColor(getColorForGenomeID(genomeID));
+                edge.setColor(getColorForGenomeID(genome));
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
             } else {
-                currentNode.getOutEdge(currentNode.getId(), next.getId()).addGenomeToEdge(getColorForGenomeID(genomeID));
+                currentNode.getOutEdge(currentNode.getId(), next.getId()).addGenomeToEdge(getColorForGenomeID(genome));
             }
 
 
@@ -214,9 +218,9 @@ public final class RibbonController {
      * @param currentIndex The current node index to start searching.
      * @return The next node that contains genome.
      */
-    public RibbonNode findNextNodeWithGenome(ArrayList<RibbonNode> nodes, String genome, int currentIndex) {
+    public RibbonNode findNextNodeWithGenome(ArrayList<RibbonNode> nodes, Genome genome, int currentIndex) {
         for (int i = currentIndex + 1; i < nodes.size(); i++) {
-            if (nodes.get(i).getGenomes().contains(genome)) {
+            if (nodes.get(i).getGenomes().contains(genome.getId())) {
                 return nodes.get(i);
             }
         }
@@ -230,18 +234,22 @@ public final class RibbonController {
      * @param GenomeID The genome to return the color for.
      * @return The color that is associated with this genomeid.
      */
-    public Color getColorForGenomeID(String GenomeID) {
-        Color[] colors = {new Color(0, 0, 255),
-                new Color(0, 255, 0),
-                new Color(255, 0, 0),
-                new Color(0, 255, 255),
-                new Color(255, 0, 255),
-                new Color(255, 255, 0),
-                new Color(0, 0, 128),
-                new Color(0, 128, 0),
-                new Color(128, 0, 0)};
+    public Color getColorForGenomeID(Genome genome) {
+    	HashMap<String,Color> colorMap =  new HashMap<String, Color>();
 
-        return colors[genomeGraph.getActiveGenomes().indexOf(GenomeID)];
+    	colorMap.put("LIN 1",Color.decode("0xed00c3"));	 
+    	colorMap.put("LIN 2",Color.decode("0x0000ff"));	 
+    	colorMap.put("LIN 3",Color.decode("0x500079"));	 
+    	colorMap.put("LIN 4",Color.decode("0xff0000"));	 
+    	colorMap.put("LIN 5",Color.decode("0x4e2c00"));	 
+    	colorMap.put("LIN 6",Color.decode("0x69ca00"));	 
+    	colorMap.put("LIN 7",Color.decode("0xff7e00"));	 
+    	colorMap.put("LIN animal", Color.decode("0x00ff9c"));	 
+    	colorMap.put("LIN B", Color.decode("0x00ff9c"));	 
+    	colorMap.put("LIN CANETTII", Color.decode("0x00ffff"));
+    	
+
+        return colorMap.get(genome.getMetadata().getLineage());
 
     }
 

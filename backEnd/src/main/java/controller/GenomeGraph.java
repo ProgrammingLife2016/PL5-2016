@@ -26,7 +26,7 @@ public class GenomeGraph {
     /**
      * The active genomes.
      */
-    private ArrayList<String> activeGenomes; //The current genomes selected in the GUI.
+    private ArrayList<Genome> activeGenomes; //The current genomes selected in the GUI.
 
 
     /**
@@ -145,7 +145,7 @@ public class GenomeGraph {
      *
      * @return the active genomeIDS.
      */
-    public ArrayList<String> getActiveGenomes() {
+    public ArrayList<Genome> getActiveGenomes() {
         return activeGenomes;
     }
 
@@ -155,8 +155,13 @@ public class GenomeGraph {
      *
      * @param activeGenomes The genomeIDS.
      */
-    public void setActiveGenomes(ArrayList<String> activeGenomes) {
-        this.activeGenomes = activeGenomes;
+    public void setGenomesAsActive(ArrayList<String> ids) {
+    	
+        this.activeGenomes = new ArrayList<Genome>();
+        for(String genomeId: ids) {
+        	activeGenomes.add(genomes.get(genomeId));
+        }
+        
     }
 
 	/**

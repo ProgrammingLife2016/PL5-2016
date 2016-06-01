@@ -66,7 +66,7 @@ public class RibbonControllerTest {
         genomeGraph.findStartAndCalculateX();
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
         // add all genomes to active genomes.
-        genomeGraph.setActiveGenomes(new ArrayList<>(genomeGraph.getGenomes().keySet()));
+        genomeGraph.setGenomesAsActive(new ArrayList<>(genomeGraph.getGenomes().keySet()));
 
     }
 

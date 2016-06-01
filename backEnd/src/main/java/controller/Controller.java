@@ -98,7 +98,7 @@ public class Controller implements FrontEndBackEndInterface {
      * @param activeGenomes The genomeIDS.
      */
     public void setActiveGenomes(ArrayList<String> activeGenomes) {
-        genomeGraph.setActiveGenomes(activeGenomes);
+        genomeGraph.setGenomesAsActive(activeGenomes);
     }
 
 }
