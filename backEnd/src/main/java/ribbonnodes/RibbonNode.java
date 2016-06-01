@@ -104,8 +104,6 @@ public class RibbonNode {
         this.id = id;
     }
 
-    ;
-
     /**
      * Get the out edges.
      *

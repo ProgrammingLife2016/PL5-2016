@@ -7,8 +7,14 @@ import java.util.ArrayList;
  */
 public class Genome {
 
-    private ArrayList<Strand> strands; //The strands contained in this Genome, parsed starting at the lowest id.
-    private String id; //The id String of this genome.
+	/**
+	 * The strands contained in this Genome, parsed starting at the lowest id.
+	 */
+    private ArrayList<Strand> strands;
+    /**
+     * The id String of this genome.
+     */
+    private String id; 
 
     /**
      * Constructor to create a new genome.

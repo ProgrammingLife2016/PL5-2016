@@ -29,7 +29,6 @@ public class PylogeneticTreeTest {
         ArrayList<String> genomes = new ArrayList<>(
         		Arrays.asList("A.fasta", "C.fasta", "D.fasta"));
         tree.parseTree("testFile", genomes);
-        //System.out.println(tree.getRoot().getChildren().size());
     }
 
     /**

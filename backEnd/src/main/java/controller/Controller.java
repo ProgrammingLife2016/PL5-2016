@@ -38,7 +38,7 @@ public class Controller implements FrontEndBackEndInterface {
     /**
      * Controller Singleton.
      */
-    private static controller.Controller DC = null;
+    private static controller.Controller dc = null;
 
     /**
      * Constructor.
@@ -94,11 +94,16 @@ public class Controller implements FrontEndBackEndInterface {
         genomeGraph.setActiveGenomes(activeGenomes);
     }
 
+    /**
+     * Get the singleton dc.
+     * If dc is not instantiated yet, do this first.
+     * @return The controller dc.
+     */
     public static Controller getDC() {
-    	if (DC == null) {
-    		DC = new Controller();
+    	if (dc == null) {
+    		dc = new Controller();
     	}
-    	return DC;
+    	return dc;
     }
     
     

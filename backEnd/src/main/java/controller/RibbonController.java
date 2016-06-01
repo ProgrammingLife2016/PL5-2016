@@ -8,7 +8,6 @@ import ribbonnodes.RibbonNode;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -17,8 +16,14 @@ import java.util.Arrays;
  */
 public final class RibbonController {
 
-    private GenomeGraph genomeGraph; //The graph that contains the geographic information of the stands.
-    private DataTree dataTree; //The tree that contains the phylogenetic information of the strands.
+	/**
+	 * The graph that contains the geographic information of the stands.
+	 */
+    private GenomeGraph genomeGraph;
+    /**
+     * The tree that contains the phylogenetic information of the strands.
+     */
+    private DataTree dataTree;
 
     /**
      * Create ribbonController object.
@@ -178,14 +183,16 @@ public final class RibbonController {
     }
 
     /**
-     * Finds the next node that contains a certain genome, creates an edge between the two nodes and returns the end Node of the edge.
+     * Finds the next node that contains a certain genome.
+     * Creates an edge between the two nodes and returns the end Node of the edge.
      *
      * @param nodes       The RibbonGraph.
      * @param currentNode The start node of the edge.
      * @param genomeID    The genome id to find an edge for.
      * @return The end node of the edge.
      */
-    public RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes, RibbonNode currentNode, String genomeID) {
+    public RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes, 
+    		RibbonNode currentNode, String genomeID) {
         RibbonNode next = findNextNodeWithGenome(nodes, genomeID, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {
@@ -194,7 +201,8 @@ public final class RibbonController {
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
             } else {
-                currentNode.getOutEdge(currentNode.getId(), next.getId()).addGenomeToEdge(getColorForGenomeID(genomeID));
+                currentNode.getOutEdge(currentNode.getId(), 
+                		next.getId()).addGenomeToEdge(getColorForGenomeID(genomeID));
             }
 
 
@@ -211,7 +219,8 @@ public final class RibbonController {
      * @param currentIndex The current node index to start searching.
      * @return The next node that contains genome.
      */
-    public RibbonNode findNextNodeWithGenome(ArrayList<RibbonNode> nodes, String genome, int currentIndex) {
+    public RibbonNode findNextNodeWithGenome(ArrayList<RibbonNode> nodes, 
+    		String genome, int currentIndex) {
         for (int i = currentIndex + 1; i < nodes.size(); i++) {
             if (nodes.get(i).getGenomes().contains(genome)) {
                 return nodes.get(i);
@@ -224,10 +233,10 @@ public final class RibbonController {
     /**
      * Return the color associated with a genome.
      *
-     * @param GenomeID The genome to return the color for.
+     * @param genomeID The genome to return the color for.
      * @return The color that is associated with this genomeid.
      */
-    public Color getColorForGenomeID(String GenomeID) {
+    public Color getColorForGenomeID(String genomeID) {
         Color[] colors = {new Color(0, 0, 255),
                 new Color(0, 255, 0),
                 new Color(255, 0, 0),
@@ -239,7 +248,7 @@ public final class RibbonController {
                 new Color(128, 0, 0),
                 new Color(128, 128, 128)};
 
-        return colors[genomeGraph.getActiveGenomes().indexOf(GenomeID)];
+        return colors[genomeGraph.getActiveGenomes().indexOf(genomeID)];
 
     }
 
