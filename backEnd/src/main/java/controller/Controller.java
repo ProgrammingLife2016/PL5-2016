@@ -3,10 +3,10 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import parser.Parser;
+import java.util.ArrayList;
+import java.util.List;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
-
-import java.util.ArrayList;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -92,9 +92,10 @@ public class Controller implements FrontEndBackEndInterface {
      * Setter for the activeGenomes.
      *
      * @param activeGenomes The genomeIDS.
+     * @return the list   	The list of unrecognized genomes.
      */
-    public void setActiveGenomes(ArrayList<String> activeGenomes) {
-        genomeGraph.setGenomesAsActive(activeGenomes);
+    public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
+        return genomeGraph.setGenomesAsActive(activeGenomes);
     }
 
 }

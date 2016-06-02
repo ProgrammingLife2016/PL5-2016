@@ -1,13 +1,11 @@
 package controller;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import genome.Genome;
 import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * The Class GenomeGraph.
@@ -155,13 +153,22 @@ public class GenomeGraph {
      * Sets the genomes as active.
      *
      * @param ids the new genomes as active
+     * @return the list of unrecognized genomes
      */
-    public void setGenomesAsActive(ArrayList<String> ids) {
-    	
+    public List<String> setGenomesAsActive(ArrayList<String> ids) {
+    	List<String> unrecognizedGenomes = new ArrayList<String>();
         this.activeGenomes = new ArrayList<Genome>();
         for (String genomeId: ids) {
-        	activeGenomes.add(genomes.get(genomeId));
+        	Genome genome = genomes.get(genomeId);
+        	if (genome != null) {
+        		activeGenomes.add(genome);
+        	}
+        	else {
+        		unrecognizedGenomes.add(genomeId);
+        	}
+        	
         }
+        return unrecognizedGenomes;
         
     }
 
