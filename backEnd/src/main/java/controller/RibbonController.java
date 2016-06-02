@@ -17,9 +17,9 @@ import java.util.HashMap;
  */
 public final class RibbonController {
 
-    /**
-     * The graph that contains the geographic information of the strands.
-     */
+	/**
+	 * The graph that contains the geographic information of the stands.
+	 */
     private GenomeGraph genomeGraph;
 
     /**
@@ -76,20 +76,9 @@ public final class RibbonController {
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
 
         System.out.println(minX + ", " + maxX);
+
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
 
-
-        //HARD CODED ACTIVE GENOMES.
-        if (actGen.size() < 2) {
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0010"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0006"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0025"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0005"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0008"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0004"));
-
-
-        }
 
 
         ArrayList<RibbonNode> result = new ArrayList<>();
@@ -215,9 +204,8 @@ public final class RibbonController {
     }
 
     /**
-     * Finds the next node that contains a certain genome, creates an
-     * edge between the two nodes and returns the end Node of the edge.
-     *
+     * Finds the next node that contains a certain genome.
+     * Creates an edge between the two nodes and returns the end Node of the edge.
      * @param nodes       The RibbonGraph.
      * @param currentNode The start node of the edge.
      * @param genome      The genome to find an edge for.
@@ -236,11 +224,8 @@ public final class RibbonController {
                 RibbonEdge edge = currentNode.getOutEdge(currentNode.getId(), next.getId());
                 edge.addGenomeToEdge(getColorForGenome(genome));
             }
-
-
         }
         return next;
-
     }
 
     /**

@@ -2,6 +2,7 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
+import datatree.TempReadWriteTree;
 import parser.Parser;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,21 +38,29 @@ public class Controller implements FrontEndBackEndInterface {
     /**
      * Controller Singleton.
      */
-    public static controller.Controller DC;
+    private static controller.Controller dc = null;
 
     /**
      * Constructor.
      */
     public Controller() {
-        genomeGraph = Parser.parse("data/TB10.gfa");
+    	String gfaFile = "data/TB328.gfa";
+        genomeGraph = Parser.parse(gfaFile);
         genomeGraph.generateGenomes();
         genomeGraph.findStartAndCalculateX();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk", 
+        		new ArrayList<>(genomeGraph.getGenomes().keySet()));
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
-        dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+        
+        if (gfaFile.equals("data/TB328.gfa")) {
+        	TempReadWriteTree.readFile(dataTree, genomeGraph.getStrandNodes(), "data/tempTree.txt");
+        } else {
+            dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+
+        }
         ribbonController = new RibbonController(genomeGraph, dataTree);
-        DC = this;     
+        dc = this;
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
 
@@ -78,7 +87,8 @@ public class Controller implements FrontEndBackEndInterface {
     public PhylogeneticTree loadPhylogeneticTree(int treeId) {
         if (treeId == 0) {
             phylogeneticTree = new PhylogeneticTree();
-            phylogeneticTree.parseTree("testGenomeNwk");
+            phylogeneticTree.parseTree("testGenomeNwk", 
+            		new ArrayList<>(genomeGraph.getGenomes().keySet()));
             return phylogeneticTree;
         } else {
             return phylogeneticTree;
@@ -93,7 +103,21 @@ public class Controller implements FrontEndBackEndInterface {
      * @return the list   	The list of unrecognized genomes.
      */
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
+        System.out.println(activeGenomes);
         return genomeGraph.setGenomesAsActive(activeGenomes);
     }
 
+    /**
+     * Get the singleton dc.
+     * If dc is not instantiated yet, do this first.
+     * @return The controller dc.
+     */
+    public static Controller getDC() {
+    	if (dc == null) {
+    		dc = new Controller();
+    	}
+    	return dc;
+    }
+    
+    
 }

@@ -152,6 +152,14 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
     public ArrayList<String> getGenomes() {
         return genomes;
     }
+    
+    /**
+     * Set the genomes.
+     * @param genomes New genomes.
+     */
+    public void setGenomes(ArrayList<String> genomes) {
+    	this.genomes = genomes;
+    }
 
     /**
      * Add a genome to this node and its parents, if its parent is not the root.

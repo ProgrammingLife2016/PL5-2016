@@ -10,7 +10,10 @@ import java.awt.*;
  */
 public class RibbonEdge extends Edge {
 
-    private Color color;//The color of this edge
+	/**
+	 * The color of this edge.
+	 */
+    private Color color;
 
     /**
      * Constructor to create an edge.

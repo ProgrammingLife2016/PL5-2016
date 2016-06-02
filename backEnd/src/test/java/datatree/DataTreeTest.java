@@ -23,8 +23,8 @@ public class DataTreeTest {
     private DataNode child2; //child of the tree;
     private ArrayList<Genome> genomes; //genomes contained in the tree;
     private Strand strand1; //a strand to test data return.
-    private Strand strand2;//a strand to test data return.
-    private Strand strand12;//a strand to test data return.
+    private Strand strand2; //a strand to test data return.
+    private Strand strand12; //a strand to test data return.
 
     /**
      * Set up the tests.

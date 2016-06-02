@@ -6,9 +6,10 @@ import java.util.ArrayList;
  * @author Jeffrey Helgers
  */
 public class Genome {
-    /**
-     * The strands contained in this Genome, parsed starting at the lowest id.
-     */
+
+	/**
+	 * The strands contained in this Genome, parsed starting at the lowest id.
+	 */
     private ArrayList<Strand> strands;
     /**
      * The id String of this genome.
