@@ -164,6 +164,18 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
             this.getParent().addGenome(genome);
         }
     }
+    
+    /**
+     * Add a genome to this node and its parents, if its parent is not the root.
+     *
+     * @param genome The genome to add.
+     */
+    public void removeGenome(final String genome) {
+        genomes.remove(genome);
+        if (this.getParent() != null) {
+            this.getParent().removeGenome(genome);
+        }
+    }
 
 
 

@@ -52,6 +52,36 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         
     }
 	
+    /**
+     * Removes the leaf.
+     *
+     * @param node the node
+     */
+    public void removeLeaf(PhylogeneticNode node) {
+    	removeSubtree(node);
+    }
+
+	/**
+	 * Removes the subtree.
+	 *
+	 * @param node the node
+	 */
+	private void removeSubtree(PhylogeneticNode node) {
+		assert (node.getParent().getChildren().size() == 2);
+		
+		for (String genome : node.getGenomes()) {
+			node.getParent().removeGenome(genome);
+		}
+		
+		PhylogeneticNode parent = node.getParent();
+		int childNumber = parent.getChildren().indexOf(node);
+		int siblingChildNumber = (1 + childNumber) % 2;
+		PhylogeneticNode sibling = parent.getChildren().get(siblingChildNumber);
+		parent.getParent().addChild(sibling);
+		parent.getParent().removeChild(parent);
+		sibling.setParent(parent.getParent());
+		
+	}
 
 	/**
 	 * Recursive algorithm to get all the leaves in a tree.
