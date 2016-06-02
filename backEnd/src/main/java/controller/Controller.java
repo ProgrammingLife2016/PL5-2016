@@ -2,6 +2,7 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
+import datatree.TempReadWriteTree;
 import parser.Parser;
 
 import java.util.ArrayList;
@@ -44,14 +45,21 @@ public class Controller implements FrontEndBackEndInterface {
      * Constructor.
      */
     public Controller() {
-        genomeGraph = Parser.parse("data/TB10.gfa");
+    	String gfaFile = "data/TB328.gfa";
+        genomeGraph = Parser.parse(gfaFile);
         genomeGraph.generateGenomes();
         genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk", genomeGraph.getActiveGenomes());
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
-        dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+        if (gfaFile.equals("data/TB328.gfa")) {
+        	TempReadWriteTree.readFile(dataTree, genomeGraph.getStrandNodes(), "data/tempTree.txt");
+        } else {
+            dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+
+        }
         ribbonController = new RibbonController(genomeGraph, dataTree);
+        dc = this;
     }
 
 

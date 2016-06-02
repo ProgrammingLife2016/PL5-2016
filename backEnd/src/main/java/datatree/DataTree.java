@@ -46,7 +46,7 @@ public class DataTree extends TreeStructure<DataNode> {
         
         ForkJoinPool pool = new ForkJoinPool();
         pool.invoke(new AddStrandsFromChildren(getRoot()));
-
+        //TempReadWriteTree.writeTree((getRoot()));
 
     }
 
