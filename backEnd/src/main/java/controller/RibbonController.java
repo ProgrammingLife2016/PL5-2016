@@ -80,16 +80,6 @@ public final class RibbonController {
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
 
 
-        //HARD CODED ACTIVE GENOMES.
-        if (actGen.size() < 2) {
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0010"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0006"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0025"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0005"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0008"));
-            actGen.add(genomeGraph.getGenomes().get("TKK_02_0004"));
-
-        }
 
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);

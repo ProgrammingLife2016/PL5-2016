@@ -44,7 +44,7 @@ public class Controller implements FrontEndBackEndInterface {
      * Constructor.
      */
     public Controller() {
-    	String gfaFile = "data/TB10.gfa";
+    	String gfaFile = "data/TB328.gfa";
         genomeGraph = Parser.parse(gfaFile);
         genomeGraph.generateGenomes();
         genomeGraph.findStartAndCalculateX();
@@ -103,6 +103,7 @@ public class Controller implements FrontEndBackEndInterface {
      * @return the list   	The list of unrecognized genomes.
      */
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
+        System.out.println(activeGenomes);
         return genomeGraph.setGenomesAsActive(activeGenomes);
     }
 

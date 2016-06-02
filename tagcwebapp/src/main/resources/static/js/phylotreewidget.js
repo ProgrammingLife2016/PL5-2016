@@ -99,6 +99,7 @@ function addCompareGenomeButtonBindings() {
         fullSizeMinimap();
 
         makeRestAPIcall('setactivegenomes', 'JSON', 'POST', data, handleActivationResponse);
+        initializeMinimap();
     })
 }
 
