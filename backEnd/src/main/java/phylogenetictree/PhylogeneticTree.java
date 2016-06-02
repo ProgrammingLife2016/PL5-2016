@@ -3,6 +3,7 @@ package phylogenetictree;
 import abstractdatastructure.TreeStructure;
 import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
+import genome.Genome;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -51,6 +53,22 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
 
         
     }
+    
+    /**
+     * Removes all genomes except the ones in the list.
+     *
+     * @param list the list of genomes.
+     */
+    public void removeAllGenomesExcept(List<Genome> list) {
+    	ArrayList<PhylogeneticNode> leaves = new ArrayList<PhylogeneticNode>();
+    	getLeaves(getRoot(), leaves);
+    	for (PhylogeneticNode leaf : leaves) {
+    		if (!list.contains(leaf.getNameLabel())) {
+    			removeLeaf(leaf);
+    		}
+    	}
+    }
+    
 	
     /**
      * Removes the leaf.

@@ -7,6 +7,7 @@ import genome.StrandEdge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * The Class GenomeGraph.
@@ -175,6 +176,15 @@ public class GenomeGraph {
 			g.setMetadata(metadata.get(g.getId()));
 		}
 		
+	}
+
+	/**
+	 * Gets the genomes as a list.
+	 *
+	 * @return the genomes as a list
+	 */
+	public List<Genome> getGenomesAsList() {
+		return new ArrayList<Genome>(genomes.values());
 	}
 
 }

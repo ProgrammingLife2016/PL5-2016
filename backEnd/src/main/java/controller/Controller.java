@@ -32,6 +32,7 @@ public class Controller implements FrontEndBackEndInterface {
      */
     private DataTree dataTree;
 
+    /** The ribbon controller. */
     private RibbonController ribbonController;
 
     /**
@@ -47,6 +48,7 @@ public class Controller implements FrontEndBackEndInterface {
         genomeGraph.generateGenomes();
         genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk");
+        phylogeneticTree.removeAllGenomesExcept(genomeGraph.getGenomesAsList());
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
