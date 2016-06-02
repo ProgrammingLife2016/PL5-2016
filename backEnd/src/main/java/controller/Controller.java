@@ -59,7 +59,6 @@ public class Controller implements FrontEndBackEndInterface {
             dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
 
         }
-        System.out.println(genomeGraph.getGenomes().keySet().contains("MT_H37RV_BRD_V5.ref"));
         ribbonController = new RibbonController(genomeGraph, dataTree);
         dc = this;
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));

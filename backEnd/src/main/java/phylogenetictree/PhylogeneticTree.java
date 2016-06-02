@@ -41,6 +41,7 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
      * @param genomes The active genomes. 
      */
     public void parseTree(final String fileName, ArrayList<String> genomes) {
+    	genomes.remove("MT_H37RV_BRD_V5.ref");
         Tree tree;
         BufferedReader reader;
         InputStream in = PhylogeneticTree.class.getClassLoader().getResourceAsStream(fileName);
