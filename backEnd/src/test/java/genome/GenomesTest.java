@@ -1,11 +1,11 @@
 package genome;
 
-import org.junit.Test;
 import org.junit.Before;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**

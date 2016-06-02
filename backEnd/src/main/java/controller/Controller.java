@@ -3,11 +3,10 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import parser.Parser;
-
-import java.util.ArrayList;
-
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
+
+import java.util.ArrayList;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -52,7 +51,8 @@ public class Controller implements FrontEndBackEndInterface {
                 null, 0));
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
         ribbonController = new RibbonController(genomeGraph, dataTree);
-        DC = this;
+        DC = this;     
+        genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
 
 
@@ -92,7 +92,7 @@ public class Controller implements FrontEndBackEndInterface {
      * @param activeGenomes The genomeIDS.
      */
     public void setActiveGenomes(ArrayList<String> activeGenomes) {
-        genomeGraph.setActiveGenomes(activeGenomes);
+        genomeGraph.setGenomesAsActive(activeGenomes);
     }
 
 }

@@ -1,15 +1,14 @@
 package mutation;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import genome.Strand;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import genome.Strand;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * 

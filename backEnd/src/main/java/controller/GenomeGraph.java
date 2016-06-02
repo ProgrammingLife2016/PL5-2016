@@ -1,11 +1,12 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import genome.Genome;
+import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The Class GenomeGraph.
@@ -25,7 +26,7 @@ public class GenomeGraph {
     /**
      * The active genomes.
      */
-    private ArrayList<String> activeGenomes; //The current genomes selected in the GUI.
+    private ArrayList<Genome> activeGenomes; //The current genomes selected in the GUI.
 
 
     /**
@@ -144,18 +145,36 @@ public class GenomeGraph {
      *
      * @return the active genomeIDS.
      */
-    public ArrayList<String> getActiveGenomes() {
+    public ArrayList<Genome> getActiveGenomes() {
         return activeGenomes;
     }
 
 
     /**
-     * Setter for the activeGenomes.
+     * Sets the genomes as active.
      *
-     * @param activeGenomes The genomeIDS.
+     * @param ids the new genomes as active
      */
-    public void setActiveGenomes(ArrayList<String> activeGenomes) {
-        this.activeGenomes = activeGenomes;
+    public void setGenomesAsActive(ArrayList<String> ids) {
+    	
+        this.activeGenomes = new ArrayList<Genome>();
+        for (String genomeId: ids) {
+        	activeGenomes.add(genomes.get(genomeId));
+        }
+        
     }
+
+	/**
+	 * Load meta data.
+	 *
+	 * @param metadata the metadata
+	 */
+	public void loadMetaData(HashMap<String, GenomeMetadata> metadata) {
+		
+		for (Genome g: genomes.values()) {
+			g.setMetadata(metadata.get(g.getId()));
+		}
+		
+	}
 
 }
