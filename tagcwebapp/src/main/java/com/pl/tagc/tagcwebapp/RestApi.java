@@ -58,15 +58,16 @@ public class RestApi {
 	
 
 	/**
-	 * Request ribbon graph.
+	 * Uses the genome ids to set the genomes as active in the backend. Which means that 
+	 * they will be used to generate the ribbongraph when getnodes is called.
 	 *
-	 * @param names
-	 *            the names
+	 * @param ids            the genome ids
+	 * @return the list      List of unrecognized genomes.
 	 */
 	@POST
-	@Path("/getribbongraph")
-	public void requestRibbonGraph(@FormParam("names[]") List<String> names) {
-		Controller.DC.setActiveGenomes((ArrayList<String>) names);
+	@Path("/setactivegenomes")
+	public ArrayListObject setActiveGenomes(@FormParam("names[]") List<String> ids) {
+		return new ArrayListObject(Controller.DC.setActiveGenomes((ArrayList<String>) ids));
 	}
 
 	/**

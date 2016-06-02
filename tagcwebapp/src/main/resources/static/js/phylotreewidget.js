@@ -98,14 +98,14 @@ function addCompareGenomeButtonBindings() {
 
         fullSizeMinimap();
 
-        makeRestAPIcall('getribbongraph', 'JSON', 'POST', data, drawRibbonGraph);
+        makeRestAPIcall('setactivegenomes', 'JSON', 'POST', data, handleActivationResponse);
     })
 }
 
 function makeRestAPIcall(apiCall, dataType, requestType, reqData, callback) {
     var url = 'http://localhost:9998/api/';
     //Temp:
-    url = 'http://localhost:9998/app/';
+    // url = 'http://localhost:9998/app/';
     $.ajax({
         url : url + apiCall,
         dataType : dataType,
@@ -116,9 +116,9 @@ function makeRestAPIcall(apiCall, dataType, requestType, reqData, callback) {
     });
 }
 
-function drawRibbonGraph(graph) {
-    console.log("drawRibbonGraph function called with data:");
-    console.log(graph);
+function handleActivationResponse(response) {
+    console.log("handleActivationResponse function called with data:");
+    console.log(response);
     initializeMinimap();
 }
 
