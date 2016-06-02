@@ -4,7 +4,6 @@ import genome.Genome;
 import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
-
 import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
@@ -13,7 +12,6 @@ import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseBuilder;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
-
 import parser.Parser;
 
 import java.io.File;
@@ -40,6 +38,7 @@ public class Database {
 
     /**
      * Instantiates a new database.
+     * @param databasePath Path of the database file.
      */
     public Database(String databasePath) {
     	path = databasePath.toLowerCase();

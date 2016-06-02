@@ -1,7 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.util.ArrayList;
 import ribbonnodes.RibbonEdge;
+
+import java.util.ArrayList;
 
 /**
  * The Class AdaptedRibbonNode.

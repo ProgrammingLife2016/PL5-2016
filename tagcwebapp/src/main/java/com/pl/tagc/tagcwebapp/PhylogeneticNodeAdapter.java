@@ -1,8 +1,8 @@
  package com.pl.tagc.tagcwebapp;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+ import phylogenetictree.PhylogeneticNode;
 
-import phylogenetictree.PhylogeneticNode;
+ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The Class PhylogeneticNodeAdapter. This is an XMLAdapter with the standard

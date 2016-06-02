@@ -1,8 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 import ribbonnodes.RibbonNode;
+
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The Class RibbonNodeAdapter.

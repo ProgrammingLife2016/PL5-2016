@@ -1,11 +1,11 @@
 package mutation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import controller.GenomeGraph;
 import genome.Strand;
 import genome.StrandEdge;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The Class AllMutations.

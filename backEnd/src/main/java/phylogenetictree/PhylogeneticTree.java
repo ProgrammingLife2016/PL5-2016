@@ -1,5 +1,6 @@
 package phylogenetictree;
 
+import abstractdatastructure.TreeStructure;
 import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
 
@@ -9,8 +10,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-
-import abstractdatastructure.TreeStructure;
 
 
 /**
