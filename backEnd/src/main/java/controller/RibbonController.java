@@ -254,7 +254,9 @@ public final class RibbonController {
     }
 
     /**
-     * Gets the color for the genome.
+     * Gets the color for the genome as specified by http://www.abeel.be/wiki/Lineage_colors. 
+     * Because genomes with an identifier starting with G are not specified in the metadata
+     * they get treated as a special case in this method.
      *
      * @param genome the genome
      * @return the color for the genome 
@@ -265,7 +267,12 @@ public final class RibbonController {
     		result = colorMap.get(genome.getMetadata().getLineage());
     	}
     	else {
-    		result = new Color(100, 100, 100);
+    		if(genome.getId().startsWith("G")) {
+    			result = Color.decode("0xff0000");
+    		}
+    		else {
+    			result = new Color(100, 100, 100);
+    		}
     	}
         return result;
     }
