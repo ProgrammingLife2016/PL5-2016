@@ -1,6 +1,7 @@
 package controller;
 
 import datatree.DataTree;
+import genome.Genome;
 import genome.Strand;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
@@ -89,7 +90,7 @@ public final class RibbonController {
      * @param nodes The ribbonNode Graph to collapse.
      * @return A collapsed graph.
      */
-    public ArrayList<RibbonNode> collapseRibbons(ArrayList<RibbonNode> nodes) {
+    private void collapseRibbons(ArrayList<RibbonNode> nodes) {
         for (int i = 0; i < nodes.size(); i++) {
             RibbonNode node = nodes.get(i);
             if (node != null) {
@@ -106,7 +107,6 @@ public final class RibbonController {
                 }
             }
         }
-        return nodes;
 
 
     }
@@ -135,40 +135,14 @@ public final class RibbonController {
      * @param nodes The ribbonGraph to calculate y cooridnates for.
      * @return The ribbonGraph with added y coordinates.
      */
-    public ArrayList<RibbonNode> calcYcoordinates(ArrayList<RibbonNode> nodes) {
-        int currentX = 0;
-        ArrayList<RibbonNode> currentXNodes = new ArrayList<>();
-        for (int i = 0; i < nodes.size(); i++) {
-            RibbonNode node = nodes.get(i);
-            if (node.getX() > currentX-1000 && node.getX()<currentX+1000) {
-                currentXNodes.add(node);
-            } else {
-                if (currentXNodes.size() > 1) {
-                    for (int j = 0; j < currentXNodes.size(); j++) {
-                        RibbonNode currentNode = currentXNodes.get(j);
-                        int minY = (currentXNodes.size() / 2) * -10;
-                        int prevY=0;
-                        for(RibbonEdge inEdge: currentNode.getInEdges()){
-                            prevY+=getNodeWithId(inEdge.getStart(),nodes).getY();
-                        }
-                        if(prevY!=0){
-                            prevY=prevY/currentNode.getInEdges().size();
-                            currentNode.setY(prevY);
-                        }
-                        else {
-                            currentNode.setY(minY + 10 * j);
-                        }
-                    }
-                }
-                currentXNodes = new ArrayList<>();
-                currentXNodes.add(node);
-                currentX = node.getX();
-            }
+    private void calcYcoordinates(ArrayList<RibbonNode> nodes) {
+        ArrayList<String> ag = genomeGraph.getActiveGenomes();
+        for (Genome genome : genomeGraph.getGenomes().values()) {
 
 
         }
 
-        return nodes;
+
     }
 
 
@@ -178,7 +152,7 @@ public final class RibbonController {
      * @param nodes the RibbinGraph to calculate edges for.
      * @return The ribbonGraph with added edges.
      */
-    public ArrayList<RibbonNode> addEdges(ArrayList<RibbonNode> nodes) {
+    private void addEdges(ArrayList<RibbonNode> nodes) {
         for (String genomeID : genomeGraph.getActiveGenomes()) {
             RibbonNode currentNode = findNextNodeWithGenome(nodes, genomeID, -1);
             while (currentNode != null) {
@@ -186,7 +160,6 @@ public final class RibbonController {
             }
 
         }
-        return nodes;
 
 
     }
