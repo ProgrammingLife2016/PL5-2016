@@ -185,4 +185,13 @@ public class GenomeGraph {
 		
 	}
 
+	/**
+	 * Gets the genomes as a list.
+	 *
+	 * @return the genomes as a list
+	 */
+	public List<Genome> getGenomesAsList() {
+		return new ArrayList<Genome>(genomes.values());
+	}
+
 }

@@ -3,6 +3,7 @@ package phylogenetictree;
 import abstractdatastructure.TreeStructure;
 import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
+import genome.Genome;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -51,7 +53,53 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
 
         
     }
+    
+    /**
+     * Removes all genomes except the ones in the list.
+     *
+     * @param list the list of genomes.
+     */
+    public void removeAllGenomesExcept(List<Genome> list) {
+    	ArrayList<PhylogeneticNode> leaves = new ArrayList<PhylogeneticNode>();
+    	getLeaves(getRoot(), leaves);
+    	for (PhylogeneticNode leaf : leaves) {
+    		if (!list.contains(leaf.getNameLabel())) {
+    			removeLeaf(leaf);
+    		}
+    	}
+    }
+    
 	
+    /**
+     * Removes the leaf.
+     *
+     * @param node the node
+     */
+    public void removeLeaf(PhylogeneticNode node) {
+    	removeSubtree(node);
+    }
+
+	/**
+	 * Removes the subtree.
+	 *
+	 * @param node the node
+	 */
+	private void removeSubtree(PhylogeneticNode node) {
+		assert (node.getParent().getChildren().size() == 2);
+		
+		for (String genome : node.getGenomes()) {
+			node.getParent().removeGenome(genome);
+		}
+		
+		PhylogeneticNode parent = node.getParent();
+		int childNumber = parent.getChildren().indexOf(node);
+		int siblingChildNumber = (1 + childNumber) % 2;
+		PhylogeneticNode sibling = parent.getChildren().get(siblingChildNumber);
+		parent.getParent().addChild(sibling);
+		parent.getParent().removeChild(parent);
+		sibling.setParent(parent.getParent());
+		
+	}
 
 	/**
 	 * Recursive algorithm to get all the leaves in a tree.
