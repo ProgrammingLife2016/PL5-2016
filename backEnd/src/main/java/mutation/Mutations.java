@@ -79,7 +79,7 @@ public class Mutations {
 				genomesInBothStrands.removeAll(genomesInOriginal);
 				MutationIndel indel = new MutationIndel(MutationType.DELETION, genomesInOriginal,
 						genomesInBothStrands, start, next2, new ArrayList<Strand>());
-				mutation.add(indel);
+				start.addMutation(indel);
 				return;
 			}
 		}
@@ -93,17 +93,9 @@ public class Mutations {
 				MutationIndel indel = new MutationIndel(MutationType.INSERTION, 
 						genomesInBothStrands, genomesInMutation, 
 						start, next1, new ArrayList<Strand>());
-				mutation.add(indel);
+				start.addMutation(indel);
 				return;
 			} 
 		}
-	}
-	
-	/**
-	 * Get the mutations.
-	 * @return Mutations.
-	 */
-	public ArrayList<AbstractMutation> getMutation() {
-		return mutation;
 	}
 }
