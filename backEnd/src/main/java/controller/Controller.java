@@ -3,7 +3,6 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
-import genome.Strand;
 import parser.Parser;
 import mutation.Mutations;
 import java.util.ArrayList;
@@ -67,11 +66,6 @@ public class Controller implements FrontEndBackEndInterface {
         dc = this;
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
-    
-    public ArrayList<Strand> getStrands() {
-    	return new ArrayList<>(genomeGraph.getStrandNodes().values());
-    }
-
 
     /**
      * Wrapper method that returns a list of filtered node for the particular query.
