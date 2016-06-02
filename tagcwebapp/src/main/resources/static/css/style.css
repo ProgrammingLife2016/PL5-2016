@@ -117,3 +117,42 @@ div#minimapContainer {
 #zoomWindow {
     height: 100%;
 }
+
+#nodeDialog {
+    position: absolute;
+    display: none;
+}
+
+#nodeDialog .message {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    border: 1px solid #747171;
+    background: #f7f7f7 url("../img/bg01.png");
+    position: relative;
+}
+
+#nodeDialog .message:after, #nodeDialog .message:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+#nodeDialog .message:after {
+    border-color: rgba(247, 247, 247, 0);
+    border-top-color: #F7F7F7;
+    border-width: 7px;
+    margin-left: -7px;
+}
+
+#nodeDialog .message:before {
+    border-color: rgba(116, 113, 113, 0);
+    border-top-color: #747171;
+    border-width: 8px;
+    margin-left: -8px;
+}

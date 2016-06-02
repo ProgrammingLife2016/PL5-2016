@@ -1,10 +1,13 @@
 package database;
 
 import genome.Genome;
+import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
+import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.ResourceIterator;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseBuilder;
@@ -12,7 +15,12 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import parser.Parser;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +36,15 @@ public class Database {
     private String path;
     private GraphDatabaseService graphDb;
 
+    /**
+     * Instantiates a new database.
+     * @param databasePath Path of the database file.
+     */
+    public Database(String databasePath) {
+    	path = databasePath.toLowerCase();
+    	createDatabaseConnection(false);
+    }
+    
     /**
      * Create a Database with its connection.
      * @param databasePath Path of the databasefile.
@@ -264,4 +281,54 @@ public class Database {
     public GraphDatabaseService getGraphService() {
         return graphDb;
     }
+
+	/**
+	 * Gets the all genome metadata.
+	 *
+	 * @return the all genome metadata
+	 */
+	public HashMap<String, GenomeMetadata> getAllGenomeMetadata() {
+		HashMap<String, GenomeMetadata> hmap = new HashMap<String, GenomeMetadata>(); 
+		try (Transaction tx = graphDb.beginTx();
+				ResourceIterator<Node> it = graphDb.findNodes(DynamicLabel.label("GenomeMeta"));) {
+
+		while (it.hasNext()) {
+			Node n = it.next();
+			System.out.println(n.getAllProperties());
+			String genomeId = n.getProperty("id").toString();
+			String lineage = n.getProperty("lineage").toString();
+			hmap.put(genomeId, new GenomeMetadata(genomeId, lineage));
+		}
+		
+		tx.success();
+		return hmap;
+		}
+	}
+
+	/**
+	 * Load genome metadata from resources.
+	 *
+	 * @param filePath the file path
+	 */
+	public void loadGenomeMetadataFromResources(String filePath) {
+		
+		InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
+		new File("temp").mkdir();
+		File temp = new File("temp/metadata.csv");
+		try {
+			temp.createNewFile();
+			System.out.println(temp.toPath());
+			Files.copy(in, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try (Transaction tx = graphDb.beginTx()) {
+            graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + temp.toURI()
+                    + "\' AS line FIELDTERMINATOR ';' \n CREATE (:GenomeMeta "
+                    + " {id: line.`Specimen ID`, lineage: line.Lineage})");
+            tx.success();
+        }
+		
+	}
 }

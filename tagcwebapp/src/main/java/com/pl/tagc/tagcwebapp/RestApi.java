@@ -1,8 +1,6 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import controller.Controller;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
@@ -12,8 +10,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-
-import controller.Controller;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 //The Java class will be hosted at the URI path "/api"
 /**
@@ -58,15 +57,16 @@ public class RestApi {
 	
 
 	/**
-	 * Request ribbon graph.
+	 * Uses the genome ids to set the genomes as active in the backend. Which means that 
+	 * they will be used to generate the ribbongraph when getnodes is called.
 	 *
-	 * @param names
-	 *            the names
+	 * @param ids            the genome ids
+	 * @return the list      List of unrecognized genomes.
 	 */
 	@POST
-	@Path("/getribbongraph")
-	public void requestRibbonGraph(@FormParam("names[]") List<String> names) {
-		Controller.getDC().setActiveGenomes((ArrayList<String>) names);
+	@Path("/setactivegenomes")
+	public ArrayListObject setActiveGenomes(@FormParam("names[]") List<String> ids) {
+		return new ArrayListObject(Controller.getDC().setActiveGenomes((ArrayList<String>) ids));
 	}
 
 	/**

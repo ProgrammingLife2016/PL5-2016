@@ -85,7 +85,6 @@ public class StrandTest {
     }
 
 
-
     /**
      * Test the getter of Edges.
      *

@@ -1,10 +1,11 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.util.ArrayList;
-import java.util.Locale;
+import phylogenetictree.PhylogeneticNode;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import phylogenetictree.PhylogeneticNode;
+import java.util.ArrayList;
+import java.util.Locale;
 
 
 /**

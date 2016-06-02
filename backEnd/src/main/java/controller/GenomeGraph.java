@@ -1,9 +1,9 @@
 package controller;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 import genome.Genome;
+import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
 
@@ -25,7 +25,7 @@ public class GenomeGraph {
     /**
      * The active genomes.
      */
-    private ArrayList<String> activeGenomes; //The current genomes selected in the GUI.
+    private ArrayList<Genome> activeGenomes; //The current genomes selected in the GUI.
 
 
     /**
@@ -144,18 +144,45 @@ public class GenomeGraph {
      *
      * @return the active genomeIDS.
      */
-    public ArrayList<String> getActiveGenomes() {
+    public ArrayList<Genome> getActiveGenomes() {
         return activeGenomes;
     }
 
 
     /**
-     * Setter for the activeGenomes.
+     * Sets the genomes as active.
      *
-     * @param activeGenomes The genomeIDS.
+     * @param ids the new genomes as active
+     * @return the list of unrecognized genomes
      */
-    public void setActiveGenomes(ArrayList<String> activeGenomes) {
-        this.activeGenomes = activeGenomes;
+    public List<String> setGenomesAsActive(ArrayList<String> ids) {
+    	List<String> unrecognizedGenomes = new ArrayList<String>();
+        this.activeGenomes = new ArrayList<Genome>();
+        for (String genomeId: ids) {
+        	Genome genome = genomes.get(genomeId);
+        	if (genome != null) {
+        		activeGenomes.add(genome);
+        	}
+        	else {
+        		unrecognizedGenomes.add(genomeId);
+        	}
+        	
+        }
+        return unrecognizedGenomes;
+        
     }
+
+	/**
+	 * Load meta data.
+	 *
+	 * @param metadata the metadata
+	 */
+	public void loadMetaData(HashMap<String, GenomeMetadata> metadata) {
+		
+		for (Genome g: genomes.values()) {
+			g.setMetadata(metadata.get(g.getId()));
+		}
+		
+	}
 
 }

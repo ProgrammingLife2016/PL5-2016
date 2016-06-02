@@ -53,7 +53,7 @@ public class PhylogeneticNodeTest {
         assertEquals(testNode.getGenomes().size(), 2);
         for (int i = 0; i < 2; i++) {
             PhylogeneticNode child = testNode.getChildren().get(i);
-            assertEquals(child.getNameLabel(), "child" + (i + 1) + ".fasta");
+            assertEquals(child.getNameLabel(), "child" + (i + 1));
         }
 
 
@@ -66,8 +66,8 @@ public class PhylogeneticNodeTest {
      */
     @Test
     public void testGetNodeWithLabel() throws Exception {
-        assertEquals(node.getNodeWithLabel("child1.fasta"), child1);
-        assertEquals(node.getNodeWithLabel("child2.fasta"), child2);
+        assertEquals(node.getNodeWithLabel("child1"), child1);
+        assertEquals(node.getNodeWithLabel("child2"), child2);
     }
 
 
@@ -80,7 +80,7 @@ public class PhylogeneticNodeTest {
     public void testSetNameLabel() throws Exception {
         assertEquals("", node.getNameLabel());
         node.setNameLabel("asdf");
-        assertEquals("asdf.fasta", node.getNameLabel());
+        assertEquals("asdf", node.getNameLabel());
     }
 
     /**
@@ -90,8 +90,8 @@ public class PhylogeneticNodeTest {
      */
     @Test
     public void testGetNameLabel() throws Exception {
-        assertEquals(child1.getNameLabel(), "child1.fasta");
-        assertEquals(child2.getNameLabel(), "child2.fasta");
+        assertEquals(child1.getNameLabel(), "child1");
+        assertEquals(child2.getNameLabel(), "child2");
 
     }
 
@@ -112,8 +112,8 @@ public class PhylogeneticNodeTest {
      */
     @Test
     public void testGetGenomes() throws Exception {
-        assertEquals(node.getGenomes().get(0), "child1.fasta");
-        assertEquals(node.getNodeWithLabel("child1.fasta").getGenomes().get(0), "child1.fasta");
+        assertEquals(node.getGenomes().get(0), "child1");
+        assertEquals(node.getNodeWithLabel("child1").getGenomes().get(0), "child1");
     }
 
     /**

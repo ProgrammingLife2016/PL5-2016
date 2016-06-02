@@ -4,9 +4,8 @@ import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
 import parser.Parser;
-
 import java.util.ArrayList;
-
+import java.util.List;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
 
@@ -45,21 +44,25 @@ public class Controller implements FrontEndBackEndInterface {
      * Constructor.
      */
     public Controller() {
-    	String gfaFile = "data/TB328.gfa";
+    	String gfaFile = "data/TB10.gfa";
         genomeGraph = Parser.parse(gfaFile);
         genomeGraph.generateGenomes();
         genomeGraph.findStartAndCalculateX();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk", genomeGraph.getActiveGenomes());
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk", 
+        		new ArrayList<>(genomeGraph.getGenomes().keySet()));
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
+        
         if (gfaFile.equals("data/TB328.gfa")) {
         	TempReadWriteTree.readFile(dataTree, genomeGraph.getStrandNodes(), "data/tempTree.txt");
         } else {
             dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
 
         }
+        System.out.println(genomeGraph.getGenomes().keySet().contains("MT_H37RV_BRD_V5.ref"));
         ribbonController = new RibbonController(genomeGraph, dataTree);
         dc = this;
+        genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
 
 
@@ -85,7 +88,8 @@ public class Controller implements FrontEndBackEndInterface {
     public PhylogeneticTree loadPhylogeneticTree(int treeId) {
         if (treeId == 0) {
             phylogeneticTree = new PhylogeneticTree();
-            phylogeneticTree.parseTree("testGenomeNwk", genomeGraph.getActiveGenomes());
+            phylogeneticTree.parseTree("testGenomeNwk", 
+            		new ArrayList<>(genomeGraph.getGenomes().keySet()));
             return phylogeneticTree;
         } else {
             return phylogeneticTree;
@@ -97,9 +101,10 @@ public class Controller implements FrontEndBackEndInterface {
      * Setter for the activeGenomes.
      *
      * @param activeGenomes The genomeIDS.
+     * @return the list   	The list of unrecognized genomes.
      */
-    public void setActiveGenomes(ArrayList<String> activeGenomes) {
-        genomeGraph.setActiveGenomes(activeGenomes);
+    public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
+        return genomeGraph.setGenomesAsActive(activeGenomes);
     }
 
     /**

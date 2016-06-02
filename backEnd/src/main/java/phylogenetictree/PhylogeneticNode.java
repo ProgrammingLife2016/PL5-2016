@@ -1,11 +1,10 @@
 package phylogenetictree;
 
 
+import abstractdatastructure.AbstractTreeNode;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.util.ArrayList;
-
-import abstractdatastructure.AbstractTreeNode;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -55,7 +54,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
                             final double distance, int childNumber) {
 
         super(parent, childNumber);
-        nameLabel = node.getName();
+        nameLabel = node.getName();        
         this.distance = distance;
         genomes = new ArrayList<>();
 
@@ -83,7 +82,6 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      */
     private void checkLeaf() {
         if (!nameLabel.equals("")) {
-            nameLabel = nameLabel + ".fasta";
             genomes.add(nameLabel);
             if (this.getParent() != null) {
                 getParent().addGenome(nameLabel);
