@@ -1,9 +1,10 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.util.ArrayList;
+import phylogenetictree.PhylogeneticNode;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import phylogenetictree.PhylogeneticNode;
+import java.util.ArrayList;
 
 /**
  * The Class PhylogeneticTreeObject.

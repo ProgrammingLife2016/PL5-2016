@@ -1,11 +1,10 @@
 package com.pl.tagc.main;
 
+import com.pl.tagc.tagcwebapp.RestServer;
+import controller.Controller;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.pl.tagc.tagcwebapp.RestServer;
-
-import controller.Controller;
 
 /**
  * The Class Main.

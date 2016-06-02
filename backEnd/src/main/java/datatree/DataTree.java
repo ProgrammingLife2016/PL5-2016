@@ -1,13 +1,12 @@
 package datatree;
 
+import abstractdatastructure.TreeStructure;
 import genome.Genome;
 import genome.Strand;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
-import abstractdatastructure.TreeStructure;
 
 /**
  * Tree containing all strands and genomes of the data.
@@ -144,8 +143,8 @@ public class DataTree extends TreeStructure<DataNode> {
     /**
      * Get the full datanodes of a single genome.
      *
-     * @param genomeId The genome to get the nodes from.
-     * @param level    The zoomlevel in the tree.
+     * @param genome The genome to get datanodes for.
+     * @param level  The zoomlevel in the tree.
      * @return The list of unfiltered dataNodes.
      */
     public Set<DataNode> getDataNodesForGenome(Genome genome, int level) {

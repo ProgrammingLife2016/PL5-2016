@@ -3,10 +3,8 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import parser.Parser;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
 

@@ -1,7 +1,7 @@
 package parser;
 
+import com.opencsv.CSVReader;
 import controller.GenomeGraph;
-import genome.Genome;
 import genome.GenomeMetadata;
 import genome.Strand;
 import genome.StrandEdge;
@@ -18,139 +18,137 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.neo4j.graphdb.DynamicLabel;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.ResourceIterator;
-import org.neo4j.graphdb.Transaction;
-
-import com.opencsv.CSVReader;
-
 /**
  * Created by Jeffrey on 24-4-2016.
  */
 public class Parser {
 
-	private PrintWriter nodes;
-	private PrintWriter edges;
+    private PrintWriter nodes;
+    private PrintWriter edges;
     private PrintWriter phylo;
     private int parentID = 0;
 
-	/**
-	 * Constructor to create an Parser.
-     * @param destPath the destination path
+    /**
+     * Constructor to create an Parser.
+     *
+     * @param destPath    the destination path
      * @param currentPath the path of the files
-     * @param phyloTree path of the phylogenetic tree file
-	 */
+     * @param phyloTree   path of the phylogenetic tree file
+     */
     @SuppressWarnings("checkstyle:methodlength")
-	public Parser(String destPath, String currentPath, String phyloTree) {
+    public Parser(String destPath, String currentPath, String phyloTree) {
         boolean problem = new File(destPath).mkdir();
         File nodeFile = new File(destPath + "/nodes.csv");
-		File edgeFile = new File(destPath + "/edges.csv");
+        File edgeFile = new File(destPath + "/edges.csv");
         File phyloFile = new File(destPath + "/phylo.csv");
-		// creates the files
-		try {
-			problem = nodeFile.createNewFile();
-			problem = edgeFile.createNewFile();
+        // creates the files
+        try {
+            problem = nodeFile.createNewFile();
+            problem = edgeFile.createNewFile();
             problem = phyloFile.createNewFile();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			edges = new PrintWriter(destPath + "/edges.csv", "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            edges = new PrintWriter(destPath + "/edges.csv", "UTF-8");
             edges.println("start,end");
             nodes = new PrintWriter(destPath + "/nodes.csv", "UTF-8");
             nodes.println("id,sequence,genomes,refGenome,refCoor");
             phylo = new PrintWriter(destPath + "/phylo.csv", "UTF-8");
             phylo.println("parent,child,dist,pc");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (problem) {
             System.out.println("Something went wrong creating /temp");
         }
 
-		parseToCSV(currentPath);
+        parseToCSV(currentPath);
 
         getPhyloFile(phyloTree);
-		edges.close();
-		nodes.close();
+        edges.close();
+        nodes.close();
         phylo.close();
     }
-	
-	/**
-	 * Reads the file as a graph in to an Controller.
-	 * @param file The file that is read.
-	 * @return The graph in the file.
-	 */
-	 @SuppressWarnings("checkstyle:methodlength")
-	 public static GenomeGraph parse(String file) {
-		BufferedReader reader;
-		String line;
-		GenomeGraph result = new GenomeGraph();
-		try {
-			InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
-			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-			reader.readLine();
-			reader.readLine();
-			line = reader.readLine();
-			while (line != null) {
-				String[] splittedLine = line.split("\t");
-				String temp = splittedLine[0];
-				if (temp.equals("S")) {
-					Strand strand = createNode(splittedLine);
-					result.addStrand(strand);
-				} else if (temp.equals("L")) {
-					StrandEdge edge = createEdge(splittedLine);
-					result.getStrandNodes().get(edge.getStart()).addEdge(edge);
-				}
-				line = reader.readLine();
-			}
-			reader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	/**
-	 * Creates an StrandEdge from input data.
-	 * @param splittedLine A line that contains an edge read from the file.
-	 * @return An StrandEdge.
-	 */
-	private static StrandEdge createEdge(String[] splittedLine) {
-		int startId = Integer.parseInt(splittedLine[1]);
-		int endId = Integer.parseInt(splittedLine[3]);
-		return new StrandEdge(startId, endId);
-	}
-
-	/**
-	 * Creates a Strand from the input data.
-	 * @param splittedLine A line that contains a node read from the file.
-	 * @return A Strand.
-	 */
-	private static Strand createNode(String[] splittedLine) {
-		int nodeId = Integer.parseInt(splittedLine[1]);
-		String sequence = splittedLine[2];
-		splittedLine[4] = splittedLine[4].substring(6, splittedLine[4].length());
-		String[] genomes = splittedLine[4].split(";");
-		for (int i = 0; i < genomes.length; i++) {
-			String genomeId = genomes[i];
-			if (genomeId.endsWith(".fasta")) {
-				 genomes[i] = genomeId.substring(0, genomeId.length() - 6);
-				}
-		}
-		String referenceGenome = splittedLine[5].substring(6, splittedLine[5].length());
-		String ref = splittedLine[8].substring(8, splittedLine[8].length());
-		int referenceCoordinate = Integer.parseInt(ref);
-
-		return new Strand(nodeId, sequence, genomes, referenceGenome, referenceCoordinate);
-	}
 
     /**
      * Reads the file as a graph in to an Controller.
+     *
+     * @param file The file that is read.
+     * @return The graph in the file.
+     */
+    @SuppressWarnings("checkstyle:methodlength")
+    public static GenomeGraph parse(String file) {
+        BufferedReader reader;
+        String line;
+        GenomeGraph result = new GenomeGraph();
+        try {
+            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            reader.readLine();
+            reader.readLine();
+            line = reader.readLine();
+            while (line != null) {
+                String[] splittedLine = line.split("\t");
+                String temp = splittedLine[0];
+                if (temp.equals("S")) {
+                    Strand strand = createNode(splittedLine);
+                    result.addStrand(strand);
+                } else if (temp.equals("L")) {
+                    StrandEdge edge = createEdge(splittedLine);
+                    result.getStrandNodes().get(edge.getStart()).addEdge(edge);
+                }
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * Creates an StrandEdge from input data.
+     *
+     * @param splittedLine A line that contains an edge read from the file.
+     * @return An StrandEdge.
+     */
+    private static StrandEdge createEdge(String[] splittedLine) {
+        int startId = Integer.parseInt(splittedLine[1]);
+        int endId = Integer.parseInt(splittedLine[3]);
+        return new StrandEdge(startId, endId);
+    }
+
+    /**
+     * Creates a Strand from the input data.
+     *
+     * @param splittedLine A line that contains a node read from the file.
+     * @return A Strand.
+     */
+    private static Strand createNode(String[] splittedLine) {
+        int nodeId = Integer.parseInt(splittedLine[1]);
+        String sequence = splittedLine[2];
+        splittedLine[4] = splittedLine[4].substring(6, splittedLine[4].length());
+        String[] genomes = splittedLine[4].split(";");
+        for (int i = 0; i < genomes.length; i++) {
+            String genomeId = genomes[i];
+            if (genomeId.endsWith(".fasta")) {
+                genomes[i] = genomeId.substring(0, genomeId.length() - 6);
+            }
+        }
+        String referenceGenome = splittedLine[5].substring(6, splittedLine[5].length());
+        String ref = splittedLine[8].substring(8, splittedLine[8].length());
+        int referenceCoordinate = Integer.parseInt(ref);
+
+        return new Strand(nodeId, sequence, genomes, referenceGenome, referenceCoordinate);
+    }
+
+    /**
+     * Reads the file as a graph in to an Controller.
+     *
      * @param file The file that is read.
      * @return The graph in the file.
      */
@@ -183,17 +181,19 @@ public class Parser {
 
     /**
      * Writes an edge to the CSV-file.
+     *
      * @param splittedLine the line from the GFA-file
      */
-	private void writeEdge(String[] splittedLine) {
-		edges.println(splittedLine[1] + "," + splittedLine[3]);
-	}
+    private void writeEdge(String[] splittedLine) {
+        edges.println(splittedLine[1] + "," + splittedLine[3]);
+    }
 
     /**
      * Writes a node to the CSV-file.
+     *
      * @param splittedLine the line from the GFA-file
      */
-	private void writeNode(String[] splittedLine) {
+    private void writeNode(String[] splittedLine) {
         String id = splittedLine[1];
         String sequence = splittedLine[2];
         String genomes = splittedLine[4].substring(6, splittedLine[4].length());
@@ -202,10 +202,11 @@ public class Parser {
 
         nodes.println(String.format("%s,%s,%s,%s,%s", id, sequence, genomes,
                 referenceGenome, refCoor));
-	}
+    }
 
     /**
      * Get all the genomes that are in the file.
+     *
      * @param file The file.
      * @return The genomes.
      */
@@ -234,6 +235,7 @@ public class Parser {
 
     /**
      * Get the content from the phylogenetic tree.
+     *
      * @param file the path of the file
      */
     public void getPhyloFile(String file) {
@@ -255,7 +257,8 @@ public class Parser {
 
     /**
      * Recursively parses the inputted Newick tree (assumed binary).
-     * @param tree the path of the file
+     *
+     * @param tree   the path of the file
      * @param parent the id of the parent for recursion (root is 0)
      */
     private void parsePhyloTree(String tree, int parent) {
@@ -283,7 +286,7 @@ public class Parser {
             phylo.println(parent + "," + tree.split(":")[0] + "," + tree.split(":")[1] + ",child");
         }
     }
-    
+
     /**
      * Parses the genome metadata.
      *
@@ -291,21 +294,21 @@ public class Parser {
      * @return the hash map
      */
     public static HashMap<String, GenomeMetadata> parseGenomeMetadata(String filePath) {
-    	HashMap<String, GenomeMetadata> hmap = new HashMap<String, GenomeMetadata>(); 
-    	InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
-    	CSVReader reader = new CSVReader(new InputStreamReader(in),';');
-    	String [] nextLine;
-    	try {
-    		while ((nextLine = reader.readNext()) != null) {
-    			String genomeId = nextLine[0];
-    			String lineage = nextLine[21];
-    			hmap.put(genomeId, new GenomeMetadata(genomeId, lineage));
-    		}
-    		reader.close();
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
+        HashMap<String, GenomeMetadata> hmap = new HashMap<String, GenomeMetadata>();
+        InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
+        CSVReader reader = new CSVReader(new InputStreamReader(in), ';');
+        String[] nextLine;
+        try {
+            while ((nextLine = reader.readNext()) != null) {
+                String genomeId = nextLine[0];
+                String lineage = nextLine[21];
+                hmap.put(genomeId, new GenomeMetadata(genomeId, lineage));
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    	return hmap;
+        return hmap;
     }
 }
