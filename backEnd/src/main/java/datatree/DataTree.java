@@ -6,6 +6,7 @@ import genome.Strand;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ForkJoinPool;
 
 import abstractdatastructure.TreeStructure;
 
@@ -43,33 +44,11 @@ public class DataTree extends TreeStructure<DataNode> {
 
         }
         
-        addCommonStrandsToParent(getRoot());
+        ForkJoinPool pool = new ForkJoinPool();
+        pool.invoke(new AddStrandsFromChildren(getRoot()));
 
 
     }
-
-
-    /**
-     * Recursive method for going through the tree and adding the strands top down.
-     *
-     * @param currentNode the tree root.
-     */
-    public void addCommonStrandsToParent(DataNode currentNode) {
-    	ArrayList<DataNode> children = currentNode.getChildren();
-    	if (children.size() != 0) {
-    		addCommonStrandsToParent(children.get(0));
-    		addCommonStrandsToParent(children.get(1));
-    		ArrayList<Strand> strands1 = children.get(0).getStrands();
-    		ArrayList<Strand> strands2 = children.get(1).getStrands();
-    		ArrayList<Strand> current = new ArrayList<>(strands1);
-    		current.retainAll(strands2);
-    		currentNode.setStrands(current);
-    		strands1.removeAll(current);
-    		strands2.removeAll(current);
-    		children.get(0).setStrands(strands1);
-    		children.get(1).setStrands(strands2);
-    	}
-   }
 
     /**
      * Get the strands within the given parameters.

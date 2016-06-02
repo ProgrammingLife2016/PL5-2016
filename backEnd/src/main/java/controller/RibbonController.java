@@ -48,7 +48,7 @@ public final class RibbonController {
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
 
         System.out.println(minX + ", " + maxX);
-        ArrayList<String> actGen = new ArrayList<>();
+        ArrayList<String> actGen = genomeGraph.getActiveGenomes();
         //HARD CODED ACTIVE GENOMES.
         if (actGen.size() < 2) {
             actGen.add("TKK_02_0010.fasta");
