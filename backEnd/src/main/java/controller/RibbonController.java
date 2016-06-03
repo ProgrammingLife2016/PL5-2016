@@ -100,7 +100,7 @@ public final class RibbonController {
         result.sort((RibbonNode o1, RibbonNode o2) -> Integer.valueOf(o1.getX()).compareTo(o2.getX()));
         calcYcoordinates(result);
         addEdges(result);
-
+        addMutationLabels(result);
 
         return result;
 
@@ -265,5 +265,13 @@ public final class RibbonController {
         return result;
     }
 
-
+    public void addMutationLabels(ArrayList<RibbonNode> nodes) {
+    	for (RibbonNode node : nodes) {
+    		Strand strand = node.getStrands().get(0);
+    		if (strand.getMutations().size() > 0) {
+    			System.out.println("Mutation added");
+    			node.setLabel(strand.getMutations().get(0).toString());
+    		}
+    	}
+    }
 }

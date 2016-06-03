@@ -103,4 +103,8 @@ public abstract class AbstractMutation {
 		this.mutatedStrands = mutatedStrands;
 	}
 	
+	public String toString() {
+		return mutationType.toString();
+	}
+	
 }
