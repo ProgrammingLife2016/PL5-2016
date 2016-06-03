@@ -1,11 +1,12 @@
 package phylogenetictree;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -25,8 +26,9 @@ public class PylogeneticTreeTest {
     @Before
     public void setUp() {
         tree = new PhylogeneticTree();
-        tree.parseTree("testFile");
-
+        ArrayList<String> genomes = new ArrayList<>(
+        		Arrays.asList("A", "C", "D"));
+        tree.parseTree("testFile", genomes);
     }
 
     /**
@@ -34,7 +36,7 @@ public class PylogeneticTreeTest {
      */
     @Test
     public void testRootSize() {
-        assertEquals(tree.getRoot().getChildren().size(), 3);
+        assertEquals(tree.getRoot().getChildren().size(), 2);
     }
 
     /**
@@ -42,7 +44,7 @@ public class PylogeneticTreeTest {
      */
     @Test
     public void testGetNodeWithLabelEnd() {
-        assertEquals(tree.getRoot().getNodeWithLabel("D.fasta").getDistance(), 0.4, 0.001);
+        assertEquals(tree.getRoot().getNodeWithLabel("D").getDistance(), 0.4, 0.001);
     }
 
     /**
@@ -58,7 +60,7 @@ public class PylogeneticTreeTest {
      */
     @Test
     public void testGetNodeEnd() {
-        assertEquals(tree.getRoot().getNode(2).getDistance(), 0.2, 0.001);
+        assertEquals(tree.getRoot().getNode(2).getDistance(), 0.5, 0.001);
 
     }
 
@@ -89,10 +91,10 @@ public class PylogeneticTreeTest {
     @Test
     public void testContainsGenomes() throws Exception {
         ArrayList<String> testList = new ArrayList<>();
-        testList.add("C.fasta");
-        testList.add("D.fasta");
+        testList.add("C");
+        testList.add("D");
 
-        assertEquals(tree.getRoot().getChildren().get(2).getGenomes(), testList);
+        assertEquals(tree.getRoot().getChildren().get(1).getGenomes(), testList);
     }
 
     /**

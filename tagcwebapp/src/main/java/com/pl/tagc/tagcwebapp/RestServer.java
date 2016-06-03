@@ -1,14 +1,15 @@
 package com.pl.tagc.tagcwebapp;
 
-import javax.ws.rs.ProcessingException;
-import javax.ws.rs.ext.RuntimeDelegate;
 import org.eclipse.persistence.jaxb.MarshallerProperties;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.grizzly.http.server.CLStaticHttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.ServerConfiguration;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer;
+import org.glassfish.jersey.server.ResourceConfig;
+
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.ext.RuntimeDelegate;
 
 
 

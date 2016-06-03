@@ -1,8 +1,10 @@
 package com.pl.tagc.tagcwebapp;
+
 import ribbonnodes.RibbonNode;
+
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * The Class NodeListObject.

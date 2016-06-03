@@ -258,7 +258,6 @@ public class DatabaseTest {
         wanted.add("DD");
         Assert.assertEquals(db.returnDescGenome("2"), wanted);
     }
-
     /**
      * Deletes the created database.
      */

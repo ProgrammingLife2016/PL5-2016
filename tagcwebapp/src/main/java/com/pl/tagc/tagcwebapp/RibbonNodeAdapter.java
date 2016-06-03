@@ -1,8 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 import ribbonnodes.RibbonNode;
+
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The Class RibbonNodeAdapter.
@@ -23,7 +23,7 @@ public class RibbonNodeAdapter extends XmlAdapter<AdaptedRibbonNode, RibbonNode>
     @Override
     public AdaptedRibbonNode marshal(RibbonNode node) throws Exception {
     	AdaptedRibbonNode adaptedNode = new AdaptedRibbonNode();
-    	adaptedNode.setLabel(node.getLabel());
+    	adaptedNode.setLabel(node.getLabel() + "Node: " +node.getId());
     	adaptedNode.setId(node.getId());
     	adaptedNode.setGenomes(node.getGenomes());
         adaptedNode.setEdges(node.getOutEdges());

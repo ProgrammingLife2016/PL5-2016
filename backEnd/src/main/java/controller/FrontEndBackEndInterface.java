@@ -1,8 +1,8 @@
 package controller;
 
 import ribbonnodes.RibbonNode;
-
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interface that contracts the interaction between the frontend and the Backend.
@@ -21,9 +21,11 @@ public interface FrontEndBackEndInterface {
     ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel);
 
     /**
-     * Set the active genomes of the view.
-     * @param activeGenomes String id's of the genomes selected.
+     * Sets the active genomes.
+     *
+     * @param activeGenomes the active genomes
+     * @return the list
      */
-    void setActiveGenomes(ArrayList<String> activeGenomes);
+    List<String> setActiveGenomes(ArrayList<String> activeGenomes);
 
 }

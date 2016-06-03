@@ -1,8 +1,8 @@
 package mutation;
 
-import java.util.ArrayList;
-
 import genome.Strand;
+
+import java.util.ArrayList;
 
 /**
  * 

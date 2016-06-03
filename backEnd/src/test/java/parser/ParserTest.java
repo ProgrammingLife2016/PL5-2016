@@ -1,14 +1,14 @@
 package parser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
+import controller.GenomeGraph;
 import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import controller.GenomeGraph;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 
 /**

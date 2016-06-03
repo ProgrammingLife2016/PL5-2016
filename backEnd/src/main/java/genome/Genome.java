@@ -7,8 +7,18 @@ import java.util.ArrayList;
  */
 public class Genome {
 
-    private ArrayList<Strand> strands; //The strands contained in this Genome, parsed starting at the lowest id.
-    private String id; //The id String of this genome.
+	/**
+	 * The strands contained in this Genome, parsed starting at the lowest id.
+	 */
+    private ArrayList<Strand> strands;
+    /**
+     * The id String of this genome.
+     */
+    private String id;
+    /**
+     * The meta data of this genome.
+     */
+    private GenomeMetadata metadata;
 
     /**
      * Constructor to create a new genome.
@@ -19,7 +29,6 @@ public class Genome {
         this.id = id;
         strands = new ArrayList<>();
     }
-
 
 
     /**
@@ -59,4 +68,27 @@ public class Genome {
     }
 
 
+    /**
+     * @return the metadata
+     */
+    public GenomeMetadata getMetadata() {
+        return metadata;
+    }
+
+
+    /**
+     * @param metadata the metadata to set
+     */
+    public void setMetadata(GenomeMetadata metadata) {
+        this.metadata = metadata;
+    }
+
+    /**
+     * Checks for metadata.
+     *
+     * @return true, if successful
+     */
+    public boolean hasMetadata() {
+        return this.metadata != null;
+    }
 }

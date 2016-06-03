@@ -98,14 +98,15 @@ function addCompareGenomeButtonBindings() {
 
         fullSizeMinimap();
 
-        makeRestAPIcall('getribbongraph', 'JSON', 'POST', data, drawRibbonGraph);
+        makeRestAPIcall('setactivegenomes', 'JSON', 'POST', data, handleActivationResponse);
+        initializeMinimap();
     })
 }
 
 function makeRestAPIcall(apiCall, dataType, requestType, reqData, callback) {
     var url = 'http://localhost:9998/api/';
     //Temp:
-    url = 'http://localhost:9998/app/';
+    // url = 'http://localhost:9998/app/';
     $.ajax({
         url : url + apiCall,
         dataType : dataType,
@@ -116,10 +117,35 @@ function makeRestAPIcall(apiCall, dataType, requestType, reqData, callback) {
     });
 }
 
-function drawRibbonGraph(graph) {
-    console.log("drawRibbonGraph function called with data:");
-    console.log(graph);
+//Handles the genome activation response. The response contains a list 
+//of unrecognized genomes. If this list is not empty it will activate
+//a dialog in the GUI with the unrecognized genomes and a message.
+function handleActivationResponse(response) {
+    console.log("handleActivationResponse function called with data:");
+    console.log(response);
+    if(response.list.length != 0)
+    	{    	
+    	showDialog("Warning: Unrecognized genomes",createUnrecognizedGenomesMessage(response.list));
+    	}
     initializeMinimap();
+}
+
+//creates an unrecognized genomes message from a list of genome id's
+function createUnrecognizedGenomesMessage(list)
+{
+	var message = "The following genomes were not found in the genome graph:<br>"
+		list.forEach(function(genome){
+			message = message + genome + "<br>";
+		})
+	return message;
+}
+
+//Shows a dialog with the specified header and body
+function showDialog(header, body)
+{
+	$("#myModal .modal-title").html(header);
+	$("#myModal .modal-body>p").html(body);
+	$('#myModal').modal('show');
 }
 
 function set_default_tree_settings() {
