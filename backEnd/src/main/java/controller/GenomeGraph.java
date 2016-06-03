@@ -87,7 +87,7 @@ public class GenomeGraph {
                 for (StrandEdge edge : strand.getEdges()) {
                     Strand nextStrand = strandNodes.get(edge.getEnd());
                     if (nextStrand.getX() < strand.getX() + 1) {
-                        nextStrand.setX(strand.getX() + 1);
+                        nextStrand.setX(strand.getX()+strand.getSequence().length() + 1);
                         nextStrands.add(nextStrand);
                     }
                 }

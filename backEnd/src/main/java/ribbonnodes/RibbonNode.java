@@ -59,9 +59,10 @@ public class RibbonNode {
         inEdges = new ArrayList<>();
         outEdges = new ArrayList<>();
         strands = new ArrayList<>();
+        this.label = "";
         this.genomes = genomes;
         this.id = id;
-        this.x = id; //for now
+        this.x = 0; //for now
         this.y = 0;
     }
 
@@ -115,6 +116,13 @@ public class RibbonNode {
      */
     public void setLabel(String label) {
         this.label = label;
+        String newLabel = "";
+        for (int i = 0; i < label.length(); i += 40) {
+            String sub = label.substring(i, Math.min(i + 40, label.length()));
+            newLabel += sub + "\n";
+        }
+        this.label = newLabel;
+
     }
 
     /**
@@ -245,7 +253,9 @@ public class RibbonNode {
      * @param strands Added strands.
      */
     public void addStrands(ArrayList<Strand> strands) {
-        this.strands.addAll(strands);
+        for (Strand strand : strands) {
+            addStrand(strand);
+        }
     }
 
     /**
@@ -255,5 +265,6 @@ public class RibbonNode {
      */
     public void addStrand(Strand strand) {
         this.strands.add(strand);
+        this.setLabel(label + strand.getSequence() + "\n");
     }
 }

@@ -227,6 +227,7 @@ function calcHeight(nodes) {
         minHeight = Math.min(minHeight, node.y);
         maxHeight = Math.max(maxHeight, node.y);
     });
+
     return maxHeight - minHeight + 0.00001;
 }
 
@@ -270,8 +271,9 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
 
     $.each(points, function(id, point) {
         ctx.beginPath();
+
         var xPos = xTranslate(point.x);
-        var yPos = nodeHeight + point.y * yTranslate * 0.3;
+        var yPos = nodeHeight + point.y;
         ctx.arc(xPos, yPos, 5, 0, 2 * Math.PI);
         ctx.stroke();
         if (saveRealCoordinates) {
@@ -285,8 +287,8 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
             }
             if (target) {
                 ctx.beginPath();
-                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y * yTranslate * 0.3);
-                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y * yTranslate * 0.3);
+                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y );
+                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y );
                 ctx.lineWidth = edge.weight;
                 ctx.strokeStyle = '#'+ edge.color;
                 ctx.stroke();
@@ -310,7 +312,7 @@ function zoom(direction, zoomAmount, xMousePos) {
     var maxWidth = minimap.width();
     var currentWidth = slider.width();
     zoomWidth += (direction > 0)?-1*zoomAmount:zoomAmount;
-    zoomWidth = Math.max(1, Math.min(zoomWidth, 100));
+    zoomWidth = Math.max(0.1, Math.min(zoomWidth, 100));
 
     var newWidth = Math.max(1, Math.min(maxWidth, zoomWidth / 100 * maxWidth));
 
