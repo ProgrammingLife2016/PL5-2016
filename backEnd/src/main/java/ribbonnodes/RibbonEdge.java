@@ -2,7 +2,7 @@ package ribbonnodes;
 
 import abstractdatastructure.Edge;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * The Edges between the Ribbon Nodes.

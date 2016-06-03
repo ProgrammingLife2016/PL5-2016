@@ -3,6 +3,7 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import parser.Parser;
 import mutation.Mutations;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class Controller implements FrontEndBackEndInterface {
     /**
      * Constructor.
      */
+    @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public Controller() {
     	String gfaFile = "data/TB328.gfa";
         genomeGraph = Parser.parse(gfaFile);

@@ -18,18 +18,12 @@ public class Mutations {
 	/** The genome graph. */
 	private GenomeGraph genomeGraph;
 	
-	/** The mutations. 
-	 * For now all the mutations will be stored in a ArrayList.
-	 */
-	private ArrayList<AbstractMutation> mutation;
-	
 	/**
 	 * Constructor to create.
 	 *
 	 * @param graph The genome graph.
 	 */
 	public Mutations(GenomeGraph graph) {
-		mutation = new ArrayList<>();
 		this.genomeGraph = graph;
 	}
 	

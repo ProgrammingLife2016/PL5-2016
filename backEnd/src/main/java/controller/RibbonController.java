@@ -6,7 +6,7 @@ import genome.Strand;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -97,7 +97,7 @@ public final class RibbonController {
         }
 
 
-        result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
+        result.sort((RibbonNode o1, RibbonNode o2) -> Integer.valueOf(o1.getX()).compareTo(o2.getX()));
         calcYcoordinates(result);
         addEdges(result);
 
@@ -115,8 +115,7 @@ public final class RibbonController {
     public ArrayList<RibbonNode> collapseRibbons(ArrayList<RibbonNode> nodes) {
         for (int i = 0; i < nodes.size(); i++) {
             RibbonNode node = nodes.get(i);
-            if (node != null) {
-                if (node.getOutEdges().size() == 1) {
+            if (node != null && node.getOutEdges().size() == 1) {
                     RibbonNode other = getNodeWithId(node.getOutEdges().get(0).getEnd(), nodes);
                     if (other.getInEdges().size() == 1) {
                         node.addStrands(other.getStrands());
@@ -128,10 +127,7 @@ public final class RibbonController {
                     }
                 }
             }
-        }
         return nodes;
-
-
     }
 
     /**

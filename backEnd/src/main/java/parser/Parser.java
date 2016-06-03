@@ -205,8 +205,6 @@ public class Parser {
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Get all the genomes that are in the file.
      *
      * @param file The file.
@@ -236,7 +234,6 @@ public class Parser {
     }
 
     /**
->>>>>>> master
      * Get the content from the phylogenetic tree.
      *
      * @param file the path of the file
