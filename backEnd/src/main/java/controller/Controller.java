@@ -35,6 +35,9 @@ public class Controller implements FrontEndBackEndInterface {
      */
     private DataTree dataTree;
 
+    /**
+     * The ribbon controller.
+     */
     private RibbonController ribbonController;
 
     /**

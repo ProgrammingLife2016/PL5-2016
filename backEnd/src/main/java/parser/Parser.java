@@ -22,7 +22,7 @@ import java.util.HashMap;
  * Created by Jeffrey on 24-4-2016.
  */
 public class Parser {
-
+	
     private PrintWriter nodes;
     private PrintWriter edges;
     private PrintWriter phylo;

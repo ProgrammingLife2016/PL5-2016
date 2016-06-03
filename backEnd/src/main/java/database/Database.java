@@ -33,7 +33,14 @@ import java.util.Set;
  */
 public class Database {
 
+	/**
+	 * Path to the database.
+	 */
     private String path;
+    
+    /**
+     * Connection to the database.
+     */
     private GraphDatabaseService graphDb;
 
     /**

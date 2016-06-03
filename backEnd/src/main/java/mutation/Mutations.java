@@ -15,7 +15,9 @@ import java.util.HashMap;
  */
 public class Mutations {
 
-	/** The genome graph. */
+	/** 
+	 * The genome graph. 
+	 */
 	private GenomeGraph genomeGraph;
 	
 	/**
