@@ -238,7 +238,7 @@ function draw(points, c, yTranslate, xTranslate) {
 
     $.each(points, function(id, point) {
         ctx.beginPath();
-        ctx.arc(xTranslate(point.x), nodeHeight + point.y * yTranslate * 0.3, 5, 0, 2 * Math.PI);
+        ctx.arc(xTranslate(point.x), nodeHeight + point.y , 5, 0, 2 * Math.PI);
         ctx.stroke();
 
         $.each(point.edges, function(key, edge) {
@@ -248,8 +248,8 @@ function draw(points, c, yTranslate, xTranslate) {
             }
             if (target) {
                 ctx.beginPath();
-                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y * yTranslate * 0.3);
-                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y * yTranslate * 0.3);
+                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y );
+                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y );
                 ctx.lineWidth = edge.weight;
                 ctx.strokeStyle = '#'+ edge.color;
                 ctx.stroke();

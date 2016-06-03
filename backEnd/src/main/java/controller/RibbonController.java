@@ -9,6 +9,7 @@ import ribbonnodes.RibbonNode;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -77,7 +78,7 @@ public final class RibbonController {
 
         result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
         addEdges(result);
-        calcYcoordinates(result);
+        calcYcoordinatesFromStart(result);
 
 
         return result;
@@ -135,12 +136,7 @@ public final class RibbonController {
      * @param nodes The ribbonGraph to calculate y cooridnates for.
      * @return The ribbonGraph with added y coordinates.
      */
-    private void calcYcoordinates(ArrayList<RibbonNode> nodes) {
-        ArrayList<String> ag = genomeGraph.getActiveGenomes();
-        for (Genome genome : genomeGraph.getGenomes().values()) {
-
-
-        }
+    private void calcYcoordinatesFromStart(ArrayList<RibbonNode> nodes) {
 
 
     }
@@ -181,6 +177,8 @@ public final class RibbonController {
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
             } else {
+                currentNode.setY(currentNode.getY()+10);
+                next.setY(next.getY()+10);
                 currentNode.getOutEdge(currentNode.getId(), next.getId()).addGenomeToEdge(getColorForGenomeID(genomeID));
             }
 

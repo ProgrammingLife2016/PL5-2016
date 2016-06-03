@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import abstractdatastructure.TreeStructure;
+import genome.StrandEdge;
 
 /**
  * Tree containing all strands and genomes of the data.
@@ -111,14 +112,16 @@ public class DataTree extends TreeStructure<DataNode> {
      */
     public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes) {
         ArrayList<Strand> result = new ArrayList<>();
+        ArrayList<Integer> resultIDs = new ArrayList<>();
 
         for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
-                if (strand.getX() < xMax + 10 && strand.getX() > xMin - 10) {
                     result.add(strand);
+                    resultIDs.add(strand.getId());
                 }
-            }
+
         }
+
 
         return result;
 
