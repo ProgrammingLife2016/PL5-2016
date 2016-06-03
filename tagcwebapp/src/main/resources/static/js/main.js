@@ -273,7 +273,7 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
         ctx.beginPath();
 
         var xPos = xTranslate(point.x);
-        var yPos = nodeHeight + point.y * yTranslate * 0.3;
+        var yPos = nodeHeight + point.y;
         ctx.arc(xPos, yPos, 5, 0, 2 * Math.PI);
         ctx.stroke();
         if (saveRealCoordinates) {

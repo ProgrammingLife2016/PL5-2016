@@ -43,7 +43,7 @@ public class DataTree extends TreeStructure<DataNode> {
             }
 
         }
-        
+
         ForkJoinPool pool = new ForkJoinPool();
         pool.invoke(new AddStrandsFromChildren(getRoot()));
         //TempReadWriteTree.writeTree((getRoot()));
@@ -79,9 +79,11 @@ public class DataTree extends TreeStructure<DataNode> {
 
         for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
+                if (strand.getX() > xMin - 10000 && strand.getX() < xMax + 10000) {
                     result.add(strand);
                     resultIDs.add(strand.getId());
                 }
+            }
 
         }
 
