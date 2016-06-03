@@ -12,9 +12,20 @@ import java.util.ArrayList;
  */
 public class DataNode extends AbstractTreeNode<DataNode> {
 
-    private ArrayList<Strand> strands; // The strands contained in this node.
-    private ArrayList<String> genomes; // The genomeIds contained in this node.
-    private int level; //The level of this node in the tree, root having level 0;
+	/**
+	 * The strands contained in this node.
+	 */
+    private ArrayList<Strand> strands;
+    
+    /**
+     * The genomeIds contained in this node.
+     */
+    private ArrayList<String> genomes;
+    
+    /**
+     * The level of this node in the tree, root having level 0.
+     */
+    private int level;
 
     /**
      * creates a data Node.

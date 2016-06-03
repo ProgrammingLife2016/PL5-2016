@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.never;
+import static org.mockito.Matchers.any;
 
 /**
  * 
@@ -60,7 +62,7 @@ public class MutationsTest {
 		when(strand2.getEdges()).thenReturn(new ArrayList<>());
 		when(strand3.getEdges()).thenReturn(new ArrayList<>());
 		mutations.computeAllMutations();
-		assertEquals(mutations.getMutation().size(), 0);
+		verify(strand1, never()).addMutation(any());
 	}
 	
 	/**
@@ -73,8 +75,8 @@ public class MutationsTest {
 		when(strand2.getEdges()).thenReturn(new ArrayList<>(Arrays.asList(new StrandEdge(1, 2))));
 		when(strand3.getEdges()).thenReturn(new ArrayList<>());
 		mutations.computeAllMutations();
-		assertEquals(mutations.getMutation().size(), 1);
-		assertTrue(mutations.getMutation().get(0).getMutationType().equals(MutationType.DELETION));
+		System.out.println(strand1.getMutations().size());
+		verify(strand1, atLeastOnce()).addMutation(any());
 	}
 	
 	/**
@@ -87,8 +89,7 @@ public class MutationsTest {
 		when(strand2.getEdges()).thenReturn(new ArrayList<>());
 		when(strand3.getEdges()).thenReturn(new ArrayList<>(Arrays.asList(new StrandEdge(2, 1))));
 		mutations.computeAllMutations();
-		assertEquals(mutations.getMutation().size(), 1);
-		assertTrue(mutations.getMutation().get(0).getMutationType().equals(MutationType.INSERTION));
+		verify(strand1, atLeastOnce()).addMutation(any());
 
 	}
 }

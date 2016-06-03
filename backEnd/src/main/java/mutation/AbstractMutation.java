@@ -11,11 +11,34 @@ import java.util.ArrayList;
  */
 public abstract class AbstractMutation {
 	
+	/**
+	 * The genomes in the reference.
+	 */
 	private ArrayList<String> reference;
+	
+	/**
+	 * The genomes in the other.
+	 */
 	private ArrayList<String> other;
+	
+	/**
+	 * The start strand.
+	 */
 	private Strand start;
+	
+	/**
+	 * The mutation type.
+	 */
 	private MutationType mutationType;
+	
+	/**
+	 * The strands that are mutated.
+	 */
 	private ArrayList<Strand> mutatedStrands;
+	
+	/**
+	 * The end strand if there is any.
+	 */
 	private Strand end;
 	
 	/**
@@ -101,6 +124,10 @@ public abstract class AbstractMutation {
 	 */
 	public void setMutatedStrands(ArrayList<Strand> mutatedStrands) {
 		this.mutatedStrands = mutatedStrands;
+	}
+	
+	public String toString() {
+		return mutationType.toString();
 	}
 	
 }

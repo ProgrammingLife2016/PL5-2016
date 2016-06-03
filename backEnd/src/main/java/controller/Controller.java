@@ -4,6 +4,7 @@ import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
 import parser.Parser;
+import mutation.Mutations;
 import java.util.ArrayList;
 import java.util.List;
 import phylogenetictree.PhylogeneticTree;
@@ -33,6 +34,9 @@ public class Controller implements FrontEndBackEndInterface {
      */
     private DataTree dataTree;
 
+    /**
+     * The ribbon controller.
+     */
     private RibbonController ribbonController;
 
     /**
@@ -60,10 +64,11 @@ public class Controller implements FrontEndBackEndInterface {
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);
+        Mutations mutations = new Mutations(genomeGraph);
+        mutations.computeAllMutations();
         dc = this;
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
-
 
     /**
      * Wrapper method that returns a list of filtered node for the particular query.

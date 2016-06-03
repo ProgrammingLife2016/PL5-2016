@@ -3,11 +3,11 @@ package datatree;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import parser.Parser;
  * @author Jeffrey Helgers.
  * Temporary class that reads and writes the datatree.
  */
-public class TempReadWriteTree {
+public final class TempReadWriteTree {
 
 	/**
 	 * Constructor to create the tree.
@@ -34,10 +34,8 @@ public class TempReadWriteTree {
 	 */
 	public static void writeTree(DataNode root) {
 		try {
-			File file = new File("tempTree.txt");
-			System.out.println(file.getAbsolutePath());
-			file.createNewFile();
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+				    new FileOutputStream("outfilename"), StandardCharsets.UTF_8));
 			writeNode(root, writer);
 			writer.close();
 		} catch (IOException e) {

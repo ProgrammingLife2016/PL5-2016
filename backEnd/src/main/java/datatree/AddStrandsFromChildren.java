@@ -14,6 +14,9 @@ import genome.Strand;
  */
 public class AddStrandsFromChildren extends RecursiveAction {
 
+	/**
+	 * The node on which the computation is made.
+	 */
 	private DataNode currentNode;
 	
 	/**

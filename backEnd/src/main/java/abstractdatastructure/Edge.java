@@ -8,8 +8,20 @@ package abstractdatastructure;
  * data container class that stores the start and end of an edge, as well as its weight.
  */
 public class Edge {
+	
+	/**
+	 * Edge start id.
+	 */
     private int startId;
+    
+    /**
+     * Edge end id.
+     */
     private int endId;
+    
+    /**
+     * The number of genomes going through the edge.
+     */
     private int weight;
 
     /**

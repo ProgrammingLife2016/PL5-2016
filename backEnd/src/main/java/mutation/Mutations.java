@@ -15,13 +15,10 @@ import java.util.HashMap;
  */
 public class Mutations {
 
-	/** The genome graph. */
-	private GenomeGraph genomeGraph;
-	
-	/** The mutations. 
-	 * For now all the mutations will be stored in a ArrayList.
+	/** 
+	 * The genome graph. 
 	 */
-	private ArrayList<AbstractMutation> mutation;
+	private GenomeGraph genomeGraph;
 	
 	/**
 	 * Constructor to create.
@@ -29,7 +26,6 @@ public class Mutations {
 	 * @param graph The genome graph.
 	 */
 	public Mutations(GenomeGraph graph) {
-		mutation = new ArrayList<>();
 		this.genomeGraph = graph;
 	}
 	
@@ -79,7 +75,7 @@ public class Mutations {
 				genomesInBothStrands.removeAll(genomesInOriginal);
 				MutationIndel indel = new MutationIndel(MutationType.DELETION, genomesInOriginal,
 						genomesInBothStrands, start, next2, new ArrayList<Strand>());
-				mutation.add(indel);
+				start.addMutation(indel);
 				return;
 			}
 		}
@@ -93,17 +89,9 @@ public class Mutations {
 				MutationIndel indel = new MutationIndel(MutationType.INSERTION, 
 						genomesInBothStrands, genomesInMutation, 
 						start, next1, new ArrayList<Strand>());
-				mutation.add(indel);
+				start.addMutation(indel);
 				return;
 			} 
 		}
-	}
-	
-	/**
-	 * Get the mutations.
-	 * @return Mutations.
-	 */
-	public ArrayList<AbstractMutation> getMutation() {
-		return mutation;
 	}
 }
