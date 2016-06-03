@@ -8,15 +8,46 @@ import java.util.ArrayList;
  * Created by Matthijs on 12-5-2016.
  */
 public class RibbonNode {
-    private int id; // The id of the Node.
-    private int x; //The x coordinate of the Node.
-    private int y; // The y coordinate of the Node.
-    private ArrayList<RibbonEdge> inEdges; // The edges going in to the node.
-    private ArrayList<RibbonEdge> outEdges; // The edges going out of the node.
-    private ArrayList<String> genomes; //The genomes that go through this node.
-    private ArrayList<Strand> strands; // The strands contained in this node.
-    private String label; // The entire strand contained in this node 
-    // (if zoomlevel is above a certain threshold).
+    
+	/**
+	 * The id of the Node.
+	 */
+	private int id;
+	
+	/**
+	 * The x coordinate of the Node.
+	 */
+    private int x;
+    
+    /**
+     * The y coordinate of the Node.
+     */
+    private int y;
+    
+    /**
+     * The edges going in to the node.
+     */
+    private ArrayList<RibbonEdge> inEdges;
+    
+    /**
+     * The edges going out of the node.
+     */
+    private ArrayList<RibbonEdge> outEdges;
+    
+    /**
+     * The genomes that go through this node.
+     */
+    private ArrayList<String> genomes;
+    
+    /**
+     * The strands contained in this node.
+     */
+    private ArrayList<Strand> strands;
+    
+    /**
+     * The entire strand contained in this node.
+     */
+    private String label;
 
     /**
      * Constructor for the RibbonNode.

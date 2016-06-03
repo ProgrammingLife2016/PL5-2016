@@ -6,7 +6,7 @@ import genome.Strand;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -106,6 +106,10 @@ public final class RibbonController {
         spreadYCoordinates(result);
         collapseRibbons(result, Math.max(0, 5 - zoomLevel));
 
+        if(zoomLevel<10){
+            addMutationLabels(result);
+        }
+
         System.out.println(result.size() + " nodes returned");
         return result;
 
@@ -119,10 +123,10 @@ public final class RibbonController {
      */
     private void collapseRibbons(ArrayList<RibbonNode> nodes, int iterations) {
         int nIter = 0;
-        int changedThisPass = 100000 ;
-        while (nIter < iterations && nodes.size() > maxStrandsToReturn && changedThisPass>maxStrandsToReturn/2) {
+        int changedThisPass = 100000;
+        while (nIter < iterations && nodes.size() > maxStrandsToReturn && changedThisPass > maxStrandsToReturn / 2) {
             nIter++;
-            changedThisPass=0;
+            changedThisPass = 0;
             for (int i = 0; i < nodes.size(); i++) {
                 RibbonNode node = nodes.get(i);
                 if (node != null) {
@@ -141,6 +145,7 @@ public final class RibbonController {
                 }
             }
         }
+
     }
 
 
@@ -288,5 +293,15 @@ public final class RibbonController {
      */
     public void setMaxStrandsToReturn(int maxStrandsToReturn) {
         this.maxStrandsToReturn = maxStrandsToReturn;
+    }
+
+    public void addMutationLabels(ArrayList<RibbonNode> nodes) {
+        for (RibbonNode node : nodes) {
+            Strand strand = node.getStrands().get(0);
+            if (strand.getMutations().size() > 0) {
+                System.out.println("Mutation added");
+                node.setLabel(strand.getMutations().get(0).toString());
+            }
+        }
     }
 }

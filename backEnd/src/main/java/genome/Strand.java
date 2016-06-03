@@ -5,6 +5,8 @@ package genome;
 
 import org.neo4j.graphdb.Node;
 
+import mutation.AbstractMutation;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,14 +15,50 @@ import java.util.Arrays;
  */
 public class Strand {
 
-    private int id; //node id
-    private int x; //The x coordinate of this Strand.
-    private String sequence; //dna in node
-    private String[] genomes; //genomes that contain this node
-    private String referenceGenome; // the refrence genome of this node
-    private int referenceCoordinate; //coordinate of this node in the refr genome
-    private int weight; // amount of genomes that contain this node
-    private ArrayList<StrandEdge> edges; // The edges going out of this strand.
+	/**
+	 * Node id.
+	 */
+    private int id;
+    
+    /**
+     * The x coordinate of this Strand.
+     */
+    private int x;
+    
+    /**
+     * Dna in node.
+     */
+    private String sequence;
+    
+    /**
+     * Genomes that contain this node.
+     */
+    private String[] genomes;
+    
+    /**
+     * The refrence genome of this node.
+     */
+    private String referenceGenome;
+    
+    /**
+     * Coordinate of this node in the refr genome.
+     */
+    private int referenceCoordinate;
+    
+    /**
+     * Amount of genomes that contain this node.
+     */
+    private int weight;
+    
+    /**
+     * The edges going out of this strand.
+     */
+    private ArrayList<StrandEdge> edges;
+    
+    /**
+     * The mutations on this Strand.
+     */
+    private ArrayList<AbstractMutation> mutations;
 
     /**
      * Constructor to create a node.
@@ -44,6 +82,7 @@ public class Strand {
         this.weight = genomes.length;
         this.edges = new ArrayList<>();
         this.x = 0;
+        this.mutations = new ArrayList<>();
     }
 
     /**
@@ -214,5 +253,21 @@ public class Strand {
      */
     public void setX(int x) {
         this.x = x;
+    }
+    
+    /**
+     * Get all the mutations started from this Strand.
+     * @return Mutations.
+     */
+    public ArrayList<AbstractMutation> getMutations() {
+    	return mutations;
+    }
+    
+    /**
+     * Add a mutation to the mutations.
+     * @param mutation The added mutation.
+     */
+    public void addMutation(AbstractMutation mutation) {
+    	mutations.add(mutation);
     }
 }

@@ -5,10 +5,14 @@ package genome;
  */
 public class GenomeMetadata {
 
-	/** The lineage. */
+	/** 
+	 * The lineage. 
+	 */
 	private String lineage;
 	
-	/** The genome id. */
+	/** 
+	 * The genome id. 
+	 */
 	private String genomeId;
 	
 	/**
