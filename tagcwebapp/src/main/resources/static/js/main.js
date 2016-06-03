@@ -312,7 +312,7 @@ function zoom(direction, zoomAmount, xMousePos) {
     var maxWidth = minimap.width();
     var currentWidth = slider.width();
     zoomWidth += (direction > 0)?-1*zoomAmount:zoomAmount;
-    zoomWidth = Math.max(1, Math.min(zoomWidth, 100));
+    zoomWidth = Math.max(0.1, Math.min(zoomWidth, 100));
 
     var newWidth = Math.max(1, Math.min(maxWidth, zoomWidth / 100 * maxWidth));
 

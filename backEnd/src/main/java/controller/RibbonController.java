@@ -99,7 +99,7 @@ public final class RibbonController {
 
         result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
         addEdges(result);
-        calcYcoordinatesFromStart(result);
+        spreadYCoordinates(result);
 
 
         return result;
@@ -157,7 +157,27 @@ public final class RibbonController {
      * @param nodes The ribbonGraph to calculate y cooridnates for.
      * @return The ribbonGraph with added y coordinates.
      */
-    private void calcYcoordinatesFromStart(ArrayList<RibbonNode> nodes) {
+    private void spreadYCoordinates(ArrayList<RibbonNode> nodes) {
+        int currentX = 0;
+        ArrayList<RibbonNode> currentXNodes = new ArrayList<>();
+        for (int i = 0; i < nodes.size(); i++) {
+            RibbonNode node = nodes.get(i);
+            if (node.getX() < currentX+1000&&node.getX() >currentX-1000) {
+                currentXNodes.add(node);
+            } else {
+                if (currentXNodes.size() > 1) {
+                    for (int j = 0; j < currentXNodes.size(); j++) {
+                        currentXNodes.get(j).setY(currentXNodes.get(j).getY()-10*(genomeGraph.getActiveGenomes().size()-1));
+                        currentXNodes.get(j).setY((int) (currentXNodes.get(j).getY()*(Math.pow(-1,j))));
+                    }
+                }
+                currentXNodes = new ArrayList<>();
+                currentXNodes.add(node);
+                currentX = node.getX();
+            }
+
+
+        }
 
 
     }
@@ -200,7 +220,6 @@ public final class RibbonController {
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
             } else {
-                currentNode.setY(currentNode.getY()+10);
                 next.setY(next.getY()+10);
                 RibbonEdge edge = currentNode.getOutEdge(currentNode.getId(), next.getId());
                 edge.addGenomeToEdge(getColorForGenome(genome));

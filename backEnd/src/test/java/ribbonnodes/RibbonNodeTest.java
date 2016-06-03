@@ -75,7 +75,7 @@ public class RibbonNodeTest {
     public void testSetLabel() throws Exception {
         assertEquals("node1\n", node1.getLabel());
         node1.setLabel("testLabel");
-        assertEquals("testLabeln\n", node1.getLabel());
+        assertEquals("testLabel\n", node1.getLabel());
 
     }
 

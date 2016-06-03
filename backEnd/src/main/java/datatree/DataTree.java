@@ -119,12 +119,17 @@ public class DataTree extends TreeStructure<DataNode> {
     public Set<DataNode> getDataNodesForGenome(Genome genome, int level) {
         Set<DataNode> result = new HashSet<>();
         DataNode currentNode = getRoot();
+        int totalStrands = 0;
         while (currentNode.getLevel() <= level) {
             result.add(currentNode);
+            totalStrands+=currentNode.getStrands().size();
             currentNode = currentNode.getChildWithGenome(genome.getId());
             if (currentNode == null) {
                 break;
             }
+        }
+        if(totalStrands<10000){
+            result=getDataNodesForGenome(genome, level+1);
         }
         return result;
 
