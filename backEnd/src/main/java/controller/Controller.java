@@ -52,6 +52,7 @@ public class Controller implements FrontEndBackEndInterface {
         		new ArrayList<>(genomeGraph.getGenomes().keySet()));
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
+        dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size()/8);
         
         if (gfaFile.equals("data/TB328.gfa")) {
         	TempReadWriteTree.readFile(dataTree, genomeGraph.getStrandNodes(), "data/tempTree.txt");
@@ -60,6 +61,7 @@ public class Controller implements FrontEndBackEndInterface {
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);
+        ribbonController.setMaxStrandsToReturn(3000);
         dc = this;
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }

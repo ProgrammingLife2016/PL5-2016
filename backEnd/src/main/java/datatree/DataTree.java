@@ -15,6 +15,10 @@ import java.util.concurrent.ForkJoinPool;
  */
 public class DataTree extends TreeStructure<DataNode> {
 
+    /**
+     * The minimal amount of strands to return.
+     */
+    private int minStrandsToReturn=0;
 
     /**
      * Default constructor.
@@ -128,7 +132,7 @@ public class DataTree extends TreeStructure<DataNode> {
                 break;
             }
         }
-        if(totalStrands<10000){
+        if(totalStrands<minStrandsToReturn){
             result=getDataNodesForGenome(genome, level+1);
         }
         return result;
@@ -136,5 +140,11 @@ public class DataTree extends TreeStructure<DataNode> {
 
     }
 
-
+    /**
+     * Set the minimal strands to return.
+     * @param minStrandsToReturn The minimal strands amount to return.
+     */
+    public void setMinStrandsToReturn(int minStrandsToReturn) {
+        this.minStrandsToReturn = minStrandsToReturn;
+    }
 }
