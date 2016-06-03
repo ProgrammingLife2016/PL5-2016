@@ -80,7 +80,7 @@ public class RibbonControllerTest {
 
         assertEquals(3, controller.getRibbonNodes(0, 1, 2).size());
         assertEquals(3, controller.getRibbonNodes(0, 1, 0).size());
-        assertEquals(0, controller.getRibbonNodes(100, 1000, 0).size());
+        assertEquals(3, controller.getRibbonNodes(100, 1000, 0).size());
 
 
     }
