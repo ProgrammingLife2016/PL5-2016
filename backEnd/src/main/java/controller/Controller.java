@@ -66,7 +66,7 @@ public class Controller implements FrontEndBackEndInterface {
         if (gfaFile.equals("data/TB328.gfa")) {
             TempReadWriteTree.readFile(dataTree, genomeGraph.getStrandNodes(), "data/tempTree.txt");
         } else {
-            dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+            dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);

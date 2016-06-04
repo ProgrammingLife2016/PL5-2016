@@ -52,7 +52,7 @@ public class Genome {
      * @return The strands the genome passes through.
      */
     public ArrayList<Strand> getStrands() {
-        return strands;
+        return new ArrayList<Strand>(strands);
     }
 
     /**

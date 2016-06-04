@@ -5,6 +5,7 @@ import java.util.List;
 
 import ribbonnodes.RibbonNode;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GenomeGraph.
  */
@@ -42,6 +43,15 @@ public class GenomeGraph {
      */
     public HashMap<Integer, Strand> getStrandNodes() {
         return strandNodes;
+    }
+    
+    /**
+     * Sets the strand nodes.
+     *
+     * @param strands the strands
+     */
+    public void setStrandNodes(HashMap<Integer, Strand> strands) {
+        this.strandNodes = strands;
 
     }
 
@@ -189,8 +199,8 @@ public class GenomeGraph {
 	/**
 	 * Annotate strands for genome.
 	 *
-	 * @param string the string
-	 * @param parseAnnotations the parse annotations
+	 * @param genomeID the genome id
+	 * @param annotations the annotations
 	 */
 	public void annotateGenome(String genomeID, List<GenomicFeature> annotations) {
 		Genome genome = genomes.get(genomeID);
@@ -198,6 +208,12 @@ public class GenomeGraph {
 		genome.annotate(annotations);
 	}
 
+	/**
+	 * Gets the strand.
+	 *
+	 * @param id the id
+	 * @return the strand
+	 */
 	public Strand getStrand(int id) {
 		return strandNodes.get(id);
 	}

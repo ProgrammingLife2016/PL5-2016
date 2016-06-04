@@ -82,7 +82,7 @@ public class DataTreeTest {
         root.setGenomes(parentGenomes);
 
         tree = new DataTree(root);
-        tree.addStrands(genomes);
+        tree.addStrandsFromGenomes(genomes);
     }
 
     /**
