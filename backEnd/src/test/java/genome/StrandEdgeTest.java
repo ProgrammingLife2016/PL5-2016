@@ -32,7 +32,7 @@ public class StrandEdgeTest {
      */
     @Test
     public void testGetEndId() {
-    	assertEquals(strandEdge.getEnd(), 2);
+    	assertEquals(strandEdge.getEnd().getId(), 2);
     }
     
     /**
