@@ -1,7 +1,10 @@
 package genome;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+
+import ribbonnodes.RibbonNode;
 
 /**
  * The Class GenomeGraph.
@@ -179,6 +182,18 @@ public class GenomeGraph {
 			g.setMetadata(metadata.get(g.getId()));
 		}
 		
+	}
+
+	/**
+	 * Annotate strands for genome.
+	 *
+	 * @param string the string
+	 * @param parseAnnotations the parse annotations
+	 */
+	public void annotateGenome(String genomeID, List<GenomicFeature> annotations) {
+		Genome genome = genomes.get(genomeID);
+		assert (genome != null);
+		genome.annotate(annotations);
 	}
 
 }

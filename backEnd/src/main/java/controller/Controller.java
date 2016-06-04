@@ -52,9 +52,10 @@ public class Controller implements FrontEndBackEndInterface {
      */
     public Controller() {
         String gfaFile = "data/TB10.gfa";
-        System.out.println(Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
         genomeGraph = Parser.parse(gfaFile);
         genomeGraph.generateGenomes();
+        genomeGraph.annotateGenome("MT_H37RV_BRD_V5.ref",
+        		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
         genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));

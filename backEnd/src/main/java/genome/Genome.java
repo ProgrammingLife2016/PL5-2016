@@ -1,6 +1,8 @@
 package genome;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Jeffrey Helgers
@@ -93,4 +95,42 @@ public class Genome {
     public boolean hasMetadata() {
         return this.metadata != null;
     }
+
+	/**
+	 * Annotate strands for genome.
+	 *
+	 * @param annotations the annotations
+	 */
+	public void annotate(List<GenomicFeature> annotations) {
+		ArrayList<Strand> strands = getStrands();
+		strands.sort((Strand o1, Strand o2) -> new Integer(o1.getReferenceCoordinate()).
+				compareTo(o2.getReferenceCoordinate()));
+		annotations.sort((GenomicFeature o1, GenomicFeature o2) -> new Integer(o1.getStart()).
+				compareTo(o2.getStart()));		
+		Iterator<GenomicFeature> gfIterator = annotations.iterator();
+		GenomicFeature genomicFeature = gfIterator.next();		
+		
+		for (int i = 0; i < strands.size() - 1; i++) {
+			while (genomicFeature.startsBetween(strands.get(i), strands.get(i + 1))) {
+				strands.get(i).setGenomicFeature(genomicFeature);
+				if (gfIterator.hasNext()) {
+				genomicFeature = gfIterator.next();
+				}
+				else {
+					break;
+				}
+			}
+		}
+		
+		if (gfIterator.hasNext()) {
+		Strand lastStrand = strands.get(strands.size() - 1);
+		assert (lastStrand.getReferenceCoordinate() <= genomicFeature.getStart());
+			while (gfIterator.hasNext()) {
+				lastStrand.setGenomicFeature(genomicFeature);
+				genomicFeature = gfIterator.next();
+			}
+		}
+		System.out.println(strands);
+	}
+	
 }

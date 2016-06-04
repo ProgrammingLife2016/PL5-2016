@@ -26,4 +26,8 @@ public String toString()
 {
 	return "start: " + start +", end: " + end + ", displayName: " + displayName + "\n";
 }
+
+public boolean startsBetween(Strand strand, Strand strand2) {
+	return strand.getReferenceCoordinate() <= start && strand2.getReferenceCoordinate() >= start;
+}
 }
