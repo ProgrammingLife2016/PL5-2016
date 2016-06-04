@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import genome.GenomeGraph;
 import genome.Strand;
 
@@ -29,8 +32,9 @@ public class GenomeGraphTest {
     public void setUp() {
     	data = new GenomeGraph();
     	String[] genomes = {"ref1", "ref2"};
-    	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
-    	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
+		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(genomes));
+    	strand1 = new Strand(1, "AA", genomeSet, "ref1", 0);
+    	strand2 = new Strand(2, "TG", genomeSet, "ref1", 3);
     	
     	data.addStrand(strand1);
     	data.addStrand(strand2);

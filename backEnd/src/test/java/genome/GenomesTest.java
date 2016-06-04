@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,7 +34,8 @@ public class GenomesTest {
 		ArrayList<Strand> res = new ArrayList<Strand>();
 		assertEquals(genome.getStrands(), res);
 		String[] genomes = {"ref1", "ref2"};
-    	Strand strand = new Strand(1, "AA", genomes, "ref1", 0);
+		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(genomes));
+    	Strand strand = new Strand(1, "AA", genomeSet, "ref1", 0);
     	res.add(strand);
     	genome.addStrand(strand);
     	assertEquals(genome.getStrands(), res);
@@ -45,7 +48,8 @@ public class GenomesTest {
     @Test
     public void testAddNode() {
         String[] genomes = {"ref1", "ref2"};
-        Strand strand = new Strand(1, "AA", genomes, "ref1", 0);
+		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(genomes));
+        Strand strand = new Strand(1, "AA", genomeSet, "ref1", 0);
         ArrayList<Strand> res = new ArrayList<Strand>();
         assertEquals(genome.getStrands(), res);
         res.add(strand);

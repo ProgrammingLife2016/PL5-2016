@@ -7,9 +7,8 @@ package genome;
 import org.neo4j.graphdb.Node;
 
 import mutation.AbstractMutation;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Class that contains the graph nodes.
@@ -34,7 +33,7 @@ public class Strand {
 	/**
 	 * Genomes that contain this node.
 	 */
-	private String[] genomes;
+	private HashSet<String> genomes;
 
 	/**
 	 * The refrence genome of this node.
@@ -78,17 +77,14 @@ public class Strand {
 	 * @param referenceCoordinate
 	 *            the reference coordinate.
 	 */
-	public Strand(int id, String sequence, String[] newGenomes, String referenceGenome,
+	public Strand(int id, String sequence, HashSet<String> newGenomes, String referenceGenome,
 			int referenceCoordinate) {
 		this.id = id;
 		this.sequence = sequence;
-		genomes = new String[newGenomes.length];
-		for (int i = 0; i < newGenomes.length; i++) {
-			genomes[i] = newGenomes[i];
-		}
+		genomes = newGenomes;
 		this.referenceGenome = referenceGenome;
 		this.referenceCoordinate = referenceCoordinate;
-		this.weight = genomes.length;
+		this.weight = genomes.size();
 		this.edges = new ArrayList<>();
 		this.x = 0;
 		this.mutations = new ArrayList<>();
@@ -133,9 +129,8 @@ public class Strand {
 	 *
 	 * @return The genomes id's.
 	 */
-	public ArrayList<String> getGenomes() {
-		ArrayList<String> res = new ArrayList<>(Arrays.asList(genomes));
-		return res;
+	public HashSet<String> getGenomes() {
+		return genomes;
 	}
 
 	/**
@@ -211,12 +206,9 @@ public class Strand {
 	 * @param newGenomes
 	 *            The genomes id's.
 	 */
-	public void setGenomes(String[] newGenomes) {
-		genomes = new String[newGenomes.length];
-		for (int i = 0; i < newGenomes.length; i++) {
-			genomes[i] = newGenomes[i];
-		}
-		this.weight = genomes.length;
+	public void setGenomes(HashSet<String> newGenomes) {
+		genomes = new HashSet<String>(newGenomes);
+		this.weight = genomes.size();
 
 	}
 

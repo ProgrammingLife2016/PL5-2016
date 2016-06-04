@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,13 +34,16 @@ public class RibbonControllerTest {
 
 
         String[] strand1Genomes = {"1"};
-        Strand strand1 = new Strand(1, "tagc", strand1Genomes, "1", 0);
+		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strand1Genomes));
+        Strand strand1 = new Strand(1, "tagc", genomeSet, "1", 0);
 
         String[] strand2Genomes = {"2"};
-        Strand strand2 = new Strand(10, "tagc", strand2Genomes, "2", 0);
+        genomeSet = new HashSet<String>(Arrays.asList(strand2Genomes));
+        Strand strand2 = new Strand(10, "tagc", genomeSet, "2", 0);
 
-        String[] strand12Genomes = {"1", "2"};
-        Strand stand12 = new Strand(5, "tagc", strand12Genomes, "2", 0);
+        String[] strand12Genomes = {"1", "2"}; 
+        genomeSet = new HashSet<String>(Arrays.asList(strand12Genomes));
+        Strand stand12 = new Strand(5, "tagc", genomeSet, "2", 0);
 
         DataNode root = new DataNode(null, 0);
         DataNode child1 = new DataNode(root, 0);

@@ -2,10 +2,13 @@ package datatree;
 
 import genome.Genome;
 import genome.Strand;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -40,13 +43,16 @@ public class DataTreeTest {
 
 
         String[] strand1Genomes = {"1"};
-        strand1 = new Strand(1, "tagc", strand1Genomes, "1", 0);
+		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strand1Genomes));
+        strand1 = new Strand(1, "tagc", genomeSet, "1", 0);
 
         String[] strand2Genomes = {"2"};
-        strand2 = new Strand(10, "tagc", strand2Genomes, "2", 0);
+        genomeSet = new HashSet<String>(Arrays.asList(strand2Genomes));
+        strand2 = new Strand(10, "tagc", genomeSet, "2", 0);
 
         String[] strand12Genomes = {"1", "2"};
-        strand12 = new Strand(5, "tagc", strand12Genomes, "2", 0);
+        genomeSet = new HashSet<String>(Arrays.asList(strand12Genomes));
+        strand12 = new Strand(5, "tagc", genomeSet, "2", 0);
 
         genome1.addStrand(strand1);
         genome1.addStrand(strand12);

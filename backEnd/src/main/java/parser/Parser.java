@@ -18,7 +18,9 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -145,8 +147,9 @@ public class Parser {
         String referenceGenome = splittedLine[5].substring(6, splittedLine[5].length());
         String ref = splittedLine[8].substring(8, splittedLine[8].length());
         int referenceCoordinate = Integer.parseInt(ref);
-
-        return new Strand(nodeId, sequence, genomes, referenceGenome, referenceCoordinate);
+        HashSet<String> genomeSet = new HashSet<String>();
+        Collections.addAll(genomeSet, genomes);
+        return new Strand(nodeId, sequence, genomeSet, referenceGenome, referenceCoordinate);
     }
 
     /**

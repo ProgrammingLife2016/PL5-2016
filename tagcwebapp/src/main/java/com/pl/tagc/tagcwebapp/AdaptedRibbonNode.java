@@ -3,6 +3,7 @@ package com.pl.tagc.tagcwebapp;
 import ribbonnodes.RibbonEdge;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * The Class AdaptedRibbonNode.
@@ -19,7 +20,7 @@ public class AdaptedRibbonNode {
     private ArrayList<RibbonEdge> edges;
     
     /** The genomes. */
-    private ArrayList<String> genomes;
+    private HashSet<String> genomes;
     
     /** The label. */
     private String label;
@@ -67,7 +68,7 @@ public class AdaptedRibbonNode {
 	 *
 	 * @return the genomes
 	 */
-	public ArrayList<String> getGenomes() {
+	public HashSet<String> getGenomes() {
 		return genomes;
 	}
 
@@ -76,7 +77,7 @@ public class AdaptedRibbonNode {
 	 *
 	 * @param genomes the new genomes
 	 */
-	public void setGenomes(ArrayList<String> genomes) {
+	public void setGenomes(HashSet<String> genomes) {
 		this.genomes = genomes;
 	}
 
