@@ -16,7 +16,7 @@ public class StrandEdgeTest {
 	 */
     @Before
     public void setUp() {
-    	strandEdge = new StrandEdge(1, 2);
+    	strandEdge = new StrandEdge(new Strand(1), new Strand(2));
     }
     
     /**
@@ -24,7 +24,7 @@ public class StrandEdgeTest {
      */
     @Test
     public void testGetStartId() {
-    	assertEquals(strandEdge.getStart(), 1);
+    	assertEquals(strandEdge.getStart().getId(), 1);
     }
     
     /**

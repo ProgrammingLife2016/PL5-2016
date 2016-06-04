@@ -1,7 +1,9 @@
 package genome;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -13,7 +15,6 @@ public class Genome {
 	 * The strands contained in this Genome, parsed starting at the lowest id.
 	 */
     private ArrayList<Strand> strands;
-    
     /**
      * The id String of this genome.
      */
@@ -31,7 +32,7 @@ public class Genome {
      */
     public Genome(String id) {
         this.id = id;
-        strands = new ArrayList<>();
+        strands = new ArrayList<Strand>();
     }
 
 
@@ -102,17 +103,15 @@ public class Genome {
 	 * @param annotations the annotations
 	 */
 	public void annotate(List<GenomicFeature> annotations) {
-		ArrayList<Strand> strands = getStrands();
-		strands.sort((Strand o1, Strand o2) -> new Integer(o1.getReferenceCoordinate()).
-				compareTo(o2.getReferenceCoordinate()));
 		annotations.sort((GenomicFeature o1, GenomicFeature o2) -> new Integer(o1.getStart()).
 				compareTo(o2.getStart()));		
 		Iterator<GenomicFeature> gfIterator = annotations.iterator();
 		GenomicFeature genomicFeature = gfIterator.next();		
-		
-		for (int i = 0; i < strands.size() - 1; i++) {
-			while (genomicFeature.startsBetween(strands.get(i), strands.get(i + 1))) {
-				strands.get(i).addGenomicFeature(genomicFeature);
+		Strand strand = getFirstStrand();
+		Strand nextStrand = strand.getNextStrand(this);
+		while (nextStrand != null) {
+			while (genomicFeature.startsBetween(strand, nextStrand)) {
+				strand.addGenomicFeature(genomicFeature);
 				if (gfIterator.hasNext()) {
 				genomicFeature = gfIterator.next();
 				}
@@ -120,10 +119,12 @@ public class Genome {
 					break;
 				}
 			}
+			strand  = nextStrand;
+			nextStrand = nextStrand.getNextStrand(this);
 		}
 		
 		if (gfIterator.hasNext()) {
-		Strand lastStrand = strands.get(strands.size() - 1);
+		Strand lastStrand = strand;
 		assert (lastStrand.getReferenceCoordinate() <= genomicFeature.getStart());
 			while (gfIterator.hasNext()) {
 				lastStrand.addGenomicFeature(genomicFeature);
@@ -131,6 +132,32 @@ public class Genome {
 			}
 		}
 		System.out.println(strands);
+	}
+
+
+	private Strand getFirstStrand() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public void straightenStrands() {
+		LinkedList<Strand> straightStrands = new LinkedList<Strand>();
+		while(!strands.isEmpty())
+		{
+			Strand strand = strands.iterator().next();
+			while(strand != null)
+			{				
+			strands.remove(strand);
+			straightStrands.add(strand);
+			strand = strand.getNextStrand(this);
+			if(strand.equals(straightStrands.peekFirst()))
+			{
+				
+			}
+		}
+	}
+		
 	}
 	
 }

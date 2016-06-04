@@ -58,10 +58,11 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testNoMutation() {
-		when(strand1.getEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		when(strand2.getEdges()).thenReturn(new ArrayList<>());
-		when(strand3.getEdges()).thenReturn(new ArrayList<>());
+		when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
+						new StrandEdge(new Strand(0), new Strand(2)))));
+		when(strand2.getOutgoingEdges()).thenReturn(new ArrayList<>());
+		when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>());
 		mutations.computeAllMutations();
 		verify(strand1, never()).addMutation(any());
 	}
@@ -71,10 +72,12 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationDeletion() {
-		when(strand1.getEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		when(strand2.getEdges()).thenReturn(new ArrayList<>(Arrays.asList(new StrandEdge(1, 2))));
-		when(strand3.getEdges()).thenReturn(new ArrayList<>());
+		when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
+						new StrandEdge(new Strand(0), new Strand(2)))));
+		when(strand2.getOutgoingEdges()).thenReturn(new ArrayList<>(Arrays.asList(
+				new StrandEdge(new Strand(1), new Strand(2)))));
+		when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>());
 		mutations.computeAllMutations();
 		System.out.println(strand1.getMutations().size());
 		verify(strand1, atLeastOnce()).addMutation(any());
@@ -85,10 +88,12 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationInsertion() {
-		when(strand1.getEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		when(strand2.getEdges()).thenReturn(new ArrayList<>());
-		when(strand3.getEdges()).thenReturn(new ArrayList<>(Arrays.asList(new StrandEdge(2, 1))));
+		when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
+						new StrandEdge(new Strand(0), new Strand(2)))));
+		when(strand2.getOutgoingEdges()).thenReturn(new ArrayList<>());
+		when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>(Arrays.asList(
+				new StrandEdge(new Strand(2), new Strand(1)))));
 		mutations.computeAllMutations();
 		verify(strand1, atLeastOnce()).addMutation(any());
 

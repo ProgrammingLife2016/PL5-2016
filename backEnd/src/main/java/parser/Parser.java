@@ -100,11 +100,23 @@ public class Parser {
                 if (temp.equals("S")) {
                     Strand strand = createNode(splittedLine);
                     result.addStrand(strand);
-                } else if (temp.equals("L")) {
-                    StrandEdge edge = createEdge(splittedLine);
-                    result.getStrandNodes().get(edge.getStart()).addEdge(edge);
-                }
+                } 
                 line = reader.readLine();
+            }
+            
+            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            reader.readLine();
+            reader.readLine();
+            line = reader.readLine();
+            while (line != null) {
+                String[] splittedLine = line.split("\t");
+                String temp = splittedLine[0];
+            if (temp.equals("L")) {
+                StrandEdge edge = createEdge(splittedLine,result);
+                result.getStrand(edge.getStart().getId()).addEdge(edge);
+                result.getStrand(edge.getEnd().getId()).addEdge(edge);
+            }
+            line = reader.readLine();
             }
             reader.close();
         } catch (FileNotFoundException e) {
@@ -121,10 +133,10 @@ public class Parser {
      * @param splittedLine A line that contains an edge read from the file.
      * @return An StrandEdge.
      */
-    private static StrandEdge createEdge(String[] splittedLine) {
+    private static StrandEdge createEdge(String[] splittedLine, GenomeGraph graph) {
         int startId = Integer.parseInt(splittedLine[1]);
         int endId = Integer.parseInt(splittedLine[3]);
-        return new StrandEdge(startId, endId);
+        return new StrandEdge(graph.getStrand(startId), graph.getStrand(endId));
     }
 
     /**

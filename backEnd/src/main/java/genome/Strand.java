@@ -53,8 +53,8 @@ public class Strand {
 	/**
 	 * The edges going out of this strand.
 	 */
-	private ArrayList<StrandEdge> edges;
-
+	private ArrayList<StrandEdge> outgoingEdges;
+	private ArrayList<StrandEdge> incomingEdges;
 	/**
 	 * The mutations on this Strand.
 	 */
@@ -85,26 +85,30 @@ public class Strand {
 		this.referenceGenome = referenceGenome;
 		this.referenceCoordinate = referenceCoordinate;
 		this.weight = genomes.size();
-		this.edges = new ArrayList<>();
+		this.outgoingEdges = new ArrayList<>();
+		this.incomingEdges = new ArrayList<>();
 		this.x = 0;
 		this.mutations = new ArrayList<>();
 	}
 
-	/**
-	 * Constructor to create a new strand.
-	 *
-	 * @param o
-	 *            The Object (returned by the Cypherquery) from which a strand
-	 *            should be created.
-	 */
-	public Strand(Object o) {
-		Node no = (Node) o;
-		this.id = java.lang.Math.toIntExact((long) no.getProperty("id"));
-		this.sequence = (String) no.getProperty("sequence");
-		// String genomes = (String) no.getProperty("genomes");
-		this.referenceGenome = (String) no.getProperty("refGenome");
-		this.referenceCoordinate = java.lang.Math.toIntExact((long) no.getProperty("refCoor"));
+	public Strand(int id) {
+		this.id = id;
 	}
+//	/**
+//	 * Constructor to create a new strand.
+//	 *
+//	 * @param o
+//	 *            The Object (returned by the Cypherquery) from which a strand
+//	 *            should be created.
+//	 */
+//	public Strand(Object o) {
+//		Node no = (Node) o;
+//		this.id = java.lang.Math.toIntExact((long) no.getProperty("id"));
+//		this.sequence = (String) no.getProperty("sequence");
+//		// String genomes = (String) no.getProperty("genomes");
+//		this.referenceGenome = (String) no.getProperty("refGenome");
+//		this.referenceCoordinate = java.lang.Math.toIntExact((long) no.getProperty("refCoor"));
+//	}
 
 	/**
 	 * Get the node id.
@@ -229,17 +233,17 @@ public class Strand {
 	 *            The added edge.
 	 */
 	public void addEdge(StrandEdge edge) {
-		edges.add(edge);
+		assert(edge.contains(this));
+		if(edge.getStart().equals(this))
+			{
+			outgoingEdges.add(edge);
+			}
+		else 
+		{
+			incomingEdges.add(edge);
+		}
 	}
 
-	/**
-	 * Get the edges.
-	 *
-	 * @return Edges.
-	 */
-	public ArrayList<StrandEdge> getEdges() {
-		return edges;
-	}
 
 	/**
 	 * Getter for x.
@@ -309,4 +313,25 @@ public class Strand {
 	public void addGenomicFeature(GenomicFeature genomicFeature) {
 		genomicFeatures.add(genomicFeature);
 	}
+
+	public Strand getNextStrand(Genome genome) {
+		for (StrandEdge edge: outgoingEdges) {
+			Strand neighbor = edge.getEnd();
+			if(neighbor.contains(genome))
+			{
+				return neighbor;
+			}
+		}
+		return null;
+	}
+
+	private boolean contains(Genome genome) {
+		// TODO Auto-generated method stub
+		return genomes.contains(genome);
+	}
+
+	public ArrayList<StrandEdge> getOutgoingEdges() {
+		return outgoingEdges;
+	}
+
 }

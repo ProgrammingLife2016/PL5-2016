@@ -47,11 +47,11 @@ public class Mutations {
 	 * @param strands All the Strands in the graph.
 	 */
 	private void mutationsOnStrand(Strand start, HashMap<Integer, Strand> strands) {
-		if (start.getEdges().size() > 1) {
-			for (int i = 0; i < start.getEdges().size() - 1; i++) {
-				Strand next1 = strands.get(start.getEdges().get(i).getEnd());
-				for (int j = i + 1; j < start.getEdges().size(); j++) {
-					Strand next2 = strands.get(start.getEdges().get(j).getEnd());
+		if (start.getOutgoingEdges().size() > 1) {
+			for (int i = 0; i < start.getOutgoingEdges().size() - 1; i++) {
+				Strand next1 = strands.get(start.getOutgoingEdges().get(i).getEnd().getId());
+				for (int j = i + 1; j < start.getOutgoingEdges().size(); j++) {
+					Strand next2 = strands.get(start.getOutgoingEdges().get(j).getEnd().getId());
 					checkMutation(start, next1, next2);
 				}
 			}
@@ -66,8 +66,8 @@ public class Mutations {
 	 * @param strands	All the strands.
 	 */
 	private void checkMutation(Strand start, Strand next1, Strand next2) {
-		for (StrandEdge edge1 : next1.getEdges()) {
-			if (edge1.getEnd() == next2.getId()) {
+		for (StrandEdge edge1 : next1.getOutgoingEdges()) {
+			if (edge1.getEnd().getId() == next2.getId()) {
 				ArrayList<String> genomesInBothStrands = new ArrayList<>(start.getGenomes());
 				genomesInBothStrands.retainAll(next2.getGenomes());
 				ArrayList<String> genomesInOriginal = new ArrayList<>(next1.getGenomes());
@@ -79,8 +79,8 @@ public class Mutations {
 				return;
 			}
 		}
-		for (StrandEdge edge2 : next2.getEdges()) {
-			if (edge2.getEnd() == next1.getId()) {
+		for (StrandEdge edge2 : next2.getOutgoingEdges()) {
+			if (edge2.getEnd().getId() == next1.getId()) {
 				ArrayList<String> genomesInBothStrands = new ArrayList<>(start.getGenomes());
 				genomesInBothStrands.retainAll(next2.getGenomes());
 				ArrayList<String> genomesInMutation = new ArrayList<>(next1.getGenomes());

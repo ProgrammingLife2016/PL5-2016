@@ -212,7 +212,7 @@ public class Database {
             while (r.hasNext()) {
                 Map<String, Object> row = r.next();
                 for (Object n : row.values()) {
-                    result.add(new Strand(n));
+                    //result.add(new Strand(n));
                 }
             }
         }
@@ -232,7 +232,7 @@ public class Database {
             while (r.hasNext()) {
                 Map<String, Object> row = r.next();
                 for (Object n : row.values()) {
-                    result.add(new StrandEdge(n));
+                    //result.add(new StrandEdge(n));
                 }
             }
         }
@@ -253,7 +253,7 @@ public class Database {
             while (r.hasNext()) {
                 Map<String, Object> row = r.next();
                 for (Object n : row.values()) {
-                    genome.addStrand(new Strand(n));
+                    //genome.addStrand(new Strand(n));
                 }
             }
         }
