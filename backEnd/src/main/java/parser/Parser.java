@@ -1,8 +1,10 @@
 package parser;
 
 import com.opencsv.CSVReader;
-import controller.GenomeGraph;
+
+import genome.GenomeGraph;
 import genome.GenomeMetadata;
+import genome.GenomicFeature;
 import genome.Strand;
 import genome.StrandEdge;
 
@@ -17,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Jeffrey on 24-4-2016.
@@ -310,5 +313,36 @@ public class Parser {
         }
 
         return hmap;
+    }
+    /**
+     * Parses the genome metadata.
+     *
+     * @param filePath the file path
+     * @return the hash map
+     */
+    public static List<GenomicFeature> parseAnnotations(String filePath) {
+        List<GenomicFeature> list = new ArrayList<GenomicFeature>();
+        InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
+        CSVReader reader = new CSVReader(new InputStreamReader(in),'\t');
+        String[] nextLine;
+        try {
+            while ((nextLine = reader.readNext()) != null) {
+                int start = Integer.parseInt(nextLine[3]);
+                int end = Integer.parseInt(nextLine[4]);
+                String temp = "";
+                for(int i = 8; i < nextLine.length; i++)
+                {
+                	temp = temp + nextLine[i];
+                }
+                String[] attributes = temp.split(";");
+                String displayName = attributes[attributes.length-1];
+                list.add(new GenomicFeature(start, end, displayName));
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }

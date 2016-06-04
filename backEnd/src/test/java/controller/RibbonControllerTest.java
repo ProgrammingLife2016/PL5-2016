@@ -2,7 +2,9 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
+import genome.GenomeGraph;
 import genome.Strand;
+
 import org.junit.Before;
 import org.junit.Test;
 

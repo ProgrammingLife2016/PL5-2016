@@ -30,6 +30,8 @@ public class Strand {
      */
     private String sequence;
     
+    private GenomicFeature genomicFeature;
+    
     /**
      * Genomes that contain this node.
      */

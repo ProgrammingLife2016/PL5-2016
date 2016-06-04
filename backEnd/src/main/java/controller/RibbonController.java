@@ -2,6 +2,7 @@ package controller;
 
 import datatree.DataTree;
 import genome.Genome;
+import genome.GenomeGraph;
 import genome.Strand;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;

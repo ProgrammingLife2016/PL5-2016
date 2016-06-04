@@ -3,6 +3,7 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
+import genome.GenomeGraph;
 import parser.Parser;
 import mutation.Mutations;
 
@@ -50,7 +51,8 @@ public class Controller implements FrontEndBackEndInterface {
      * Constructor.
      */
     public Controller() {
-        String gfaFile = "data/TB328.gfa";
+        String gfaFile = "data/TB10.gfa";
+        System.out.println(Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
         genomeGraph = Parser.parse(gfaFile);
         genomeGraph.generateGenomes();
         genomeGraph.findStartAndCalculateX();

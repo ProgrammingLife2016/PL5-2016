@@ -1,8 +1,9 @@
 package mutation;
 
-import controller.GenomeGraph;
+import genome.GenomeGraph;
 import genome.Strand;
 import genome.StrandEdge;
+
 import org.junit.Before;
 import org.junit.Test;
 

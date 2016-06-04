@@ -1,6 +1,6 @@
 package mutation;
 
-import controller.GenomeGraph;
+import genome.GenomeGraph;
 import genome.Strand;
 import genome.StrandEdge;
 
