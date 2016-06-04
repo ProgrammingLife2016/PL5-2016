@@ -103,7 +103,7 @@ public class Parser {
                 } 
                 line = reader.readLine();
             }
-            
+            in = Parser.class.getClassLoader().getResourceAsStream(file);
             reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             reader.readLine();
             reader.readLine();

@@ -323,7 +323,7 @@ public class Strand {
 	 * @return true, if successful
 	 */
 	private boolean contains(Genome genome) {
-		return genomes.contains(genome);
+		return genomes.contains(genome.getId());
 	}
 
 	/**
