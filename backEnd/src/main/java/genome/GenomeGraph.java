@@ -1,7 +1,6 @@
 package genome;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import ribbonnodes.RibbonNode;
@@ -118,7 +117,7 @@ public class GenomeGraph {
 
             }
         }
-        for(Genome genome : genomes.values()) {
+        for (Genome genome : genomes.values()) {
         	genome.straightenStrands();
         }
     }

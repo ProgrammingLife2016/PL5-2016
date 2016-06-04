@@ -4,8 +4,6 @@ package genome;
  * Created by Matthijs on 24-4-2016.
  */
 
-import org.neo4j.graphdb.Node;
-
 import mutation.AbstractMutation;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -91,6 +89,11 @@ public class Strand {
 		this.mutations = new ArrayList<>();
 	}
 
+	/**
+	 * Instantiates a new strand.
+	 *
+	 * @param id the id
+	 */
 	public Strand(int id) {
 		this.id = id;
 	}
@@ -233,13 +236,11 @@ public class Strand {
 	 *            The added edge.
 	 */
 	public void addEdge(StrandEdge edge) {
-		assert(edge.contains(this));
-		if(edge.getStart().equals(this))
-			{
+		assert (edge.contains(this));
+		if (edge.getStart().equals(this)) {
 			outgoingEdges.add(edge);
-			}
-		else 
-		{
+		}
+		else {
 			incomingEdges.add(edge);
 		}
 	}
@@ -314,24 +315,56 @@ public class Strand {
 		genomicFeatures.add(genomicFeature);
 	}
 
+
+	/**
+	 * Contains.
+	 *
+	 * @param genome the genome
+	 * @return true, if successful
+	 */
+	private boolean contains(Genome genome) {
+		return genomes.contains(genome);
+	}
+
+	/**
+	 * Gets the outgoing edges.
+	 *
+	 * @return the outgoing edges
+	 */
+	public ArrayList<StrandEdge> getOutgoingEdges() {
+		return outgoingEdges;
+	}
+
+	/**
+	 * Gets the next strand.
+	 *
+	 * @param genome the genome we want to find the next strand for
+	 * @return the next strand
+	 */
 	public Strand getNextStrand(Genome genome) {
 		for (StrandEdge edge: outgoingEdges) {
 			Strand neighbor = edge.getEnd();
-			if(neighbor.contains(genome))
-			{
+			if (neighbor.contains(genome)) {
 				return neighbor;
 			}
 		}
 		return null;
 	}
 
-	private boolean contains(Genome genome) {
-		// TODO Auto-generated method stub
-		return genomes.contains(genome);
-	}
-
-	public ArrayList<StrandEdge> getOutgoingEdges() {
-		return outgoingEdges;
+	/**
+	 * Gets the previous strand.
+	 *
+	 * @param genome the genome we want to find the previous strand for
+	 * @return the previous strand
+	 */
+	public Strand getPreviousStrand(Genome genome) {
+		for (StrandEdge edge: incomingEdges) {
+			Strand neighbor = edge.getStart();
+			if (neighbor.contains(genome)) {
+				return neighbor;
+			}
+		}
+		return null;
 	}
 
 }

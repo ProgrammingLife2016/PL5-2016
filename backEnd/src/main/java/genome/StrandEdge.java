@@ -1,26 +1,26 @@
 package genome;
 
+// TODO: Auto-generated Javadoc
 /**
- * Created by Matthijs on 24-4-2016.
- */
-
-import abstractdatastructure.Edge;
-import org.neo4j.graphdb.Relationship;
-
-/***
- * data container class that stores the start and end of an edge, as well as its weight.
+ * The Class StrandEdge.
  */
 public class StrandEdge  {
 
+    /** The start. */
     private Strand start;
+    
+    /** The end. */
     private Strand end;
+    
+    /** The weight. */
     private int weight;
+	
 	/**
-     * Constructor to create an edge.
-     *
-     * @param startId Start id.
-     * @param endId   End id.
-     */
+	 * Instantiates a new strand edge.
+	 *
+	 * @param startEdge the start edge
+	 * @param endEdge the end edge
+	 */
     public StrandEdge(Strand startEdge, Strand endEdge) {
         this.start = startEdge;
         this.end = endEdge;
@@ -28,10 +28,6 @@ public class StrandEdge  {
 
     }
 
-    /**
-     * Constructor to create a new genome.
-     * @param o The Object (returned by the Cypherquery) from which a StrandEdge should be made.
-     */
 //    public StrandEdge(Object o) {
 //        super(0, 0);
 //        Relationship rela = (Relationship) o;
@@ -39,23 +35,49 @@ public class StrandEdge  {
 //        setEndId(java.lang.Math.toIntExact((long) rela.getEndNode().getProperty("id")));
 //    }
 
+
+    /**
+     * Gets the start.
+     *
+     * @return the start
+     */
 	public Strand getStart() {
 		return start;
 	}
 
+	/**
+	 * Gets the end.
+	 *
+	 * @return the end
+	 */
 	public Strand getEnd() {
 		return end;
 	}
 
+	/**
+	 * Checks if the edge contains the strand.
+	 *
+	 * @param strand the strand
+	 * @return true, if successful
+	 */
 	public boolean contains(Strand strand) {
-		// TODO Auto-generated method stub
 		return start == strand || end == strand;
 	}
 
+	/**
+	 * Gets the weight.
+	 *
+	 * @return the weight
+	 */
 	public int getWeight() {
 		return weight;
 	}
 
+	/**
+	 * Sets the weight.
+	 *
+	 * @param weight the new weight
+	 */
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}

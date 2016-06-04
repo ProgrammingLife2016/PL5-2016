@@ -1,7 +1,6 @@
 package genome;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,10 +14,12 @@ public class Genome {
 	 * The strands contained in this Genome, parsed starting at the lowest id.
 	 */
     private ArrayList<Strand> strands;
+    
     /**
      * The id String of this genome.
      */
     private String id;
+    
     
     /**
      * The meta data of this genome.
@@ -106,12 +107,10 @@ public class Genome {
 		annotations.sort((GenomicFeature o1, GenomicFeature o2) -> new Integer(o1.getStart()).
 				compareTo(o2.getStart()));		
 		Iterator<GenomicFeature> gfIterator = annotations.iterator();
-		GenomicFeature genomicFeature = gfIterator.next();		
-		Strand strand = getFirstStrand();
-		Strand nextStrand = strand.getNextStrand(this);
-		while (nextStrand != null) {
-			while (genomicFeature.startsBetween(strand, nextStrand)) {
-				strand.addGenomicFeature(genomicFeature);
+		GenomicFeature genomicFeature = gfIterator.next();	
+		for (int i = 0; i < strands.size() - 1; i++) {
+			while (genomicFeature.startsBetween(strands.get(i), strands.get(i + 1))) {
+				strands.get(i).addGenomicFeature(genomicFeature);
 				if (gfIterator.hasNext()) {
 				genomicFeature = gfIterator.next();
 				}
@@ -119,12 +118,10 @@ public class Genome {
 					break;
 				}
 			}
-			strand  = nextStrand;
-			nextStrand = nextStrand.getNextStrand(this);
 		}
 		
 		if (gfIterator.hasNext()) {
-		Strand lastStrand = strand;
+		Strand lastStrand = strands.get(strands.size() - 1);
 		assert (lastStrand.getReferenceCoordinate() <= genomicFeature.getStart());
 			while (gfIterator.hasNext()) {
 				lastStrand.addGenomicFeature(genomicFeature);
@@ -135,29 +132,24 @@ public class Genome {
 	}
 
 
-	private Strand getFirstStrand() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
+	/**
+	 * 'Straightens' the genome by making sure the order of the strands corresponds
+	 * to the order of the dna sequence of this genome. It does this by first traversing
+	 * 
+	 */
 	public void straightenStrands() {
 		LinkedList<Strand> straightStrands = new LinkedList<Strand>();
-		while(!strands.isEmpty())
-		{
-			Strand strand = strands.iterator().next();
-			while(strand != null)
-			{				
-			strands.remove(strand);
-			straightStrands.add(strand);
+		Strand strand = strands.get(0);
+		while (strand != null) {				
+			straightStrands.addLast(strand);
 			strand = strand.getNextStrand(this);
-			if(strand.equals(straightStrands.peekFirst()))
-			{
-				
-			}
 		}
-	}
-		
+		strand = straightStrands.peekFirst().getPreviousStrand(this);
+		while (strand != null) {				
+			straightStrands.addFirst(strand);
+			strand = strand.getPreviousStrand(this);
+		}
+		strands = new ArrayList<Strand>(straightStrands);
 	}
 	
 }
