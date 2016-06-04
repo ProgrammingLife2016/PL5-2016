@@ -31,9 +31,6 @@ public class Strand {
 	 */
 	private String sequence;
 
-	/** The genomic feature. */
-	private GenomicFeature genomicFeature;
-
 	/**
 	 * Genomes that contain this node.
 	 */
@@ -63,6 +60,9 @@ public class Strand {
 	 * The mutations on this Strand.
 	 */
 	private ArrayList<AbstractMutation> mutations;
+
+	/** The genomic features. */
+	private ArrayList<GenomicFeature> genomicFeatures = new ArrayList<GenomicFeature>();
 
 	/**
 	 * Constructor to create a node.
@@ -293,20 +293,28 @@ public class Strand {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		if (genomicFeature != null) {
-			return referenceCoordinate + genomicFeature.toString() + "\n";
+		String result = "" + referenceCoordinate;
+		for (GenomicFeature feature : genomicFeatures) {
+			result = result + " " + feature.toString();
 		}
-		else {
-
-			return referenceCoordinate + "\n";
-		}
+		return result + "\n";
 	}
 
-	public GenomicFeature getGenomicFeature() {
-		return genomicFeature;
+	/**
+	 * Gets the genomic features.
+	 *
+	 * @return the genomic features
+	 */
+	public ArrayList<GenomicFeature> getGenomicFeatures() {
+		return genomicFeatures;
 	}
 
-	public void setGenomicFeature(GenomicFeature genomicFeature) {
-		this.genomicFeature = genomicFeature;
+	/**
+	 * Adds the genomic feature.
+	 *
+	 * @param genomicFeature the genomic feature
+	 */
+	public void addGenomicFeature(GenomicFeature genomicFeature) {
+		genomicFeatures.add(genomicFeature);
 	}
 }

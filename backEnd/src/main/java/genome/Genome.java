@@ -112,7 +112,7 @@ public class Genome {
 		
 		for (int i = 0; i < strands.size() - 1; i++) {
 			while (genomicFeature.startsBetween(strands.get(i), strands.get(i + 1))) {
-				strands.get(i).setGenomicFeature(genomicFeature);
+				strands.get(i).addGenomicFeature(genomicFeature);
 				if (gfIterator.hasNext()) {
 				genomicFeature = gfIterator.next();
 				}
@@ -126,7 +126,7 @@ public class Genome {
 		Strand lastStrand = strands.get(strands.size() - 1);
 		assert (lastStrand.getReferenceCoordinate() <= genomicFeature.getStart());
 			while (gfIterator.hasNext()) {
-				lastStrand.setGenomicFeature(genomicFeature);
+				lastStrand.addGenomicFeature(genomicFeature);
 				genomicFeature = gfIterator.next();
 			}
 		}
