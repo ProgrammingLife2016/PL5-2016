@@ -98,7 +98,7 @@ public class StrandTest {
      */
     @Test
     public void testGetEdges() throws Exception {
-        StrandEdge edge = new StrandEdge(new Strand(1), new Strand(2));
+        StrandEdge edge = new StrandEdge(strand, new Strand(2));
         strand.addEdge(edge);
         assertEquals(strand.getOutgoingEdges().get(0), edge);
     }

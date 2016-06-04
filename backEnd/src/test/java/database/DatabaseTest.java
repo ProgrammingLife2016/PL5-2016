@@ -201,34 +201,34 @@ public class DatabaseTest {
         Assert.assertEquals(i, 8);
     }
 
-    /**
-     * Test if nodes get retrieved correctly.
-     */
-    @Test
-    public void testNodeRetrieval() {
-        List<Strand> strands = db.returnNodes("MATCH (n:Strand) RETURN n");
-        Assert.assertEquals(1, strands.get(0).getId());
-        Assert.assertEquals(2, strands.get(1).getId());
-        Assert.assertEquals(3, strands.get(2).getId());
-        Assert.assertEquals(3, strands.size());
+//    /**
+//     * Test if nodes get retrieved correctly.
+//     */
+//    @Test
+//    public void testNodeRetrieval() {
+//        List<Strand> strands = db.returnNodes("MATCH (n:Strand) RETURN n");
+//        Assert.assertEquals(1, strands.get(0).getId());
+//        Assert.assertEquals(2, strands.get(1).getId());
+//        Assert.assertEquals(3, strands.get(2).getId());
+//        Assert.assertEquals(3, strands.size());
+//
+//        strands = db.returnNodes("MATCH (n {id: 1}) RETURN n");
+//        Assert.assertEquals(1, strands.get(0).getId());
+//        Assert.assertEquals(1, strands.size());
+//    }
 
-        strands = db.returnNodes("MATCH (n {id: 1}) RETURN n");
-        Assert.assertEquals(1, strands.get(0).getId());
-        Assert.assertEquals(1, strands.size());
-    }
-
-    /**
-     * Test if all relationships get retrieved correctly.
-     */
-    @Test
-    public void testRelaRetrieval() {
-        List<StrandEdge> strandEdges = db.returnEdges("MATCH (a)-[b:GENOME]->(c) RETURN b");
-        Assert.assertEquals(1, strandEdges.get(0).getStart());
-        Assert.assertEquals(2, strandEdges.get(0).getEnd());
-        Assert.assertEquals(2, strandEdges.get(1).getStart());
-        Assert.assertEquals(3, strandEdges.get(1).getEnd());
-        Assert.assertEquals(2, strandEdges.size());
-    }
+//    /**
+//     * Test if all relationships get retrieved correctly.
+//     */
+//    @Test
+//    public void testRelaRetrieval() {
+//        List<StrandEdge> strandEdges = db.returnEdges("MATCH (a)-[b:GENOME]->(c) RETURN b");
+//        Assert.assertEquals(1, strandEdges.get(0).getStart());
+//        Assert.assertEquals(2, strandEdges.get(0).getEnd());
+//        Assert.assertEquals(2, strandEdges.get(1).getStart());
+//        Assert.assertEquals(3, strandEdges.get(1).getEnd());
+//        Assert.assertEquals(2, strandEdges.size());
+//    }
 
     /**
      * Test if all relationships get retrieved correctly.
