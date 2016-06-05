@@ -123,10 +123,10 @@ function makeRestAPIcall(apiCall, dataType, requestType, reqData, callback) {
 function handleActivationResponse(response) {
     console.log("handleActivationResponse function called with data:");
     console.log(response);
-    if(response.list.length != 0)
-    	{    	
+    if (!$.isEmptyObject(response))
+    {  	
     	showDialog("Warning: Unrecognized genomes",createUnrecognizedGenomesMessage(response.list));
-    	}
+    }
     initializeMinimap();
 }
 
