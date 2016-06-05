@@ -149,6 +149,7 @@ public class Genome {
 			straightStrands.addFirst(strand);
 			strand = strand.getPreviousStrand(this);
 		}
+		assert(strands.size() == straightStrands.size());
 		strands = new ArrayList<Strand>(straightStrands);
 	}
 	

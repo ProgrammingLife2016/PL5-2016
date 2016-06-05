@@ -5,6 +5,7 @@ import datatree.DataTree;
 import genome.Genome;
 import genome.GenomeGraph;
 import genome.Strand;
+import genome.StrandEdge;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -90,9 +91,15 @@ public class RibbonControllerTest {
         genomeSet = new HashSet<String>(Arrays.asList(strand12Genomes));
         Strand strand12 = new Strand(5, "tagc", genomeSet, "2", 0);
         HashMap<Integer, Strand> strands = new HashMap<Integer, Strand>();
-        strands.put(1, strand1);
-        strands.put(2, strand2);
-        strands.put(3, strand12);        
+        StrandEdge edge1 = new StrandEdge(strand1,strand12);
+        StrandEdge edge2 = new StrandEdge(strand2,strand12);
+        strand1.addEdge(edge1);
+        strand2.addEdge(edge2);
+        strand12.addEdge(edge1);
+        strand12.addEdge(edge2);
+        strands.put(strand1.getId(), strand1);
+        strands.put(strand2.getId(), strand2);
+        strands.put(strand12.getId(), strand12);        
 		return strands;
 	}
 
