@@ -81,8 +81,6 @@ public final class RibbonController {
     @SuppressWarnings("checkstyle:methodlength")
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
 
-        System.out.println(minX + ", " + maxX);
-
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
 
 
@@ -300,7 +298,6 @@ public final class RibbonController {
         for (RibbonNode node : nodes) {
             Strand strand = node.getStrands().get(0);
             if (strand.getMutations().size() > 0) {
-                System.out.println("Mutation added");
                 node.setLabel(strand.getMutations().get(0).toString());
             }
         }

@@ -79,7 +79,6 @@ public class MutationsTest {
 				new StrandEdge(new Strand(1), new Strand(2)))));
 		when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>());
 		mutations.computeAllMutations();
-		System.out.println(strand1.getMutations().size());
 		verify(strand1, atLeastOnce()).addMutation(any());
 	}
 	
