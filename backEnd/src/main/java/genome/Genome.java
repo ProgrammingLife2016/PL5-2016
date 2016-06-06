@@ -1,9 +1,12 @@
 package genome;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author Jeffrey Helgers
@@ -128,29 +131,13 @@ public class Genome {
 				genomicFeature = gfIterator.next();
 			}
 		}
-		System.out.println(strands);
+		//System.out.println(strands);
 	}
 
 
-	/**
-	 * 'Straightens' the genome by making sure the order of the strands corresponds
-	 * to the order of the dna sequence of this genome. It does this by first traversing
-	 * 
-	 */
-	public void straightenStrands() {
-		LinkedList<Strand> straightStrands = new LinkedList<Strand>();
-		Strand strand = strands.get(0);
-		while (strand != null) {				
-			straightStrands.addLast(strand);
-			strand = strand.getNextStrand(this);
-		}
-		strand = straightStrands.peekFirst().getPreviousStrand(this);
-		while (strand != null) {				
-			straightStrands.addFirst(strand);
-			strand = strand.getPreviousStrand(this);
-		}
-		assert(strands.size() == straightStrands.size());
-		strands = new ArrayList<Strand>(straightStrands);
+	public void setStrands(ArrayList<Strand> strands) {
+		this.strands = strands;
+		
 	}
 	
 }

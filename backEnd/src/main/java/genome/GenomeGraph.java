@@ -111,24 +111,17 @@ public class GenomeGraph {
      * Generates the genomes from the the information contained within the strand nodes.
      */
     public void generateGenomes() {
-
+    	
         genomes = new HashMap<String, Genome>();
 
         for (Strand strand : strandNodes.values()) {
             for (String genomeID : strand.getGenomes()) {
-
                 if (!genomes.containsKey(genomeID)) {
-                    Genome genome = new Genome(genomeID);
-                    genome.addStrand(strand);
+                    Genome genome = GenomeFactory.deriveGenome(strand, genomeID);
                     genomes.put(genomeID, genome);
-                } else {
-                    genomes.get(genomeID).addStrand(strand);
-                }
+                } 
 
             }
-        }
-        for (Genome genome : genomes.values()) {
-        	genome.straightenStrands();
         }
     }
 

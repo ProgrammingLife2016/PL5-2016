@@ -5,9 +5,12 @@ package genome;
  */
 
 import mutation.AbstractMutation;
+
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Class that contains the graph nodes.
  */
@@ -52,6 +55,8 @@ public class Strand {
 	 * The edges going out of this strand.
 	 */
 	private ArrayList<StrandEdge> outgoingEdges;
+	
+	/** The incoming edges. */
 	private ArrayList<StrandEdge> incomingEdges;
 	/**
 	 * The mutations on this Strand.
@@ -284,17 +289,26 @@ public class Strand {
 		mutations.add(mutation);
 	}
 
+//	/**
+//	 *  
+//	 * @return the string
+//	 * @see java.lang.Object#toString()
+//	 */
+//	public String toString() {
+//		String result = "" + referenceCoordinate;
+//		for (GenomicFeature feature : genomicFeatures) {
+//			result = result + " " + feature.toString();
+//		}
+//		return result + "\n";
+//	}
+
 	/**
 	 *  
 	 * @return the string
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		String result = "" + referenceCoordinate;
-		for (GenomicFeature feature : genomicFeatures) {
-			result = result + " " + feature.toString();
-		}
-		return result + "\n";
+		return "" + id;
 	}
 
 	/**
@@ -322,8 +336,8 @@ public class Strand {
 	 * @param genome the genome
 	 * @return true, if successful
 	 */
-	private boolean contains(Genome genome) {
-		return genomes.contains(genome.getId());
+	private boolean contains(String id) {
+		return genomes.contains(id);
 	}
 
 	/**
@@ -335,36 +349,40 @@ public class Strand {
 		return outgoingEdges;
 	}
 
-	/**
-	 * Gets the next strand.
-	 *
-	 * @param genome the genome we want to find the next strand for
-	 * @return the next strand
-	 */
-	public Strand getNextStrand(Genome genome) {
-		for (StrandEdge edge: outgoingEdges) {
-			Strand neighbor = edge.getEnd();
-			if (neighbor.contains(genome)) {
-				return neighbor;
-			}
-		}
-		return null;
-	}
 
 	/**
-	 * Gets the previous strand.
+	 * Gets the next strands with.
 	 *
-	 * @param genome the genome we want to find the previous strand for
-	 * @return the previous strand
+	 * @param genomeId the genome
+	 * @return the next strands with
 	 */
-	public Strand getPreviousStrand(Genome genome) {
+	public List<Strand> getNextStrandsWith(String genomeId) {
+		ArrayList<Strand> strands = new ArrayList<Strand>();
+		for (StrandEdge edge: outgoingEdges) {
+			Strand neighbor = edge.getEnd();
+			if (neighbor.contains(genomeId)) {
+				strands.add(neighbor);
+			}
+		}
+		return strands;
+		
+	}
+	
+	/**
+	 * Gets the previous strands with.
+	 *
+	 * @param genome the genome
+	 * @return the previous strands with
+	 */
+	public List<Strand> getPreviousStrandsWith(String genome) {
+		ArrayList<Strand> strands = new ArrayList<Strand>();
 		for (StrandEdge edge: incomingEdges) {
 			Strand neighbor = edge.getStart();
 			if (neighbor.contains(genome)) {
-				return neighbor;
+				strands.add(neighbor);
 			}
 		}
-		return null;
+		return strands;
+		
 	}
-
 }
