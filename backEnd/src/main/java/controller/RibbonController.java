@@ -61,21 +61,26 @@ public final class RibbonController {
         System.out.println(minX + ", " + maxX);
 
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
+        ArrayList<String> actIds= new ArrayList<>();
+        for(Genome genome:actGen){
+            actIds.add(genome.getId());
+        }
+
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);
 
         int id = 0;
         for (Strand strand : filteredNodes) {
-            RibbonNode ribbon = RibbonNodeFactory.makeRibbonNodeFromStrand(id, strand);
+            RibbonNode ribbon = RibbonNodeFactory.makeRibbonNodeFromStrand(id, strand, actIds);
             id++;
             result.add(ribbon);
         }
 
 
         result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
-        addEdges(result);
-        spreadYCoordinates(result);
-        collapseRibbons(result, Math.max(0, 5 - zoomLevel));
+       // addEdges(result);
+        spreadYCoordinates(result, actIds, id);
+        //collapseRibbons(result, Math.max(0, 5 - zoomLevel));
 
         if (zoomLevel < 10) {
             addMutationLabels(result);
@@ -144,27 +149,24 @@ public final class RibbonController {
      * @param nodes The ribbonGraph to calculate y cooridnates for.
      * @return The ribbonGraph with added y coordinates.
      */
-    private void spreadYCoordinates(ArrayList<RibbonNode> nodes) {
-        int currentX = 0;
-        ArrayList<RibbonNode> currentXNodes = new ArrayList<>();
-        for (int i = 0; i < nodes.size(); i++) {
-            RibbonNode node = nodes.get(i);
-            if (node.getX() < currentX + 1000 && node.getX() > currentX - 1000) {
-                currentXNodes.add(node);
-            } else {
-                if (currentXNodes.size() > 1) {
-                    for (int j = 0; j < currentXNodes.size(); j++) {
-                        currentXNodes.get(j).setY(currentXNodes.get(j).getY() - 10 * (genomeGraph.getActiveGenomes().size() - 1));
-                        currentXNodes.get(j).setY((int) (currentXNodes.get(j).getY() * (Math.pow(-1, j))));
-                    }
+    private void spreadYCoordinates(ArrayList<RibbonNode> nodes, ArrayList<String> activeGenomes, int maxId) {
+        ArrayList<RibbonNode> splitNodes = new ArrayList<>();
+        ArrayList<RibbonNode> newNodes = new ArrayList<>();
+        for(RibbonNode node: nodes){
+            if(node.getGenomes().size()!=activeGenomes.size()){
+                ArrayList<RibbonNode> ribbonSplitCopies = RibbonNodeFactory.makeRibbonNodesFromSplit(node,maxId);
+                for(RibbonNode splitNode: ribbonSplitCopies){
+                    int genIndex= activeGenomes.indexOf(splitNode.getGenomes().get(0));
+                    int newY= (int)((Math.ceil((genIndex+1)/2.)*20)*Math.pow(-1,genIndex));
+                    splitNode.setY(newY);
                 }
-                currentXNodes = new ArrayList<>();
-                currentXNodes.add(node);
-                currentX = node.getX();
+                maxId+=ribbonSplitCopies.size();
+                splitNodes.add(node);
+                newNodes.addAll(ribbonSplitCopies);
             }
-
-
         }
+        nodes.removeAll(splitNodes);
+        nodes.addAll(newNodes);
 
 
     }

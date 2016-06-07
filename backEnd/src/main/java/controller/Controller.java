@@ -50,7 +50,7 @@ public class Controller implements FrontEndBackEndInterface {
      * Constructor.
      */
     public Controller() {
-        String gfaFile = "data/TB328.gfa";
+        String gfaFile = "data/TB10.gfa";
         genomeGraph = Parser.parse(gfaFile);
         genomeGraph.generateGenomes();
         genomeGraph.findStartAndCalculateX();

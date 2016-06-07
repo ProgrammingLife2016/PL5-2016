@@ -3,6 +3,9 @@ package ribbonnodes;
 import genome.Strand;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 /**
@@ -17,7 +20,9 @@ public class RibbonNodeFactoryTest {
         Strand strand = new Strand(0,"asdf",genomes,"1",0);
         strand.setX(5);
 
-        RibbonNode node = RibbonNodeFactory.makeRibbonNodeFromStrand(5,strand);
+        ArrayList<String> activeGenome= new ArrayList<>(Arrays.asList(genomes));
+
+        RibbonNode node = RibbonNodeFactory.makeRibbonNodeFromStrand(5,strand, activeGenome);
         assertEquals(node.getId(),5);
         assertEquals(2,node.getGenomes().size());
         assertEquals(node.getGenomes().get(0),"1");
