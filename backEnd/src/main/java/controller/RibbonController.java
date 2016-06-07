@@ -3,13 +3,14 @@ package controller;
 import datatree.DataTree;
 import genome.Genome;
 import genome.Strand;
+import mutation.AbstractMutation;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-
 
 /**
  * Class that calculates and returns the Ribbons and Edges to be drawn on the screen,
@@ -79,11 +80,9 @@ public final class RibbonController {
      */
     @SuppressWarnings("checkstyle:methodlength")
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
-
-        System.out.println(minX + ", " + maxX);
-
+        
+    	System.out.println("minX: " + minX + ", maxX: " + maxX + ", zoomLevel: " + zoomLevel);
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
-
 
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);
@@ -96,23 +95,16 @@ public final class RibbonController {
 
             id++;
             result.add(ribbon);
-
-
         }
-
-
         result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
         addEdges(result);
         spreadYCoordinates(result);
         collapseRibbons(result, Math.max(0, 5 - zoomLevel));
-
-        if(zoomLevel<10){
-            addMutationLabels(result);
-        }
+        
+        addMutationLabels(result, actGen);
 
         System.out.println(result.size() + " nodes returned");
         return result;
-
     }
 
     /**
@@ -295,13 +287,36 @@ public final class RibbonController {
         this.maxStrandsToReturn = maxStrandsToReturn;
     }
 
-    public void addMutationLabels(ArrayList<RibbonNode> nodes) {
-        for (RibbonNode node : nodes) {
-            Strand strand = node.getStrands().get(0);
-            if (strand.getMutations().size() > 0) {
-                System.out.println("Mutation added");
-                node.setLabel(strand.getMutations().get(0).toString());
-            }
-        }
+    /**
+     * Adds the mutations to the labels.
+     * @param nodes The nodes in the graph.
+     * @param actGen The active genomes.
+     */
+    public void addMutationLabels(ArrayList<RibbonNode> nodes, ArrayList<Genome> actGen) {
+    	ArrayList<String> active = new ArrayList<>();
+    	for (Genome genome : actGen) {
+    		active.add(genome.getId());
+    	}
+    	for (RibbonNode node : nodes) {
+    		Strand strand = node.getStrands().get(node.getStrands().size() - 1);
+    		if (strand.getMutations().size() > 0) {
+    			boolean addedMutation = false;
+    			StringBuilder mutationLabel = new StringBuilder();
+    			for (AbstractMutation mutation : strand.getMutations()) {
+    				if (!Collections.disjoint(active, mutation.getReferenceGenome()) 
+    						&& !Collections.disjoint(active, mutation.getOtherGenomes())) {
+    					System.out.println("mutation added");
+        				mutationLabel.append(mutation.toString());
+        				mutationLabel.append(", ");
+        				addedMutation = true;
+    				}
+    			}
+    			if (addedMutation) {
+    				mutationLabel.deleteCharAt(mutationLabel.length() - 1);
+    				mutationLabel.deleteCharAt(mutationLabel.length() - 1);
+        			node.setLabel(mutationLabel.toString());
+    			}
+       		}
+    	}
     }
 }
