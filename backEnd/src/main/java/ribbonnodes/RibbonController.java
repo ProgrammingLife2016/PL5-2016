@@ -1,11 +1,9 @@
-package controller;
+package ribbonnodes;
 
 import datatree.DataTree;
 import genome.Genome;
 import genome.GenomeGraph;
 import genome.Strand;
-import ribbonnodes.RibbonEdge;
-import ribbonnodes.RibbonNode;
 
 import java.awt.Color;
 import java.util.ArrayList;

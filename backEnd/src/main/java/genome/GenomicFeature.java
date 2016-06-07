@@ -25,6 +25,9 @@ public class GenomicFeature {
 	 *            the display name
 	 */
 	public GenomicFeature(int start, int end, String displayName) {
+		if (start > end) {
+			throw new IllegalArgumentException("Illegal bounds, start is greater than end");
+		}
 		this.start = start;
 		this.end = end;
 		this.displayName = displayName;
@@ -67,16 +70,29 @@ public class GenomicFeature {
 	}
 
 	/**
-	 * Starts between.
-	 *
-	 * @param strand
-	 *            the strand
+	 * Checks if this feature overlaps the space between the reference
+	 * coordinates of strand1 and strand2 given that they use the same reference
+	 * genome as reference coordinate.
+	 * 
+	 * @param strand1
+	 *            a strand
 	 * @param strand2
-	 *            the strand2
+	 *            a strand
 	 * @return true, if successful
 	 */
-	public boolean startsBetween(Strand strand, Strand strand2) {
-		return strand.getReferenceCoordinate() <= start
-				&& strand2.getReferenceCoordinate() >= start;
+	public boolean overlaps(Strand strand1, Strand strand2) {
+		Strand leftStrand;
+		Strand rightStrand;
+
+		if (strand1.getReferenceCoordinate() <= strand2.getReferenceCoordinate()) {
+			leftStrand = strand1;
+			rightStrand = strand2;
+		} else {
+			leftStrand = strand2;
+			rightStrand = strand1;
+		}
+
+		return !((end < leftStrand.getReferenceCoordinate()) || (start > rightStrand
+				.getReferenceCoordinate()));
 	}
 }

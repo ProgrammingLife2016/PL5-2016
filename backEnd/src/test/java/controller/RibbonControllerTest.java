@@ -11,6 +11,8 @@ import genome.StrandEdge;
 import org.junit.Before;
 import org.junit.Test;
 
+import ribbonnodes.RibbonController;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

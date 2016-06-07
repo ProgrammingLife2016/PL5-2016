@@ -115,7 +115,7 @@ public class Genome {
 		Iterator<GenomicFeature> gfIterator = annotations.iterator();
 		GenomicFeature genomicFeature = gfIterator.next();	
 		for (int i = 0; i < strands.size() - 1; i++) {
-			while (genomicFeature.startsBetween(strands.get(i), strands.get(i + 1))) {
+			while (genomicFeature.overlaps(strands.get(i), strands.get(i + 1))) {
 				strands.get(i).addGenomicFeature(genomicFeature);
 				if (gfIterator.hasNext()) {
 				genomicFeature = gfIterator.next();
