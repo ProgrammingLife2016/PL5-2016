@@ -202,7 +202,7 @@ var drawZoom = function(nodes) {
     if (Object.keys(nodes).length > 0) {
         var canvas = $('#zoomWindow canvas')[0];
         draw(nodes, canvas, true, canvas.height / zoomHeight, function(x) {
-            return (x) * ratio;
+            return (x - zoomLeft) * ratio;
         });
     } else {
         var c = $('#zoomWindow canvas')[0];
@@ -373,7 +373,7 @@ function updateZoomValues()
     var totalWidth = $('#minimap').width();
     var sliderLeft = pxToInt(slider.css('left'));
     var xWidth = minimapNodes[Object.keys(minimapNodes)[Object.keys(minimapNodes).length - 1]].x;
-    zoomLeft = Math.max(0, Math.floor(sliderLeft / totalWidth * xWidth));
+    zoomLeft = Math.floor(sliderLeft / totalWidth * xWidth);
     zoomRight =  Math.floor((sliderLeft + slider.width()) / totalWidth * xWidth);
     return Math.round(totalWidth / slider.width());
 }
@@ -404,15 +404,7 @@ function parseNodeData(nodes) {
     var left = nodes[0].x;
 
     $.each(nodes, function(key, value) {
-        result[value.id] = {
-            x: value.x - zoomLeft,
-            y: value.y,
-            id: value.id,
-            label: value.label,
-            strands: value.strands,
-            edges: value.edges,
-            genomes: value.genomes
-        }
+        result[value.id] = value;
     });
     return result;
 }
