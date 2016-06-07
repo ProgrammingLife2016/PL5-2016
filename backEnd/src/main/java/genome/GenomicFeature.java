@@ -73,26 +73,24 @@ public class GenomicFeature {
 	 * Checks if this feature overlaps the space between the reference
 	 * coordinates of strand1 and strand2 given that they use the same reference
 	 * genome as reference coordinate.
-	 * 
-	 * @param strand1
-	 *            a strand
-	 * @param strand2
-	 *            a strand
+	 *
+	 * @param start the start
+	 * @param end the end
 	 * @return true, if successful
 	 */
-	public boolean overlaps(Strand strand1, Strand strand2) {
-		Strand leftStrand;
-		Strand rightStrand;
+	public boolean overlaps(int start, int end) {
 
-		if (strand1.getReferenceCoordinate() <= strand2.getReferenceCoordinate()) {
-			leftStrand = strand1;
-			rightStrand = strand2;
-		} else {
-			leftStrand = strand2;
-			rightStrand = strand1;
-		}
+		return !((this.end < start) || (this.start > end));
+	}
 
-		return !((end < leftStrand.getReferenceCoordinate()) || (start > rightStrand
-				.getReferenceCoordinate()));
+	/**
+	 * Ends between.
+	 *
+	 * @param start the start
+	 * @param end the end
+	 * @return true, if successful
+	 */
+	public boolean endsBetween(int start, int end) {
+		return (this.end >= start) && (this.end <= end);
 	}
 }
