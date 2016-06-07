@@ -9,23 +9,16 @@ import java.util.List;
  */
 public final class StrandAnnotator {
 
-	private StrandAnnotator() { };
-	
+	private StrandAnnotator() {
+	};
+
 	/**
 	 * Annotate.
 	 *
-	 * @param genomeId
-	 *            the genome id
-	 * @param genomeGraph
-	 *            the genome graph
-	 * @param annotations
-	 *            the annotations
+	 * @param strands            the strands
+	 * @param annotations            the annotations
 	 */
-	public static void annotate(String genomeId, GenomeGraph genomeGraph,
-			List<GenomicFeature> annotations) {
-		Genome genome = genomeGraph.getGenome(genomeId);
-		assert (genome != null);
-		ArrayList<Strand> strands = genome.getStrands();
+	public static void annotate(ArrayList<Strand> strands, List<GenomicFeature> annotations) {
 		annotations.sort((GenomicFeature o1, GenomicFeature o2) -> new Integer(o1.getStart())
 				.compareTo(o2.getStart()));
 		Iterator<GenomicFeature> gfIterator = annotations.iterator();

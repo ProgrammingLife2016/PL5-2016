@@ -55,8 +55,8 @@ public class Controller implements FrontEndBackEndInterface {
     public Controller() {
         String gfaFile = "data/TB10.gfa";
         genomeGraph = Parser.parse(gfaFile);
-        StrandAnnotator.annotate("MT_H37RV_BRD_V5.ref", genomeGraph, 
-        		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
+        genomeGraph.annotate("MT_H37RV_BRD_V5.ref", Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
+        genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
         genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
@@ -75,7 +75,6 @@ public class Controller implements FrontEndBackEndInterface {
         Mutations mutations = new Mutations(genomeGraph);
         mutations.computeAllMutations();
         dc = this;
-        genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
 
     /**

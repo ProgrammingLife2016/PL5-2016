@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * Class that contains the graph nodes.
  */

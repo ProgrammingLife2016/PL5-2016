@@ -188,6 +188,16 @@ public class GenomeGraph {
 		return genomes.get(genomeId);
 	}
 
+	/**
+	 * Annotate.
+	 *
+	 * @param genomeId the genome id
+	 * @param annotations the annotations
+	 */
+	public void annotate(String genomeId, List<GenomicFeature> annotations) {
+		StrandAnnotator.annotate(genomes.get(genomeId).getStrands(), annotations);
+	}
+
 
 	
 }
