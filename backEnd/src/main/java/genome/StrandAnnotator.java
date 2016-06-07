@@ -5,10 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * The Class StrandAnnotator which annotates strands.
+ * The Class StrandAnnotator. A utility class which annotates strands.
  */
-public abstract class StrandAnnotator {
+public final class StrandAnnotator {
 
+	private StrandAnnotator() { };
+	
 	/**
 	 * Annotate.
 	 *

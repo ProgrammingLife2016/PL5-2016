@@ -10,10 +10,12 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * The Class GenomeGenerator. A class that uses the topological ordering of the graph
+ * The Class GenomeGenerator. A utility class that uses the topological ordering of the graph
  * parsed in from the .gfa file to generate the genomes.
  */
-public abstract class GenomeGenerator {
+public final class GenomeGenerator {
+	
+	private GenomeGenerator() { }
 
 	/**
 	 * Generate genomes.

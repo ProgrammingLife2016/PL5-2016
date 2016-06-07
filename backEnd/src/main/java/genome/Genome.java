@@ -1,8 +1,6 @@
 package genome;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
