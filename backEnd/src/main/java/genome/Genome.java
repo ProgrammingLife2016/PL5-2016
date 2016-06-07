@@ -1,14 +1,13 @@
 package genome;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class Genome.
+ *
  * @author Jeffrey Helgers
  */
 public class Genome {
@@ -78,6 +77,8 @@ public class Genome {
 
 
     /**
+     * Gets the metadata.
+     *
      * @return the metadata
      */
     public GenomeMetadata getMetadata() {
@@ -86,6 +87,8 @@ public class Genome {
 
 
     /**
+     * Sets the metadata.
+     *
      * @param metadata the metadata to set
      */
     public void setMetadata(GenomeMetadata metadata) {
@@ -131,10 +134,14 @@ public class Genome {
 				genomicFeature = gfIterator.next();
 			}
 		}
-		//System.out.println(strands);
 	}
 
 
+	/**
+	 * Sets the strands.
+	 *
+	 * @param strands the new strands
+	 */
 	public void setStrands(ArrayList<Strand> strands) {
 		this.strands = strands;
 		

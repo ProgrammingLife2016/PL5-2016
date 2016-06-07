@@ -53,7 +53,6 @@ public class Controller implements FrontEndBackEndInterface {
     public Controller() {
         String gfaFile = "data/TB10.gfa";
         genomeGraph = Parser.parse(gfaFile);
-        genomeGraph.generateGenomes();
         genomeGraph.annotateGenome("MT_H37RV_BRD_V5.ref",
         		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
         genomeGraph.findStartAndCalculateX();

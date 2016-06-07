@@ -3,9 +3,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import ribbonnodes.RibbonNode;
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class GenomeGraph.
  */
@@ -95,7 +92,7 @@ public class GenomeGraph {
                 for (StrandEdge edge : strand.getOutgoingEdges()) {
                     Strand nextStrand = strandNodes.get(edge.getEnd().getId());
                     if (nextStrand.getX() < strand.getX() + 1) {
-                        nextStrand.setX(strand.getX()+strand.getSequence().length() + 1);
+                        nextStrand.setX(strand.getX() + strand.getSequence().length() + 1);
                         nextStrands.add(nextStrand);
                     }
                 }
@@ -105,24 +102,6 @@ public class GenomeGraph {
 
         }
 
-    }
-
-    /**
-     * Generates the genomes from the the information contained within the strand nodes.
-     */
-    public void generateGenomes() {
-    	
-        genomes = new HashMap<String, Genome>();
-
-        for (Strand strand : strandNodes.values()) {
-            for (String genomeID : strand.getGenomes()) {
-                if (!genomes.containsKey(genomeID)) {
-                    Genome genome = GenomeFactory.deriveGenome(strand, genomeID);
-                    genomes.put(genomeID, genome);
-                } 
-
-            }
-        }
     }
 
     /**

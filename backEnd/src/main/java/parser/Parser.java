@@ -7,7 +7,7 @@ import genome.GenomeMetadata;
 import genome.GenomicFeature;
 import genome.Strand;
 import genome.StrandEdge;
-
+import genome.GenomeGenerator;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -87,19 +87,20 @@ public class Parser {
     public static GenomeGraph parse(String file) {
         BufferedReader reader;
         String line;
-        GenomeGraph result = new GenomeGraph();
+        GenomeGraph genomeGraph = new GenomeGraph();
         try {
             InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
             reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             reader.readLine();
-            reader.readLine();
+            String[] genomeIds = reader.readLine().split("\t")[1].split(":")[2].split(";");
+            genomeIds = removeEnding(".fasta", genomeIds);
             line = reader.readLine();
             while (line != null) {
                 String[] splittedLine = line.split("\t");
                 String temp = splittedLine[0];
                 if (temp.equals("S")) {
                     Strand strand = createNode(splittedLine);
-                    result.addStrand(strand);
+                    genomeGraph.addStrand(strand);
                 } 
                 line = reader.readLine();
             }
@@ -112,19 +113,20 @@ public class Parser {
                 String[] splittedLine = line.split("\t");
                 String temp = splittedLine[0];
             if (temp.equals("L")) {
-                StrandEdge edge = createEdge(splittedLine,result);
-                result.getStrand(edge.getStart().getId()).addEdge(edge);
-                result.getStrand(edge.getEnd().getId()).addEdge(edge);
+                StrandEdge edge = createEdge(splittedLine,genomeGraph);
+                genomeGraph.getStrand(edge.getStart().getId()).addEdge(edge);
+               genomeGraph.getStrand(edge.getEnd().getId()).addEdge(edge);
             }
             line = reader.readLine();
             }
             reader.close();
+            genomeGraph.setGenomes(GenomeGenerator.generateGenomes(genomeIds, genomeGraph));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+        return genomeGraph;
     }
 
     /**
@@ -149,22 +151,28 @@ public class Parser {
         int nodeId = Integer.parseInt(splittedLine[1]);
         String sequence = splittedLine[2];
         splittedLine[4] = splittedLine[4].substring(6, splittedLine[4].length());
-        String[] genomes = splittedLine[4].split(";");
-        for (int i = 0; i < genomes.length; i++) {
-            String genomeId = genomes[i];
-            if (genomeId.endsWith(".fasta")) {
-                genomes[i] = genomeId.substring(0, genomeId.length() - 6);
-            }
-        }
+        String[] genomeIds = splittedLine[4].split(";");
+        genomeIds = removeEnding(".fasta", genomeIds);
         String referenceGenome = splittedLine[5].substring(6, splittedLine[5].length());
         String ref = splittedLine[8].substring(8, splittedLine[8].length());
         int referenceCoordinate = Integer.parseInt(ref);
         HashSet<String> genomeSet = new HashSet<String>();
-        Collections.addAll(genomeSet, genomes);
+        Collections.addAll(genomeSet, genomeIds);
         return new Strand(nodeId, sequence, genomeSet, referenceGenome, referenceCoordinate);
     }
 
-    /**
+    private static String[] removeEnding(String string, String[] genomeIds) {
+    	String[] trimmedGenomeIds = new String[genomeIds.length];
+        for (int i = 0; i < genomeIds.length; i++) {
+            String genomeId = genomeIds[i];
+            if (genomeId.endsWith(string)) {
+            	trimmedGenomeIds[i] = genomeId.substring(0, genomeId.length() - 6);
+            }
+        }
+		return trimmedGenomeIds;
+	}
+
+	/**
      * Reads the file as a graph in to an Controller.
      *
      * @param file The file that is read.

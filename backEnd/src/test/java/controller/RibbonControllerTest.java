@@ -3,6 +3,7 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import genome.Genome;
+import genome.GenomeGenerator;
 import genome.GenomeGraph;
 import genome.Strand;
 import genome.StrandEdge;
@@ -17,7 +18,6 @@ import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
-// TODO: Auto-generated Javadoc
 /**
  * A class that tests the RibbonController.
  * Created by Matthijs on 30-5-2016.
@@ -35,8 +35,10 @@ public class RibbonControllerTest {
     @Before
     public void setUp() throws Exception {
         GenomeGraph genomeGraph = new GenomeGraph();
-        genomeGraph.setStrandNodes(generateThreeStrandsWithTwoGenomes());
-        genomeGraph.generateGenomes();
+        String[] genomeIds = new String[]{"1", "2"};
+        HashMap<Integer, Strand> strands =  generateThreeStrandsWithTwoGenomes(genomeIds);
+        genomeGraph.setStrandNodes(strands);
+        genomeGraph.setGenomes(GenomeGenerator.generateGenomes(genomeIds, genomeGraph));
         genomeGraph.findStartAndCalculateX();
         ArrayList<Genome> genomes = new ArrayList<>(genomeGraph.getGenomes().values());
         
@@ -75,19 +77,20 @@ public class RibbonControllerTest {
     
     /**
      * Generate three strands with two genomes.
+     * @param genomeIds 
      *
      * @return the hash map
      */
-    private HashMap<Integer, Strand> generateThreeStrandsWithTwoGenomes() {
-    	String[] strand1Genomes = {"1"};
+    private HashMap<Integer, Strand> generateThreeStrandsWithTwoGenomes(String[] genomeIds) {
+    	String[] strand1Genomes = {genomeIds[0]};
 		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strand1Genomes));
         Strand strand1 = new Strand(1, "tagc", genomeSet, "1", 0);
 
-        String[] strand2Genomes = {"2"};
+        String[] strand2Genomes = {genomeIds[1]};
         genomeSet = new HashSet<String>(Arrays.asList(strand2Genomes));
         Strand strand2 = new Strand(10, "tagc", genomeSet, "2", 0);
 
-        String[] strand12Genomes = {"1", "2"}; 
+        String[] strand12Genomes = {genomeIds[0], genomeIds[1]}; 
         genomeSet = new HashSet<String>(Arrays.asList(strand12Genomes));
         Strand strand12 = new Strand(5, "tagc", genomeSet, "2", 0);
         HashMap<Integer, Strand> strands = new HashMap<Integer, Strand>();
