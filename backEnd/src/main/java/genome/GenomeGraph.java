@@ -169,18 +169,6 @@ public class GenomeGraph {
 	}
 
 	/**
-	 * Annotate strands for genome.
-	 *
-	 * @param genomeID the genome id
-	 * @param annotations the annotations
-	 */
-	public void annotateGenome(String genomeID, List<GenomicFeature> annotations) {
-		Genome genome = genomes.get(genomeID);
-		assert (genome != null);
-		genome.annotate(annotations);
-	}
-
-	/**
 	 * Gets the strand.
 	 *
 	 * @param id the id
@@ -188,6 +176,16 @@ public class GenomeGraph {
 	 */
 	public Strand getStrand(int id) {
 		return strandNodes.get(id);
+	}
+
+	/**
+	 * Gets the genome.
+	 *
+	 * @param genomeId the genome id
+	 * @return the genome
+	 */
+	public Genome getGenome(String genomeId) {
+		return genomes.get(genomeId);
 	}
 
 

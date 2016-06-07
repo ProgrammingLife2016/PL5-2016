@@ -4,6 +4,7 @@ import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
 import genome.GenomeGraph;
+import genome.StrandAnnotator;
 import parser.Parser;
 import mutation.Mutations;
 
@@ -54,7 +55,7 @@ public class Controller implements FrontEndBackEndInterface {
     public Controller() {
         String gfaFile = "data/TB10.gfa";
         genomeGraph = Parser.parse(gfaFile);
-        genomeGraph.annotateGenome("MT_H37RV_BRD_V5.ref",
+        StrandAnnotator.annotate("MT_H37RV_BRD_V5.ref", genomeGraph, 
         		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
         genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
