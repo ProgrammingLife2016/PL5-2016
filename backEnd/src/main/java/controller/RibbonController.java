@@ -4,7 +4,9 @@ import datatree.DataTree;
 import genome.Genome;
 import genome.Strand;
 import ribbonnodes.RibbonEdge;
+import ribbonnodes.RibbonEdgeFactory;
 import ribbonnodes.RibbonNode;
+import ribbonnodes.RibbonNodeFactory;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -27,10 +29,6 @@ public final class RibbonController {
      */
     private DataTree dataTree;
 
-    /**
-     * The color map used to color the genomes.
-     */
-    private HashMap<String, Color> colorMap;
 
     /**
      * The maximal amount of strands to return.
@@ -46,28 +44,8 @@ public final class RibbonController {
     public RibbonController(GenomeGraph genomeGraph, DataTree dataTree) {
         this.genomeGraph = genomeGraph;
         this.dataTree = dataTree;
-        colorMap = constructColorMap();
     }
 
-    /**
-     * Construct color map.
-     *
-     * @return the hash map
-     */
-    private HashMap<String, Color> constructColorMap() {
-        HashMap<String, Color> map = new HashMap<String, Color>();
-        map.put("LIN 1", Color.decode("0xed00c3"));
-        map.put("LIN 2", Color.decode("0x0000ff"));
-        map.put("LIN 3", Color.decode("0x500079"));
-        map.put("LIN 4", Color.decode("0xff0000"));
-        map.put("LIN 5", Color.decode("0x4e2c00"));
-        map.put("LIN 6", Color.decode("0x69ca00"));
-        map.put("LIN 7", Color.decode("0xff7e00"));
-        map.put("LIN animal", Color.decode("0x00ff9c"));
-        map.put("LIN B", Color.decode("0x00ff9c"));
-        map.put("LIN CANETTII", Color.decode("0x00ffff"));
-        return map;
-    }
 
     /**
      * Get the ribbon nodes with edges for a certain view in the GUI.
@@ -83,21 +61,14 @@ public final class RibbonController {
         System.out.println(minX + ", " + maxX);
 
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
-
-
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);
 
         int id = 0;
         for (Strand strand : filteredNodes) {
-            RibbonNode ribbon = new RibbonNode(id, strand.getGenomes());
-            ribbon.setX(strand.getX());
-            ribbon.addStrand(strand);
-
+            RibbonNode ribbon = RibbonNodeFactory.makeRibbonNodeFromStrand(id, strand);
             id++;
             result.add(ribbon);
-
-
         }
 
 
@@ -106,7 +77,7 @@ public final class RibbonController {
         spreadYCoordinates(result);
         collapseRibbons(result, Math.max(0, 5 - zoomLevel));
 
-        if(zoomLevel<10){
+        if (zoomLevel < 10) {
             addMutationLabels(result);
         }
 
@@ -232,14 +203,15 @@ public final class RibbonController {
         RibbonNode next = findNextNodeWithGenome(nodes, genome, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {
-                RibbonEdge edge = new RibbonEdge(currentNode.getId(), next.getId());
-                edge.setColor(getColorForGenome(genome));
+                RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(currentNode.getId(), next.getId(), genome);
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
             } else {
                 next.setY(next.getY() + 10);
                 RibbonEdge edge = currentNode.getOutEdge(currentNode.getId(), next.getId());
-                edge.addGenomeToEdge(getColorForGenome(genome));
+                //temp fix for color visibilty.
+                RibbonEdge colorEdge = RibbonEdgeFactory.createRibbonEdge(currentNode.getId(), next.getId(), genome);
+                edge.addGenomeToEdge(colorEdge.getColor());
             }
         }
         return next;
@@ -264,27 +236,6 @@ public final class RibbonController {
 
     }
 
-    /**
-     * Gets the color for the genome as specified by http://www.abeel.be/wiki/Lineage_colors.
-     * Because genomes with an identifier starting with G are not specified in the metadata
-     * they get treated as a special case in this method.
-     *
-     * @param genome the genome
-     * @return the color for the genome
-     */
-    public Color getColorForGenome(Genome genome) {
-        Color result;
-        if (genome.hasMetadata()) {
-            result = colorMap.get(genome.getMetadata().getLineage());
-        } else {
-            if (genome.getId().startsWith("G")) {
-                result = Color.decode("0xff0000");
-            } else {
-                result = new Color(100, 100, 100);
-            }
-        }
-        return result;
-    }
 
     /**
      * Set the maximal amount of strands to return.

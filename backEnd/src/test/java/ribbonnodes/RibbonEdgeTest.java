@@ -49,4 +49,31 @@ public class RibbonEdgeTest {
         edge.setColor(Color.red);
         assertEquals(Color.red, edge.getColor());
     }
+
+    /**
+     * Test the updateColor funtion.
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testUpdateColor() throws Exception {
+        edge.setColor(Color.red);
+        edge.updateColor(Color.yellow);
+        assertEquals(new Color(255,127,0), edge.getColor());
+    }
+
+    /**
+     * Test if when a genome is added to an edge the weight and color are updated.
+     * @throws Exception if fail.
+     */
+    @Test
+    public void testAddGenome() throws Exception {
+        edge.setColor(Color.red);
+        assertEquals(edge.getColor(),Color.red);
+        assertEquals(edge.getWeight(),1);
+        edge.addGenomeToEdge(Color.yellow);
+        assertEquals(new Color(255,127,0), edge.getColor());
+        assertEquals(edge.getWeight(),2);
+
+
+    }
 }
