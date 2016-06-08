@@ -34,7 +34,7 @@ public class Mutations {
 	 * From all the start Strands.
 	 */
 	public void computeAllMutations() {
-		HashMap<Integer, Strand> strands = genomeGraph.getStrandNodes();
+		HashMap<Integer, Strand> strands = genomeGraph.getStrands();
 		for (Strand strand : strands.values()) {
 			mutationsOnStrand(strand, strands);
 		}

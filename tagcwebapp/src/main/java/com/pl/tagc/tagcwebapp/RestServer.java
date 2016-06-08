@@ -60,6 +60,7 @@ public class RestServer {
 		} catch (Exception ex) {
 			throw new ProcessingException("Exception thrown when trying to start grizzly server",
 					ex);
+			
 		}
 		
 		System.out.println(String.format("Application started.%n" + "Access it at %s%n"

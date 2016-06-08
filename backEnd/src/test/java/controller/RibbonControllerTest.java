@@ -39,7 +39,7 @@ public class RibbonControllerTest {
         GenomeGraph genomeGraph = new GenomeGraph();
         String[] genomeIds = new String[]{"1", "2"};
         HashMap<Integer, Strand> strands =  generateThreeStrandsWithTwoGenomes(genomeIds);
-        genomeGraph.setStrandNodes(strands);
+        genomeGraph.setStrands(strands);
         genomeGraph.setGenomes(GenomeGenerator.generateGenomes(genomeIds, genomeGraph));
         genomeGraph.findStartAndCalculateX();
         ArrayList<Genome> genomes = new ArrayList<>(genomeGraph.getGenomes().values());

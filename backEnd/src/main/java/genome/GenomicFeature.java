@@ -16,6 +16,10 @@ public class GenomicFeature {
 
 	/**
 	 * Instantiates a new genomic feature.
+	 */
+	public GenomicFeature() {} 
+	/**
+	 * Instantiates a new genomic feature.
 	 *
 	 * @param start
 	 *            the start
@@ -92,5 +96,32 @@ public class GenomicFeature {
 	 */
 	public boolean endsBetween(int start, int end) {
 		return (this.end >= start) && (this.end <= end);
+	}
+	
+	/**
+	 * Sets the start.
+	 *
+	 * @param start the new start
+	 */
+	public void setStart(int start) {
+		this.start = start;
+	}
+	
+	/**
+	 * Sets the end.
+	 *
+	 * @param end the new end
+	 */
+	public void setEnd(int end) {
+		this.end = end;
+	}
+	
+	/**
+	 * Sets the display name.
+	 *
+	 * @param displayName the new display name
+	 */
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }

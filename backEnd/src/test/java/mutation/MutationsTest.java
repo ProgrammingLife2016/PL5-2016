@@ -47,7 +47,7 @@ public class MutationsTest {
 		strands.put(0, strand1);
 		strands.put(1, strand2);
 		strands.put(2, strand3);
-		when(graph.getStrandNodes()).thenReturn(strands);
+		when(graph.getStrands()).thenReturn(strands);
 		when(strand1.getId()).thenReturn(0);
 		when(strand2.getId()).thenReturn(1);
 		when(strand3.getId()).thenReturn(2);

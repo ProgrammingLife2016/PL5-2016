@@ -64,6 +64,7 @@ public class Strand {
 
 	/** The genomic features. */
 	private ArrayList<GenomicFeature> genomicFeatures = new ArrayList<GenomicFeature>();
+	
 
 	/**
 	 * Constructor to create a node.

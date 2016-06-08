@@ -45,7 +45,7 @@ public class GenomeGraphTest {
      */
     @Test
     public void testAddStrand() {
-    	assertEquals(data.getStrandNodes().get(strand1.getId()), strand1);
-    	assertEquals(data.getStrandNodes().get(strand2.getId()), strand2);
+    	assertEquals(data.getStrands().get(strand1.getId()), strand1);
+    	assertEquals(data.getStrands().get(strand2.getId()), strand2);
     }
 }

@@ -60,10 +60,10 @@ public class Controller {
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
-        dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size() / 8);
+        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
 
         if (gfaFile.equals("data/TB328.gfa")) {
-            TempReadWriteTree.readFile(dataTree, genomeGraph.getStrandNodes(), "data/tempTree.txt");
+            TempReadWriteTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
         } else {
             dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
 

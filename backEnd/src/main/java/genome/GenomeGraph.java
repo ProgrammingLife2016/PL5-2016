@@ -13,7 +13,7 @@ public class GenomeGraph {
     /**
      * The strand nodes.
      */
-    private HashMap<Integer, Strand> strandNodes;
+    private HashMap<Integer, Strand> strands;
 
     /**
      * The genomes.
@@ -30,7 +30,7 @@ public class GenomeGraph {
      * Instantiates a new genome graph.
      */
     public GenomeGraph() {
-        strandNodes = new HashMap<>();
+        strands = new HashMap<>();
         activeGenomes = new ArrayList<>();
         genomes = new HashMap<>();
     }
@@ -40,8 +40,8 @@ public class GenomeGraph {
      *
      * @return strandNodes.
      */
-    public HashMap<Integer, Strand> getStrandNodes() {
-        return strandNodes;
+    public HashMap<Integer, Strand> getStrands() {
+        return strands;
     }
     
     /**
@@ -49,8 +49,8 @@ public class GenomeGraph {
      *
      * @param strands the strands
      */
-    public void setStrandNodes(HashMap<Integer, Strand> strands) {
-        this.strandNodes = strands;
+    public void setStrands(HashMap<Integer, Strand> strands) {
+        this.strands = strands;
 
     }
 
@@ -60,7 +60,7 @@ public class GenomeGraph {
      * @param strand The added strand.
      */
     public void addStrand(Strand strand) {
-        strandNodes.put(strand.getId(), strand);
+        strands.put(strand.getId(), strand);
     }
 
 
@@ -68,7 +68,7 @@ public class GenomeGraph {
      * Method that finds the starting nodes and calculates the x coordinates for the graphnodes.
      */
     public void findStartAndCalculateX() {
-        for (Strand start : strandNodes.values()) {
+        for (Strand start : strands.values()) {
             if (start.getX() == 0) {
                 start.setX(1);
                 calculateXfromStart(start);
@@ -92,7 +92,7 @@ public class GenomeGraph {
         while (!currentStrands.isEmpty()) {
             for (Strand strand : currentStrands) {
                 for (StrandEdge edge : strand.getOutgoingEdges()) {
-                    Strand nextStrand = strandNodes.get(edge.getEnd().getId());
+                    Strand nextStrand = strands.get(edge.getEnd().getId());
                     if (nextStrand.getX() < strand.getX() + 1) {
                         nextStrand.setX(strand.getX() + strand.getSequence().length() + 1);
                         nextStrands.add(nextStrand);
@@ -177,7 +177,7 @@ public class GenomeGraph {
 	 * @return the strand
 	 */
 	public Strand getStrand(int id) {
-		return strandNodes.get(id);
+		return strands.get(id);
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class GenomeGraph {
 	 * @return the g search result
 	 */
 	public GSearchResult search(String searchString, SearchType searchType) {
-		return GraphSearcher.search(searchString, searchType);
+		return GraphSearcher.search(searchString, searchType, this);
 	}
 
 

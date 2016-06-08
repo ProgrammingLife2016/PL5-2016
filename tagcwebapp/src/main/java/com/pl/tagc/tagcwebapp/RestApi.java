@@ -8,6 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
+
 import java.util.List;
 
 //The Java class will be hosted at the URI path "/api"
@@ -68,8 +69,24 @@ public class RestApi {
 	@Path("/getphylogenetictree")
 	@Produces("application/json")
 	public Response requestPhylogeneticTree(@DefaultValue("1") @QueryParam("treeId") int treeId) {
+		System.out.println("jj");
 		return BackEndAdapter.getInstance().loadPhylogeneticTree(treeId);
 		
 	}
 
+	/**
+	 * Request phylogenetic tree.
+	 *
+	 * @param searchString the search string
+	 * @param searchType the search type
+	 * @return the response
+	 */
+	@GET
+	@Path("/search")
+	@Produces("application/json")
+	public SearchResultObject search(@QueryParam("searchString") String searchString,
+			@QueryParam("searchType") String searchType) {
+		return BackEndAdapter.getInstance().search(searchString, searchType);
+		
+	}
 }

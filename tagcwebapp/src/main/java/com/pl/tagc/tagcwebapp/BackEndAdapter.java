@@ -60,12 +60,12 @@ public final class BackEndAdapter implements BackEndInterface {
 	@Override
 	public SearchResultObject search(String searchString, String searchTypeStr) {
 		SearchType searchType = searchTypeMap.get(searchTypeStr);
-		if(searchType == null) {
+		if (searchType == null) {
 			throw new IllegalArgumentException("Unknown search type");
 		}
 		GSearchResult gSearchRresult = controller.search(searchString, searchType);
 		SearchResultObject resultObject = new SearchResultObject();
-		//resultObject.setSomeThing();
+		resultObject.setgFeatureSearchMatches(gSearchRresult.getgFeatureSearchMatches());
 		return resultObject;
 	}
 	
@@ -86,6 +86,7 @@ public final class BackEndAdapter implements BackEndInterface {
 	public static void createInstance(Controller controller) {
 		if (ba == null) {
 			ba = new BackEndAdapter();
+			BackEndAdapter.controller = controller;
 		}
 	}
 	

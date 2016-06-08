@@ -28,7 +28,7 @@ public final class GenomeGenerator {
 			GenomeGraph genomeGraph) {
 		HashSet<String> genomeIdSet = new HashSet<String>(Arrays.asList(genomeIds));
 		HashMap<String, Genome> genomes = new HashMap<String, Genome>();
-		Iterator<Strand> strandIterator = genomeGraph.getStrandNodes().values().iterator();
+		Iterator<Strand> strandIterator = genomeGraph.getStrands().values().iterator();
 
 		while (strandIterator.hasNext() && !genomeIdSet.isEmpty()) {
 			Strand strand = strandIterator.next();
