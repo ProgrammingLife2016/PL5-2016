@@ -15,6 +15,9 @@ public class GFeatureSearchMatch {
 	
 	
 
+	/**
+	 * Instantiates a new g feature search match.
+	 */
 	public GFeatureSearchMatch() { }
 	
 	/**

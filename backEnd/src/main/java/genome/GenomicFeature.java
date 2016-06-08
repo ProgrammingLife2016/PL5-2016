@@ -17,7 +17,8 @@ public class GenomicFeature {
 	/**
 	 * Instantiates a new genomic feature.
 	 */
-	public GenomicFeature() {} 
+	public GenomicFeature() { } 
+	
 	/**
 	 * Instantiates a new genomic feature.
 	 *
