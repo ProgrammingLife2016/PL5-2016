@@ -2,88 +2,113 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
-import genome.Strand;
+import datatree.TempReadWriteTree;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import parser.Parser;
+import phylogenetictree.PhylogeneticTree;
+import ribbonnodes.RibbonEdge;
+import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
- * A class that tests the RibbonController.
- * Created by Matthijs on 30-5-2016.
+ * Created by Matthijs on 8-6-2016.
  */
 public class RibbonControllerTest {
 
-    private RibbonController controller; // the ribboncontroller to test.
+    private RibbonController controller;
 
-    /**
-     * Set up the test.
-     *
-     * @throws Exception if fail.
-     */
-    @SuppressWarnings("checkstyle:methodlength")
     @Before
     public void setUp() throws Exception {
-        GenomeGraph genomeGraph = new GenomeGraph();
-
-
-        String[] strand1Genomes = {"1"};
-        Strand strand1 = new Strand(1, "tagc", strand1Genomes, "1", 0);
-
-        String[] strand2Genomes = {"2"};
-        Strand strand2 = new Strand(10, "tagc", strand2Genomes, "2", 0);
-
-        String[] strand12Genomes = {"1", "2"};
-        Strand stand12 = new Strand(5, "tagc", strand12Genomes, "2", 0);
-
-        DataNode root = new DataNode(null, 0);
-        DataNode child1 = new DataNode(root, 0);
-        DataNode child2 = new DataNode(root, 1);
-        ArrayList<String> child1Genomes = new ArrayList<>();
-        ArrayList<String> child2Genomes = new ArrayList<>();
-        ArrayList<String> parentGenomes = new ArrayList<>();
-        child1Genomes.add("1");
-        child2Genomes.add("2");
-        parentGenomes.add("1");
-        parentGenomes.add("2");
-        child1.setGenomes(child1Genomes);
-        child2.setGenomes(child2Genomes);
-        root.addChild(child1);
-        root.addChild(child2);
-        root.setGenomes(parentGenomes);
-
-        DataTree dataTree = new DataTree(root);
-        controller = new RibbonController(genomeGraph, dataTree);
-
-
-        genomeGraph.addStrand(strand1);
-        genomeGraph.addStrand(strand2);
-        genomeGraph.addStrand(stand12);
-
-        genomeGraph.generateGenomes();
-        genomeGraph.findStartAndCalculateX();
-        dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
-        // add all genomes to active genomes.
-        genomeGraph.setGenomesAsActive(new ArrayList<>(genomeGraph.getGenomes().keySet()));
+        GenomeGraph graph = Mockito.mock(GenomeGraph.class);
+        DataTree tree = Mockito.mock(DataTree.class);
+        controller = new RibbonController(graph, tree);
 
     }
 
-    /**
-     * Test if the getRibbonNodes method returns the right ribbonNodes.
-     *
-     * @throws Exception if fail.
-     */
     @Test
     public void testGetRibbonNodes() throws Exception {
+        GenomeGraph genomeGraph = Parser.parse("data/TB10.gfa");
+        genomeGraph.generateGenomes();
+        genomeGraph.findStartAndCalculateX();
+        ArrayList<String> actGen = new ArrayList<>();
 
-        assertEquals(3, controller.getRibbonNodes(0, 1, 2).size());
-        assertEquals(3, controller.getRibbonNodes(0, 1, 0).size());
-        assertEquals(3, controller.getRibbonNodes(100, 1000, 0).size());
+        for(String genId:genomeGraph.getGenomes().keySet()){
+            if(actGen.size()<2){
+                actGen.add(genId);
+            }
+        }
 
+        genomeGraph.setGenomesAsActive(actGen);
+        PhylogeneticTree phylogeneticTree= new PhylogeneticTree();
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
+                new ArrayList<>(genomeGraph.getGenomes().keySet()));
+        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
+                null, 0));
+        dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size() / 8);
+
+
+        dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+
+
+        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
+
+        ribbonController.getRibbonNodes(0,100000000, 2);
+    }
+
+    @Test
+    public void testCollapseRibbons() throws Exception {
+        ArrayList<String> genomes = new ArrayList<>();
+        genomes.add("1");
+        ArrayList<RibbonNode> nodes = new ArrayList<>();
+        RibbonNode node1 = new RibbonNode(0, genomes);
+        RibbonNode node2 = new RibbonNode(1, genomes);
+        RibbonNode node3 = new RibbonNode(2, genomes);
+        nodes.add(node1);
+        nodes.add(node2);
+        nodes.add(node3);
+        RibbonEdge edge1 = new RibbonEdge(0,1);
+        RibbonEdge edge2 = new RibbonEdge(1,2);
+        node1.addEdge(edge1);
+        node2.addEdge(edge1);
+        node2.addEdge(edge2);
+        node3.addEdge(edge2);
+        assertEquals(3, nodes.size());
+        controller.collapseRibbons(nodes);
+        assertEquals(1,nodes.size());
+    }
+
+    @Test
+    public void testGetNodeWithId() throws Exception {
 
     }
 
+    @Test
+    public void testSpreadYCoordinates() throws Exception {
 
+    }
+
+    @Test
+    public void testAddEdges() throws Exception {
+
+    }
+
+    @Test
+    public void testAddEdgeReturnEnd() throws Exception {
+
+    }
+
+    @Test
+    public void testFindNextNodeWithGenome() throws Exception {
+
+    }
+
+    @Test
+    public void testAddMutationLabels() throws Exception {
+
+    }
 }

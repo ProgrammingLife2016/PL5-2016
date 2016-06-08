@@ -31,11 +31,6 @@ public final class RibbonController {
 
 
     /**
-     * The maximal amount of strands to return.
-     */
-    private int maxStrandsToReturn = 0;
-
-    /**
      * Create ribbonController object.
      *
      * @param genomeGraph the graph that contains the geographic information of the stands.
@@ -61,8 +56,8 @@ public final class RibbonController {
         System.out.println(minX + ", " + maxX);
 
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
-        ArrayList<String> actIds= new ArrayList<>();
-        for(Genome genome:actGen){
+        ArrayList<String> actIds = new ArrayList<>();
+        for (Genome genome : actGen) {
             actIds.add(genome.getId());
         }
 
@@ -71,16 +66,18 @@ public final class RibbonController {
 
         int id = 0;
         for (Strand strand : filteredNodes) {
-            RibbonNode ribbon = RibbonNodeFactory.makeRibbonNodeFromStrand(id, strand, actIds);
-            id++;
-            result.add(ribbon);
+            if (strand.getSequence().length() > 100 - zoomLevel * 5) {
+                RibbonNode ribbon = RibbonNodeFactory.makeRibbonNodeFromStrand(id, strand, actIds);
+                id++;
+                result.add(ribbon);
+            }
         }
 
 
-        result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
-       // addEdges(result);
         spreadYCoordinates(result, actIds, id);
-        //collapseRibbons(result, Math.max(0, 5 - zoomLevel));
+        result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
+        addEdges(result);
+     //   collapseRibbons(result);
 
         if (zoomLevel < 10) {
             addMutationLabels(result);
@@ -97,30 +94,26 @@ public final class RibbonController {
      * @param nodes The ribbonNode Graph to collapse.
      * @return A collapsed graph.
      */
-    private void collapseRibbons(ArrayList<RibbonNode> nodes, int iterations) {
-        int nIter = 0;
-        int changedThisPass = 100000;
-        while (nIter < iterations && nodes.size() > maxStrandsToReturn && changedThisPass > maxStrandsToReturn / 2) {
-            nIter++;
-            changedThisPass = 0;
-            for (int i = 0; i < nodes.size(); i++) {
-                RibbonNode node = nodes.get(i);
-                if (node != null) {
-                    if (node.getOutEdges().size() == 1) {
-                        RibbonNode other = getNodeWithId(node.getOutEdges().get(0).getEnd(), nodes);
-                        if (other.getInEdges().size() == 1) {
-                            node.addStrands(other.getStrands());
-                            for (RibbonEdge edge : other.getOutEdges()) {
-                                edge.setStartId(node.getId());
-                            }
-                            node.setOutEdges(other.getOutEdges());
-                            nodes.remove(other);
-                            changedThisPass++;
-                        }
+    protected void collapseRibbons(ArrayList<RibbonNode> nodes) {
+        for (int i = 0; i < nodes.size(); i++) {
+            RibbonNode node = nodes.get(i);
+            System.out.println(nodes.size()+ "Before collapsing");
+            if (node != null) {
+                while (node.getOutEdges().size() == 1) {
+                    RibbonNode other = getNodeWithId(node.getOutEdges().get(0).getEnd(), nodes, i);
+                    if (other.getInEdges().size() == 1) {
+                        node = RibbonNodeFactory.collapseNodes(node, other);
+                        nodes.remove(other);
+                    } else {
+                        break;
                     }
+
+
                 }
             }
+
         }
+
 
     }
 
@@ -133,8 +126,9 @@ public final class RibbonController {
      * @return null if that id is not found.
      */
 
-    public RibbonNode getNodeWithId(int id, ArrayList<RibbonNode> nodes) {
-        for (RibbonNode node : nodes) {
+    public RibbonNode getNodeWithId(int id, ArrayList<RibbonNode> nodes, int minIndex) {
+        for (int i = minIndex; i < nodes.size(); i++) {
+            RibbonNode node = nodes.get(i);
             if (node.getId() == id) {
                 return node;
             }
@@ -149,18 +143,18 @@ public final class RibbonController {
      * @param nodes The ribbonGraph to calculate y cooridnates for.
      * @return The ribbonGraph with added y coordinates.
      */
-    private void spreadYCoordinates(ArrayList<RibbonNode> nodes, ArrayList<String> activeGenomes, int maxId) {
+    protected void spreadYCoordinates(ArrayList<RibbonNode> nodes, ArrayList<String> activeGenomes, int maxId) {
         ArrayList<RibbonNode> splitNodes = new ArrayList<>();
         ArrayList<RibbonNode> newNodes = new ArrayList<>();
-        for(RibbonNode node: nodes){
-            if(node.getGenomes().size()!=activeGenomes.size()){
-                ArrayList<RibbonNode> ribbonSplitCopies = RibbonNodeFactory.makeRibbonNodesFromSplit(node,maxId);
-                for(RibbonNode splitNode: ribbonSplitCopies){
-                    int genIndex= activeGenomes.indexOf(splitNode.getGenomes().get(0));
-                    int newY= (int)((Math.ceil((genIndex+1)/2.)*20)*Math.pow(-1,genIndex));
+        for (RibbonNode node : nodes) {
+            if (node.getGenomes().size() != activeGenomes.size()) {
+                ArrayList<RibbonNode> ribbonSplitCopies = RibbonNodeFactory.makeRibbonNodesFromSplit(node, maxId);
+                for (RibbonNode splitNode : ribbonSplitCopies) {
+                    int genIndex = activeGenomes.indexOf(splitNode.getGenomes().get(0));
+                    int newY = (int) ((Math.ceil((genIndex + 1) / 2.) * 20) * Math.pow(-1, genIndex));
                     splitNode.setY(newY);
                 }
-                maxId+=ribbonSplitCopies.size();
+                maxId += ribbonSplitCopies.size();
                 splitNodes.add(node);
                 newNodes.addAll(ribbonSplitCopies);
             }
@@ -209,7 +203,6 @@ public final class RibbonController {
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
             } else {
-                next.setY(next.getY() + 10);
                 RibbonEdge edge = currentNode.getOutEdge(currentNode.getId(), next.getId());
                 //temp fix for color visibilty.
                 RibbonEdge colorEdge = RibbonEdgeFactory.createRibbonEdge(currentNode.getId(), next.getId(), genome);
@@ -238,15 +231,6 @@ public final class RibbonController {
 
     }
 
-
-    /**
-     * Set the maximal amount of strands to return.
-     *
-     * @param maxStrandsToReturn
-     */
-    public void setMaxStrandsToReturn(int maxStrandsToReturn) {
-        this.maxStrandsToReturn = maxStrandsToReturn;
-    }
 
     public void addMutationLabels(ArrayList<RibbonNode> nodes) {
         for (RibbonNode node : nodes) {

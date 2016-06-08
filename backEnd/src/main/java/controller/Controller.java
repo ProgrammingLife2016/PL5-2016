@@ -50,7 +50,7 @@ public class Controller implements FrontEndBackEndInterface {
      * Constructor.
      */
     public Controller() {
-        String gfaFile = "data/TB10.gfa";
+        String gfaFile = "data/TB328.gfa";
         genomeGraph = Parser.parse(gfaFile);
         genomeGraph.generateGenomes();
         genomeGraph.findStartAndCalculateX();
@@ -67,7 +67,6 @@ public class Controller implements FrontEndBackEndInterface {
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);
-        ribbonController.setMaxStrandsToReturn(3000);
         Mutations mutations = new Mutations(genomeGraph);
         mutations.computeAllMutations();
         dc = this;

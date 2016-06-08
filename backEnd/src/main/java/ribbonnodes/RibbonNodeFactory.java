@@ -46,5 +46,16 @@ public abstract class RibbonNodeFactory {
 
     }
 
+    public static RibbonNode collapseNodes(RibbonNode node1, RibbonNode node2){
+
+        node1.addStrands(node2.getStrands());
+        for (RibbonEdge edge : node2.getOutEdges()) {
+            edge.setStartId(node1.getId());
+        }
+        node1.setOutEdges(node2.getOutEdges());
+
+        return node1;
+    }
+
 
 }
