@@ -7,12 +7,13 @@ var tree = d3.layout.phylotree("body").separation(
 
 var container_id = '#tree_container';
 var svgPanZoomObject;
+var url = 'http://localhost:9998/';
 
 $(document).ready(function() {
     addCompareGenomeButtonBindings();
     set_default_tree_settings();
     //makeRestAPIcall('getnewickstring','JSON', 'GET', '', drawTree);
-    makeRestAPIcall('getphylogenetictree','JSON', 'GET', {'treeId' : 1}, drawTree);
+    makeRestAPIcall('app/getphylogenetictree','JSON', 'GET', {'treeId' : 1}, drawTree);
 });
 
 function drawTree(json) {
@@ -98,15 +99,12 @@ function addCompareGenomeButtonBindings() {
 
         fullSizeMinimap();
 
-        makeRestAPIcall('setactivegenomes', 'JSON', 'POST', data, handleActivationResponse);
+        makeRestAPIcall('api/setactivegenomes', 'JSON', 'POST', data, handleActivationResponse);
         initializeMinimap();
     })
 }
 
 function makeRestAPIcall(apiCall, dataType, requestType, reqData, callback) {
-    var url = 'http://localhost:9998/api/';
-    //Temp:
-    // url = 'http://localhost:9998/app/';
     $.ajax({
         url : url + apiCall,
         dataType : dataType,
