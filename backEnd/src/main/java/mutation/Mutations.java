@@ -5,6 +5,7 @@ import genome.Strand;
 import genome.StrandEdge;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -68,6 +69,27 @@ public class Mutations {
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	/**
+	 * Check if there is a tandem duplication mutation starting from the start strand.
+	 * @param start The start strand.
+	 * @param strands All the strands.
+	 */
+	private void findTandemDuplication(Strand start, ArrayList<Strand> strands) {
+		for (StrandEdge edge : start.getEdges()) {
+			if(start.getSequence().equals(strands.get(edge.getEnd()).getSequence())) {
+				Strand mutated = strands.get(edge.getEnd());
+				ArrayList<String> reference = new ArrayList<>(start.getGenomes());
+				reference.removeAll(mutated.getGenomes());
+				start.addMutation(new MutationOther(
+										MutationType.TANDEMDUPLICATION,
+										reference,
+										strands.get(edge.getEnd()).getGenomes(),
+										start,
+										new ArrayList<>(Arrays.asList(mutated))));
 			}
 		}
 	}
