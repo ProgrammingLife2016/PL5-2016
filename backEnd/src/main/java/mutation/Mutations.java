@@ -41,6 +41,38 @@ public class Mutations {
 	}
 	
 	/**
+	 * Check if there is a SNP mutation starting from the start strand.
+	 * @param start The start strand.
+	 * @param strands All the strands.
+	 */
+	private void findSNP(Strand start, ArrayList<Strand> strands) {
+		for (int i = 0; i < start.getEdges().size() - 1; i++) {
+			Strand firstEdgeEnd = strands.get(start.getEdges().get(i).getEnd());
+			if (firstEdgeEnd.getSequence().length() == 1) {
+				for (int j = i + 1; j < start.getEdges().size(); i++) {
+					Strand secondEdgeEnd = strands.get(start.getEdges().get(j).getEnd());
+					if (secondEdgeEnd.getSequence().length() == 1) {
+						for (StrandEdge edge1 : firstEdgeEnd.getEdges()) {
+							for (StrandEdge edge2 : secondEdgeEnd.getEdges()) {
+								if (edge1.getEnd() == edge2.getEnd()) {
+									start.addMutation(new MutationSNP(
+														MutationType.SNP,
+														firstEdgeEnd.getGenomes(),
+														secondEdgeEnd.getGenomes(),
+														start,
+														strands.get(edge1.getEnd()),
+														firstEdgeEnd,
+														secondEdgeEnd));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Compute mutations that can appear form a start Strand.
 	 * When there is only one edge, there can't be a mutation.
 	 * @param start The start Strand.
