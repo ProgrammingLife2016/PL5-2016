@@ -1,11 +1,7 @@
 package com.pl.tagc.tagcwebapp;
 
-import ribbonnodes.RibbonNode;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import phylogenetictree.PhylogeneticTree;
+import javax.ws.rs.core.Response;
 
 /**
  * Interface that contracts the interaction between the frontend and the Backend.
@@ -21,15 +17,15 @@ public interface BackEndInterface {
      * @param zoomLevel The zoomLevel to calculate the Nodes for.
      * @return A list of RibbonNodes to draw.
      */
-    ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel);
+	Response getRibbonNodes(int minX, int maxX, int zoomLevel);
 
     /**
      * Sets the active genomes.
      *
-     * @param activeGenomes the active genomes
-     * @return the list
+     * @param ids the ids
+     * @return the array list object
      */
-    List<String> setActiveGenomes(ArrayList<String> activeGenomes);
+	ArrayListObject setActiveGenomes(List<String> ids);
 
     /**
      * Load phylogenetic tree.
@@ -37,6 +33,14 @@ public interface BackEndInterface {
      * @param treeId the tree id
      * @return the phylogenetic tree 
      */
-    PhylogeneticTree loadPhylogeneticTree(int treeId);
+    Response loadPhylogeneticTree(int treeId);
 
+    /**
+     * Search.
+     *
+     * @param searchString the search string
+     * @param searchType the search type
+     * @return the search result object
+     */
+    SearchResultObject search(String searchString, String searchType);
 }

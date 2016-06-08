@@ -8,9 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 //The Java class will be hosted at the URI path "/api"
 /**
@@ -43,16 +41,9 @@ public class RestApi {
 	public Response requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
 			@DefaultValue("100") @QueryParam("xright") int xright,
 			@DefaultValue("1") @QueryParam("zoom") int zoom) {
-		NodeListObject nodeList =
-				new NodeListObject(new CopyOnWriteArrayList<>(
-						BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom)));
-		return Response.ok() //200
-				.entity(nodeList)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-				.allow("OPTIONS").build();
+		return BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom);
 	}
-	
+
 
 	/**
 	 * Uses the genome ids to set the genomes as active in the backend. Which means that 
@@ -64,29 +55,21 @@ public class RestApi {
 	@POST
 	@Path("/setactivegenomes")
 	public ArrayListObject setActiveGenomes(@FormParam("names[]") List<String> ids) {
-		return new ArrayListObject(BackEndAdapter.getInstance().
-				setActiveGenomes((ArrayList<String>) ids));
+		return BackEndAdapter.getInstance().setActiveGenomes(ids);
 	}
 
 	/**
 	 * Request phylogenetic tree.
 	 *
-	 * @param treeId The tree id that will be used to load the right tree from the backend.
-	 * @return the phylogenetic tree object
+	 * @param treeId the tree id
+	 * @return the response
 	 */
 	@GET
 	@Path("/getphylogenetictree")
 	@Produces("application/json")
-	public Response requestPhylogeneticTree(
-			@DefaultValue("1") @QueryParam("treeId") int treeId) {
-		PhylogeneticTreeObject result =
-				new PhylogeneticTreeObject(BackEndAdapter.getInstance().
-						loadPhylogeneticTree(treeId).getRoot());
-		return Response.ok() //200
-				.entity(result)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-				.allow("OPTIONS").build();
+	public Response requestPhylogeneticTree(@DefaultValue("1") @QueryParam("treeId") int treeId) {
+		return BackEndAdapter.getInstance().loadPhylogeneticTree(treeId);
+		
 	}
 
 }
