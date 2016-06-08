@@ -1,10 +1,15 @@
 package com.pl.tagc.tagcwebapp;
 
+import genome.GSearchResult;
 import genome.GraphSearcher.SearchType;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import javax.ws.rs.core.Response;
+
 import controller.Controller;
 
 /**
@@ -14,6 +19,14 @@ public final class BackEndAdapter implements BackEndInterface {
 
 	private static BackEndAdapter ba = null;
 	private static Controller controller = null;
+	private static HashMap<String, SearchType> searchTypeMap;
+	private BackEndAdapter() { 
+		searchTypeMap = new HashMap<String, SearchType>();
+		searchTypeMap.put("GenomicFeatureSearch", SearchType.GenomicFeatureSearch);
+		searchTypeMap.put("MetaDataSearch", SearchType.MetaDataSearch);
+		searchTypeMap.put("MutationSearch", SearchType.MutationSearch);
+		searchTypeMap.put("FullSearch", SearchType.FullSearch);
+	}
 	
 	@Override
 	public Response getRibbonNodes(int minX, int maxX, int zoomLevel) {
@@ -46,25 +59,14 @@ public final class BackEndAdapter implements BackEndInterface {
 
 	@Override
 	public SearchResultObject search(String searchString, String searchTypeStr) {
-		SearchType searchType;
-		switch (searchTypeStr) {
-		case "GenomicFeatureSearch":
-			searchType = SearchType.GenomicFeatureSearch;
-			break;
-		case "MetaDataSearch":
-			searchType = SearchType.MetaDataSearch;
-			break;
-		case "MutationSearch":
-			searchType = SearchType.MutationSearch;
-			break;
-		case "FullSearch":
-			searchType = SearchType.FullSearch;
-			break;
-		default:
-			searchType = SearchType.FullSearch;
+		SearchType searchType = searchTypeMap.get(searchTypeStr);
+		if(searchType == null) {
+			throw new IllegalArgumentException("Unknown search type");
 		}
-		controller.search(searchString, searchType);
-		return null;
+		GSearchResult gSearchRresult = controller.search(searchString, searchType);
+		SearchResultObject resultObject = new SearchResultObject();
+		//resultObject.setSomeThing();
+		return resultObject;
 	}
 	
 	/**
