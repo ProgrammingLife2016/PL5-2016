@@ -55,18 +55,26 @@ public final class RibbonController {
 
         System.out.println(minX + ", " + maxX);
 
-        ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
+
+
         ArrayList<String> actIds = new ArrayList<>();
-        for (Genome genome : actGen) {
-            actIds.add(genome.getId());
-        }
+        //for (Genome genome : actGen) {
+        //    actIds.add(genome.getId());
+       // }
+
+        actIds.add("TKK_04_0149");
+        actIds.add("TKK_04_0068");
+
+        genomeGraph.setGenomesAsActive(actIds);
+        ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
+
 
         ArrayList<RibbonNode> result = new ArrayList<>();
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);
 
         int id = 0;
         for (Strand strand : filteredNodes) {
-            if (strand.getSequence().length() > 100 - zoomLevel * 5) {
+            if (strand.getSequence().length() > 100 - zoomLevel * 8) {
                 RibbonNode ribbon = RibbonNodeFactory.makeRibbonNodeFromStrand(id, strand, actIds);
                 id++;
                 result.add(ribbon);

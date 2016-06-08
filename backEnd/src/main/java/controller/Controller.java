@@ -70,6 +70,8 @@ public class Controller implements FrontEndBackEndInterface {
         Mutations mutations = new Mutations(genomeGraph);
         mutations.computeAllMutations();
         dc = this;
+
+
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
 
