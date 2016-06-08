@@ -1,14 +1,17 @@
-package controller;
+package com.pl.tagc.tagcwebapp;
 
 import ribbonnodes.RibbonNode;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import phylogenetictree.PhylogeneticTree;
 
 /**
  * Interface that contracts the interaction between the frontend and the Backend.
  * Created by Matthijs on 23-5-2016.
  */
-public interface FrontEndBackEndInterface {
+public interface BackEndInterface {
 
     /**
      * Request and generate a list of ribbonNodes to draw.
@@ -27,5 +30,13 @@ public interface FrontEndBackEndInterface {
      * @return the list
      */
     List<String> setActiveGenomes(ArrayList<String> activeGenomes);
+
+    /**
+     * Load phylogenetic tree.
+     *
+     * @param treeId the tree id
+     * @return the phylogenetic tree 
+     */
+    PhylogeneticTree loadPhylogeneticTree(int treeId);
 
 }

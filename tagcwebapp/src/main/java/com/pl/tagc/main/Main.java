@@ -1,6 +1,8 @@
 package com.pl.tagc.main;
 
+import com.pl.tagc.tagcwebapp.BackEndAdapter;
 import com.pl.tagc.tagcwebapp.RestServer;
+
 import controller.Controller;
 
 import java.util.logging.Level;
@@ -35,8 +37,8 @@ final class Main {
 	public static void main(String[] args) {
 
 		try {
-			@SuppressWarnings("unused")
 			Controller controller = new Controller();
+			BackEndAdapter.createInstance(controller);
 		    RestServer restServer = new RestServer();
 	        restServer.startServer();
 			Thread.currentThread().join();

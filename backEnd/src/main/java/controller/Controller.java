@@ -3,8 +3,9 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
+import genome.GSearchResult;
 import genome.GenomeGraph;
-import genome.StrandAnnotator;
+import genome.GraphSearcher.SearchType;
 import parser.Parser;
 import mutation.Mutations;
 
@@ -22,7 +23,7 @@ import ribbonnodes.RibbonNode;
 /**
  * Controller. This class connects the classes together.
  */
-public class Controller implements FrontEndBackEndInterface {
+public class Controller {
 
     /**
      * The genome graph.
@@ -44,10 +45,6 @@ public class Controller implements FrontEndBackEndInterface {
      */
     private RibbonController ribbonController;
 
-    /**
-     * Controller Singleton.
-     */
-    private static controller.Controller dc = null;
 
     /**
      * Constructor.
@@ -55,7 +52,8 @@ public class Controller implements FrontEndBackEndInterface {
     public Controller() {
         String gfaFile = "data/TB10.gfa";
         genomeGraph = Parser.parse(gfaFile);
-        genomeGraph.annotate("MT_H37RV_BRD_V5.ref", Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
+        genomeGraph.annotate("MT_H37RV_BRD_V5.ref", 
+        		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
         genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
@@ -74,7 +72,6 @@ public class Controller implements FrontEndBackEndInterface {
         ribbonController.setMaxStrandsToReturn(3000);
         Mutations mutations = new Mutations(genomeGraph);
         mutations.computeAllMutations();
-        dc = this;
     }
 
     /**
@@ -89,6 +86,16 @@ public class Controller implements FrontEndBackEndInterface {
         return ribbonController.getRibbonNodes(minX, maxX, zoomLevel);
     }
 
+    /**
+     * Search.
+     *
+     * @param searchString the search string
+     * @param searchType the search type
+     * @return the g search result
+     */
+    public GSearchResult search(String searchString, SearchType searchType) {
+        return genomeGraph.search(searchString, searchType);
+    }
 
     /**
      * Getter for the phylogenicTree.
@@ -117,19 +124,5 @@ public class Controller implements FrontEndBackEndInterface {
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
         return genomeGraph.setGenomesAsActive(activeGenomes);
     }
-
-    /**
-     * Get the singleton dc.
-     * If dc is not instantiated yet, do this first.
-     *
-     * @return The controller dc.
-     */
-    public static Controller getDC() {
-        if (dc == null) {
-            dc = new Controller();
-        }
-        return dc;
-    }
-
 
 }

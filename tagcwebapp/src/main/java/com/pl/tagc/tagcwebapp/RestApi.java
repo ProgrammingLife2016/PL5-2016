@@ -1,7 +1,5 @@
 package com.pl.tagc.tagcwebapp;
 
-import controller.Controller;
-
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -47,7 +45,7 @@ public class RestApi {
 			@DefaultValue("1") @QueryParam("zoom") int zoom) {
 		NodeListObject nodeList =
 				new NodeListObject(new CopyOnWriteArrayList<>(
-						Controller.getDC().getRibbonNodes(xleft, xright, zoom)));
+						BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom)));
 		return Response.ok() //200
 				.entity(nodeList)
 				.header("Access-Control-Allow-Origin", "*")
@@ -66,7 +64,8 @@ public class RestApi {
 	@POST
 	@Path("/setactivegenomes")
 	public ArrayListObject setActiveGenomes(@FormParam("names[]") List<String> ids) {
-		return new ArrayListObject(Controller.getDC().setActiveGenomes((ArrayList<String>) ids));
+		return new ArrayListObject(BackEndAdapter.getInstance().
+				setActiveGenomes((ArrayList<String>) ids));
 	}
 
 	/**
@@ -81,7 +80,8 @@ public class RestApi {
 	public Response requestPhylogeneticTree(
 			@DefaultValue("1") @QueryParam("treeId") int treeId) {
 		PhylogeneticTreeObject result =
-				new PhylogeneticTreeObject(Controller.getDC().loadPhylogeneticTree(treeId).getRoot());
+				new PhylogeneticTreeObject(BackEndAdapter.getInstance().
+						loadPhylogeneticTree(treeId).getRoot());
 		return Response.ok() //200
 				.entity(result)
 				.header("Access-Control-Allow-Origin", "*")
