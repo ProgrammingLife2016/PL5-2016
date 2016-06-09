@@ -37,12 +37,12 @@ public final class StrandAnnotator {
 			int endOfStrand = strand.getEndCoordinate();
 			if (firstFeature.overlaps(startOfStrand, endOfStrand)) {
 				annotateStrand(strand, features);
-			}
-			if (!features.isEmpty()) {
-				firstFeature = features.iterator().next();
-			}
-
+				if (!features.isEmpty()) {
+					firstFeature = features.iterator().next();
+				}
+			}			
 		}
+		assert (features.isEmpty());
 	}
 
 	private static void annotateStrand(Strand strand, LinkedHashSet<GenomicFeature> features) {
