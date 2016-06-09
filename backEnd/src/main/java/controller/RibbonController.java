@@ -73,7 +73,7 @@ public class RibbonController {
         addEdges(result);
         //   collapseRibbons(result);
 
-
+        addMutationLabels(result, actIds);
         System.out.println(result.size() + " nodes returned");
         return result;
 
@@ -264,31 +264,23 @@ public class RibbonController {
      * @param nodes The nodes in the graph.
      * @param actGen The active genomes.
      */
-    public void addMutationLabels(ArrayList<RibbonNode> nodes, ArrayList<Genome> actGen) {
-    	ArrayList<String> active = new ArrayList<>();
-    	for (Genome genome : actGen) {
-    		active.add(genome.getId());
-    	}
-    	for (RibbonNode node : nodes) {
-    		Strand strand = node.getStrands().get(node.getStrands().size() - 1);
-    		if (strand.getMutations().size() > 0) {
-    			boolean addedMutation = false;
-    			StringBuilder mutationLabel = new StringBuilder();
-    			for (AbstractMutation mutation : strand.getMutations()) {
-    				if (!Collections.disjoint(active, mutation.getReferenceGenome()) 
-    						&& !Collections.disjoint(active, mutation.getOtherGenomes())) {
-    					System.out.println("mutation added");
-        				mutationLabel.append(mutation.toString());
-        				mutationLabel.append(", ");
-        				addedMutation = true;
-    				}
-    			}
-    			if (addedMutation) {
-    				mutationLabel.deleteCharAt(mutationLabel.length() - 1);
-    				mutationLabel.deleteCharAt(mutationLabel.length() - 1);
-        			node.setLabel(mutationLabel.toString());
-    			}
-       		}
-    	}
+    protected void addMutationLabels(ArrayList<RibbonNode> nodes, ArrayList<String> actGenomes) {
+        for (RibbonNode node : nodes) {
+        	boolean mutationAdded = false;
+            Strand strand = node.getStrands().get(node.getStrands().size() - 1);
+            StringBuilder label = new StringBuilder();
+            label.append(System.lineSeparator());
+            for (AbstractMutation mutation : strand.getMutations()) {
+            	if (!Collections.disjoint(mutation.getReferenceGenome(), actGenomes)
+            			&& !Collections.disjoint(mutation.getOtherGenomes(), actGenomes))
+            	label.append(mutation.toString());
+            	label.append(", ");
+            	mutationAdded = true;
+            }
+            if (mutationAdded) {
+            	label.setLength(label.length() - 2);
+            	node.setLabel(node.getLabel() + label.toString());
+            }
+        }
     }
 }
