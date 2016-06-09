@@ -1,4 +1,4 @@
-package controller;
+package genome;
 
 import java.util.Arrays;
 import java.util.HashSet;
