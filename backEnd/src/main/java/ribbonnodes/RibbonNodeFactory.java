@@ -20,7 +20,7 @@ public abstract class RibbonNodeFactory {
      */
     public static RibbonNode makeRibbonNodeFromStrand(int id, Strand strand, ArrayList<String> activeGenomes) {
 
-        ArrayList<String> actGen= strand.getGenomes();
+        ArrayList<String> actGen = strand.getGenomes();
         actGen.retainAll(activeGenomes);
         RibbonNode ribbon = new RibbonNode(id, actGen);
         ribbon.setX(strand.getX());
@@ -30,12 +30,19 @@ public abstract class RibbonNodeFactory {
     }
 
 
-    public static ArrayList<RibbonNode> makeRibbonNodesFromSplit(RibbonNode node, int maxId){
+    /**
+     * For every genome contained in a Ribbonnode, make a copy containing only that genome and return it.
+     *
+     * @param node  the node to split.
+     * @param maxId The current max id in the ribbonnode graph (so no double ids get used).
+     * @return A list of ribbon Nodes containing only one genome.
+     */
+    public static ArrayList<RibbonNode> makeRibbonNodesFromSplit(RibbonNode node, int maxId) {
         ArrayList<RibbonNode> result = new ArrayList<>();
-        for(String genome:node.getGenomes()){
+        for (String genome : node.getGenomes()) {
             ArrayList<String> ribbonGenome = new ArrayList<>();
             ribbonGenome.add(genome);
-            RibbonNode ribbon = new RibbonNode(maxId++, ribbonGenome);
+            RibbonNode ribbon = new RibbonNode(++maxId, ribbonGenome);
             ribbon.setX(node.getX());
             ribbon.addStrands(node.getStrands());
             result.add(ribbon);
@@ -43,10 +50,16 @@ public abstract class RibbonNodeFactory {
         return result;
 
 
-
     }
 
-    public static RibbonNode collapseNodes(RibbonNode node1, RibbonNode node2){
+    /**
+     * Collapse node 2 into node 1, and lead all edges the right way.
+     *
+     * @param node1 The node to collapse in to.
+     * @param node2 The node that is collapsed into node1.
+     * @return The collapsed node.
+     */
+    public static RibbonNode collapseNodes(RibbonNode node1, RibbonNode node2) {
 
         node1.addStrands(node2.getStrands());
         for (RibbonEdge edge : node2.getOutEdges()) {

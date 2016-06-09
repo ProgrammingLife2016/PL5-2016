@@ -9,13 +9,14 @@ import java.util.HashMap;
  * A factory to create Ribbon Edges.
  * Created by Matthijs on 7-6-2016.
  */
-public class RibbonEdgeFactory {
+public abstract class RibbonEdgeFactory {
 
 
     /**
      * Static mapping of the color associated with the lineages.
      */
     private static HashMap<String, Color> colorMap = new HashMap<String, Color>();
+
     static {
         colorMap.put("LIN 1", Color.decode("0xed00c3"));
         colorMap.put("LIN 2", Color.decode("0x0000ff"));
@@ -32,12 +33,13 @@ public class RibbonEdgeFactory {
 
     /**
      * Create and return a Ribbonedge.
+     *
      * @param startID The starting id of the edge.
-     * @param endID The end id of the edge.
-     * @param genome The genome to color the edge for.
+     * @param endID   The end id of the edge.
+     * @param genome  The genome to color the edge for.
      * @return The Created edge.
      */
-    public static RibbonEdge createRibbonEdge(int startID, int endID, Genome genome){
+    public static RibbonEdge createRibbonEdge(int startID, int endID, Genome genome) {
         RibbonEdge edge = new RibbonEdge(startID, endID);
         edge.setColor(getColorForGenome(genome));
         return edge;

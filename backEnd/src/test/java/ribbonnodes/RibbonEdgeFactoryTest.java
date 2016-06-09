@@ -3,11 +3,10 @@ package ribbonnodes;
 import genome.Genome;
 import genome.GenomeMetadata;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.awt.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * A class to test the RibbonEdgeFactory.

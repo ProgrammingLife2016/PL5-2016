@@ -2,34 +2,56 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
-import datatree.TempReadWriteTree;
+import genome.Genome;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import parser.Parser;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.fail;
 
 /**
+ * Test class to test the ribbonController.
  * Created by Matthijs on 8-6-2016.
  */
 public class RibbonControllerTest {
 
+    /**
+     * The controller to test.
+     */
     private RibbonController controller;
 
+    /**
+     * Initialize the controller.
+     *
+     * @throws Exception if fail.
+     */
     @Before
     public void setUp() throws Exception {
         GenomeGraph graph = Mockito.mock(GenomeGraph.class);
+        ArrayList<Genome> genomes = new ArrayList<>();
+        genomes.add(new Genome("1"));
+        Mockito.when(graph.getActiveGenomes()).thenReturn(genomes);
         DataTree tree = Mockito.mock(DataTree.class);
         controller = new RibbonController(graph, tree);
 
     }
 
+    /**
+     * Full usability test of the getribbonnodes method to verify that getribbon still works.
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testGetRibbonNodes() throws Exception {
         GenomeGraph genomeGraph = Parser.parse("data/TB10.gfa");
@@ -37,14 +59,14 @@ public class RibbonControllerTest {
         genomeGraph.findStartAndCalculateX();
         ArrayList<String> actGen = new ArrayList<>();
 
-        for(String genId:genomeGraph.getGenomes().keySet()){
-            if(actGen.size()<2){
+        for (String genId : genomeGraph.getGenomes().keySet()) {
+            if (actGen.size() < 2) {
                 actGen.add(genId);
             }
         }
 
         genomeGraph.setGenomesAsActive(actGen);
-        PhylogeneticTree phylogeneticTree= new PhylogeneticTree();
+        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
         DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
@@ -57,8 +79,17 @@ public class RibbonControllerTest {
 
         RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
 
-        ribbonController.getRibbonNodes(0,100000000, 2);
+
+        assertEquals(2794, ribbonController.getRibbonNodes(0, 100000000, 2).size());
+
+
     }
+
+    /**
+     * Test if the collapsing of ribbons works correctly.
+     *
+     * @throws Exception if fail.
+     */
 
     @Test
     public void testCollapseRibbons() throws Exception {
@@ -71,40 +102,151 @@ public class RibbonControllerTest {
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
-        RibbonEdge edge1 = new RibbonEdge(0,1);
-        RibbonEdge edge2 = new RibbonEdge(1,2);
+        RibbonEdge edge1 = new RibbonEdge(0, 1);
+        RibbonEdge edge2 = new RibbonEdge(1, 2);
         node1.addEdge(edge1);
         node2.addEdge(edge1);
         node2.addEdge(edge2);
         node3.addEdge(edge2);
         assertEquals(3, nodes.size());
         controller.collapseRibbons(nodes);
-        assertEquals(1,nodes.size());
+        assertEquals(1, nodes.size());
     }
 
+
+    /**
+     * Test if the getNodewithid works for an id that is contained and one that is not.
+     *
+     * @throws Exception if fail
+     */
     @Test
     public void testGetNodeWithId() throws Exception {
+        ArrayList<String> genomes = new ArrayList<>();
+        genomes.add("1");
+        ArrayList<RibbonNode> nodes = new ArrayList<>();
+        RibbonNode node1 = new RibbonNode(0, genomes);
+        RibbonNode node2 = new RibbonNode(1, genomes);
+        RibbonNode node3 = new RibbonNode(2, genomes);
+        nodes.add(node1);
+        nodes.add(node2);
+        nodes.add(node3);
 
+        assertEquals(controller.getNodeWithId(1, nodes, 0), node2);
+        assertEquals(controller.getNodeWithId(5, nodes, 0), null);
+        assertEquals(controller.getNodeWithId(1, nodes, 5), null);
     }
 
+
+    /**
+     * Assert the nodes are split to one ribbon with common nodes in the middle,
+     * and other ribbons placed at their respective Ys containing only one genome.
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testSpreadYCoordinates() throws Exception {
+        ArrayList<String> actGen = new ArrayList<>();
+        actGen.add("1");
+        actGen.add("2");
+        actGen.add("3");
+        ArrayList<RibbonNode> nodes = new ArrayList<>();
+        RibbonNode node1 = new RibbonNode(0, new ArrayList<>(Arrays.asList("1")));
+        RibbonNode node2 = new RibbonNode(1, new ArrayList<>(Arrays.asList("1", "2")));
+        RibbonNode node3 = new RibbonNode(2, new ArrayList<>(Arrays.asList("1", "2", "3")));
+        nodes.add(node1);
+        nodes.add(node2);
+        nodes.add(node3);
+        for (RibbonNode node : nodes) {
+            assertEquals(node.getY(), 0);
+        }
+        assertEquals(nodes.size(), 3);
+        controller.spreadYCoordinates(nodes, actGen);
+        assertEquals(nodes.size(), 4);
+
+        for (RibbonNode node : nodes) {
+            if (node.getGenomes().size() == actGen.size()) {
+                // Middle nodes contain all genomes.
+                assertEquals(node.getY(), 0);
+            } else if (node.getGenomes().size() == 1) {
+                if (node.getGenomes().get(0).equals("1")) {
+                    assertEquals(node.getY(), 20);
+                } else if (node.getGenomes().get(0).equals("2")) {
+                    assertEquals(node.getY(), -20);
+                }
+
+            } else {
+                fail();
+            }
+        }
 
     }
 
+    /**
+     * Test if the edges are added correctly to the RibbonNodes for a genome.
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testAddEdges() throws Exception {
+        ArrayList<String> genomes = new ArrayList<>();
+        genomes.add("1");
+        ArrayList<RibbonNode> nodes = new ArrayList<>();
+        RibbonNode node1 = new RibbonNode(0, genomes);
+        RibbonNode node2 = new RibbonNode(1, genomes);
+        RibbonNode node3 = new RibbonNode(2, genomes);
+        nodes.add(node1);
+        nodes.add(node2);
+        nodes.add(node3);
 
+        controller.addEdges(nodes);
+
+        assertNotNull(node1.getOutEdge(node1.getId(), node2.getId()));
+        assertNotNull(node2.getInEdge(node1.getId(), node2.getId()));
+        assertNotNull(node2.getOutEdge(node2.getId(), node3.getId()));
+        assertNotNull(node3.getInEdge(node2.getId(), node3.getId()));
     }
 
+    /**
+     * Assert an edge is added to a node or the weight is incremented when the edge already exists.
+     *
+     * @throws Exception if fail.
+     */
     @Test
     public void testAddEdgeReturnEnd() throws Exception {
 
+        ArrayList<RibbonNode> nodes = new ArrayList<>();
+        RibbonNode node1 = new RibbonNode(0, new ArrayList<>(Arrays.asList("1", "2")));
+        RibbonNode node2 = new RibbonNode(1, new ArrayList<>(Arrays.asList("1", "2")));
+        nodes.add(node1);
+        nodes.add(node2);
+
+        assertEquals(node1.getOutEdges().size(), 0);
+        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("1")), node2);
+        assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 1);
+        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("2")), node2);
+        assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 2);
+
+
     }
 
+
+    /**
+     * Assert the next node with a certain genome is returned.
+     *
+     * @throws Exception if fail
+     */
     @Test
     public void testFindNextNodeWithGenome() throws Exception {
 
+        ArrayList<RibbonNode> nodes = new ArrayList<>();
+        RibbonNode node1 = new RibbonNode(0, new ArrayList<>(Arrays.asList("1")));
+        RibbonNode node2 = new RibbonNode(1, new ArrayList<>(Arrays.asList("1", "2")));
+        RibbonNode node3 = new RibbonNode(2, new ArrayList<>(Arrays.asList("1", "2", "3")));
+        nodes.add(node1);
+        nodes.add(node2);
+        nodes.add(node3);
+
+        assertEquals(controller.findNextNodeWithGenome(nodes, new Genome("2"), 1), node3);
     }
 
     @Test
