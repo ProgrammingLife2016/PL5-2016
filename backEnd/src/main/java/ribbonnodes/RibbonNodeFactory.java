@@ -56,21 +56,30 @@ public abstract class RibbonNodeFactory {
     }
 
     /**
-     * Collapse node 2 into node 1, and lead all edges the right way.
+     * Collapse a group of nodes and lead all edges the right way.
      *
-     * @param node1 The node to collapse in to.
-     * @param node2 The node that is collapsed into node1.
+     * @param nodesToCollapse The nodes to collapse in to the first node of the array.
      * @return The collapsed node.
      */
-    public static RibbonNode collapseNodes(RibbonNode node1, RibbonNode node2) {
+    public static RibbonNode collapseNodes(ArrayList<RibbonNode> nodesToCollapse) {
+        RibbonNode node = nodesToCollapse.get(0);
+        if (nodesToCollapse.size() > 1) {
+            for (int i = 0; i < nodesToCollapse.size(); i++) {
+                RibbonNode node2 = nodesToCollapse.get(i);
+                node.addStrands(node2.getStrands());
 
-        node1.addStrands(node2.getStrands());
-        for (RibbonEdge edge : node2.getOutEdges()) {
-            edge.setStartId(node1.getId());
+                if (i == nodesToCollapse.size() - 1) {
+                    for (RibbonEdge edge : node2.getOutEdges()) {
+                        edge.setStartId(node.getId());
+                    }
+                    node.setOutEdges(node2.getOutEdges());
+                }
+
+            }
         }
-        node1.setOutEdges(node2.getOutEdges());
 
-        return node1;
+
+        return node;
     }
 
 

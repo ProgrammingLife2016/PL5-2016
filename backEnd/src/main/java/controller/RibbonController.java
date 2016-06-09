@@ -8,6 +8,7 @@ import ribbonnodes.RibbonEdgeFactory;
 import ribbonnodes.RibbonNode;
 import ribbonnodes.RibbonNodeFactory;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -68,7 +69,7 @@ public class RibbonController {
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds, zoomLevel);
         spreadYCoordinates(result, actIds);
         addEdges(result);
-        //   collapseRibbons(result);
+        collapseRibbons(result);
 
         System.out.println(result.size() + " nodes returned");
         return result;
@@ -90,13 +91,12 @@ public class RibbonController {
 
 
         for (Strand strand : filteredNodes) {
-            if (strand.getSequence().length() > 100 - zoomLevel * 8) {
-                RibbonNode ribbon = RibbonNodeFactory.makeRibbonNodeFromStrand(
-                        maxId++,
-                        strand,
-                        actIds);
-                result.add(ribbon);
-            }
+            RibbonNode ribbon = RibbonNodeFactory.makeRibbonNodeFromStrand(
+                    maxId++,
+                    strand,
+                    actIds);
+            result.add(ribbon);
+
         }
 
         return result;
@@ -108,14 +108,17 @@ public class RibbonController {
      * @param nodes The ribbonNode Graph to collapse.
      */
     protected void collapseRibbons(ArrayList<RibbonNode> nodes) {
+        System.out.println(nodes.size() + " Before collapsing");
         for (int i = 0; i < nodes.size(); i++) {
             RibbonNode node = nodes.get(i);
-            System.out.println(nodes.size() + " Before collapsing");
+            ArrayList<RibbonNode> nodesToCollapse = new ArrayList<>();
+            nodesToCollapse.add(node);
             if (node != null) {
                 while (node.getOutEdges().size() == 1) {
                     RibbonNode other = getNodeWithId(node.getOutEdges().get(0).getEnd(), nodes, i);
                     if (other.getInEdges().size() == 1) {
-                        node = RibbonNodeFactory.collapseNodes(node, other);
+                        nodesToCollapse.add(other);
+                        node = other;
                         nodes.remove(other);
                     } else {
                         break;
@@ -124,6 +127,9 @@ public class RibbonController {
 
                 }
             }
+            System.out.println(nodes.size());
+            RibbonNodeFactory.collapseNodes(nodesToCollapse);
+
 
         }
 

@@ -79,7 +79,7 @@ public class RibbonNodeFactoryTest {
         RibbonEdge edge = new RibbonEdge(1, 3);
         node2.addEdge(edge);
 
-        RibbonNode collapsedNode = RibbonNodeFactory.collapseNodes(node1, node2);
+        RibbonNode collapsedNode = RibbonNodeFactory.collapseNodes(new ArrayList<>(Arrays.asList(node1,node2)));
         assertNotNull(collapsedNode.getOutEdge(0, 3));
         assertEquals(collapsedNode.getStrands().get(0), strand);
         assertEquals(collapsedNode.getX(), node1.getX());
