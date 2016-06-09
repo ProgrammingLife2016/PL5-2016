@@ -37,7 +37,9 @@ public class Mutations {
 	public void computeAllMutations() {
 		HashMap<Integer, Strand> strands = genomeGraph.getStrandNodes();
 		for (Strand strand : strands.values()) {
-			mutationsOnStrand(strand, strands);
+			findIndel(strand, strands);
+			findSNP(strand, strands);
+			findTandemDuplication(strand, strands);
 		}
 	}
 	
@@ -46,7 +48,7 @@ public class Mutations {
 	 * @param start The start strand.
 	 * @param strands All the strands.
 	 */
-	private void findSNP(Strand start, ArrayList<Strand> strands) {
+	private void findSNP(Strand start, HashMap<Integer, Strand> strands) {
 		for (int i = 0; i < start.getEdges().size() - 1; i++) {
 			Strand firstEdgeEnd = strands.get(start.getEdges().get(i).getEnd());
 			if (firstEdgeEnd.getSequence().length() == 1) {
@@ -78,7 +80,7 @@ public class Mutations {
 	 * @param start The start strand.
 	 * @param strands All the strands.
 	 */
-	private void findTandemDuplication(Strand start, ArrayList<Strand> strands) {
+	private void findTandemDuplication(Strand start, HashMap<Integer, Strand> strands) {
 		for (StrandEdge edge : start.getEdges()) {
 			if (start.getSequence().equals(strands.get(edge.getEnd()).getSequence())) {
 				Strand mutated = strands.get(edge.getEnd());
@@ -99,7 +101,7 @@ public class Mutations {
 	 * @param start The start strand.
 	 * @param strands All the strands.
 	 */
-	private void findIndel(Strand start, ArrayList<Strand> strands) {
+	private void findIndel(Strand start, HashMap<Integer, Strand> strands) {
 		for (StrandEdge edge1 : start.getEdges()) {
 			for (StrandEdge edge2 : start.getEdges()) {
 				if (!edge1.equals(edge2)) {
@@ -123,61 +125,6 @@ public class Mutations {
 					}
 				}
 			}
-		}
-	}
-	
-	/**
-	 * Compute mutations that can appear form a start Strand.
-	 * When there is only one edge, there can't be a mutation.
-	 * @param start The start Strand.
-	 * @param strands All the Strands in the graph.
-	 */
-	private void mutationsOnStrand(Strand start, HashMap<Integer, Strand> strands) {
-		if (start.getEdges().size() > 1) {
-			for (int i = 0; i < start.getEdges().size() - 1; i++) {
-				Strand next1 = strands.get(start.getEdges().get(i).getEnd());
-				for (int j = i + 1; j < start.getEdges().size(); j++) {
-					Strand next2 = strands.get(start.getEdges().get(j).getEnd());
-					checkMutation(start, next1, next2);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Checks if there is a mutation from the start Strand using these two edges.
-	 * @param start		The start Strand.
-	 * @param next1		The Strand on the first edge.
-	 * @param next2		The Strand on the second edge.
-	 * @param strands	All the strands.
-	 */
-	private void checkMutation(Strand start, Strand next1, Strand next2) {
-		for (StrandEdge edge1 : next1.getEdges()) {
-			if (edge1.getEnd() == next2.getId()) {
-				ArrayList<String> genomesInBothStrands = new ArrayList<>(start.getGenomes());
-				genomesInBothStrands.retainAll(next2.getGenomes());
-				ArrayList<String> genomesInOriginal = new ArrayList<>(next1.getGenomes());
-				genomesInOriginal.retainAll(genomesInBothStrands);
-				genomesInBothStrands.removeAll(genomesInOriginal);
-				MutationIndel indel = new MutationIndel(MutationType.INDEL, genomesInOriginal,
-						genomesInBothStrands, start, next2, new ArrayList<Strand>());
-				start.addMutation(indel);
-				return;
-			}
-		}
-		for (StrandEdge edge2 : next2.getEdges()) {
-			if (edge2.getEnd() == next1.getId()) {
-				ArrayList<String> genomesInBothStrands = new ArrayList<>(start.getGenomes());
-				genomesInBothStrands.retainAll(next2.getGenomes());
-				ArrayList<String> genomesInMutation = new ArrayList<>(next1.getGenomes());
-				genomesInMutation.retainAll(genomesInBothStrands);
-				genomesInBothStrands.removeAll(genomesInMutation);
-				MutationIndel indel = new MutationIndel(MutationType.INDEL, 
-						genomesInBothStrands, genomesInMutation, 
-						start, next1, new ArrayList<Strand>());
-				start.addMutation(indel);
-				return;
-			} 
 		}
 	}
 }
