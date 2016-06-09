@@ -2,7 +2,7 @@ package ribbonnodes;
 
 import genome.Genome;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 
 /**

@@ -4,7 +4,7 @@ import genome.Genome;
 import genome.GenomeMetadata;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 
 import static org.junit.Assert.assertEquals;
 

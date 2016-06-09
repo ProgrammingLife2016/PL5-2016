@@ -18,7 +18,9 @@ public abstract class RibbonNodeFactory {
      * @param activeGenomes The genomes to filter this node for.
      * @return The created ribbonNode.
      */
-    public static RibbonNode makeRibbonNodeFromStrand(int id, Strand strand, ArrayList<String> activeGenomes) {
+    public static RibbonNode makeRibbonNodeFromStrand(int id,
+                                                      Strand strand,
+                                                      ArrayList<String> activeGenomes) {
 
         ArrayList<String> actGen = strand.getGenomes();
         actGen.retainAll(activeGenomes);
@@ -31,7 +33,8 @@ public abstract class RibbonNodeFactory {
 
 
     /**
-     * For every genome contained in a Ribbonnode, make a copy containing only that genome and return it.
+     * For every genome contained in a Ribbonnode,
+     * make a copy containing only that genome and return it.
      *
      * @param node  the node to split.
      * @param maxId The current max id in the ribbonnode graph (so no double ids get used).

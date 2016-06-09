@@ -89,7 +89,7 @@ public class GenomeGraph {
                 for (StrandEdge edge : strand.getEdges()) {
                     Strand nextStrand = strandNodes.get(edge.getEnd());
                     if (nextStrand.getX() < strand.getX() + 1) {
-                        nextStrand.setX(strand.getX()+strand.getSequence().length() + 1);
+                        nextStrand.setX(strand.getX() + strand.getSequence().length() + 1);
                         nextStrands.add(nextStrand);
                     }
                 }
@@ -158,33 +158,32 @@ public class GenomeGraph {
      * @return the list of unrecognized genomes
      */
     public List<String> setGenomesAsActive(ArrayList<String> ids) {
-    	List<String> unrecognizedGenomes = new ArrayList<String>();
+        List<String> unrecognizedGenomes = new ArrayList<String>();
         this.activeGenomes = new ArrayList<Genome>();
-        for (String genomeId: ids) {
-        	Genome genome = genomes.get(genomeId);
-        	if (genome != null) {
-        		activeGenomes.add(genome);
-        	}
-        	else {
-        		unrecognizedGenomes.add(genomeId);
-        	}
-        	
+        for (String genomeId : ids) {
+            Genome genome = genomes.get(genomeId);
+            if (genome != null) {
+                activeGenomes.add(genome);
+            } else {
+                unrecognizedGenomes.add(genomeId);
+            }
+
         }
         return unrecognizedGenomes;
-        
+
     }
 
-	/**
-	 * Load meta data.
-	 *
-	 * @param metadata the metadata
-	 */
-	public void loadMetaData(HashMap<String, GenomeMetadata> metadata) {
-		
-		for (Genome g: genomes.values()) {
-			g.setMetadata(metadata.get(g.getId()));
-		}
-		
-	}
+    /**
+     * Load meta data.
+     *
+     * @param metadata the metadata
+     */
+    public void loadMetaData(HashMap<String, GenomeMetadata> metadata) {
+
+        for (Genome g : genomes.values()) {
+            g.setMetadata(metadata.get(g.getId()));
+        }
+
+    }
 
 }

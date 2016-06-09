@@ -6,7 +6,6 @@ import genome.Genome;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import parser.Parser;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonEdge;
@@ -17,7 +16,6 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.fail;
 
 /**
@@ -72,11 +70,7 @@ public class RibbonControllerTest {
         DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
         dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size() / 8);
-
-
         dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
-
-
         RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
 
 
@@ -143,6 +137,7 @@ public class RibbonControllerTest {
      *
      * @throws Exception if fail.
      */
+
     @Test
     public void testSpreadYCoordinates() throws Exception {
         ArrayList<String> actGen = new ArrayList<>();
@@ -156,16 +151,11 @@ public class RibbonControllerTest {
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
-        for (RibbonNode node : nodes) {
-            assertEquals(node.getY(), 0);
-        }
-        assertEquals(nodes.size(), 3);
         controller.spreadYCoordinates(nodes, actGen);
         assertEquals(nodes.size(), 4);
 
         for (RibbonNode node : nodes) {
             if (node.getGenomes().size() == actGen.size()) {
-                // Middle nodes contain all genomes.
                 assertEquals(node.getY(), 0);
             } else if (node.getGenomes().size() == 1) {
                 if (node.getGenomes().get(0).equals("1")) {
@@ -178,7 +168,6 @@ public class RibbonControllerTest {
                 fail();
             }
         }
-
     }
 
     /**
@@ -249,6 +238,10 @@ public class RibbonControllerTest {
         assertEquals(controller.findNextNodeWithGenome(nodes, new Genome("2"), 1), node3);
     }
 
+    /**
+     * Test the adding of mutation labels. Empty for now.
+     * @throws Exception if fail.
+     */
     @Test
     public void testAddMutationLabels() throws Exception {
 
