@@ -9,8 +9,7 @@ package mutation;
  */
 public enum MutationType {
 	SNP(true), 
-	DELETION(true), 
-	INSERTION(true), 
+	INDEL(true), 
 	TANDEMDUPLICATION(false), 
 	INTERSPERSEDDUPLICATION(false), 
 	INVERSION(false), 
