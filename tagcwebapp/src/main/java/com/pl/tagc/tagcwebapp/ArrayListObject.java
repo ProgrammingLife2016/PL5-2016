@@ -1,6 +1,7 @@
 package com.pl.tagc.tagcwebapp;
-import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * The Class NodeListObject.

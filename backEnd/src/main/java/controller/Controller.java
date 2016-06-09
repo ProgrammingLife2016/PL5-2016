@@ -3,14 +3,13 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
-import parser.Parser;
 import mutation.Mutations;
+import parser.Parser;
+import phylogenetictree.PhylogeneticTree;
+import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import phylogenetictree.PhylogeneticTree;
-import ribbonnodes.RibbonNode;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -67,10 +66,11 @@ public class Controller implements FrontEndBackEndInterface {
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);
-        ribbonController.setMaxStrandsToReturn(3000);
         Mutations mutations = new Mutations(genomeGraph);
         mutations.computeAllMutations();
         dc = this;
+
+
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
 

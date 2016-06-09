@@ -10,9 +10,9 @@ import java.awt.Color;
  */
 public class RibbonEdge extends Edge {
 
-	/**
-	 * The color of this edge.
-	 */
+    /**
+     * The color of this edge.
+     */
     private Color color;
 
     /**
@@ -32,9 +32,9 @@ public class RibbonEdge extends Edge {
      * @param color The color to average by.
      */
     public void updateColor(Color color) {
-        int newBlue = (int) (this.color.getBlue() + color.getBlue()) / 2;
         int newRed = (int) (this.color.getRed() + color.getRed()) / 2;
         int newGreen = (int) (this.color.getGreen() + color.getGreen()) / 2;
+        int newBlue = (int) (this.color.getBlue() + color.getBlue()) / 2;
 
         this.color = new Color(newRed, newGreen, newBlue);
 
