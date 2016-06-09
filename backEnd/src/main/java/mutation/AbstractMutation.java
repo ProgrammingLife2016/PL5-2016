@@ -5,9 +5,8 @@ import genome.Strand;
 import java.util.ArrayList;
 
 /**
- * 
  * @author Jefrrey Helgers
- * Interface for mutations, the frontend can use this interface.
+ *         Abstract class for mutations, the frontend can use this interface.
  */
 public abstract class AbstractMutation {
 	
@@ -126,8 +125,11 @@ public abstract class AbstractMutation {
 		this.mutatedStrands = mutatedStrands;
 	}
 	
+	/**
+	 * Get the mutation as a string.
+	 * @return The resulting string.
+	 */
 	public String toString() {
 		return mutationType.toString();
 	}
-	
 }

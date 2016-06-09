@@ -3,7 +3,7 @@ package com.pl.tagc.tagcwebapp;
 import ribbonnodes.RibbonEdge;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * The Class RibbonEdgeAdapter.

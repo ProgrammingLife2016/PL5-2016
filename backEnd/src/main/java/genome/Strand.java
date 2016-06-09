@@ -3,9 +3,8 @@ package genome;
  * Created by Matthijs on 24-4-2016.
  */
 
-import org.neo4j.graphdb.Node;
-
 import mutation.AbstractMutation;
+import org.neo4j.graphdb.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;

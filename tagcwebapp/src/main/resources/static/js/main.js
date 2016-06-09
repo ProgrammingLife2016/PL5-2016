@@ -1,5 +1,3 @@
-
-var animationSpeed = 1000;
 var currentHover = null;
 var zoomTimeout = null;
 var url = 'http://localhost:9998/';
@@ -116,9 +114,10 @@ $('document').ready(function() {
             e.preventDefault();
             zoom(e.originalEvent.wheelDelta, 1, Math.floor(currentMousePos.x - $(currentHover).position().left));
         } else if($(currentHover).is('#zoomWindow')) {
-            var ratio = $('#minimap').width() / $('#zoom').width();
+            var ratio = $('#minimap .slider').width() / $('#zoom').width();
             e.preventDefault();
-            zoom(e.originalEvent.wheelDelta, 1, Math.floor((currentMousePos.x - $(currentHover).position().left) * ratio));
+            var left = Math.floor(currentMousePos.x - $(currentHover).position().left) * ratio;
+            zoom(e.originalEvent.wheelDelta, 1, pxToInt($('#minimap .slider').css('left') + left));
             updateZoomValues();
             drawZoom(null);
         }
@@ -166,9 +165,6 @@ $('document').ready(function() {
                     currentHoverNode = node.id;
                     var dialog = $('#nodeDialog');
                     dialog.show().find('.message').html(node.label);
-                    dialog
-                        .css('top', node.y + $(that).position().top - (dialog.height() + 15) +'px')
-                        .css('left', node.x + $(that).position().left - (dialog.width() / 2) +'px');
                 }
                 return false;
             }
@@ -206,7 +202,7 @@ var drawZoom = function(nodes) {
     if (Object.keys(nodes).length > 0) {
         var canvas = $('#zoomWindow canvas')[0];
         draw(nodes, canvas, true, canvas.height / zoomHeight, function(x) {
-            return (x) * ratio;
+            return (x - zoomLeft) * ratio;
         });
     } else {
         var c = $('#zoomWindow canvas')[0];
@@ -221,6 +217,9 @@ var drawZoom = function(nodes) {
  * @returns {number} The max difference in y
  */
 function calcHeight(nodes) {
+    if (nodes == null || nodes.length < 1 || Object.keys(nodes).length < 1) {
+        return 10;
+    }
     var minHeight = nodes[Object.keys(nodes)[0]].y;
     var maxHeight = minHeight;
     $.each(nodes, function(key, node) {
@@ -241,6 +240,9 @@ var drawMinimap = function(nodes) {
     } else {
         minimapNodes = nodes;
         minimapHeight = calcHeight(nodes);
+    }
+    if (nodes == null || Object.keys(nodes).length < 1) {
+        return;
     }
     var ratio = $('#minimap').width() / nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
 
@@ -311,6 +313,9 @@ function zoom(direction, zoomAmount, xMousePos) {
     var zoomWindow = $('#zoomWindow');
     var maxWidth = minimap.width();
     var currentWidth = slider.width();
+    if (zoomWidth < 10) {
+        zoomAmount /= 11 - zoomWidth;
+    }
     zoomWidth += (direction > 0)?-1*zoomAmount:zoomAmount;
     zoomWidth = Math.max(0.1, Math.min(zoomWidth, 100));
 
@@ -361,13 +366,16 @@ function updatezoomWindow()
 
 function updateZoomValues()
 {
-        var slider = $('#minimap .slider');
-        var totalWidth = $('#minimap').width();
-        var sliderLeft = pxToInt(slider.css('left'));
-        var xWidth = minimapNodes[Object.keys(minimapNodes)[Object.keys(minimapNodes).length - 1]].x;
-        zoomLeft = Math.max(0, Math.floor(sliderLeft / totalWidth * xWidth));
-        zoomRight =  Math.floor((sliderLeft + slider.width()) / totalWidth * xWidth);
-        return Math.round(totalWidth / slider.width());
+    if (Object.keys(minimapNodes).length < 1) {
+        return;
+    }
+    var slider = $('#minimap .slider');
+    var totalWidth = $('#minimap').width();
+    var sliderLeft = pxToInt(slider.css('left'));
+    var xWidth = minimapNodes[Object.keys(minimapNodes)[Object.keys(minimapNodes).length - 1]].x;
+    zoomLeft = Math.floor(sliderLeft / totalWidth * xWidth);
+    zoomRight =  Math.floor((sliderLeft + slider.width()) / totalWidth * xWidth);
+    return Math.round(totalWidth / slider.width());
 }
 
 // This function translates from one representation of a bounding box in gui coordinates to
@@ -396,15 +404,7 @@ function parseNodeData(nodes) {
     var left = nodes[0].x;
 
     $.each(nodes, function(key, value) {
-        result[value.id] = {
-            x: value.x - zoomLeft,
-            y: value.y,
-            id: value.id,
-            label: value.label,
-            strands: value.strands,
-            edges: value.edges,
-            genomes: value.genomes
-        }
+        result[value.id] = value;
     });
     return result;
 }

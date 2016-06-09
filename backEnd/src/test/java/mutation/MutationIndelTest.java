@@ -36,7 +36,7 @@ public class MutationIndelTest {
 		Strand mutate = Mockito.mock(Strand.class);
 		mutatedStrands = new ArrayList<>();
 		mutatedStrands.add(mutate);
-		mutation = new MutationIndel(MutationType.DELETION, 
+		mutation = new MutationIndel(MutationType.INDEL, 
 				reference, other, start, end, mutatedStrands);
 	}
 
@@ -64,6 +64,14 @@ public class MutationIndelTest {
 	public void testWrongType() {
 		new MutationIndel(MutationType.TRANSLOCATION, reference, 
 				other, start, end, mutatedStrands);
+	}
+	
+	/**
+	 * Test getting the mutation as a String.
+	 */
+	@Test
+	public void testToString() {
+		assertEquals(mutation.toString(), MutationType.INDEL.toString());
 	}
 
 }

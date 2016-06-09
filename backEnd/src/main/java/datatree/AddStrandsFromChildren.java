@@ -1,10 +1,10 @@
 package datatree;
 
+import genome.Strand;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;
-
-import genome.Strand;
 
 /**
  * 
