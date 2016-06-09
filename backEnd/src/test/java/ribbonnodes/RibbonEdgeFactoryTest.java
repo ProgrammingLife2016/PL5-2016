@@ -16,6 +16,7 @@ public class RibbonEdgeFactoryTest {
 
     /**
      * Test the creation of a node with metadata.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -25,14 +26,15 @@ public class RibbonEdgeFactoryTest {
         genome.setMetadata(metadata);
         RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(0, 1, genome);
 
-        assertEquals(edge.getStart(),0);
-        assertEquals(edge.getEnd(),1);
+        assertEquals(edge.getStart(), 0);
+        assertEquals(edge.getEnd(), 1);
         assertEquals(edge.getColor(), Color.decode("0xed00c3"));
 
     }
 
     /**
      * Test the creation of a node that starts with G.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -40,14 +42,15 @@ public class RibbonEdgeFactoryTest {
         Genome genome = new Genome("G");
         RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(0, 1, genome);
 
-        assertEquals(edge.getStart(),0);
-        assertEquals(edge.getEnd(),1);
+        assertEquals(edge.getStart(), 0);
+        assertEquals(edge.getEnd(), 1);
         assertEquals(edge.getColor(), Color.decode("0xff0000"));
 
     }
 
     /**
      * Test the creation of a node that has no metadata (broken data).
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -55,9 +58,9 @@ public class RibbonEdgeFactoryTest {
         Genome genome = new Genome("broken");
         RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(0, 1, genome);
 
-        assertEquals(edge.getStart(),0);
-        assertEquals(edge.getEnd(),1);
-        assertEquals(edge.getColor(), new Color(100,100,100));
+        assertEquals(edge.getStart(), 0);
+        assertEquals(edge.getEnd(), 1);
+        assertEquals(edge.getColor(), new Color(100, 100, 100));
 
     }
 }

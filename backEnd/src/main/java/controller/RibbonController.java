@@ -158,7 +158,8 @@ public class RibbonController {
      * @param nodes         The nodes to calculate the Y for.
      * @param activeGenomes The active genomes to spread out.
      */
-    protected void spreadYCoordinates(ArrayList<RibbonNode> nodes, ArrayList<String> activeGenomes) {
+    protected void spreadYCoordinates(ArrayList<RibbonNode> nodes,
+                                      ArrayList<String> activeGenomes) {
         ArrayList<RibbonNode> splitNodes = new ArrayList<>();
         ArrayList<RibbonNode> newNodes = new ArrayList<>();
         for (RibbonNode node : nodes) {

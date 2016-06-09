@@ -1,15 +1,10 @@
 package controller;
 
-import datatree.DataNode;
 import datatree.DataTree;
 import genome.Genome;
-import org.apache.velocity.tools.config.Data;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import parser.Parser;
-import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
