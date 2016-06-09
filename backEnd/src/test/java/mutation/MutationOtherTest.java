@@ -70,7 +70,7 @@ public class MutationOtherTest {
 	 */
 	@Test(expected = UnsupportedOperationException.class)
 	public void testWrongType() {
-		new MutationOther(MutationType.INSERTION, reference, 
+		new MutationOther(MutationType.INDEL, reference, 
 				other, start, mutatedStrands);
 	}
 

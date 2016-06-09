@@ -95,6 +95,38 @@ public class Mutations {
 	}
 	
 	/**
+	 * Check if there is an indel mutation starting from the start strand.
+	 * @param start The start strand.
+	 * @param strands All the strands.
+	 */
+	private void findIndel(Strand start, ArrayList<Strand> strands) {
+		for (StrandEdge edge1 : start.getEdges()) {
+			for (StrandEdge edge2 : start.getEdges()) {
+				if (!edge1.equals(edge2)) {
+					Strand end = strands.get(edge1.getEnd());
+					Strand mutated = strands.get(edge2.getEnd());
+					ArrayList<String> reference = new ArrayList<>(start.getGenomes());
+					reference.retainAll(end.getGenomes());
+					for (StrandEdge edge3 : strands.get(edge2.getEnd()).getEdges()) {
+						if (edge3.getEnd() == end.getId()) {
+							ArrayList<String> other = new ArrayList<>(mutated.getGenomes());
+							other.removeAll(reference);
+							reference.removeAll(other);
+							start.addMutation(new MutationIndel(
+													MutationType.INDEL,
+													reference,
+													other,
+													start,
+													end,
+													new ArrayList<>(Arrays.asList(mutated))));	
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Compute mutations that can appear form a start Strand.
 	 * When there is only one edge, there can't be a mutation.
 	 * @param start The start Strand.
@@ -127,7 +159,7 @@ public class Mutations {
 				ArrayList<String> genomesInOriginal = new ArrayList<>(next1.getGenomes());
 				genomesInOriginal.retainAll(genomesInBothStrands);
 				genomesInBothStrands.removeAll(genomesInOriginal);
-				MutationIndel indel = new MutationIndel(MutationType.DELETION, genomesInOriginal,
+				MutationIndel indel = new MutationIndel(MutationType.INDEL, genomesInOriginal,
 						genomesInBothStrands, start, next2, new ArrayList<Strand>());
 				start.addMutation(indel);
 				return;
@@ -140,7 +172,7 @@ public class Mutations {
 				ArrayList<String> genomesInMutation = new ArrayList<>(next1.getGenomes());
 				genomesInMutation.retainAll(genomesInBothStrands);
 				genomesInBothStrands.removeAll(genomesInMutation);
-				MutationIndel indel = new MutationIndel(MutationType.INSERTION, 
+				MutationIndel indel = new MutationIndel(MutationType.INDEL, 
 						genomesInBothStrands, genomesInMutation, 
 						start, next1, new ArrayList<Strand>());
 				start.addMutation(indel);
