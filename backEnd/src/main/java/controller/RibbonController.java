@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Class that calculates and returns the Ribbons and Edges to be drawn on the screen,
  * based on the data stored in genomeGraph and dataTree.
  */
-public final class RibbonController {
+public class RibbonController {
 
     /**
      * The graph that contains the geographic information of the stands.

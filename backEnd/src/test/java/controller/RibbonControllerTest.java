@@ -3,8 +3,10 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import genome.Genome;
+import org.apache.velocity.tools.config.Data;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import parser.Parser;
 import phylogenetictree.PhylogeneticTree;
@@ -30,51 +32,51 @@ public class RibbonControllerTest {
     private RibbonController controller;
 
     /**
+     * The DataTree mock.
+     */
+    private DataTree tree;
+
+    /**
+     * The graph Mock.
+     */
+    private GenomeGraph graph;
+
+    /**
      * Initialize the controller.
      *
      * @throws Exception if fail.
      */
     @Before
     public void setUp() throws Exception {
-        GenomeGraph graph = Mockito.mock(GenomeGraph.class);
+        graph = Mockito.mock(GenomeGraph.class);
         ArrayList<Genome> genomes = new ArrayList<>();
         genomes.add(new Genome("1"));
         Mockito.when(graph.getActiveGenomes()).thenReturn(genomes);
-        DataTree tree = Mockito.mock(DataTree.class);
+        tree = Mockito.mock(DataTree.class);
         controller = new RibbonController(graph, tree);
 
     }
 
     /**
-     * Full usability test of the getribbonnodes method to verify that getribbon still works.
+     * Test that getRibbonNodes calls the right methods.
      *
      * @throws Exception if fail.
      */
     @Test
     public void testGetRibbonNodes() throws Exception {
-        GenomeGraph genomeGraph = Parser.parse("data/TB10.gfa");
-        genomeGraph.generateGenomes();
-        genomeGraph.findStartAndCalculateX();
-        ArrayList<String> actGen = new ArrayList<>();
-
-        for (String genId : genomeGraph.getGenomes().keySet()) {
-            if (actGen.size() < 2) {
-                actGen.add(genId);
-            }
-        }
-
-        genomeGraph.setGenomesAsActive(actGen);
-        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
-                new ArrayList<>(genomeGraph.getGenomes().keySet()));
-        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
-                null, 0));
-        dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size() / 8);
-        dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
-        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
-
-
-        assertEquals(2794, ribbonController.getRibbonNodes(0, 100000000, 2).size());
+        RibbonController testController = Mockito.mock(RibbonController.class);
+        Mockito.doCallRealMethod().when(testController).getRibbonNodes(0, 1000, 10);
+        testController.getRibbonNodes(0, 1000, 10);
+        Mockito.verify(graph, Mockito.times(1)).getActiveGenomes();
+        Mockito.verify(tree, Mockito.times(1)).getStrands(0, 1000, graph.getActiveGenomes(), 10);
+        Mockito.verify(testController, Mockito.times(1)).createNodesFromStrands(new ArrayList<>(),
+                new ArrayList<>(Arrays.asList("1")),
+                10);
+        Mockito.verify(testController, Mockito.times(1)).spreadYCoordinates(
+                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList("1")));
+        Mockito.verify(testController, Mockito.times(1)).addEdges(new ArrayList<>());
+        //  Mockito.verify(testController, Mockito.times(1)).collapseRibbons(new ArrayList<>());
 
 
     }
@@ -240,6 +242,7 @@ public class RibbonControllerTest {
 
     /**
      * Test the adding of mutation labels. Empty for now.
+     *
      * @throws Exception if fail.
      */
     @Test
