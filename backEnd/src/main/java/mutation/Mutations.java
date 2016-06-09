@@ -50,7 +50,7 @@ public class Mutations {
 		for (int i = 0; i < start.getEdges().size() - 1; i++) {
 			Strand firstEdgeEnd = strands.get(start.getEdges().get(i).getEnd());
 			if (firstEdgeEnd.getSequence().length() == 1) {
-				for (int j = i + 1; j < start.getEdges().size(); i++) {
+				for (int j = i + 1; j < start.getEdges().size(); j++) {
 					Strand secondEdgeEnd = strands.get(start.getEdges().get(j).getEnd());
 					if (secondEdgeEnd.getSequence().length() == 1) {
 						for (StrandEdge edge1 : firstEdgeEnd.getEdges()) {
@@ -80,7 +80,7 @@ public class Mutations {
 	 */
 	private void findTandemDuplication(Strand start, ArrayList<Strand> strands) {
 		for (StrandEdge edge : start.getEdges()) {
-			if(start.getSequence().equals(strands.get(edge.getEnd()).getSequence())) {
+			if (start.getSequence().equals(strands.get(edge.getEnd()).getSequence())) {
 				Strand mutated = strands.get(edge.getEnd());
 				ArrayList<String> reference = new ArrayList<>(start.getGenomes());
 				reference.removeAll(mutated.getGenomes());

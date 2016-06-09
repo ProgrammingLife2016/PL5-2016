@@ -65,5 +65,13 @@ public class MutationIndelTest {
 		new MutationIndel(MutationType.TRANSLOCATION, reference, 
 				other, start, end, mutatedStrands);
 	}
+	
+	/**
+	 * Test getting the mutation as a String.
+	 */
+	@Test
+	public void testToString() {
+		assertEquals(mutation.toString(), MutationType.INDEL.toString());
+	}
 
 }

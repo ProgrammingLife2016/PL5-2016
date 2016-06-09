@@ -126,6 +126,10 @@ public abstract class AbstractMutation {
 		this.mutatedStrands = mutatedStrands;
 	}
 	
+	/**
+	 * Get the mutation as a string.
+	 * @return The resulting string.
+	 */
 	public String toString() {
 		return mutationType.toString();
 	}
