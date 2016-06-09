@@ -1,10 +1,8 @@
 package genome;
 import genome.GraphSearcher.SearchType;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-//import static GraphSearcher.SearchType.*;
 /**
  * The Class GenomeGraph.
  */
@@ -141,34 +139,33 @@ public class GenomeGraph {
      * @return the list of unrecognized genomes
      */
     public List<String> setGenomesAsActive(ArrayList<String> ids) {
-    	List<String> unrecognizedGenomes = new ArrayList<String>();
+        List<String> unrecognizedGenomes = new ArrayList<String>();
         this.activeGenomes = new ArrayList<Genome>();
-        for (String genomeId: ids) {
-        	Genome genome = genomes.get(genomeId);
-        	if (genome != null) {
-        		activeGenomes.add(genome);
-        	}
-        	else {
-        		unrecognizedGenomes.add(genomeId);
-        	}
-        	
+        for (String genomeId : ids) {
+            Genome genome = genomes.get(genomeId);
+            if (genome != null) {
+                activeGenomes.add(genome);
+            } else {
+                unrecognizedGenomes.add(genomeId);
+            }
+
         }
         return unrecognizedGenomes;
-        
+
     }
 
-	/**
-	 * Load meta data.
-	 *
-	 * @param metadata the metadata
-	 */
-	public void loadMetaData(HashMap<String, GenomeMetadata> metadata) {
-		
-		for (Genome g: genomes.values()) {
-			g.setMetadata(metadata.get(g.getId()));
-		}
-		
-	}
+    /**
+     * Load meta data.
+     *
+     * @param metadata the metadata
+     */
+    public void loadMetaData(HashMap<String, GenomeMetadata> metadata) {
+
+        for (Genome g : genomes.values()) {
+            g.setMetadata(metadata.get(g.getId()));
+        }
+
+    }
 
 	/**
 	 * Gets the strand.

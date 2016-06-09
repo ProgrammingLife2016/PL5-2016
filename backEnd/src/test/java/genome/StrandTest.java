@@ -2,12 +2,11 @@ package genome;
 
 import java.util.Arrays;
 import java.util.HashSet;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 
 /**
  * Created by Matthijs on 24-4-2016.

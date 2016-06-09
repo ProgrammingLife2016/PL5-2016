@@ -12,12 +12,13 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 //The Java class will be hosted at the URI path "/api"
+
 /**
  * The Class RestApi. The Java class will be hosted at the URI path "/api". The
  * annotation @GET in the class means the Java method will process HTTP GET
  * request. The annotation @Produces("application/json") means the method will
  * produce content identified by the MIME Media type "application/json".
- * 
+ *
  * @author Kasper Grabarz
  */
 

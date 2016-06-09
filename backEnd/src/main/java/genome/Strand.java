@@ -5,6 +5,7 @@ package genome;
  */
 
 import mutation.AbstractMutation;
+import org.neo4j.graphdb.Node;
 
 import java.util.ArrayList;
 import java.util.HashSet;
