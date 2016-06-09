@@ -40,10 +40,11 @@ public class Strand {
 	 */
 	private String referenceGenome;
 
-	/**
-	 * Coordinate of this node in the refr genome.
-	 */
-	private int referenceCoordinate;
+	/** The start coordinate. */
+	private int startCoordinate;
+	
+	/** The end coordinate. */
+	private int endCoordinate;
 
 	/**
 	 * Amount of genomes that contain this node.
@@ -81,16 +82,17 @@ public class Strand {
 	 *            The genomes id's passing through.
 	 * @param referenceGenome
 	 *            The reference genome id.
-	 * @param referenceCoordinate
+	 * @param startCoordinate
 	 *            the reference coordinate.
 	 */
 	public Strand(int id, String sequence, HashSet<String> newGenomes, String referenceGenome,
-			int referenceCoordinate) {
+			int startCoordinate) {
 		this.id = id;
 		this.sequence = sequence;
 		genomes = newGenomes;
 		this.referenceGenome = referenceGenome;
-		this.referenceCoordinate = referenceCoordinate;
+		this.startCoordinate = startCoordinate;
+		this.endCoordinate = startCoordinate + sequence.length() - 1;
 		this.weight = genomes.size();
 		this.outgoingEdges = new ArrayList<>();
 		this.incomingEdges = new ArrayList<>();
@@ -177,24 +179,6 @@ public class Strand {
 		this.referenceGenome = referenceGenome;
 	}
 
-	/**
-	 * Get the reference coordinate.
-	 *
-	 * @return The reference coordinate.
-	 */
-	public int getReferenceCoordinate() {
-		return referenceCoordinate;
-	}
-
-	/**
-	 * Set the reference coordinate.
-	 *
-	 * @param referenceCoordinate
-	 *            The reference coordinate.
-	 */
-	public void setReferenceCoordinate(int referenceCoordinate) {
-		this.referenceCoordinate = referenceCoordinate;
-	}
 
 	/**
 	 * Set the node id.
@@ -388,5 +372,41 @@ public class Strand {
 		}
 		return strands;
 		
+	}
+
+	/**
+	 * Gets the start coordinate.
+	 *
+	 * @return the start coordinate
+	 */
+	public int getStartCoordinate() {
+		return startCoordinate;
+	}
+
+	/**
+	 * Sets the start coordinate.
+	 *
+	 * @param startCoordinate the new start coordinate
+	 */
+	public void setStartCoordinate(int startCoordinate) {
+		this.startCoordinate = startCoordinate;
+	}
+
+	/**
+	 * Gets the end coordinate.
+	 *
+	 * @return the end coordinate
+	 */
+	public int getEndCoordinate() {
+		return endCoordinate;
+	}
+
+	/**
+	 * Sets the end coordinate.
+	 *
+	 * @param endCoordinate the new end coordinate
+	 */
+	public void setEndCoordinate(int endCoordinate) {
+		this.endCoordinate = endCoordinate;
 	}
 }

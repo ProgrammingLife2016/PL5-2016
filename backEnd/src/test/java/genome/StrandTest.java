@@ -75,9 +75,9 @@ public class StrandTest {
      */
     @Test
     public void testGetReferenceCoordinate() {
-        assertEquals(strand.getReferenceCoordinate(), 0);
-        strand.setReferenceCoordinate(10);
-        assertEquals(strand.getReferenceCoordinate(), 10);
+        assertEquals(strand.getStartCoordinate(), 0);
+        strand.setStartCoordinate(10);
+        assertEquals(strand.getStartCoordinate(), 10);
     }
 
     /**

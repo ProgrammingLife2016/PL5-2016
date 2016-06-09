@@ -2,10 +2,6 @@ package genome;
 
 import java.util.Arrays;
 import java.util.HashSet;
-
-import genome.GenomeGraph;
-import genome.Strand;
-
 import org.junit.Before;
 import org.junit.Test;
 
