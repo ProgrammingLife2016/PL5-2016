@@ -75,15 +75,15 @@ public class RibbonControllerTest {
      *
      * @throws Exception if fail.
      */
-    @Test
-    public void testGetRibbonNodes() throws Exception {
-
-        assertEquals(1, controller.getRibbonNodes(0, 1, 2).size());
-        assertEquals(1, controller.getRibbonNodes(0, 1, 0).size());
-        assertEquals(1, controller.getRibbonNodes(100, 1000, 0).size());
-
-
-    }
+//    @Test
+//    public void testGetRibbonNodes() throws Exception {
+//
+//        assertEquals(1, controller.getRibbonNodes(0, 1, 2).size());
+//        assertEquals(1, controller.getRibbonNodes(0, 1, 0).size());
+//        assertEquals(1, controller.getRibbonNodes(100, 1000, 0).size());
+//
+//
+//    }
 
 
 }
