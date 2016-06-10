@@ -22,13 +22,14 @@ public class RibbonNodeAdapter extends XmlAdapter<AdaptedRibbonNode, RibbonNode>
      */
     @Override
     public AdaptedRibbonNode marshal(RibbonNode node) throws Exception {
-    	AdaptedRibbonNode adaptedNode = new AdaptedRibbonNode();
-    	adaptedNode.setLabel(node.getLabel());
-    	adaptedNode.setId(node.getId());
-    	adaptedNode.setGenomes(node.getGenomes());
+        AdaptedRibbonNode adaptedNode = new AdaptedRibbonNode();
+        adaptedNode.setLabel(node.getLabel());
+        adaptedNode.setId(node.getId());
+        adaptedNode.setGenomes(node.getGenomes());
         adaptedNode.setEdges(node.getOutEdges());
         adaptedNode.setX(node.getX());
         adaptedNode.setY(node.getY());
+        adaptedNode.setVisible(node.isVisible());
         return adaptedNode;
     }
 

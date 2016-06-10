@@ -59,27 +59,29 @@ public abstract class RibbonNodeFactory {
      * Collapse a group of nodes and lead all edges the right way.
      *
      * @param nodesToCollapse The nodes to collapse in to the first node of the array.
-     * @return The collapsed node.
+     * @return The (Empty) endnode of the collapsed ribbon part, null if no collapsing was done.
      */
     public static RibbonNode collapseNodes(ArrayList<RibbonNode> nodesToCollapse) {
-        RibbonNode node = nodesToCollapse.get(0);
+        RibbonNode startNode = nodesToCollapse.get(0);
+        RibbonNode oldEnd = nodesToCollapse.get(nodesToCollapse.size() - 1);
+        RibbonNode newEnd = new RibbonNode(oldEnd.getId(),
+                startNode.getGenomes());
         if (nodesToCollapse.size() > 1) {
-            for (int i = 0; i < nodesToCollapse.size(); i++) {
+            for (int i = 1; i < nodesToCollapse.size(); i++) {
                 RibbonNode node2 = nodesToCollapse.get(i);
-                node.addStrands(node2.getStrands());
-
-                if (i == nodesToCollapse.size() - 1) {
-                    for (RibbonEdge edge : node2.getOutEdges()) {
-                        edge.setStartId(node.getId());
-                    }
-                    node.setOutEdges(node2.getOutEdges());
-                }
+                startNode.addStrands(node2.getStrands());
 
             }
+            newEnd.setX(startNode.getX()+(int)(startNode.getLabel().length()*0.8));
+            newEnd.setY(oldEnd.getY());
+            newEnd.setOutEdges(nodesToCollapse.get(nodesToCollapse.size() - 1).getOutEdges());
+            startNode.getOutEdges().get(0).setEndId(newEnd.getId());
+            newEnd.setVisible(false);
+            return newEnd;
         }
 
 
-        return node;
+        return null;
     }
 
 

@@ -19,7 +19,7 @@ public interface FrontEndBackEndInterface {
      * @param zoomLevel The zoomLevel to calculate the Nodes for.
      * @return A list of RibbonNodes to draw.
      */
-    ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel);
+    ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel, boolean isMiniMap);
 
     /**
      * Sets the active genomes.
