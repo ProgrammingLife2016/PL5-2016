@@ -76,13 +76,19 @@ public class RibbonNodeFactoryTest {
         String[] genomes = {"1", "2"};
         Strand strand = new Strand(0, "asdf", genomes, "1", 0);
         node2.addStrand(strand);
-        RibbonEdge edge = new RibbonEdge(1, 3);
+        RibbonEdge edge = new RibbonEdge(0, 1);
+        node1.addEdge(edge);
         node2.addEdge(edge);
 
-        RibbonNode collapsedNode = RibbonNodeFactory.collapseNodes(node1, node2);
-        assertNotNull(collapsedNode.getOutEdge(0, 3));
-        assertEquals(collapsedNode.getStrands().get(0), strand);
-        assertEquals(collapsedNode.getX(), node1.getX());
+        RibbonEdge edge2 = new RibbonEdge(1, 2);
+        node2.addEdge(edge2);
+
+
+
+        RibbonNode collapsedNode = RibbonNodeFactory.collapseNodes(new ArrayList<>(Arrays.asList(node1,node2)));
+        assertNotNull(collapsedNode.getOutEdge(0, 2));
+        assertEquals(node1.getStrands().get(0), strand);
+        assertEquals(collapsedNode.getX(), (int)(node1.getX()+node1.getLabel().length()*0.8));
 
     }
 }
