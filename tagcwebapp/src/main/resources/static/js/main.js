@@ -61,9 +61,10 @@ function screenResize() {
         if (treeRedrawTimeout) {
             clearTimeout(treeRedrawTimeout);
         }
-        treeRedrawTimeout = setTimeout(function () {
-            //drawTree(null); //Update the phylogenyTree
-        }, 1500);
+        treeRedrawTimeout = setTimeout(function() {
+            resizePhyloTree();
+        }, 500);
+
     }
 }
 
