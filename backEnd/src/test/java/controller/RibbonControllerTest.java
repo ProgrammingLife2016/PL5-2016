@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Matchers;
 
+import parser.Parser;
+import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
@@ -66,7 +68,7 @@ public class RibbonControllerTest {
 //        genomeGraph.generateGenomes();
 //        genomeGraph.findStartAndCalculateX();
 //        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
-//         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
+//        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
 //                new ArrayList<>(genomeGraph.getGenomes().keySet()));
 //        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
 //                null, 0));
@@ -80,8 +82,8 @@ public class RibbonControllerTest {
 //        }
 //        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
 //
-//        genomeGraph.setGenomesAsActive(new ArrayList<>(Arrays.asList("TKK_03_0059","TKK-01-0058")));
-//        ribbonController.getRibbonNodes(0,10000000,1,true);
+//        genomeGraph.setGenomesAsActive(new ArrayList<>(Arrays.asList("TKK_03_0059", "TKK-01-0058")));
+//        ribbonController.getRibbonNodes(0, 10000000, 1, true);
 //    }
 
     /**
