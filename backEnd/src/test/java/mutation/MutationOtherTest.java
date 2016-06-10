@@ -1,12 +1,14 @@
 package mutation;
 
 import genome.Strand;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,8 +21,8 @@ public class MutationOtherTest {
 
 	private MutationOther mutation;
 	private MutationType type;
-	private ArrayList<String> reference;
-	private ArrayList<String> other;
+	private HashSet<String> reference;
+	private HashSet<String> other;
 	private Strand start;
 	private ArrayList<Strand> mutatedStrands;
 	
@@ -29,8 +31,8 @@ public class MutationOtherTest {
 	 */
 	@Before
 	public void setUp() {
-		reference = new ArrayList<>(Arrays.asList("Genome1"));
-		other = new ArrayList<>(Arrays.asList("Genome2"));
+		reference = new HashSet<String>(Arrays.asList("Genome1"));
+		other = new HashSet<String>(Arrays.asList("Genome2"));
 		start = Mockito.mock(Strand.class);
 		Strand mutate = Mockito.mock(Strand.class);
 		mutatedStrands = new ArrayList<>();
@@ -70,7 +72,7 @@ public class MutationOtherTest {
 	 */
 	@Test(expected = UnsupportedOperationException.class)
 	public void testWrongType() {
-		new MutationOther(MutationType.INSERTION, reference, 
+		new MutationOther(MutationType.INDEL, reference, 
 				other, start, mutatedStrands);
 	}
 

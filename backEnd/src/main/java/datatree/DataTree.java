@@ -78,13 +78,11 @@ public class DataTree extends TreeStructure<DataNode> {
      */
     public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes) {
         ArrayList<Strand> result = new ArrayList<>();
-        ArrayList<Integer> resultIDs = new ArrayList<>();
 
         for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
                 if (strand.getX() > xMin - 10000 && strand.getX() < xMax + 10000) {
                     result.add(strand);
-                    resultIDs.add(strand.getId());
                 }
             }
 

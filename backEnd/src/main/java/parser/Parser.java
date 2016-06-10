@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -231,35 +230,6 @@ public class Parser {
     }
 
     /**
-     * Get all the genomes that are in the file.
-     *
-     * @param file The file.
-     * @return The genomes.
-     */
-    public static ArrayList<String> getPresentGenomes(String file) {
-        BufferedReader reader;
-        String line = null;
-        try {
-            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
-            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            reader.readLine();
-            line = reader.readLine();
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (line != null) {
-            String[] splitted = line.split("\t");
-            String[] genomes = splitted[1].split(";");
-
-            genomes = Arrays.copyOfRange(genomes, 1, genomes.length);
-            return new ArrayList<String>(Arrays.asList(genomes));
-        }
-        return null;
-    }
-
-    /**
      * Get the content from the phylogenetic tree.
      *
      * @param file the path of the file
@@ -322,7 +292,7 @@ public class Parser {
     public static HashMap<String, GenomeMetadata> parseGenomeMetadata(String filePath) {
         HashMap<String, GenomeMetadata> hmap = new HashMap<String, GenomeMetadata>();
         InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
-        CSVReader reader = new CSVReader(new InputStreamReader(in), ';');
+        CSVReader reader = new CSVReader(new InputStreamReader(in, StandardCharsets.UTF_8), ';');
         String[] nextLine;
         try {
             while ((nextLine = reader.readNext()) != null) {

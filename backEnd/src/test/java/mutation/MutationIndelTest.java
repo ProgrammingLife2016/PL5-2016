@@ -1,12 +1,14 @@
 package mutation;
 
 import genome.Strand;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 public class MutationIndelTest {
 
 	private MutationIndel mutation;
-	private ArrayList<String> reference;
-	private ArrayList<String> other;
+	private HashSet<String> reference;
+	private HashSet<String> other;
 	private Strand start;
 	private Strand end;
 	private ArrayList<Strand> mutatedStrands;
@@ -29,14 +31,14 @@ public class MutationIndelTest {
 	 */
 	@Before
 	public void setUp() {
-		reference = new ArrayList<>(Arrays.asList("Genome1"));
-		other = new ArrayList<>(Arrays.asList("Genome2"));
+		reference = new HashSet<String>(Arrays.asList("Genome1"));
+		other = new HashSet<String>(Arrays.asList("Genome2"));
 		start = Mockito.mock(Strand.class);
 		end = Mockito.mock(Strand.class);
 		Strand mutate = Mockito.mock(Strand.class);
 		mutatedStrands = new ArrayList<>();
 		mutatedStrands.add(mutate);
-		mutation = new MutationIndel(MutationType.DELETION, 
+		mutation = new MutationIndel(MutationType.INDEL, 
 				reference, other, start, end, mutatedStrands);
 	}
 
@@ -45,7 +47,7 @@ public class MutationIndelTest {
 	 */
 	@Test
 	public void testGetReference() {
-		assertEquals(mutation.getReferenceGenome(), reference);
+		assertEquals(mutation.getReferenceGenomes(), reference);
 	}
 	
 	/**
@@ -64,6 +66,14 @@ public class MutationIndelTest {
 	public void testWrongType() {
 		new MutationIndel(MutationType.TRANSLOCATION, reference, 
 				other, start, end, mutatedStrands);
+	}
+	
+	/**
+	 * Test getting the mutation as a String.
+	 */
+	@Test
+	public void testToString() {
+		assertEquals(mutation.toString(), MutationType.INDEL.toString());
 	}
 
 }

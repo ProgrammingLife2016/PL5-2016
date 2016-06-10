@@ -29,10 +29,10 @@ public final class BackEndAdapter implements BackEndInterface {
 	}
 	
 	@Override
-	public Response getRibbonNodes(int minX, int maxX, int zoomLevel) {
+	public Response getRibbonNodes(int minX, int maxX, int zoomLevel, boolean isMiniMap) {
 		NodeListObject nodeList =
 				new NodeListObject(new CopyOnWriteArrayList<>(
-						controller.getRibbonNodes(minX, maxX, zoomLevel)));
+						controller.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap)));
 		return Response.ok() //200
 				.entity(nodeList)
 				.header("Access-Control-Allow-Origin", "*")

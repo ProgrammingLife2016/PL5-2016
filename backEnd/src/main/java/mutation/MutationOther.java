@@ -3,6 +3,7 @@ package mutation;
 import genome.Strand;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * 
@@ -16,13 +17,13 @@ public class MutationOther extends AbstractMutation {
 	 * Create a mutation.
 	 * @param mutationType		The type of mutation.
 	 * @param reference			The reference Genome.
-	 * @param other				The other Genome.
+	 * @param hashSet				The other Genome.
 	 * @param start				The start Strand.
 	 * @param mutatedStrands	The mutated Strands.
 	 */
-	public MutationOther(MutationType mutationType, ArrayList<String> reference,
-			ArrayList<String> other, Strand start, ArrayList<Strand> mutatedStrands) {
-		super(mutationType, reference, other, start);
+	public MutationOther(MutationType mutationType, HashSet<String> reference,
+			HashSet<String> hashSet, Strand start, ArrayList<Strand> mutatedStrands) {
+		super(mutationType, reference, hashSet, start);
 		if (!mutationType.getBetween()) {
 			setMutatedStrands(mutatedStrands);
 		} else {

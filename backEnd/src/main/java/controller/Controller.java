@@ -76,10 +76,12 @@ public class Controller {
      * @param minX      The minimal X of the nodes.
      * @param maxX      The maximal X of the nodes.
      * @param zoomLevel The zoomlevel to filter to.
+     * @param isMiniMap Boolean if this is the minimap.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
-        return ribbonController.getRibbonNodes(minX, maxX, zoomLevel);
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, 
+    		int zoomLevel, boolean isMiniMap) {
+        return ribbonController.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap);
     }
 
     /**
@@ -120,5 +122,4 @@ public class Controller {
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
         return genomeGraph.setGenomesAsActive(activeGenomes);
     }
-
 }

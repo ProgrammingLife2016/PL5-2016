@@ -17,9 +17,10 @@ public interface FrontEndBackEndInterface {
      * @param minX      The minX to get the nodes from.
      * @param maxX      The maxX to get the nodes from.
      * @param zoomLevel The zoomLevel to calculate the Nodes for.
+     * @param isMiniMap Boolean if this is the minimap.
      * @return A list of RibbonNodes to draw.
      */
-    ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel);
+    ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel, boolean isMiniMap);
 
     /**
      * Sets the active genomes.

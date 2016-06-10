@@ -40,10 +40,11 @@ public class RestApi {
 	@GET
 	@Path("/getnodes")
 	@Produces("application/json")
-	public Response requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
-			@DefaultValue("100") @QueryParam("xright") int xright,
-			@DefaultValue("1") @QueryParam("zoom") int zoom) {
-		return BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom);
+public Response requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
+		@DefaultValue("100") @QueryParam("xright") int xright,
+		@DefaultValue("1") @QueryParam("zoom") int zoom,
+		@DefaultValue("false") @QueryParam("isMiniMap") boolean isMiniMap) {
+		return BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom, isMiniMap);
 	}
 
 

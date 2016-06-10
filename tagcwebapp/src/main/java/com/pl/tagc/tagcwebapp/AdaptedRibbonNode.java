@@ -1,7 +1,6 @@
 package com.pl.tagc.tagcwebapp;
 
 import ribbonnodes.RibbonEdge;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -9,23 +8,34 @@ import java.util.HashSet;
  * The Class AdaptedRibbonNode.
  */
 public class AdaptedRibbonNode {
-	
+
 
     /**
      * The name of this genome, "" if not a leaf.
      */
     private int id;
-    
-    /** The edges. */
+
+    /**
+     * The edges.
+     */
     private ArrayList<RibbonEdge> edges;
     
     /** The genomes. */
     private HashSet<String> genomes;
     
-    /** The label. */
+	 /**
+     * The label.
+     */
     private String label;
-	private int x;
-	private int y;
+    
+    /** The x coordinate. */
+    private int x;
+    
+    /** The y coordinate. */
+    private int y;
+    
+    /** The is visible. */
+    private boolean isVisible;
 
 	/**
 	 * Gets the label.
@@ -132,4 +142,22 @@ public class AdaptedRibbonNode {
 		this.y = y;
 	}
 
+
+    /**
+     * Getter for is visible.
+     *
+     * @return whether node is visible.
+     */
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    /**
+     * Setter for visible.
+     *
+     * @param visible true if node should be drawn.
+     */
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
 }
