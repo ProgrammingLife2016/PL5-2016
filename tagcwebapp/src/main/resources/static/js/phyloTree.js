@@ -9,8 +9,10 @@ var selectedGenomes = [];
 var lineages = [];
 
 $("document").ready(function() {
+    //Set the global variable containing all the lineages mapped to the genomes
     setLineages();
 
+    //Load the phylogenic Tree
     $.ajax({
         url: url + "app/getphylogenetictree?treeId=1",
         dataType: "json",
@@ -21,6 +23,7 @@ $("document").ready(function() {
         drawPhyloTree(-1);
     });
 
+    //Add an onclick on the links in the phyloTree, zooming in or selecting the genomes
     $("#svgCanvas").on("click", "a", function(e) {
         e.preventDefault();
         var id = $(this).attr("href").replace("#", "");
@@ -41,6 +44,7 @@ $("document").ready(function() {
         }
     });
 
+    //Send the selected genomes to the server and update the minimap
     $('#compGenomesButton').on("click", function(e) {
         e.preventDefault();
 
@@ -56,6 +60,7 @@ $("document").ready(function() {
         });
     });
 
+    //Move back up in the phyloTree
     $('#phyloBackButton').click(function(e) {
         e.preventDefault();
         var id = back.pop();
@@ -66,6 +71,7 @@ $("document").ready(function() {
         drawPhyloTree(id);
     });
 
+    //Make the phyloTreeView big in an animated way.
     $('#expandPhyloView').click(function(e) {
         e.preventDefault();
         $("#zoom").animate({
@@ -81,10 +87,18 @@ $("document").ready(function() {
     });
 });
 
+/**
+ * Resize the phyloTree based on it's container
+ */
 function resizePhyloTree() {
     drawPhyloTree(currentNode);
 }
 
+/**
+ * Parse the data so the system can work with it
+ * @param data The data to be parsed
+ * @returns {{id: (number|*), count: number}} An object containing nodes, with reference to their children and their size.
+ */
 function parsePhyloTree(data) {
     var count = 0;
     var children = [];
@@ -103,6 +117,10 @@ function parsePhyloTree(data) {
     return { id: data.id, count: Math.max(1, count)};
 }
 
+/**
+ * Draw the tree
+ * @param root The root node from which it is drawn
+ */
 function drawPhyloTree(root) {
     $("#svgCanvas").find('svg').remove();
     phyloRoot = root;
@@ -133,6 +151,13 @@ function drawPhyloTree(root) {
     });
 }
 
+/**
+ * Parse the phyloData from the server to xml that the jsphylosvg library can read
+ * @param nodeId The nodeId to parse
+ * @param maxDepth The maxDepth that the tree can go
+ * @param depth The current depth
+ * @returns {*}
+ */
 function phyloToXml(nodeId, maxDepth, depth) {
     if (depth > maxDepth) {
         return "";
@@ -173,6 +198,9 @@ function phyloToXml(nodeId, maxDepth, depth) {
     return "<clade>"+ childrenXml +"</clade>";
 }
 
+/**
+ * Temp function resetting the jsphylosvg library.
+ */
 function resetSmits() {
     Smits={};
     Smits.Common={nodeIdIncrement:0,activeNode:0,roundFloat:function(a,c){for(var b=0,f=1;b<c;)f*=10,b++;return Math.round(a*f)/f},apply:function(a,c){if(a&&typeof c=="object")for(var b in c)a[b]=c[b];return a},addRaphEventHandler:function(a,c,b,f){try{a[c](function(c,a){return function(g){a.e=g;c(a)}}(b,f))}catch(k){}},isInteger:function(a){return!isNaN(parseInt(a))},isXMLSerializerAvailable:function(){return typeof XMLSerializer=="function"?!0:!1},createSvgEl:function(a,c){a=document.createElementNS("http://www.w3.org/2000/svg",a);
@@ -251,6 +279,9 @@ function resetSmits() {
     }return k}}}();
 }
 
+/**
+ * Temp: TODO: function to set all the lineages mapped to the genomes, should be done through the REST API.
+ */
 function setLineages() {
     lineages = [{'genome':"TKK_03_0042", 'lineage':"lin4"},
         {'genome':"TKK_03_0160", 'lineage':"lin2"},
