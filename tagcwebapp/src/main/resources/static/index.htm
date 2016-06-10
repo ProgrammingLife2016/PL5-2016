@@ -24,37 +24,6 @@
 
 <body>
 
-<!--<div id="header"></div>-->
-
-<!--<div id="splashscreen"></div>-->
-<!--<div id="main_container">-->
-<!--<div id="left-side-bar">-->
-<!--<div>-->
-<!--<button id='compGenomesButton' type="button" class="btn btn-default"-->
-<!--data-dismiss="modal">Compare Genomes</button>-->
-<!--</div>-->
-<!--<div id="treeViewPort">-->
-<!--<div id='tree_container' class='tree-widget'-->
-<!--style="display: inline-block;"></div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div id="container">-->
-
-<!--<button type="button" id="zoominbtn">Zoom in</button>-->
-<!--<button type="button" id="zoomoutbtn">Zoom out</button>-->
-
-<!--<div id="minimap" class="mainGenome genome">-->
-<!--<div class="slider"></div>-->
-<!--</div>-->
-
-<!--<div id="zoomWindow" class="genome">-->
-<!--<canvas></canvas>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-
-
 <div id="page-wrapper">
 
   <!-- Header -->
@@ -74,7 +43,12 @@
         <li><a href="#">Link</a></li>
         <li><a href="#">Link</a></li>
         <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
+        <li>
+          <a href="#" id="toggleButtons">
+            <span class="hButton">Show Buttons</span>
+            <span class="sButton">Hide Buttons</span>
+          </a>
+        </li>
       </ul>
     </nav>
 
@@ -86,6 +60,10 @@
       <div id="zoomWindow" class="genome"></div>
       <div id="nodeDialog">
         <div class="message"></div>
+      </div>
+      <div id="zoomButtons" class="sButton">
+        <button id="zoomIn">+</button><br />
+        <button id="zoomOut">-</button>
       </div>
     </section>
 

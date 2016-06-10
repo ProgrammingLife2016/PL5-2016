@@ -4,7 +4,7 @@ var url = 'http://localhost:9998/';
 var minHeight = 300;
 var screenWidth = $(window).width();
 var screenHeight = $(window).height();
-var screenResizeTimeout, treeRedrawTimeout, zoomMouseTimeout;
+var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
 var minimapNodes, cachedZoomNodes;
 var currentMousePos = {x: -1, y: -1};
@@ -101,14 +101,6 @@ $('document').ready(function () {
         }, 500);
     });
 
-
-    $('#zoomoutbtn').on('click', function () {
-        zoom(-1, 10, 1);
-    });
-    $('#zoominbtn').on('click', function () {
-        zoom(1, 10, 1);
-    });
-
     //Bind the mouseScroll to trigger zooming on the miniMap
     $('body').bind('mousewheel DOMMouseScroll', function (e) {
         if ($(currentHover).is('#minimap')) {
@@ -154,6 +146,7 @@ $('document').ready(function () {
         currentMousePos.y = event.pageY;
     });
 
+    //Map the location of the mouse within the zoom window, if hovering over a node, show it's labeldata.
     $('#zoom').mousemove(function (event) {
         var that = this;
         currentMousePos.x = event.pageX;
@@ -175,6 +168,22 @@ $('document').ready(function () {
         if (!found) {
             currentHoverNode = -1;
         }
+    });
+
+    $('#toggleButtons').click(function() {
+        $('body').toggleClass('showButtons');
+    });
+
+    $('#zoomIn').click(function() {
+        var slider = $('#minimap .slider');
+        var center = Math.floor(pxToInt(slider.css('left')) + slider.width() / 2);
+        zoom(1, 5, center);
+    });
+
+    $('#zoomOut').click(function() {
+        var slider = $('#minimap .slider');
+        var center = Math.floor(pxToInt(slider.css('left')) + slider.width() / 2);
+        zoom(-1, 5, center);
     });
 
     initialize();
@@ -370,6 +379,10 @@ function updatezoomWindow() {
     }
 }
 
+/**
+ * When scrolling in the zooming view, the zooming needs to be done on the fly. This is done by updating the zoomValues.
+ * @returns {number} The amount of zooming.
+ */
 function updateZoomValues() {
     if (Object.keys(minimapNodes).length < 1) {
         return;
@@ -383,9 +396,15 @@ function updateZoomValues() {
     return Math.round(totalWidth / slider.width());
 }
 
-// This function translates from one representation of a bounding box in gui coordinates to
-// coordinates expected by the REST api. It takes x, y, width and height arguments and returns
-// an object with left right top and bottom properties.
+/**
+ * This function translates from one representation of a bounding box in gui coordinates to
+ * coordinates expected by the REST api.
+ * @param left The left side
+ * @param width The width of the viewing block
+ * @param zoom The level of zooming
+ * @param isMiniMap Whether it is being drawn in the minimap or in the zooming map.
+ * @returns {{xleft: *, xright: *, zoom: *, isMiniMap: *}}
+ */
 function computeBoundingBox(left, width, zoom, isMiniMap) {
     return {
         'xleft': left,
@@ -406,7 +425,6 @@ function parseNodeData(nodes) {
     if (typeof nodes == 'undefined' || nodes.length == 0) {
         return result;
     }
-    var left = nodes[0].x;
 
     $.each(nodes, function (key, value) {
         result[value.id] = value;
@@ -468,7 +486,7 @@ function initializeZoomWindow() {
 }
 
 /**
- * Make the phylogney Panel small, and the minimap Panel big
+ * Make the phylogeny Panel small, and the minimap Panel big
  */
 function fullSizeMinimap() {
     $("#zoom").animate({
