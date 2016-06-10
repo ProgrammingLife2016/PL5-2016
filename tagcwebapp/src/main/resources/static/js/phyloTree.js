@@ -12,7 +12,7 @@ $("document").ready(function() {
     setLineages();
 
     $.ajax({
-        url: url + "api/getphylogenetictree?treeId=1",
+        url: url + "app/getphylogenetictree?treeId=1",
         dataType: "json",
         type: "get"
     }).done(function(data) {
