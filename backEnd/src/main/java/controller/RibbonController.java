@@ -262,7 +262,7 @@ public class RibbonController {
     /**
      * Adds the mutations to the labels.
      * @param nodes The nodes in the graph.
-     * @param actGen The active genomes.
+     * @param actGenomes The active genomes.
      */
     protected void addMutationLabels(ArrayList<RibbonNode> nodes, ArrayList<String> actGenomes) {
         for (RibbonNode node : nodes) {
@@ -271,11 +271,12 @@ public class RibbonController {
             StringBuilder label = new StringBuilder();
             label.append(System.lineSeparator());
             for (AbstractMutation mutation : strand.getMutations()) {
-            	if (!Collections.disjoint(mutation.getReferenceGenome(), actGenomes)
-            			&& !Collections.disjoint(mutation.getOtherGenomes(), actGenomes))
-            	label.append(mutation.toString());
-            	label.append(", ");
-            	mutationAdded = true;
+            	if (!Collections.disjoint(mutation.getReferenceGenomes(), actGenomes) 
+            			&& !Collections.disjoint(mutation.getOtherGenomes(), actGenomes)) {
+            		label.append(mutation.toString());
+            		label.append(", ");
+            		mutationAdded = true;
+            	}
             }
             if (mutationAdded) {
             	label.setLength(label.length() - 2);
