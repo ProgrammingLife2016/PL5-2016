@@ -49,6 +49,12 @@ public class RibbonNode {
      */
     private String label;
 
+
+    /**
+     * Draw the node or not.
+     */
+    private boolean isVisible;
+
     /**
      * Constructor for the RibbonNode.
      *
@@ -64,15 +70,22 @@ public class RibbonNode {
         this.id = id;
         this.x = 0; //for now
         this.y = 0;
+        this.isVisible = true;
     }
 
     /**
-     * Get the label.
+     * Get the label, with new lines.
      *
      * @return Label.
      */
     public String getLabel() {
-        return label;
+        String newLabel = "";
+        for (int i = 0; i < label.length(); i += 40) {
+            String sub = label.substring(i, Math.min(i + 40, label.length()));
+            newLabel += sub + "\n";
+        }
+
+        return newLabel;
     }
 
     /**
@@ -116,12 +129,6 @@ public class RibbonNode {
      */
     public void setLabel(String label) {
         this.label = label;
-        String newLabel = "";
-        for (int i = 0; i < label.length(); i += 40) {
-            String sub = label.substring(i, Math.min(i + 40, label.length()));
-            newLabel += sub + "\n";
-        }
-        this.label = newLabel;
 
     }
 
@@ -265,6 +272,25 @@ public class RibbonNode {
      */
     public void addStrand(Strand strand) {
         this.strands.add(strand);
-        this.setLabel(label + strand.getSequence() + "\n");
+        this.setLabel(label + strand.getSequence());
+    }
+
+
+    /**
+     * Getter for is visible.
+     *
+     * @return whether node is visible.
+     */
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    /**
+     * Setter for visible
+     *
+     * @param visible true if node should be drawn.
+     */
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 }

@@ -42,10 +42,11 @@ public class RestApi {
     @Produces("application/json")
     public Response requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
                                  @DefaultValue("100") @QueryParam("xright") int xright,
-                                 @DefaultValue("1") @QueryParam("zoom") int zoom) {
+                                 @DefaultValue("1") @QueryParam("zoom") int zoom,
+                                 @DefaultValue("false") @QueryParam("isMiniMap") boolean isMiniMap) {
         NodeListObject nodeList =
                 new NodeListObject(new CopyOnWriteArrayList<>(
-                        Controller.getDC().getRibbonNodes(xleft, xright, zoom)));
+                        Controller.getDC().getRibbonNodes(xleft, xright, zoom, isMiniMap)));
         return Response.ok() //200
                 .entity(nodeList)
                 .header("Access-Control-Allow-Origin", "*")

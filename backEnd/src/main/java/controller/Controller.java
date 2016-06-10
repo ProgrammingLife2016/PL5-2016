@@ -82,8 +82,8 @@ public class Controller implements FrontEndBackEndInterface {
      * @param zoomLevel The zoomlevel to filter to.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
-        return ribbonController.getRibbonNodes(minX, maxX, zoomLevel);
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel, boolean isMiniMap) {
+        return ribbonController.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap);
     }
 
 

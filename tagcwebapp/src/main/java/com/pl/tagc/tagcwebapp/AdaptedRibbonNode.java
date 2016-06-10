@@ -8,127 +8,156 @@ import java.util.ArrayList;
  * The Class AdaptedRibbonNode.
  */
 public class AdaptedRibbonNode {
-	
+
 
     /**
      * The name of this genome, "" if not a leaf.
      */
     private int id;
-    
-    /** The edges. */
+
+    /**
+     * The edges.
+     */
     private ArrayList<RibbonEdge> edges;
-    
-    /** The genomes. */
+
+    /**
+     * The genomes.
+     */
     private ArrayList<String> genomes;
-    
-    /** The label. */
+
+    /**
+     * The label.
+     */
     private String label;
-	private int x;
-	private int y;
+    private int x;
+    private int y;
 
-	/**
-	 * Gets the label.
-	 *
-	 * @return the label
-	 */
-	public String getLabel() {
-		return label;
-	}
+    private boolean isVisible;
 
-	/**
-	 * Sets the label.
-	 *
-	 * @param label the new label
-	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    /**
+     * Gets the label.
+     *
+     * @return the label
+     */
+    public String getLabel() {
+        return label;
+    }
 
-	/**
-	 * Gets the edges.
-	 *
-	 * @return the edges
-	 */
-	public ArrayList<RibbonEdge> getEdges() {
-		return edges;
-	}
+    /**
+     * Sets the label.
+     *
+     * @param label the new label
+     */
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	/**
-	 * Sets the edges.
-	 *
-	 * @param edges the new edges
-	 */
-	public void setEdges(ArrayList<RibbonEdge> edges) {
-		this.edges = edges;
-	}
+    /**
+     * Gets the edges.
+     *
+     * @return the edges
+     */
+    public ArrayList<RibbonEdge> getEdges() {
+        return edges;
+    }
 
-	/**
-	 * Gets the genomes.
-	 *
-	 * @return the genomes
-	 */
-	public ArrayList<String> getGenomes() {
-		return genomes;
-	}
+    /**
+     * Sets the edges.
+     *
+     * @param edges the new edges
+     */
+    public void setEdges(ArrayList<RibbonEdge> edges) {
+        this.edges = edges;
+    }
 
-	/**
-	 * Sets the genomes.
-	 *
-	 * @param genomes the new genomes
-	 */
-	public void setGenomes(ArrayList<String> genomes) {
-		this.genomes = genomes;
-	}
+    /**
+     * Gets the genomes.
+     *
+     * @return the genomes
+     */
+    public ArrayList<String> getGenomes() {
+        return genomes;
+    }
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+    /**
+     * Sets the genomes.
+     *
+     * @param genomes the new genomes
+     */
+    public void setGenomes(ArrayList<String> genomes) {
+        this.genomes = genomes;
+    }
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
 
-	/**
-	 * Gets the x coordinate.
-	 * @return the x coordinate
-	 */
-	public int getX() {
-		return x;
-	}
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	/**
-	 * Sets the x coordinate.
-	 * @param x The x coordinate
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
+    /**
+     * Gets the x coordinate.
+     *
+     * @return the x coordinate
+     */
+    public int getX() {
+        return x;
+    }
 
-	/**
-	 * Gets the y coordinate.
-	 * @return the y coordinate
-	 */
-	public int getY() {
-		return y;
-	}
+    /**
+     * Sets the x coordinate.
+     *
+     * @param x The x coordinate
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * Gets the y coordinate.
+     *
+     * @return the y coordinate
+     */
+    public int getY() {
+        return y;
+    }
 
 
-	/**
-	 * Sets the y coordinate.
-	 * @param y The y coordinate
-	 */
-	public void setY(int y) {
-		this.y = y;
-	}
+    /**
+     * Sets the y coordinate.
+     *
+     * @param y The y coordinate
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
 
+    /**
+     * Getter for is visible.
+     *
+     * @return whether node is visible.
+     */
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    /**
+     * Setter for visible
+     *
+     * @param visible true if node should be drawn.
+     */
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
 }

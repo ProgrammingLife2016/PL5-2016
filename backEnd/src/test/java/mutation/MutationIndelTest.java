@@ -45,7 +45,7 @@ public class MutationIndelTest {
 	 */
 	@Test
 	public void testGetReference() {
-		assertEquals(mutation.getReferenceGenome(), reference);
+		assertEquals(mutation.getReferenceGenomes(), reference);
 	}
 	
 	/**

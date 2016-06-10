@@ -1,10 +1,19 @@
 package controller;
 
+import datatree.DataNode;
 import datatree.DataTree;
+import datatree.TempReadWriteTree;
 import genome.Genome;
+import genome.Strand;
+import mutation.AbstractMutation;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mockito.Matchers;
+
+import parser.Parser;
+import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
@@ -52,6 +61,31 @@ public class RibbonControllerTest {
 
     }
 
+//    @Test
+//    public void testUsability() throws Exception {
+//        String gfaFile = "data/TB328.gfa";
+//        GenomeGraph genomeGraph = Parser.parse(gfaFile);
+//        genomeGraph.generateGenomes();
+//        genomeGraph.findStartAndCalculateX();
+//        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
+//        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
+//                new ArrayList<>(genomeGraph.getGenomes().keySet()));
+//        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
+//                null, 0));
+//        dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size() / 8);
+//
+//        if (gfaFile.equals("data/TB328.gfa")) {
+//            TempReadWriteTree.readFile(dataTree, genomeGraph.getStrandNodes(), "data/tempTree.txt");
+//        } else {
+//            dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+//
+//        }
+//        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
+//
+//        genomeGraph.setGenomesAsActive(new ArrayList<>(Arrays.asList("TKK_03_0059", "TKK-01-0058")));
+//        ribbonController.getRibbonNodes(0, 10000000, 1, true);
+//    }
+
     /**
      * Test that getRibbonNodes calls the right methods.
      *
@@ -60,18 +94,17 @@ public class RibbonControllerTest {
     @Test
     public void testGetRibbonNodes() throws Exception {
         RibbonController testController = Mockito.mock(RibbonController.class);
-        Mockito.doCallRealMethod().when(testController).getRibbonNodes(0, 1000, 10);
-        testController.getRibbonNodes(0, 1000, 10);
+        Mockito.doCallRealMethod().when(testController).getRibbonNodes(0, 1000, 10, false);
+        testController.getRibbonNodes(0, 1000, 10, false);
         Mockito.verify(graph, Mockito.times(1)).getActiveGenomes();
         Mockito.verify(tree, Mockito.times(1)).getStrands(0, 1000, graph.getActiveGenomes(), 10);
         Mockito.verify(testController, Mockito.times(1)).createNodesFromStrands(new ArrayList<>(),
-                new ArrayList<>(Arrays.asList("1")),
-                10);
+                new ArrayList<>(Arrays.asList("1")));
         Mockito.verify(testController, Mockito.times(1)).spreadYCoordinates(
                 new ArrayList<>(),
                 new ArrayList<>(Arrays.asList("1")));
-        Mockito.verify(testController, Mockito.times(1)).addEdges(new ArrayList<>());
-        //  Mockito.verify(testController, Mockito.times(1)).collapseRibbons(new ArrayList<>());
+        Mockito.verify(testController, Mockito.times(1)).addEdges(new ArrayList<>(), false);
+        Mockito.verify(testController, Mockito.times(1)).collapseRibbons(new ArrayList<>(),10);
 
 
     }
@@ -100,8 +133,8 @@ public class RibbonControllerTest {
         node2.addEdge(edge2);
         node3.addEdge(edge2);
         assertEquals(3, nodes.size());
-        controller.collapseRibbons(nodes);
-        assertEquals(1, nodes.size());
+        controller.collapseRibbons(nodes,1);
+        assertEquals(2, nodes.size());
     }
 
 
@@ -184,7 +217,7 @@ public class RibbonControllerTest {
         nodes.add(node2);
         nodes.add(node3);
 
-        controller.addEdges(nodes);
+        controller.addEdges(nodes, false);
 
         assertNotNull(node1.getOutEdge(node1.getId(), node2.getId()));
         assertNotNull(node2.getInEdge(node1.getId(), node2.getId()));
@@ -207,9 +240,9 @@ public class RibbonControllerTest {
         nodes.add(node2);
 
         assertEquals(node1.getOutEdges().size(), 0);
-        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("1")), node2);
+        assertEquals(controller.addEdgeSetXReturnEnd(nodes, node1, new Genome("1"), false), node2);
         assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 1);
-        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("2")), node2);
+        assertEquals(controller.addEdgeSetXReturnEnd(nodes, node1, new Genome("2"), false), node2);
         assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 2);
 
 
@@ -242,6 +275,20 @@ public class RibbonControllerTest {
      */
     @Test
     public void testAddMutationLabels() throws Exception {
-
+    	RibbonNode node = Mockito.mock(RibbonNode.class);
+    	Strand strand = Mockito.mock(Strand.class);
+    	AbstractMutation mutation = Mockito.mock(AbstractMutation.class);
+    	
+    	Mockito.when(node.getStrands()).thenReturn(new ArrayList<>(Arrays.asList(strand)));
+    	Mockito.when(strand.getMutations()).thenReturn(new ArrayList<>(Arrays.asList(mutation)));
+    	Mockito.when(mutation.getReferenceGenomes()).thenReturn(
+    			new ArrayList<>(Arrays.asList("1")));
+    	Mockito.when(mutation.getOtherGenomes()).thenReturn(new ArrayList<>(Arrays.asList("2")));
+    	
+    	ArrayList<RibbonNode> nodes = new ArrayList<>(Arrays.asList(node));
+    	ArrayList<String> actGen = new ArrayList<>(Arrays.asList("1", "2"));
+    	
+    	controller.addMutationLabels(nodes, actGen);
+    	Mockito.verify(node, Mockito.times(1)).setLabel(Matchers.any());
     }
 }
