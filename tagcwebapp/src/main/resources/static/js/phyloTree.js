@@ -14,7 +14,7 @@ $("document").ready(function() {
 
     //Load the phylogenic Tree
     $.ajax({
-        url: url + "app/getphylogenetictree?treeId=1",
+        url: url + "api/getphylogenetictree?treeId=1",
         dataType: "json",
         type: "get"
     }).done(function(data) {
