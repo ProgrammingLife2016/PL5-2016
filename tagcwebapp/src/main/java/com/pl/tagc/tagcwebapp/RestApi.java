@@ -55,19 +55,6 @@ public class RestApi {
 
 
     /**
-     * Uses the genome ids to set the genomes as active in the backend. Which means that
-     * they will be used to generate the ribbongraph when getnodes is called.
-     *
-     * @param ids the genome ids
-     * @return the list      List of unrecognized genomes.
-     */
-    @POST
-    @Path("/setactivegenomes")
-    public ArrayListObject setActiveGenomes(@FormParam("names[]") List<String> ids) {
-        return new ArrayListObject(Controller.getDC().setActiveGenomes((ArrayList<String>) ids));
-    }
-
-    /**
      * Request phylogenetic tree.
      *
      * @param treeId The tree id that will be used to load the right tree from the backend.
@@ -81,6 +68,26 @@ public class RestApi {
         PhylogeneticTreeObject result =
                 new PhylogeneticTreeObject(
                         Controller.getDC().loadPhylogeneticTree(treeId).getRoot());
+        return Response.ok() //200
+                .entity(result)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+    }
+
+
+    /**
+     * Uses the genome ids to set the genomes as active in the backend. Which means that
+     * they will be used to generate the ribbongraph when getnodes is called.
+     *
+     * @param ids the genome ids
+     * @return the list      List of unrecognized genomes.
+     */
+    @POST
+    @Path("/setactivegenomes")
+    public Response setActiveGenomes(@FormParam("names[]") List<String> ids) {
+        ArrayListObject result =
+                new ArrayListObject(Controller.getDC().setActiveGenomes((ArrayList<String>) ids));
         return Response.ok() //200
                 .entity(result)
                 .header("Access-Control-Allow-Origin", "*")
