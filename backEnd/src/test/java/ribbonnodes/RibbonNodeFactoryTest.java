@@ -85,10 +85,11 @@ public class RibbonNodeFactoryTest {
 
 
 
-        RibbonNode collapsedNode = RibbonNodeFactory.collapseNodes(new ArrayList<>(Arrays.asList(node1,node2)));
+        RibbonNode collapsedNode = RibbonNodeFactory.collapseNodes(
+        		new ArrayList<>(Arrays.asList(node1, node2)));
         assertNotNull(collapsedNode.getOutEdge(0, 2));
         assertEquals(node1.getStrands().get(0), strand);
-        assertEquals(collapsedNode.getX(), (int)(node1.getX()+node1.getLabel().length()*0.8));
+        assertEquals(collapsedNode.getX(), (int) (node1.getX() + node1.getLabel().length() * 0.8));
 
     }
 }

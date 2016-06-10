@@ -79,13 +79,14 @@ public class RibbonNode {
      * @return Label.
      */
     public String getLabel() {
-        String newLabel = "";
+        StringBuilder newLabel = new StringBuilder();
         for (int i = 0; i < label.length(); i += 40) {
             String sub = label.substring(i, Math.min(i + 40, label.length()));
-            newLabel += sub + "\n";
+            newLabel.append(sub);
+            newLabel.append("\n");
         }
 
-        return newLabel;
+        return newLabel.toString();
     }
 
     /**
@@ -286,7 +287,7 @@ public class RibbonNode {
     }
 
     /**
-     * Setter for visible
+     * Setter for visible.
      *
      * @param visible true if node should be drawn.
      */
