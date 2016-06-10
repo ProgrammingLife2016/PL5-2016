@@ -3,12 +3,14 @@ package controller;
 import datatree.DataTree;
 import genome.Genome;
 import genome.Strand;
+import mutation.AbstractMutation;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonEdgeFactory;
 import ribbonnodes.RibbonNode;
 import ribbonnodes.RibbonNodeFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 /**
@@ -55,6 +57,7 @@ public class RibbonController {
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
 
+
         System.out.println(minX + ", " + maxX);
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
 
@@ -70,6 +73,7 @@ public class RibbonController {
         addEdges(result);
         //   collapseRibbons(result);
 
+        addMutationLabels(result, actIds);
         System.out.println(result.size() + " nodes returned");
         return result;
 
@@ -255,18 +259,28 @@ public class RibbonController {
 
     }
 
-
     /**
-     * Add mutationLabels to nodes.
-     *
-     * @param nodes The nodes to add labels to.
+     * Adds the mutations to the labels.
+     * @param nodes The nodes in the graph.
+     * @param actGenomes The active genomes.
      */
-    protected void addMutationLabels(ArrayList<RibbonNode> nodes) {
+    protected void addMutationLabels(ArrayList<RibbonNode> nodes, ArrayList<String> actGenomes) {
         for (RibbonNode node : nodes) {
-            Strand strand = node.getStrands().get(0);
-            if (strand.getMutations().size() > 0) {
-                System.out.println("Mutation added");
-                node.setLabel(strand.getMutations().get(0).toString());
+        	boolean mutationAdded = false;
+            Strand strand = node.getStrands().get(node.getStrands().size() - 1);
+            StringBuilder label = new StringBuilder();
+            label.append(System.lineSeparator());
+            for (AbstractMutation mutation : strand.getMutations()) {
+            	if (!Collections.disjoint(mutation.getReferenceGenomes(), actGenomes) 
+            			&& !Collections.disjoint(mutation.getOtherGenomes(), actGenomes)) {
+            		label.append(mutation.toString());
+            		label.append(", ");
+            		mutationAdded = true;
+            	}
+            }
+            if (mutationAdded) {
+            	label.setLength(label.length() - 2);
+            	node.setLabel(node.getLabel() + label.toString());
             }
         }
     }

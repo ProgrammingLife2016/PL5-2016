@@ -61,7 +61,7 @@ public abstract class AbstractMutation {
 	 * Get the reference genome.
 	 * @return The reference.
 	 */
-	public ArrayList<String> getReferenceGenome() {
+	public ArrayList<String> getReferenceGenomes() {
 		return reference;
 	}
 	

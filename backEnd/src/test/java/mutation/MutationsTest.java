@@ -13,12 +13,8 @@ import org.mockito.ArgumentCaptor;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import org.mockito.Matchers;
+import org.mockito.Mockito;
 /**
  * 
  * @author Jeffrey Helgers.
@@ -41,24 +37,24 @@ public class MutationsTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		graph = mock(GenomeGraph.class);
+		graph = Mockito.mock(GenomeGraph.class);
 		mutations = new Mutations(graph);
-		strand1 = mock(Strand.class);
-		strand2 = mock(Strand.class);
-		strand3 = mock(Strand.class);
-		strand4 = mock(Strand.class);
+		strand1 = Mockito.mock(Strand.class);
+		strand2 = Mockito.mock(Strand.class);
+		strand3 = Mockito.mock(Strand.class);
+		strand4 = Mockito.mock(Strand.class);
 		strands = new HashMap<>();
 		strands.put(0, strand1);
 		strands.put(1, strand2);
 		strands.put(2, strand3);
 		strands.put(3, strand4);
 		captor = new ArgumentCaptor<AbstractMutation>();
-		when(graph.getStrandNodes()).thenReturn(strands);
-		when(strand1.getId()).thenReturn(0);
-		when(strand2.getId()).thenReturn(1);
-		when(strand3.getId()).thenReturn(2);
-		when(strand4.getId()).thenReturn(3);
-		when(strand1.getSequence()).thenReturn("tagc");
+		Mockito.when(graph.getStrandNodes()).thenReturn(strands);
+		Mockito.when(strand1.getId()).thenReturn(0);
+		Mockito.when(strand2.getId()).thenReturn(1);
+		Mockito.when(strand3.getId()).thenReturn(2);
+		Mockito.when(strand4.getId()).thenReturn(3);
+		Mockito.when(strand1.getSequence()).thenReturn("tagc");
 	}
 
 	/**
@@ -66,16 +62,17 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testNoMutation() {
-		when(strand1.getEdges()).thenReturn(new ArrayList<>(
+		Mockito.when(strand1.getEdges()).thenReturn(new ArrayList<>(
 				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		when(strand2.getEdges()).thenReturn(new ArrayList<>(Arrays.asList(new StrandEdge(1, 3))));
-		when(strand3.getEdges()).thenReturn(new ArrayList<>());
-		when(strand4.getEdges()).thenReturn(new ArrayList<>());
-		when(strand2.getSequence()).thenReturn("aa");
-		when(strand3.getSequence()).thenReturn("ac");
-		when(strand4.getSequence()).thenReturn("ag");
+		Mockito.when(strand2.getEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new StrandEdge(1, 3))));
+		Mockito.when(strand3.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand4.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand2.getSequence()).thenReturn("aa");
+		Mockito.when(strand3.getSequence()).thenReturn("ac");
+		Mockito.when(strand4.getSequence()).thenReturn("ag");
 		mutations.computeAllMutations();
-		verify(strand1, never()).addMutation(any());
+		Mockito.verify(strand1, Mockito.never()).addMutation(Matchers.any());
 	}
 	
 	/**
@@ -83,14 +80,15 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationIndel() {
-		when(strand1.getEdges()).thenReturn(new ArrayList<>(
+		Mockito.when(strand1.getEdges()).thenReturn(new ArrayList<>(
 				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		when(strand2.getEdges()).thenReturn(new ArrayList<>(Arrays.asList(new StrandEdge(1, 2))));
-		when(strand3.getEdges()).thenReturn(new ArrayList<>());
-		when(strand2.getSequence()).thenReturn("aa");
-		when(strand3.getSequence()).thenReturn("ac");
+		Mockito.when(strand2.getEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new StrandEdge(1, 2))));
+		Mockito.when(strand3.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand2.getSequence()).thenReturn("aa");
+		Mockito.when(strand3.getSequence()).thenReturn("ac");
 		mutations.computeAllMutations();
-		verify(strand1).addMutation(captor.capture());
+		Mockito.verify(strand1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.INDEL);
 	}
 	
@@ -99,16 +97,18 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationSNP() {
-		when(strand1.getEdges()).thenReturn(new ArrayList<>(
+		Mockito.when(strand1.getEdges()).thenReturn(new ArrayList<>(
 				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		when(strand2.getEdges()).thenReturn(new ArrayList<>(Arrays.asList(new StrandEdge(1, 3))));
-		when(strand3.getEdges()).thenReturn(new ArrayList<>(Arrays.asList(new StrandEdge(2, 3))));
-		when(strand4.getEdges()).thenReturn(new ArrayList<>());
-		when(strand2.getSequence()).thenReturn("a");
-		when(strand3.getSequence()).thenReturn("c");
-		when(strand4.getSequence()).thenReturn("aaa");
+		Mockito.when(strand2.getEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new StrandEdge(1, 3))));
+		Mockito.when(strand3.getEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new StrandEdge(2, 3))));
+		Mockito.when(strand4.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand2.getSequence()).thenReturn("a");
+		Mockito.when(strand3.getSequence()).thenReturn("c");
+		Mockito.when(strand4.getSequence()).thenReturn("aaa");
 		mutations.computeAllMutations();
-		verify(strand1).addMutation(captor.capture());
+		Mockito.verify(strand1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.SNP);
 	}
 	
@@ -117,14 +117,14 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationTandemDuplication() {
-		when(strand1.getEdges()).thenReturn(new ArrayList<>(
+		Mockito.when(strand1.getEdges()).thenReturn(new ArrayList<>(
 				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		when(strand2.getEdges()).thenReturn(new ArrayList<>());
-		when(strand3.getEdges()).thenReturn(new ArrayList<>());
-		when(strand2.getSequence()).thenReturn("a");
-		when(strand3.getSequence()).thenReturn("tagc");
+		Mockito.when(strand2.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand3.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand2.getSequence()).thenReturn("a");
+		Mockito.when(strand3.getSequence()).thenReturn("tagc");
 		mutations.computeAllMutations();
-		verify(strand1).addMutation(captor.capture());
+		Mockito.verify(strand1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.TANDEMDUPLICATION);
 	}
 }
