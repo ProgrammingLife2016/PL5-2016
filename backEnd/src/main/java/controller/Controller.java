@@ -80,9 +80,11 @@ public class Controller implements FrontEndBackEndInterface {
      * @param minX      The minimal X of the nodes.
      * @param maxX      The maximal X of the nodes.
      * @param zoomLevel The zoomlevel to filter to.
+     * @param isMiniMap Boolean if this is the minimap.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel, boolean isMiniMap) {
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, 
+    		int zoomLevel, boolean isMiniMap) {
         return ribbonController.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap);
     }
 
@@ -123,9 +125,6 @@ public class Controller implements FrontEndBackEndInterface {
      * @return The controller dc.
      */
     public static Controller getDC() {
-        if (dc == null) {
-            dc = new Controller();
-        }
         return dc;
     }
 

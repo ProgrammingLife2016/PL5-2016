@@ -13,7 +13,7 @@ import java.util.concurrent.RecursiveAction;
  * Makes use of a RecursiveAction to speed the process up.
  */
 public class AddStrandsFromChildren extends RecursiveAction {
-
+	
 	/**
 	 * The node on which the computation is made.
 	 */

@@ -1,8 +1,6 @@
 package controller;
 
-import datatree.DataNode;
 import datatree.DataTree;
-import datatree.TempReadWriteTree;
 import genome.Genome;
 import genome.Strand;
 import mutation.AbstractMutation;
@@ -12,8 +10,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Matchers;
 
-import parser.Parser;
-import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
@@ -75,14 +71,16 @@ public class RibbonControllerTest {
 //        dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size() / 8);
 //
 //        if (gfaFile.equals("data/TB328.gfa")) {
-//            TempReadWriteTree.readFile(dataTree, genomeGraph.getStrandNodes(), "data/tempTree.txt");
+//            TempReadWriteTree.readFile(dataTree, 
+//            genomeGraph.getStrandNodes(), "data/tempTree.txt");
 //        } else {
 //            dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
 //
 //        }
 //        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
 //
-//        genomeGraph.setGenomesAsActive(new ArrayList<>(Arrays.asList("TKK_03_0059", "TKK-01-0058")));
+//        genomeGraph.setGenomesAsActive(new ArrayList<>(
+//            Arrays.asList("TKK_03_0059", "TKK-01-0058")));
 //        ribbonController.getRibbonNodes(0, 10000000, 1, true);
 //    }
 
@@ -96,15 +94,13 @@ public class RibbonControllerTest {
         RibbonController testController = Mockito.mock(RibbonController.class);
         Mockito.doCallRealMethod().when(testController).getRibbonNodes(0, 1000, 10, false);
         testController.getRibbonNodes(0, 1000, 10, false);
-        Mockito.verify(graph, Mockito.times(1)).getActiveGenomes();
-        Mockito.verify(tree, Mockito.times(1)).getStrands(0, 1000, graph.getActiveGenomes(), 10);
         Mockito.verify(testController, Mockito.times(1)).createNodesFromStrands(new ArrayList<>(),
                 new ArrayList<>(Arrays.asList("1")));
         Mockito.verify(testController, Mockito.times(1)).spreadYCoordinates(
                 new ArrayList<>(),
                 new ArrayList<>(Arrays.asList("1")));
         Mockito.verify(testController, Mockito.times(1)).addEdges(new ArrayList<>(), false);
-        Mockito.verify(testController, Mockito.times(1)).collapseRibbons(new ArrayList<>(),10);
+        Mockito.verify(testController, Mockito.times(1)).collapseRibbons(new ArrayList<>(), 10);
 
 
     }
@@ -133,7 +129,7 @@ public class RibbonControllerTest {
         node2.addEdge(edge2);
         node3.addEdge(edge2);
         assertEquals(3, nodes.size());
-        controller.collapseRibbons(nodes,1);
+        controller.collapseRibbons(nodes, 1);
         assertEquals(2, nodes.size());
     }
 
