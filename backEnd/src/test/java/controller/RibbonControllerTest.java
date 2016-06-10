@@ -4,17 +4,19 @@ import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
 import genome.Genome;
+import genome.Strand;
+import mutation.AbstractMutation;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import parser.Parser;
-import phylogenetictree.PhylogeneticTree;
+import org.mockito.Matchers;
+
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -271,6 +273,20 @@ public class RibbonControllerTest {
      */
     @Test
     public void testAddMutationLabels() throws Exception {
-
+    	RibbonNode node = Mockito.mock(RibbonNode.class);
+    	Strand strand = Mockito.mock(Strand.class);
+    	AbstractMutation mutation = Mockito.mock(AbstractMutation.class);
+    	
+    	Mockito.when(node.getStrands()).thenReturn(new ArrayList<>(Arrays.asList(strand)));
+    	Mockito.when(strand.getMutations()).thenReturn(new ArrayList<>(Arrays.asList(mutation)));
+    	Mockito.when(mutation.getReferenceGenomes()).thenReturn(
+    			new ArrayList<>(Arrays.asList("1")));
+    	Mockito.when(mutation.getOtherGenomes()).thenReturn(new ArrayList<>(Arrays.asList("2")));
+    	
+    	ArrayList<RibbonNode> nodes = new ArrayList<>(Arrays.asList(node));
+    	ArrayList<String> actGen = new ArrayList<>(Arrays.asList("1", "2"));
+    	
+    	controller.addMutationLabels(nodes, actGen);
+    	Mockito.verify(node, Mockito.times(1)).setLabel(Matchers.any());
     }
 }
