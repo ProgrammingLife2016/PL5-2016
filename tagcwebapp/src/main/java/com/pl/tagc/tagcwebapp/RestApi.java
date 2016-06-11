@@ -71,7 +71,6 @@ public Response requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
 	@Path("/getphylogenetictree")
 	@Produces("application/json")
 	public Response requestPhylogeneticTree(@DefaultValue("1") @QueryParam("treeId") int treeId) {
-		System.out.println("jj");
 		return BackEndAdapter.getInstance().loadPhylogeneticTree(treeId);
 		
 	}
