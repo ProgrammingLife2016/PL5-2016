@@ -1,7 +1,8 @@
-package controller;
+package ribbonnodes;
 
 import datatree.DataTree;
 import genome.Genome;
+import genome.GenomeGraph;
 import genome.Strand;
 import mutation.AbstractMutation;
 import ribbonnodes.RibbonEdge;
@@ -61,7 +62,6 @@ public class RibbonController {
     		int zoomLevel, boolean isMiniMap) {
 
 
-        System.out.println(minX + ", " + maxX);
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
 
         ArrayList<String> actIds = new ArrayList<>();
@@ -198,7 +198,7 @@ public class RibbonController {
                 ArrayList<RibbonNode> ribbonSplitCopies =
                         RibbonNodeFactory.makeRibbonNodesFromSplit(node, maxId);
                 for (RibbonNode splitNode : ribbonSplitCopies) {
-                    int genIndex = activeGenomes.indexOf(splitNode.getGenomes().get(0));
+                    int genIndex = activeGenomes.indexOf(splitNode.getGenomes().iterator().next());
                     int newY = (int) ((Math.ceil((genIndex + 1) / 2.) * 20)
                             * Math.pow(-1, genIndex));
                     splitNode.setY(newY);

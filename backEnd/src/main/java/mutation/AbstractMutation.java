@@ -3,6 +3,7 @@ package mutation;
 import genome.Strand;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * @author Jefrrey Helgers
@@ -13,12 +14,12 @@ public abstract class AbstractMutation {
 	/**
 	 * The genomes in the reference.
 	 */
-	private ArrayList<String> reference;
+	private HashSet<String> reference;
 	
 	/**
 	 * The genomes in the other.
 	 */
-	private ArrayList<String> other;
+	private HashSet<String> other;
 	
 	/**
 	 * The start strand.
@@ -43,15 +44,15 @@ public abstract class AbstractMutation {
 	/**
 	 * Create a mutation.
 	 * @param mutationType		The type of mutation.
-	 * @param reference			The reference Genome.
-	 * @param other				The other Genome.
+	 * @param reference2			The reference Genome.
+	 * @param other2				The other Genome.
 	 * @param start				The start Strand.
 	 */
-	public AbstractMutation(MutationType mutationType, ArrayList<String> reference, 
-			ArrayList<String> other, Strand start) {
+	public AbstractMutation(MutationType mutationType, HashSet<String> reference2, 
+			HashSet<String> other2, Strand start) {
 		this.mutationType = mutationType;
-		this.reference = reference;
-		this.other = other;
+		this.reference = reference2;
+		this.other = other2;
 		this.start = start;
 		this.mutatedStrands = new ArrayList<>();
 	}
@@ -61,7 +62,7 @@ public abstract class AbstractMutation {
 	 * Get the reference genome.
 	 * @return The reference.
 	 */
-	public ArrayList<String> getReferenceGenomes() {
+	public HashSet<String> getReferenceGenomes() {
 		return reference;
 	}
 	
@@ -69,7 +70,7 @@ public abstract class AbstractMutation {
 	 * Get the other genome.
 	 * @return The other genome.
 	 */
-	public ArrayList<String> getOtherGenomes() {
+	public HashSet<String> getOtherGenomes() {
 		return other;
 	}
 	

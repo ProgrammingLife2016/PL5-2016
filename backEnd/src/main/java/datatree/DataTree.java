@@ -35,7 +35,7 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param genomes The Genomes containing the strands.
      */
 
-    public void addStrands(ArrayList<Genome> genomes) {
+    public void addStrandsFromGenomes(ArrayList<Genome> genomes) {
 
 
         //add all strands to the leafs.

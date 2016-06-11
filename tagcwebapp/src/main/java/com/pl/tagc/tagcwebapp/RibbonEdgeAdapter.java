@@ -1,26 +1,19 @@
 package com.pl.tagc.tagcwebapp;
 
-import ribbonnodes.RibbonEdge;
-
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.awt.Color;
+import ribbonnodes.RibbonEdge;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * The Class RibbonEdgeAdapter.
  */
 public class RibbonEdgeAdapter extends XmlAdapter<AdaptedRibbonEdge, RibbonEdge> {
 
-    /* (non-Javadoc)
-     * @see javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
-     */
     @Override
     public RibbonEdge unmarshal(AdaptedRibbonEdge adaptedRibbonEdge) throws Exception {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
-     */
     @Override
     public AdaptedRibbonEdge marshal(RibbonEdge edge) throws Exception {
     	AdaptedRibbonEdge adaptedEdge = new AdaptedRibbonEdge();

@@ -3,6 +3,7 @@ package ribbonnodes;
 import genome.Strand;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Factory for the making of ribbons derived from strands.
@@ -22,7 +23,7 @@ public abstract class RibbonNodeFactory {
                                                       Strand strand,
                                                       ArrayList<String> activeGenomes) {
 
-        ArrayList<String> actGen = strand.getGenomes();
+        HashSet<String> actGen = strand.getGenomes();
         actGen.retainAll(activeGenomes);
         RibbonNode ribbon = new RibbonNode(id, actGen);
         ribbon.setX(strand.getX());
@@ -43,7 +44,7 @@ public abstract class RibbonNodeFactory {
     public static ArrayList<RibbonNode> makeRibbonNodesFromSplit(RibbonNode node, int maxId) {
         ArrayList<RibbonNode> result = new ArrayList<>();
         for (String genome : node.getGenomes()) {
-            ArrayList<String> ribbonGenome = new ArrayList<>();
+            HashSet<String> ribbonGenome = new HashSet<String>();
             ribbonGenome.add(genome);
             RibbonNode ribbon = new RibbonNode(++maxId, ribbonGenome);
             ribbon.setX(node.getX());

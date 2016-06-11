@@ -1,6 +1,7 @@
-package controller;
+package genome;
 
-import genome.Strand;
+import java.util.Arrays;
+import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,8 +28,9 @@ public class GenomeGraphTest {
     public void setUp() {
     	data = new GenomeGraph();
     	String[] genomes = {"ref1", "ref2"};
-    	strand1 = new Strand(1, "AA", genomes, "ref1", 0);
-    	strand2 = new Strand(2, "TG", genomes, "ref1", 3);
+		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(genomes));
+    	strand1 = new Strand(1, "AA", genomeSet, "ref1", 0);
+    	strand2 = new Strand(2, "TG", genomeSet, "ref1", 3);
     	
     	data.addStrand(strand1);
     	data.addStrand(strand2);
@@ -39,7 +41,7 @@ public class GenomeGraphTest {
      */
     @Test
     public void testAddStrand() {
-    	assertEquals(data.getStrandNodes().get(strand1.getId()), strand1);
-    	assertEquals(data.getStrandNodes().get(strand2.getId()), strand2);
+    	assertEquals(data.getStrands().get(strand1.getId()), strand1);
+    	assertEquals(data.getStrands().get(strand2.getId()), strand2);
     }
 }

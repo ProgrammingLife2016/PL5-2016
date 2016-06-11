@@ -3,6 +3,7 @@ package ribbonnodes;
 import genome.Strand;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by Matthijs on 12-5-2016.
@@ -37,8 +38,9 @@ public class RibbonNode {
     /**
      * The genomes that go through this node.
      */
-    private ArrayList<String> genomes;
-
+    
+    private HashSet<String> genomes;
+    
     /**
      * The strands contained in this node.
      */
@@ -61,7 +63,7 @@ public class RibbonNode {
      * @param id      The id.
      * @param genomes The genomes.
      */
-    public RibbonNode(int id, ArrayList<String> genomes) {
+    public RibbonNode(int id, HashSet<String> genomes) {
         inEdges = new ArrayList<>();
         outEdges = new ArrayList<>();
         strands = new ArrayList<>();
@@ -206,7 +208,7 @@ public class RibbonNode {
      *
      * @return Genomes.
      */
-    public ArrayList<String> getGenomes() {
+    public HashSet<String> getGenomes() {
         return genomes;
     }
 

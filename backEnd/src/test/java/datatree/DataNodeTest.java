@@ -2,11 +2,15 @@ package datatree;
 
 import genome.Strand;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import phylogenetictree.PhylogeneticNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -72,7 +76,8 @@ public class DataNodeTest {
     @Test
     public void testSetStrands() throws Exception {
         String[] strandGenomes = {"1"};
-        Strand strand = new Strand(1, "tagc", strandGenomes, "1", 0);
+		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strandGenomes));
+        Strand strand = new Strand(1, "tagc", genomeSet, "1", 0);
         ArrayList<Strand> strands = new ArrayList<>();
         strands.add(strand);
         node.setStrands(strands);

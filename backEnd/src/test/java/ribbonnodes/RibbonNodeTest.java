@@ -4,8 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test class to test the ribbonNodes.
@@ -29,8 +32,9 @@ public class RibbonNodeTest {
         ArrayList<String> genomes = new ArrayList<>();
         genomes.add("genome1");
         genomes.add("genome2");
-        node1 = new RibbonNode(0, genomes);
-        node2 = new RibbonNode(1, genomes);
+		HashSet<String> genomeSet = new HashSet<String>(genomes);
+        node1 = new RibbonNode(0, genomeSet);
+        node2 = new RibbonNode(1, genomeSet);
         edge = new RibbonEdge(0, 1);
         edge2 = new RibbonEdge(0, 6);
         node1.addEdge(edge);
@@ -140,7 +144,7 @@ public class RibbonNodeTest {
     @Test
     public void testGetGenomes() throws Exception {
         assertEquals(node1.getGenomes().size(), 2);
-        assertEquals(node1.getGenomes().get(0), "genome1");
+        assertTrue(node1.getGenomes().contains("genome1"));
     }
 
     /**

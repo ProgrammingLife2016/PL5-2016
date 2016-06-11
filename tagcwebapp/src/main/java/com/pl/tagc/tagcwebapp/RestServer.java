@@ -7,11 +7,8 @@ import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.ServerConfiguration;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer;
 import org.glassfish.jersey.server.ResourceConfig;
-
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.ext.RuntimeDelegate;
-
-
 
 /**
  * The Class RestServer.
@@ -63,6 +60,7 @@ public class RestServer {
 		} catch (Exception ex) {
 			throw new ProcessingException("Exception thrown when trying to start grizzly server",
 					ex);
+			
 		}
 		
 		System.out.println(String.format("Application started.%n" + "Access it at %s%n"

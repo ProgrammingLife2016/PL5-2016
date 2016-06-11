@@ -1,6 +1,6 @@
 package mutation;
 
-import controller.GenomeGraph;
+import genome.GenomeGraph;
 import genome.Strand;
 import genome.StrandEdge;
 
@@ -49,7 +49,7 @@ public class MutationsTest {
 		strands.put(2, strand3);
 		strands.put(3, strand4);
 		captor = new ArgumentCaptor<AbstractMutation>();
-		Mockito.when(graph.getStrandNodes()).thenReturn(strands);
+		Mockito.when(graph.getStrands()).thenReturn(strands);
 		Mockito.when(strand1.getId()).thenReturn(0);
 		Mockito.when(strand2.getId()).thenReturn(1);
 		Mockito.when(strand3.getId()).thenReturn(2);
@@ -62,12 +62,14 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testNoMutation() {
-		Mockito.when(strand1.getEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		Mockito.when(strand2.getEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new StrandEdge(1, 3))));
-		Mockito.when(strand3.getEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(strand4.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
+						new StrandEdge(new Strand(0), new Strand(2)))));
+		Mockito.when(strand2.getOutgoingEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new StrandEdge(new Strand(1), 
+				new Strand(3)))));
+		Mockito.when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand4.getOutgoingEdges()).thenReturn(new ArrayList<>());
 		Mockito.when(strand2.getSequence()).thenReturn("aa");
 		Mockito.when(strand3.getSequence()).thenReturn("ac");
 		Mockito.when(strand4.getSequence()).thenReturn("ag");
@@ -80,11 +82,13 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationIndel() {
-		Mockito.when(strand1.getEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		Mockito.when(strand2.getEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new StrandEdge(1, 2))));
-		Mockito.when(strand3.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
+						new StrandEdge(new Strand(0), new Strand(2)))));
+		Mockito.when(strand2.getOutgoingEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new StrandEdge(new Strand(0), 
+						new Strand(2)))));
+		Mockito.when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>());
 		Mockito.when(strand2.getSequence()).thenReturn("aa");
 		Mockito.when(strand3.getSequence()).thenReturn("ac");
 		mutations.computeAllMutations();
@@ -97,13 +101,14 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationSNP() {
-		Mockito.when(strand1.getEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		Mockito.when(strand2.getEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new StrandEdge(1, 3))));
-		Mockito.when(strand3.getEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new StrandEdge(2, 3))));
-		Mockito.when(strand4.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
+						new StrandEdge(new Strand(0), new Strand(2)))));
+		Mockito.when(strand2.getOutgoingEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new StrandEdge(new Strand(1), new Strand(3)))));
+		Mockito.when(strand3.getOutgoingEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new StrandEdge(new Strand(2), new Strand(3)))));
+		Mockito.when(strand4.getOutgoingEdges()).thenReturn(new ArrayList<>());
 		Mockito.when(strand2.getSequence()).thenReturn("a");
 		Mockito.when(strand3.getSequence()).thenReturn("c");
 		Mockito.when(strand4.getSequence()).thenReturn("aaa");
@@ -117,10 +122,11 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationTandemDuplication() {
-		Mockito.when(strand1.getEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(0, 1), new StrandEdge(0, 2))));
-		Mockito.when(strand2.getEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(strand3.getEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
+						new StrandEdge(new Strand(0), new Strand(2)))));
+		Mockito.when(strand2.getOutgoingEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>());
 		Mockito.when(strand2.getSequence()).thenReturn("a");
 		Mockito.when(strand3.getSequence()).thenReturn("tagc");
 		mutations.computeAllMutations();

@@ -1,9 +1,11 @@
 package genome;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -19,7 +21,8 @@ public class StrandTest {
     @Before
     public void setUp() {
         String[] genomes = {"ref1", "ref2"};
-        strand = new Strand(1, "AA", genomes, "ref1", 0);
+		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(genomes));
+        strand = new Strand(1, "AA", genomeSet, "ref1", 0);
     }
 
     /**
@@ -47,12 +50,13 @@ public class StrandTest {
      */
     @Test
     public void testGetGenomes() {
-        assertEquals(strand.getGenomes().get(0), "ref1");
-        assertEquals(strand.getGenomes().get(1), "ref2");
+        assertTrue(strand.getGenomes().contains("ref1"));
+        assertTrue(strand.getGenomes().contains("ref2"));
         String[] temp = {"ref3", "ref4"};
-        strand.setGenomes(temp);
-        assertEquals(strand.getGenomes().get(0), "ref3");
-        assertEquals(strand.getGenomes().get(1), "ref4");
+		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(temp));
+        strand.setGenomes(genomeSet);
+        assertTrue(strand.getGenomes().contains("ref3"));
+        assertTrue(strand.getGenomes().contains("ref4"));
     }
 
     /**
@@ -70,9 +74,9 @@ public class StrandTest {
      */
     @Test
     public void testGetReferenceCoordinate() {
-        assertEquals(strand.getReferenceCoordinate(), 0);
-        strand.setReferenceCoordinate(10);
-        assertEquals(strand.getReferenceCoordinate(), 10);
+        assertEquals(strand.getStartCoordinate(), 0);
+        strand.setStartCoordinate(10);
+        assertEquals(strand.getStartCoordinate(), 10);
     }
 
     /**
@@ -93,8 +97,8 @@ public class StrandTest {
      */
     @Test
     public void testGetEdges() throws Exception {
-        StrandEdge edge = new StrandEdge(1, 2);
+        StrandEdge edge = new StrandEdge(strand, new Strand(2));
         strand.addEdge(edge);
-        assertEquals(strand.getEdges().get(0), edge);
+        assertEquals(strand.getOutgoingEdges().get(0), edge);
     }
 }

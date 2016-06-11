@@ -1,21 +1,17 @@
-package controller;
+package ribbonnodes;
 
 import datatree.DataTree;
 import genome.Genome;
+import genome.GenomeGraph;
 import genome.Strand;
 import mutation.AbstractMutation;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Matchers;
-
-import ribbonnodes.RibbonEdge;
-import ribbonnodes.RibbonNode;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.HashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -113,7 +109,7 @@ public class RibbonControllerTest {
 
     @Test
     public void testCollapseRibbons() throws Exception {
-        ArrayList<String> genomes = new ArrayList<>();
+        HashSet<String> genomes = new HashSet<String>();
         genomes.add("1");
         ArrayList<RibbonNode> nodes = new ArrayList<>();
         RibbonNode node1 = new RibbonNode(0, genomes);
@@ -141,7 +137,7 @@ public class RibbonControllerTest {
      */
     @Test
     public void testGetNodeWithId() throws Exception {
-        ArrayList<String> genomes = new ArrayList<>();
+    	HashSet<String> genomes = new HashSet<String>();
         genomes.add("1");
         ArrayList<RibbonNode> nodes = new ArrayList<>();
         RibbonNode node1 = new RibbonNode(0, genomes);
@@ -171,9 +167,9 @@ public class RibbonControllerTest {
         actGen.add("2");
         actGen.add("3");
         ArrayList<RibbonNode> nodes = new ArrayList<>();
-        RibbonNode node1 = new RibbonNode(0, new ArrayList<>(Arrays.asList("1")));
-        RibbonNode node2 = new RibbonNode(1, new ArrayList<>(Arrays.asList("1", "2")));
-        RibbonNode node3 = new RibbonNode(2, new ArrayList<>(Arrays.asList("1", "2", "3")));
+        RibbonNode node1 = new RibbonNode(0, new HashSet<String>(Arrays.asList("1")));
+        RibbonNode node2 = new RibbonNode(1, new HashSet<String>(Arrays.asList("1", "2")));
+        RibbonNode node3 = new RibbonNode(2, new HashSet<String>(Arrays.asList("1", "2", "3")));
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
@@ -184,9 +180,9 @@ public class RibbonControllerTest {
             if (node.getGenomes().size() == actGen.size()) {
                 assertEquals(node.getY(), 0);
             } else if (node.getGenomes().size() == 1) {
-                if (node.getGenomes().get(0).equals("1")) {
+                if (node.getGenomes().iterator().next().equals("1")) {
                     assertEquals(node.getY(), 20);
-                } else if (node.getGenomes().get(0).equals("2")) {
+                } else if (node.getGenomes().iterator().next().equals("2")) {
                     assertEquals(node.getY(), -20);
                 }
 
@@ -203,7 +199,7 @@ public class RibbonControllerTest {
      */
     @Test
     public void testAddEdges() throws Exception {
-        ArrayList<String> genomes = new ArrayList<>();
+    	HashSet<String> genomes = new HashSet<String>();
         genomes.add("1");
         ArrayList<RibbonNode> nodes = new ArrayList<>();
         RibbonNode node1 = new RibbonNode(0, genomes);
@@ -230,8 +226,8 @@ public class RibbonControllerTest {
     public void testAddEdgeReturnEnd() throws Exception {
 
         ArrayList<RibbonNode> nodes = new ArrayList<>();
-        RibbonNode node1 = new RibbonNode(0, new ArrayList<>(Arrays.asList("1", "2")));
-        RibbonNode node2 = new RibbonNode(1, new ArrayList<>(Arrays.asList("1", "2")));
+        RibbonNode node1 = new RibbonNode(0, new HashSet<String>(Arrays.asList("1", "2")));
+        RibbonNode node2 = new RibbonNode(1, new HashSet<String>(Arrays.asList("1", "2")));
         nodes.add(node1);
         nodes.add(node2);
 
@@ -254,15 +250,16 @@ public class RibbonControllerTest {
     public void testFindNextNodeWithGenome() throws Exception {
 
         ArrayList<RibbonNode> nodes = new ArrayList<>();
-        RibbonNode node1 = new RibbonNode(0, new ArrayList<>(Arrays.asList("1")));
-        RibbonNode node2 = new RibbonNode(1, new ArrayList<>(Arrays.asList("1", "2")));
-        RibbonNode node3 = new RibbonNode(2, new ArrayList<>(Arrays.asList("1", "2", "3")));
+        RibbonNode node1 = new RibbonNode(0, new HashSet<String>(Arrays.asList("1")));
+        RibbonNode node2 = new RibbonNode(1, new HashSet<String>(Arrays.asList("1", "2")));
+        RibbonNode node3 = new RibbonNode(2, new HashSet<String>(Arrays.asList("1", "2", "3")));
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
 
         assertEquals(controller.findNextNodeWithGenome(nodes, new Genome("2"), 1), node3);
     }
+ 
 
     /**
      * Test the adding of mutation labels. Empty for now.
@@ -278,8 +275,9 @@ public class RibbonControllerTest {
     	Mockito.when(node.getStrands()).thenReturn(new ArrayList<>(Arrays.asList(strand)));
     	Mockito.when(strand.getMutations()).thenReturn(new ArrayList<>(Arrays.asList(mutation)));
     	Mockito.when(mutation.getReferenceGenomes()).thenReturn(
-    			new ArrayList<>(Arrays.asList("1")));
-    	Mockito.when(mutation.getOtherGenomes()).thenReturn(new ArrayList<>(Arrays.asList("2")));
+    			new HashSet<String>(Arrays.asList("1")));
+    	Mockito.when(mutation.getOtherGenomes()).thenReturn(
+    			new HashSet<String>(Arrays.asList("2")));
     	
     	ArrayList<RibbonNode> nodes = new ArrayList<>(Arrays.asList(node));
     	ArrayList<String> actGen = new ArrayList<>(Arrays.asList("1", "2"));

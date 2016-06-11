@@ -84,7 +84,7 @@ public final class TempReadWriteTree {
 				int nodeId = Integer.parseInt(splitted[0]);
 				DataNode current = tree.getRoot().getNode(nodeId);
 				String[] strandIDs = splitted[1].split(";");
-				ArrayList<Strand> strandsInNode = new ArrayList<>();
+				ArrayList<Strand> strandsInNode = new ArrayList<Strand>();
 				for (String strandID : strandIDs) {
 					strandsInNode.add(strands.get(Integer.parseInt(strandID)));
 				}

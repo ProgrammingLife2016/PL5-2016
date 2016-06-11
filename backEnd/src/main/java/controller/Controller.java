@@ -3,14 +3,16 @@ package controller;
 import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
-import mutation.Mutations;
+import genome.GSearchResult;
+import genome.GenomeGraph;
+import genome.GraphSearcher.SearchType;
 import parser.Parser;
+import mutation.Mutations;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import ribbonnodes.RibbonController;
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -18,7 +20,7 @@ import java.util.List;
 /**
  * Controller. This class connects the classes together.
  */
-public class Controller implements FrontEndBackEndInterface {
+public class Controller {
 
     /**
      * The genome graph.
@@ -40,38 +42,32 @@ public class Controller implements FrontEndBackEndInterface {
      */
     private RibbonController ribbonController;
 
-    /**
-     * Controller Singleton.
-     */
-    private static controller.Controller dc = null;
 
     /**
      * Constructor.
      */
     public Controller() {
-        String gfaFile = "data/TB328.gfa";
+        String gfaFile = "data/TB10.gfa";
         genomeGraph = Parser.parse(gfaFile);
-        genomeGraph.generateGenomes();
+        genomeGraph.annotate("MT_H37RV_BRD_V5.ref", 
+        		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
+        genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
         genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
-        dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size() / 8);
+        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
 
         if (gfaFile.equals("data/TB328.gfa")) {
-            TempReadWriteTree.readFile(dataTree, genomeGraph.getStrandNodes(), "data/tempTree.txt");
+            TempReadWriteTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
         } else {
-            dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+            dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);
         Mutations mutations = new Mutations(genomeGraph);
         mutations.computeAllMutations();
-        dc = this;
-
-
-        genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
     }
 
     /**
@@ -88,6 +84,16 @@ public class Controller implements FrontEndBackEndInterface {
         return ribbonController.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap);
     }
 
+    /**
+     * Search.
+     *
+     * @param searchString the search string
+     * @param searchType the search type
+     * @return the g search result
+     */
+    public GSearchResult search(String searchString, SearchType searchType) {
+        return genomeGraph.search(searchString, searchType);
+    }
 
     /**
      * Getter for the phylogenicTree.
@@ -114,19 +120,6 @@ public class Controller implements FrontEndBackEndInterface {
      * @return the list   	The list of unrecognized genomes.
      */
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
-        System.out.println(activeGenomes);
         return genomeGraph.setGenomesAsActive(activeGenomes);
     }
-
-    /**
-     * Get the singleton dc.
-     * If dc is not instantiated yet, do this first.
-     *
-     * @return The controller dc.
-     */
-    public static Controller getDC() {
-        return dc;
-    }
-
-
 }

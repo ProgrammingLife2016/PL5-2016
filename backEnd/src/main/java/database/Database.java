@@ -85,8 +85,6 @@ public class Database {
         if (!useExistingDB) {
             deleteDirectory(new File(path));
         }
-
-        System.out.println("setting up connection");
         GraphDatabaseBuilder dbBuilder = new GraphDatabaseFactory().
                 newEmbeddedDatabaseBuilder(new File(path));
         graphDb = dbBuilder.newGraphDatabase();
@@ -212,7 +210,7 @@ public class Database {
             while (r.hasNext()) {
                 Map<String, Object> row = r.next();
                 for (Object n : row.values()) {
-                    result.add(new Strand(n));
+                    //result.add(new Strand(n));
                 }
             }
         }
@@ -232,7 +230,7 @@ public class Database {
             while (r.hasNext()) {
                 Map<String, Object> row = r.next();
                 for (Object n : row.values()) {
-                    result.add(new StrandEdge(n));
+                    //result.add(new StrandEdge(n));
                 }
             }
         }
@@ -253,7 +251,7 @@ public class Database {
             while (r.hasNext()) {
                 Map<String, Object> row = r.next();
                 for (Object n : row.values()) {
-                    genome.addStrand(new Strand(n));
+                    //genome.addStrand(new Strand(n));
                 }
             }
         }
@@ -301,7 +299,6 @@ public class Database {
 
 		while (it.hasNext()) {
 			Node n = it.next();
-			System.out.println(n.getAllProperties());
 			String genomeId = n.getProperty("id").toString();
 			String lineage = n.getProperty("lineage").toString();
 			hmap.put(genomeId, new GenomeMetadata(genomeId, lineage));
@@ -324,7 +321,6 @@ public class Database {
 		File temp = new File("temp/metadata.csv");
 		try {
 			temp.createNewFile();
-			System.out.println(temp.toPath());
 			Files.copy(in, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();

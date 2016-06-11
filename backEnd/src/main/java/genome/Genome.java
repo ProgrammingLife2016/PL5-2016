@@ -2,7 +2,10 @@ package genome;
 
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class Genome.
+ *
  * @author Jeffrey Helgers
  */
 public class Genome {
@@ -17,6 +20,7 @@ public class Genome {
      */
     private String id;
     
+    
     /**
      * The meta data of this genome.
      */
@@ -29,7 +33,7 @@ public class Genome {
      */
     public Genome(String id) {
         this.id = id;
-        strands = new ArrayList<>();
+        strands = new ArrayList<Strand>();
     }
 
 
@@ -48,7 +52,7 @@ public class Genome {
      * @return The strands the genome passes through.
      */
     public ArrayList<Strand> getStrands() {
-        return strands;
+        return new ArrayList<Strand>(strands);
     }
 
     /**
@@ -71,6 +75,8 @@ public class Genome {
 
 
     /**
+     * Gets the metadata.
+     *
      * @return the metadata
      */
     public GenomeMetadata getMetadata() {
@@ -79,6 +85,8 @@ public class Genome {
 
 
     /**
+     * Sets the metadata.
+     *
      * @param metadata the metadata to set
      */
     public void setMetadata(GenomeMetadata metadata) {
@@ -93,4 +101,18 @@ public class Genome {
     public boolean hasMetadata() {
         return this.metadata != null;
     }
+
+	
+
+
+	/**
+	 * Sets the strands.
+	 *
+	 * @param strands the new strands
+	 */
+	public void setStrands(ArrayList<Strand> strands) {
+		this.strands = strands;
+		
+	}
+	
 }

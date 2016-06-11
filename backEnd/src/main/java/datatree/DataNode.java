@@ -161,4 +161,14 @@ public class DataNode extends AbstractTreeNode<DataNode> {
     public void setGenomes(ArrayList<String> genomes) {
         this.genomes = genomes;
     }
+
+	/**
+	 * Adds the genome id.
+	 *
+	 * @param string the string
+	 */
+	public void addGenomeId(String string) {
+		genomes.add(string);
+		
+	}
 }
