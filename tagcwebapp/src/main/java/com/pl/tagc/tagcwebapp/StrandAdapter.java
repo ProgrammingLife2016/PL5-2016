@@ -21,6 +21,7 @@ public class StrandAdapter extends XmlAdapter<AdaptedStrand, Strand> {
     	adaptedNode.setReferenceCoordinate(node.getStartCoordinate());
     	adaptedNode.setId(node.getId());
     	adaptedNode.setGenomes(node.getGenomes());
+    	adaptedNode.setX(node.getX());
         return adaptedNode;
     }
 

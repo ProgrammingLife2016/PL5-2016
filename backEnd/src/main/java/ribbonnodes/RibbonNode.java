@@ -9,46 +9,53 @@ import java.util.HashSet;
  * Created by Matthijs on 12-5-2016.
  */
 public class RibbonNode {
-    
-	/**
-	 * The id of the Node.
-	 */
-	private int id;
-	
-	/**
-	 * The x coordinate of the Node.
-	 */
+
+    /**
+     * The id of the Node.
+     */
+    private int id;
+
+    /**
+     * The x coordinate of the Node.
+     */
     private int x;
-    
+
     /**
      * The y coordinate of the Node.
      */
     private int y;
-    
+
     /**
      * The edges going in to the node.
      */
     private ArrayList<RibbonEdge> inEdges;
-    
+
     /**
      * The edges going out of the node.
      */
     private ArrayList<RibbonEdge> outEdges;
-    
+
     /**
      * The genomes that go through this node.
      */
+    
     private HashSet<String> genomes;
     
     /**
      * The strands contained in this node.
      */
     private ArrayList<Strand> strands;
-    
+
     /**
      * The entire strand contained in this node.
      */
     private String label;
+
+
+    /**
+     * Draw the node or not.
+     */
+    private boolean isVisible;
 
     /**
      * Constructor for the RibbonNode.
@@ -65,15 +72,23 @@ public class RibbonNode {
         this.id = id;
         this.x = 0; //for now
         this.y = 0;
+        this.isVisible = true;
     }
 
     /**
-     * Get the label.
+     * Get the label, with new lines.
      *
      * @return Label.
      */
     public String getLabel() {
-        return label;
+        StringBuilder newLabel = new StringBuilder();
+        for (int i = 0; i < label.length(); i += 40) {
+            String sub = label.substring(i, Math.min(i + 40, label.length()));
+            newLabel.append(sub);
+            newLabel.append("\n");
+        }
+
+        return newLabel.toString();
     }
 
     /**
@@ -117,12 +132,6 @@ public class RibbonNode {
      */
     public void setLabel(String label) {
         this.label = label;
-        String newLabel = "";
-        for (int i = 0; i < label.length(); i += 40) {
-            String sub = label.substring(i, Math.min(i + 40, label.length()));
-            newLabel += sub + "\n";
-        }
-        this.label = newLabel;
 
     }
 
@@ -266,6 +275,25 @@ public class RibbonNode {
      */
     public void addStrand(Strand strand) {
         this.strands.add(strand);
-        this.setLabel(label + strand.getSequence() + "\n");
+        this.setLabel(label + strand.getSequence());
+    }
+
+
+    /**
+     * Getter for is visible.
+     *
+     * @return whether node is visible.
+     */
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    /**
+     * Setter for visible.
+     *
+     * @param visible true if node should be drawn.
+     */
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 }

@@ -3,6 +3,7 @@ package mutation;
 import genome.Strand;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * 
@@ -21,8 +22,8 @@ public class MutationIndel extends AbstractMutation {
 	 * @param end				The end Strand.
 	 * @param mutatedStrands	The mutated Strands.
 	 */
-	public MutationIndel(MutationType mutationType, ArrayList<String> reference, 
-			ArrayList<String> other, Strand start, Strand end, ArrayList<Strand> mutatedStrands) {
+	public MutationIndel(MutationType mutationType, HashSet<String> reference, 
+			HashSet<String> other, Strand start, Strand end, ArrayList<Strand> mutatedStrands) {
 		super(mutationType, reference, other, start);
 		if (mutationType.getBetween() && !mutationType.equals(MutationType.SNP)) {
 			setEndStrand(end);

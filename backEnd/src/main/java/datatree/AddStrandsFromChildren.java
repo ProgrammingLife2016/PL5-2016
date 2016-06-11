@@ -1,10 +1,10 @@
 package datatree;
 
+import genome.Strand;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;
-
-import genome.Strand;
 
 /**
  * 
@@ -13,7 +13,7 @@ import genome.Strand;
  * Makes use of a RecursiveAction to speed the process up.
  */
 public class AddStrandsFromChildren extends RecursiveAction {
-
+	
 	/**
 	 * The node on which the computation is made.
 	 */

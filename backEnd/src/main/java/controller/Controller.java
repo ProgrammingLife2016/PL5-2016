@@ -8,14 +8,11 @@ import genome.GenomeGraph;
 import genome.GraphSearcher.SearchType;
 import parser.Parser;
 import mutation.Mutations;
-
+import phylogenetictree.PhylogeneticTree;
+import ribbonnodes.RibbonNode;
 import java.util.ArrayList;
 import java.util.List;
-
-import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonController;
-import ribbonnodes.RibbonNode;
-
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -69,7 +66,6 @@ public class Controller {
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);
-        ribbonController.setMaxStrandsToReturn(3000);
         Mutations mutations = new Mutations(genomeGraph);
         mutations.computeAllMutations();
     }
@@ -80,10 +76,12 @@ public class Controller {
      * @param minX      The minimal X of the nodes.
      * @param maxX      The maximal X of the nodes.
      * @param zoomLevel The zoomlevel to filter to.
+     * @param isMiniMap Boolean if this is the minimap.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, int zoomLevel) {
-        return ribbonController.getRibbonNodes(minX, maxX, zoomLevel);
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, 
+    		int zoomLevel, boolean isMiniMap) {
+        return ribbonController.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap);
     }
 
     /**
@@ -124,5 +122,4 @@ public class Controller {
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
         return genomeGraph.setGenomesAsActive(activeGenomes);
     }
-
 }

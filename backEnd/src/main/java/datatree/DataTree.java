@@ -7,7 +7,6 @@ import genome.Strand;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
 import java.util.concurrent.ForkJoinPool;
 
 /**
@@ -18,7 +17,7 @@ public class DataTree extends TreeStructure<DataNode> {
     /**
      * The minimal amount of strands to return.
      */
-    private int minStrandsToReturn=0;
+    private int minStrandsToReturn = 0;
 
     /**
      * Default constructor.
@@ -79,13 +78,11 @@ public class DataTree extends TreeStructure<DataNode> {
      */
     public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes) {
         ArrayList<Strand> result = new ArrayList<>();
-        ArrayList<Integer> resultIDs = new ArrayList<>();
 
         for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
                 if (strand.getX() > xMin - 10000 && strand.getX() < xMax + 10000) {
                     result.add(strand);
-                    resultIDs.add(strand.getId());
                 }
             }
 
@@ -126,14 +123,14 @@ public class DataTree extends TreeStructure<DataNode> {
         int totalStrands = 0;
         while (currentNode.getLevel() <= level) {
             result.add(currentNode);
-            totalStrands+=currentNode.getStrands().size();
+            totalStrands += currentNode.getStrands().size();
             currentNode = currentNode.getChildWithGenome(genome.getId());
             if (currentNode == null) {
                 break;
             }
         }
-        if(totalStrands<minStrandsToReturn){
-            result=getDataNodesForGenome(genome, level+1);
+        if (totalStrands < minStrandsToReturn) {
+            result = getDataNodesForGenome(genome, level + 1);
         }
         return result;
 
@@ -142,6 +139,7 @@ public class DataTree extends TreeStructure<DataNode> {
 
     /**
      * Set the minimal strands to return.
+     *
      * @param minStrandsToReturn The minimal strands amount to return.
      */
     public void setMinStrandsToReturn(int minStrandsToReturn) {

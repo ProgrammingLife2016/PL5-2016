@@ -6,6 +6,7 @@ package com.pl.tagc.tagcwebapp;
 
 import java.util.HashSet;
 
+// TODO: Auto-generated Javadoc
 /**
  * Class that contains the graph nodes.
  */
@@ -15,6 +16,11 @@ public class AdaptedStrand {
 	 * Node id.
 	 */
 	private int id;
+	
+	/**
+	 * x coordinate of this strand.
+	 */
+	private int x;
 
 	/**
 	 * Genomes that contain this node.
@@ -142,6 +148,24 @@ public class AdaptedStrand {
 	public void setGenomes(HashSet<String> genomes) {
 		this.genomes = genomes;
 		
+	}
+
+	/**
+	 * Gets the x.
+	 *
+	 * @return the x
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * Sets the x.
+	 *
+	 * @param x the new x
+	 */
+	public void setX(int x) {
+		this.x = x;
 	} 
 	
 }
