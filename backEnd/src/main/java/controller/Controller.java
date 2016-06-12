@@ -6,13 +6,14 @@ import datatree.TempReadWriteTree;
 import genome.GSearchResult;
 import genome.GenomeGraph;
 import genome.GraphSearcher.SearchType;
-import parser.Parser;
 import mutation.Mutations;
+import parser.Parser;
 import phylogenetictree.PhylogeneticTree;
+import ribbonnodes.RibbonController;
 import ribbonnodes.RibbonNode;
+
 import java.util.ArrayList;
 import java.util.List;
-import ribbonnodes.RibbonController;
 /**
  * Created by Matthijs on 24-4-2016.
  */

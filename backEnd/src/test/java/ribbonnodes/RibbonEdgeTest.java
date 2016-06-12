@@ -25,8 +25,8 @@ public class RibbonEdgeTest {
     @Before
     public void setUp() throws Exception {
         HashSet<String> genome = new HashSet<>(Arrays.asList("1"));
-        RibbonNode node1= new RibbonNode(0,genome);
-        RibbonNode node2 = new RibbonNode(1,genome);
+        RibbonNode node1 = new RibbonNode(0, genome);
+        RibbonNode node2 = new RibbonNode(1, genome);
         edge = new RibbonEdge(node1, node2);
 
     }

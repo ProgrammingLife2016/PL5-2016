@@ -38,9 +38,9 @@ public class RibbonNode {
     /**
      * The genomes that go through this node.
      */
-    
+
     private HashSet<String> genomes;
-    
+
     /**
      * The strands contained in this node.
      */
@@ -178,7 +178,7 @@ public class RibbonNode {
      */
     public void setOutEdges(ArrayList<RibbonEdge> outEdges) {
         this.outEdges = outEdges;
-        for(RibbonEdge edge: this.outEdges){
+        for (RibbonEdge edge : this.outEdges) {
             edge.setStart(this);
         }
     }

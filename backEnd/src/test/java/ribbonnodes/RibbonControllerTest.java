@@ -1,22 +1,19 @@
 package ribbonnodes;
 
-import datatree.DataNode;
 import datatree.DataTree;
-import datatree.TempReadWriteTree;
 import genome.Genome;
 import genome.GenomeGraph;
 import genome.Strand;
 import mutation.AbstractMutation;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.mockito.Matchers;
-import parser.Parser;
-import phylogenetictree.PhylogeneticTree;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;

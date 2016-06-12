@@ -27,8 +27,8 @@ public class RibbonEdgeFactoryTest {
         Genome genome = new Genome("1");
         genome.setMetadata(metadata);
         HashSet<String> genomeID = new HashSet<>(Arrays.asList("1"));
-        RibbonNode node1= new RibbonNode(0,genomeID);
-        RibbonNode node2 = new RibbonNode(1,genomeID);
+        RibbonNode node1 = new RibbonNode(0, genomeID);
+        RibbonNode node2 = new RibbonNode(1, genomeID);
         RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(node1, node2, genome);
 
         assertEquals(edge.getStart(), node1);
@@ -46,8 +46,8 @@ public class RibbonEdgeFactoryTest {
     public void testCreateRibbonEdgeWithG() throws Exception {
         Genome genome = new Genome("G");
         HashSet<String> genomeID = new HashSet<>(Arrays.asList("1"));
-        RibbonNode node1= new RibbonNode(0,genomeID);
-        RibbonNode node2 = new RibbonNode(1,genomeID);
+        RibbonNode node1 = new RibbonNode(0, genomeID);
+        RibbonNode node2 = new RibbonNode(1, genomeID);
         RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(node1, node2, genome);
 
 
@@ -66,8 +66,8 @@ public class RibbonEdgeFactoryTest {
     public void testCreateRibbonEdgeBrokenData() throws Exception {
         Genome genome = new Genome("broken");
         HashSet<String> genomeID = new HashSet<>(Arrays.asList("1"));
-        RibbonNode node1= new RibbonNode(0,genomeID);
-        RibbonNode node2 = new RibbonNode(1,genomeID);
+        RibbonNode node1 = new RibbonNode(0, genomeID);
+        RibbonNode node2 = new RibbonNode(1, genomeID);
         RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(node1, node2, genome);
 
         assertEquals(edge.getStart(), node1);

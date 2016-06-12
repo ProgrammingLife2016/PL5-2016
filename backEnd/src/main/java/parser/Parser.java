@@ -1,13 +1,13 @@
 package parser;
 
 import com.opencsv.CSVReader;
-
+import genome.GenomeGenerator;
 import genome.GenomeGraph;
 import genome.GenomeMetadata;
 import genome.GenomicFeature;
 import genome.Strand;
 import genome.StrandEdge;
-import genome.GenomeGenerator;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,7 +26,7 @@ import java.util.List;
  * Created by Jeffrey on 24-4-2016.
  */
 public class Parser {
-	
+
     private PrintWriter nodes;
     private PrintWriter edges;
     private PrintWriter phylo;
@@ -100,7 +100,7 @@ public class Parser {
                 if (temp.equals("S")) {
                     Strand strand = createNode(splittedLine);
                     genomeGraph.addStrand(strand);
-                } 
+                }
                 line = reader.readLine();
             }
             in = Parser.class.getClassLoader().getResourceAsStream(file);
@@ -111,12 +111,12 @@ public class Parser {
             while (line != null) {
                 String[] splittedLine = line.split("\t");
                 String temp = splittedLine[0];
-            if (temp.equals("L")) {
-                StrandEdge edge = createEdge(splittedLine,genomeGraph);
-                genomeGraph.getStrand(edge.getStart().getId()).addEdge(edge);
-               genomeGraph.getStrand(edge.getEnd().getId()).addEdge(edge);
-            }
-            line = reader.readLine();
+                if (temp.equals("L")) {
+                    StrandEdge edge = createEdge(splittedLine, genomeGraph);
+                    genomeGraph.getStrand(edge.getStart().getId()).addEdge(edge);
+                    genomeGraph.getStrand(edge.getEnd().getId()).addEdge(edge);
+                }
+                line = reader.readLine();
             }
             reader.close();
             genomeGraph.setGenomes(GenomeGenerator.generateGenomes(genomeIds, genomeGraph));
@@ -161,47 +161,45 @@ public class Parser {
     }
 
     private static String[] removeEnding(String string, String[] genomeIds) {
-    	String[] trimmedGenomeIds = new String[genomeIds.length];
+        String[] trimmedGenomeIds = new String[genomeIds.length];
         for (int i = 0; i < genomeIds.length; i++) {
             String genomeId = genomeIds[i];
             if (genomeId.endsWith(string)) {
-            	trimmedGenomeIds[i] = genomeId.substring(0, genomeId.length() - 6);
+                trimmedGenomeIds[i] = genomeId.substring(0, genomeId.length() - 6);
             }
         }
-		return trimmedGenomeIds;
-	}
+        return trimmedGenomeIds;
+    }
 
-	/**
-     * Reads the file as a graph in to an Controller.
+    /**
+     * Parses the genome metadata.
      *
-     * @param file The file that is read.
-     * @return The graph in the file.
+     * @param filePath the file path
+     * @return the hash map
      */
-    private void parseToCSV(String file) {
-        BufferedReader reader;
-        String line;
+    public static List<GenomicFeature> parseAnnotations(String filePath) {
+        List<GenomicFeature> list = new ArrayList<GenomicFeature>();
+        InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
+        CSVReader reader = new CSVReader(new InputStreamReader(in), '\t');
+        String[] nextLine;
         try {
-            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
-            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            reader.readLine();
-            reader.readLine();
-            line = reader.readLine();
-            while (line != null) {
-                String[] splittedLine = line.split("\t");
-                String temp = splittedLine[0];
-                if (temp.equals("S")) {
-                    writeNode(splittedLine);
-                } else if (temp.equals("L")) {
-                    writeEdge(splittedLine);
+            while ((nextLine = reader.readNext()) != null) {
+                int start = Integer.parseInt(nextLine[3]);
+                int end = Integer.parseInt(nextLine[4]);
+                String temp = "";
+                for (int i = 8; i < nextLine.length; i++) {
+                    temp = temp + nextLine[i];
                 }
-                line = reader.readLine();
+                String[] attributes = temp.split(";");
+                String displayName = attributes[attributes.length - 1];
+                list.add(new GenomicFeature(start, end, displayName));
             }
             reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return list;
     }
 
     /**
@@ -307,35 +305,37 @@ public class Parser {
 
         return hmap;
     }
+
     /**
-     * Parses the genome metadata.
+     * Reads the file as a graph in to an Controller.
      *
-     * @param filePath the file path
-     * @return the hash map
+     * @param file The file that is read.
+     * @return The graph in the file.
      */
-    public static List<GenomicFeature> parseAnnotations(String filePath) {
-        List<GenomicFeature> list = new ArrayList<GenomicFeature>();
-        InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
-        CSVReader reader = new CSVReader(new InputStreamReader(in),'\t');
-        String[] nextLine;
+    private void parseToCSV(String file) {
+        BufferedReader reader;
+        String line;
         try {
-            while ((nextLine = reader.readNext()) != null) {
-                int start = Integer.parseInt(nextLine[3]);
-                int end = Integer.parseInt(nextLine[4]);
-                String temp = "";
-                for(int i = 8; i < nextLine.length; i++)
-                {
-                	temp = temp + nextLine[i];
+            InputStream in = Parser.class.getClassLoader().getResourceAsStream(file);
+            reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            reader.readLine();
+            reader.readLine();
+            line = reader.readLine();
+            while (line != null) {
+                String[] splittedLine = line.split("\t");
+                String temp = splittedLine[0];
+                if (temp.equals("S")) {
+                    writeNode(splittedLine);
+                } else if (temp.equals("L")) {
+                    writeEdge(splittedLine);
                 }
-                String[] attributes = temp.split(";");
-                String displayName = attributes[attributes.length-1];
-                list.add(new GenomicFeature(start, end, displayName));
+                line = reader.readLine();
             }
             reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return list;
     }
 }

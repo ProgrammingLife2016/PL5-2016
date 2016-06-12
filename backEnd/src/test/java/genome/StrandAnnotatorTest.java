@@ -1,15 +1,15 @@
 package genome;
 
 
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /**
  * The Class StrandAnnotatorTest.
@@ -51,13 +51,13 @@ public class StrandAnnotatorTest {
 		
 		for (Strand strand : strands) {
 			if (strand.equals(strand11)) {
-				assert (strand.getGenomicFeatures().size() == 2);
+				assert strand.getGenomicFeatures().size() == 2;
 				String featureName1 = strand.getGenomicFeatures().get(0).getDisplayName();
-				assert (featureName1.equals("200_250_feature"));
+				assert featureName1.equals("200_250_feature");
 				String featureName2 = strand.getGenomicFeatures().get(1).getDisplayName();
-				assert (featureName2.equals("1000_1000_feature"));
+				assert featureName2.equals("1000_1000_feature");
 			} else {
-				assert (strand.getGenomicFeatures().size() == 0);
+				assert strand.getGenomicFeatures().size() == 0;
 			}
 		}
 	}
@@ -80,17 +80,17 @@ public class StrandAnnotatorTest {
 		
 		for (Strand strand : strands) {
 			if (strand.equals(strand11)) {
-				assert (strand.getGenomicFeatures().size() == 1);
+				assert strand.getGenomicFeatures().size() == 1;
 				String featureName1 = strand.getGenomicFeatures().get(0).getDisplayName();
-				assert (featureName1.equals("200_250_feature"));				
+				assert featureName1.equals("200_250_feature");
 			} else if ((strand.equals(strand14))) {
-				assert (strand.getGenomicFeatures().size() == 2);
+				assert strand.getGenomicFeatures().size() == 2;
 				String featureName1 = strand.getGenomicFeatures().get(0).getDisplayName();
-				assert (featureName1.equals("200_250_feature"));
+				assert featureName1.equals("200_250_feature");
 				String featureName2 = strand.getGenomicFeatures().get(1).getDisplayName();
-				assert (featureName2.equals("1000_1000_feature"));
+				assert featureName2.equals("1000_1000_feature");
 			} else {
-				assert (strand.getGenomicFeatures().size() == 0);
+				assert strand.getGenomicFeatures().size() == 0;
 			}
 		}
 	}

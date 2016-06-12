@@ -34,6 +34,8 @@ public abstract class RibbonEdgeFactory {
     /**
      * Create and return a Ribbonedge.
      *
+     * @param start  The starting node of the edge.
+     * @param end    The ending node of the edge.
      * @param genome The genome to color the edge for.
      * @return The Created edge.
      */

@@ -1,7 +1,6 @@
 package ribbonnodes;
 
 import genome.Strand;
-
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -94,9 +93,8 @@ public class RibbonNodeFactoryTest {
         node3.addEdge(edge2);
 
 
-
         RibbonNode collapsedNode = RibbonNodeFactory.collapseNodes(
-        		new ArrayList<>(Arrays.asList(node1, node2,node3)));
+                new ArrayList<>(Arrays.asList(node1, node2, node3)));
         assertNotNull(collapsedNode.getInEdge(0, 2));
         assertEquals(node1.getStrands().get(0), strand);
         assertEquals(collapsedNode.getX(), (int) (node3.getX()));

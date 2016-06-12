@@ -2,7 +2,6 @@ package com.pl.tagc.main;
 
 import com.pl.tagc.tagcwebapp.BackEndAdapter;
 import com.pl.tagc.tagcwebapp.RestServer;
-
 import controller.Controller;
 
 import java.util.logging.Level;

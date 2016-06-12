@@ -85,7 +85,7 @@ public class GenomicFeature {
 	 */
 	public boolean overlaps(int start, int end) {
 
-		return !((this.end < start) || (this.start > end));
+		return !(this.end < start || this.start > end);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class GenomicFeature {
 	 * @return true, if successful
 	 */
 	public boolean endsBetween(int start, int end) {
-		return (this.end >= start) && (this.end <= end);
+		return this.end >= start && this.end <= end;
 	}
 	
 	/**

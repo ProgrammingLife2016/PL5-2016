@@ -2,8 +2,6 @@ package database;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import genome.Genome;
-import genome.Strand;
-import genome.StrandEdge;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -18,7 +16,6 @@ import org.neo4j.tooling.GlobalGraphOperations;
 
 import java.io.File;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

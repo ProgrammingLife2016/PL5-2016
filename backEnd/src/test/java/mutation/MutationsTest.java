@@ -3,18 +3,17 @@ package mutation;
 import genome.GenomeGraph;
 import genome.Strand;
 import genome.StrandEdge;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import org.mockito.ArgumentCaptor;
-
 
 import static org.junit.Assert.assertEquals;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
 /**
  * 
  * @author Jeffrey Helgers.

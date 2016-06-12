@@ -1,15 +1,15 @@
 package genome;
 
-import static org.junit.Assert.assertTrue;
 import genome.GraphSearcher.SearchType;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /**
  * The Class GraphSearcherTest.

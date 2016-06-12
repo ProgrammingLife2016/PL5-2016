@@ -5,14 +5,10 @@ import genome.Genome;
 import genome.GenomeGraph;
 import genome.Strand;
 import mutation.AbstractMutation;
-import ribbonnodes.RibbonEdge;
-import ribbonnodes.RibbonEdgeFactory;
-import ribbonnodes.RibbonNode;
-import ribbonnodes.RibbonNodeFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Collections;
+import java.util.HashMap;
 
 
 /**
@@ -109,7 +105,7 @@ public class RibbonController {
     /**
      * Collapses the ribbon Nodes and edges in nodes.
      *
-     * @param nodes The ribbonNode Graph to collapse.
+     * @param nodes     The ribbonNode Graph to collapse.
      * @param zoomLevel The zoomlevel.
      */
     @SuppressWarnings("checkstyle:methodlength")
@@ -241,7 +237,9 @@ public class RibbonController {
      * @return The end node of the edge.
      */
     protected RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes,
-                                              RibbonNode currentNode, Genome genome, boolean isMiniMap) {
+                                          RibbonNode currentNode,
+                                          Genome genome,
+                                          boolean isMiniMap) {
         RibbonNode next = findNextNodeWithGenome(nodes, genome, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {

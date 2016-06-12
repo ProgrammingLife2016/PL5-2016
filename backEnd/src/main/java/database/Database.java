@@ -209,9 +209,9 @@ public class Database {
               Result r = graphDb.execute(query)) {
             while (r.hasNext()) {
                 Map<String, Object> row = r.next();
-                for (Object n : row.values()) {
-                    //result.add(new Strand(n));
-                }
+//                for (Object n : row.values()) {
+//                    //result.add(new Strand(n));
+//                }
             }
         }
         return result;
@@ -229,9 +229,9 @@ public class Database {
              Result r = graphDb.execute(query)) {
             while (r.hasNext()) {
                 Map<String, Object> row = r.next();
-                for (Object n : row.values()) {
-                    //result.add(new StrandEdge(n));
-                }
+//                for (Object n : row.values()) {
+//                    //result.add(new StrandEdge(n));
+//                }
             }
         }
         return result;
@@ -250,9 +250,9 @@ public class Database {
                      + "\" IN n.genomes RETURN n")) {
             while (r.hasNext()) {
                 Map<String, Object> row = r.next();
-                for (Object n : row.values()) {
-                    //genome.addStrand(new Strand(n));
-                }
+//                for (Object n : row.values()) {
+//                    //genome.addStrand(new Strand(n));
+//                }
             }
         }
         return genome;

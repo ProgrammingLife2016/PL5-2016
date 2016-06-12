@@ -114,12 +114,18 @@ public class Genome {
 
     }
 
+    /**
+     * Reset all x's of this genome to 0, prior to recalculating.
+     */
     public void resetStrandX() {
         for (Strand strand : strands) {
             strand.setX(0);
         }
     }
 
+    /**
+     * Caculate and set the x's of all strands in this genome.
+     */
     public void setStrandsX() {
         for (int i = 1; i < strands.size(); i++) {
             Strand prevStrand = strands.get(i - 1);
