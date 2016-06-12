@@ -86,6 +86,7 @@ public class RibbonControllerTest {
      *
      * @throws Exception if fail.
      */
+    @SuppressWarnings("CPD-START")
     @Test
     public void testGetRibbonNodes() throws Exception {
         RibbonController testController = Mockito.mock(RibbonController.class);
@@ -267,6 +268,7 @@ public class RibbonControllerTest {
      *
      * @throws Exception if fail.
      */
+    @SuppressWarnings("CPD-END")
     @Test
     public void testAddMutationLabels() throws Exception {
     	RibbonNode node = Mockito.mock(RibbonNode.class);

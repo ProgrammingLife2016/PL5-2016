@@ -115,8 +115,8 @@ public class Mutations {
                     Strand mutated = strands.get(edge2.getEnd().getId());
                     HashSet<String> reference = new HashSet<String>(start.getGenomes());
                     reference.retainAll(end.getGenomes());
-                    for (StrandEdge edge3 :
-                            strands.get(edge2.getEnd().getId()).getOutgoingEdges()) {
+                    for (StrandEdge edge3
+                            : strands.get(edge2.getEnd().getId()).getOutgoingEdges()) {
                         if (edge3.getEnd().getId() == end.getId()) {
                             HashSet<String> other = new HashSet<String>(mutated.getGenomes());
                             other.removeAll(reference);

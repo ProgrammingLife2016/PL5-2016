@@ -83,7 +83,7 @@ public class StrandAnnotatorTest {
 				assert strand.getGenomicFeatures().size() == 1;
 				String featureName1 = strand.getGenomicFeatures().get(0).getDisplayName();
 				assert featureName1.equals("200_250_feature");
-			} else if ((strand.equals(strand14))) {
+			} else if (strand.equals(strand14)) {
 				assert strand.getGenomicFeatures().size() == 2;
 				String featureName1 = strand.getGenomicFeatures().get(0).getDisplayName();
 				assert featureName1.equals("200_250_feature");

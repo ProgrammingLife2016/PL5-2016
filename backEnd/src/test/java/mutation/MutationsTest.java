@@ -59,6 +59,7 @@ public class MutationsTest {
 	/**
 	 * Test a graph with no mutation.
 	 */
+	@SuppressWarnings("CPD-START")
 	@Test
 	public void testNoMutation() {
 		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
@@ -115,10 +116,11 @@ public class MutationsTest {
 		Mockito.verify(strand1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.SNP);
 	}
-	
+
 	/**
 	 * Test a graph with a tandem duplication.
 	 */
+	@SuppressWarnings("CPD-END")
 	@Test
 	public void testMutationTandemDuplication() {
 		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
@@ -132,4 +134,5 @@ public class MutationsTest {
 		Mockito.verify(strand1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.TANDEMDUPLICATION);
 	}
+
 }

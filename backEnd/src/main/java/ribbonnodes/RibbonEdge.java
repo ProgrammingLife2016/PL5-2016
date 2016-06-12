@@ -28,6 +28,8 @@ public class RibbonEdge extends Edge {
 
     /**
      * Constructor to create an edge.
+     * @param start The start node of the edge.
+     * @param end the end node of the edge.
      */
     public RibbonEdge(RibbonNode start, RibbonNode end) {
         super(start.getId(), end.getId());
