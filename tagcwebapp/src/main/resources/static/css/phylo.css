@@ -28,3 +28,11 @@ svg a.selected text {
     margin: 30px;
     overflow: visible;
 }
+
+circle.selected {
+    fill: green;
+}
+
+svg circle {
+    cursor: pointer;
+}
