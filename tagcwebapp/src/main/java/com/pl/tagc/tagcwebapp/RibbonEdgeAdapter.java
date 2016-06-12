@@ -17,8 +17,8 @@ public class RibbonEdgeAdapter extends XmlAdapter<AdaptedRibbonEdge, RibbonEdge>
     @Override
     public AdaptedRibbonEdge marshal(RibbonEdge edge) throws Exception {
     	AdaptedRibbonEdge adaptedEdge = new AdaptedRibbonEdge();
-    	adaptedEdge.setStartId(edge.getStart());
-    	adaptedEdge.setEndId(edge.getEnd());
+    	adaptedEdge.setStartId(edge.getStartId());
+    	adaptedEdge.setEndId(edge.getEndId());
         adaptedEdge.setWeight(edge.getWeight());
         adaptedEdge.setColor(parseColor(edge.getColor()));
         return adaptedEdge;

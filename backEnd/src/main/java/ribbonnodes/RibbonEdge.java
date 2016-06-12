@@ -8,21 +8,27 @@ import java.awt.Color;
  * The Edges between the Ribbon Nodes.
  * Created by Matthijs on 12-5-2016.
  */
-public class RibbonEdge extends Edge {
+public class RibbonEdge extends Edge{
 
     /**
      * The color of this edge.
      */
     private Color color;
 
+    private RibbonNode start;
+
+    private RibbonNode end;
+
+
     /**
      * Constructor to create an edge.
      *
-     * @param startId Start id.
-     * @param endId   End id.
+     *
      */
-    public RibbonEdge(int startId, int endId) {
-        super(startId, endId);
+    public RibbonEdge(RibbonNode start, RibbonNode end) {
+        super(start.getId(),end.getId());
+        this.start=start;
+        this.end=end;
         color = Color.black;
     }
 
@@ -75,4 +81,25 @@ public class RibbonEdge extends Edge {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    public RibbonNode getStart() {
+        return start;
+    }
+
+    public void setStart(RibbonNode start) {
+        this.start = start;
+        this.setStartId(start.getId());
+    }
+
+    public RibbonNode getEnd() {
+        return end;
+    }
+
+    public void setEnd(RibbonNode end) {
+        this.end = end;
+        this.setEndId(end.getId());
+
+    }
+
+
 }

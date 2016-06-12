@@ -77,16 +77,16 @@ public class RibbonNodeFactoryTest {
         RibbonNode node1 = new RibbonNode(0, new HashSet<String>(Arrays.asList("1")));
         node1.setX(1);
         RibbonNode node2 = new RibbonNode(1, new HashSet<String>(Arrays.asList("1")));
-        node2.setId(2);
+        node2.setX(2);
         String[] genomeArray = {"1", "2"};
         HashSet<String> genomes = new HashSet<String>(Arrays.asList(genomeArray));
         Strand strand = new Strand(0, "asdf", genomes, "1", 0);
         node2.addStrand(strand);
-        RibbonEdge edge = new RibbonEdge(0, 1);
+        RibbonEdge edge = new RibbonEdge(node1, node2);
         node1.addEdge(edge);
         node2.addEdge(edge);
-
-        RibbonEdge edge2 = new RibbonEdge(1, 2);
+        RibbonNode node3 = new RibbonNode(2, new HashSet<String>(Arrays.asList("1")));
+        RibbonEdge edge2 = new RibbonEdge(node1, node3);
         node2.addEdge(edge2);
 
 

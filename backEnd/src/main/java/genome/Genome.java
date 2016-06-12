@@ -3,6 +3,7 @@ package genome;
 import java.util.ArrayList;
 
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class Genome.
  *
@@ -10,17 +11,17 @@ import java.util.ArrayList;
  */
 public class Genome {
 
-	/**
-	 * The strands contained in this Genome, parsed starting at the lowest id.
-	 */
+    /**
+     * The strands contained in this Genome, parsed starting at the lowest id.
+     */
     private ArrayList<Strand> strands;
-    
+
     /**
      * The id String of this genome.
      */
     private String id;
-    
-    
+
+
     /**
      * The meta data of this genome.
      */
@@ -102,17 +103,32 @@ public class Genome {
         return this.metadata != null;
     }
 
-	
 
+    /**
+     * Sets the strands.
+     *
+     * @param strands the new strands
+     */
+    public void setStrands(ArrayList<Strand> strands) {
+        this.strands = strands;
 
-	/**
-	 * Sets the strands.
-	 *
-	 * @param strands the new strands
-	 */
-	public void setStrands(ArrayList<Strand> strands) {
-		this.strands = strands;
-		
-	}
-	
+    }
+
+    public void resetStrandX() {
+        for (Strand strand : strands) {
+            strand.setX(0);
+        }
+    }
+
+    public void setStrandsX() {
+        for (int i = 1; i < strands.size(); i++) {
+            Strand prevStrand = strands.get(i - 1);
+            int newX = prevStrand.getX() + prevStrand.getSequence().length();
+            if (newX > strands.get(i).getX()) {
+                strands.get(i).setX(newX);
+            }
+
+        }
+    }
+
 }

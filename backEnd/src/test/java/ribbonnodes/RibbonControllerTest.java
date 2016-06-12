@@ -1,6 +1,8 @@
 package ribbonnodes;
 
+import datatree.DataNode;
 import datatree.DataTree;
+import datatree.TempReadWriteTree;
 import genome.Genome;
 import genome.GenomeGraph;
 import genome.Strand;
@@ -9,6 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Matchers;
+import parser.Parser;
+import phylogenetictree.PhylogeneticTree;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -53,32 +58,31 @@ public class RibbonControllerTest {
 
     }
 
-//    @Test
-//    public void testUsability() throws Exception {
-//        String gfaFile = "data/TB328.gfa";
-//        GenomeGraph genomeGraph = Parser.parse(gfaFile);
-//        genomeGraph.generateGenomes();
-//        genomeGraph.findStartAndCalculateX();
-//        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
-//        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
-//                new ArrayList<>(genomeGraph.getGenomes().keySet()));
-//        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
-//                null, 0));
-//        dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size() / 8);
-//
-//        if (gfaFile.equals("data/TB328.gfa")) {
-//            TempReadWriteTree.readFile(dataTree, 
-//            genomeGraph.getStrandNodes(), "data/tempTree.txt");
-//        } else {
-//            dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
-//
-//        }
-//        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
-//
-//        genomeGraph.setGenomesAsActive(new ArrayList<>(
-//            Arrays.asList("TKK_03_0059", "TKK-01-0058")));
-//        ribbonController.getRibbonNodes(0, 10000000, 1, true);
-//    }
+    @Test
+    public void testUsability() throws Exception {
+        String gfaFile = "data/TB328.gfa";
+        GenomeGraph genomeGraph = Parser.parse(gfaFile);
+
+        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
+                new ArrayList<>(genomeGraph.getGenomes().keySet()));
+        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
+                null, 0));
+        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
+
+        if (gfaFile.equals("data/TB328.gfa")) {
+            TempReadWriteTree.readFile(dataTree,
+            genomeGraph.getStrands(), "data/tempTree.txt");
+        } else {
+            dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
+
+        }
+        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
+
+        genomeGraph.setGenomesAsActive(new ArrayList<>(
+            Arrays.asList("TKK_03_0059", "TKK-01-0058")));
+        ribbonController.getRibbonNodes(0, 10000000, 1, true);
+    }
 
     /**
      * Test that getRibbonNodes calls the right methods.
@@ -118,8 +122,8 @@ public class RibbonControllerTest {
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
-        RibbonEdge edge1 = new RibbonEdge(0, 1);
-        RibbonEdge edge2 = new RibbonEdge(1, 2);
+        RibbonEdge edge1 = new RibbonEdge(node1, node2);
+        RibbonEdge edge2 = new RibbonEdge(node2, node3);
         node1.addEdge(edge1);
         node2.addEdge(edge1);
         node2.addEdge(edge2);
@@ -232,9 +236,9 @@ public class RibbonControllerTest {
         nodes.add(node2);
 
         assertEquals(node1.getOutEdges().size(), 0);
-        assertEquals(controller.addEdgeSetXReturnEnd(nodes, node1, new Genome("1"), false), node2);
+        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("1"), false), node2);
         assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 1);
-        assertEquals(controller.addEdgeSetXReturnEnd(nodes, node1, new Genome("2"), false), node2);
+        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("2"), false), node2);
         assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 2);
 
 

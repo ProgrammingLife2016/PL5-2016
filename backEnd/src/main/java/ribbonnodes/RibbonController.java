@@ -58,8 +58,8 @@ public class RibbonController {
      * @param isMiniMap Boolean if this is the minimap.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, 
-    		int zoomLevel, boolean isMiniMap) {
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
+                                                int zoomLevel, boolean isMiniMap) {
 
 
         ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
@@ -74,12 +74,9 @@ public class RibbonController {
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         spreadYCoordinates(result, actIds);
         addEdges(result, isMiniMap);
-
-
         collapseRibbons(result, zoomLevel);
-
-
         addMutationLabels(result, actIds);
+
         System.out.println(result.size() + " nodes returned");
         return result;
 
@@ -129,14 +126,12 @@ public class RibbonController {
             if (node != null) {
                 ArrayList<RibbonNode> nodesToCollapse = new ArrayList<>();
                 nodesToCollapse.add(node);
-                int length = node.getLabel().length();
-                while (node.getOutEdges().size() == 1 && length < 10000 / zoomLevel) {
-                    RibbonNode other = ribbonHash.get(node.getOutEdges().get(0).getEnd());
+                while (node.getOutEdges().size() == 1) {
+                    RibbonNode other = ribbonHash.get(node.getOutEdges().get(0).getEndId());
                     if (other != null) {
                         if (other.getInEdges().size() == 1) {
                             nodesToCollapse.add(other);
                             node = other;
-                            length += node.getLabel().length();
                             ribbonHash.put(other.getId(), null);
                         } else {
                             break;
@@ -218,7 +213,7 @@ public class RibbonController {
     /**
      * Calculate and add edges to a ribbonGraph.
      *
-     * @param nodes the RibbinGraph to calculate edges for.
+     * @param nodes     the RibbinGraph to calculate edges for.
      * @param isMiniMap Boolean if this is the minimap.
      */
 
@@ -227,7 +222,7 @@ public class RibbonController {
         for (Genome genome : genomeGraph.getActiveGenomes()) {
             RibbonNode currentNode = findNextNodeWithGenome(nodes, genome, -1);
             while (currentNode != null) {
-                currentNode = addEdgeSetXReturnEnd(nodes, currentNode, genome, isMiniMap);
+                currentNode = addEdgeReturnEnd(nodes, currentNode, genome, isMiniMap);
             }
 
         }
@@ -242,35 +237,26 @@ public class RibbonController {
      * @param nodes       The RibbonGraph.
      * @param currentNode The start node of the edge.
      * @param genome      The genome to find an edge for.
-     * @param isMiniMap Boolean if this is the minimap.
+     * @param isMiniMap   Boolean if this is the minimap.
      * @return The end node of the edge.
      */
-    protected RibbonNode addEdgeSetXReturnEnd(ArrayList<RibbonNode> nodes,
-                               RibbonNode currentNode, Genome genome, boolean isMiniMap) {
+    protected RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes,
+                                              RibbonNode currentNode, Genome genome, boolean isMiniMap) {
         RibbonNode next = findNextNodeWithGenome(nodes, genome, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {
                 RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(
-                        currentNode.getId(),
-                        next.getId(),
+                        currentNode,
+                        next,
                         genome);
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
-                if (!isMiniMap) {
-                    if (next.getInEdges().isEmpty()) {
-                        next.setX(currentNode.getX() + currentNode.getLabel().length());
-                    } else if (next.getX() < currentNode.getX() + currentNode.getLabel().length()) {
-                        next.setX(currentNode.getX() + currentNode.getLabel().length());
-                    }
-                }
+
             } else {
-                if (!isMiniMap && next.getX() 
-                		< currentNode.getX() + currentNode.getLabel().length()) {
-                    next.setX(currentNode.getX() + currentNode.getLabel().length());
-                }
+
                 RibbonEdge edge = currentNode.getOutEdge(currentNode.getId(), next.getId());
                 RibbonEdge colorEdge = RibbonEdgeFactory.createRibbonEdge(
-                        currentNode.getId(), next.getId(), genome);
+                        currentNode, next, genome);
                 edge.addGenomeToEdge(colorEdge.getColor());
             }
         }

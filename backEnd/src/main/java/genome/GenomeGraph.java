@@ -62,47 +62,7 @@ public class GenomeGraph {
     }
 
 
-    /**
-     * Method that finds the starting nodes and calculates the x coordinates for the graphnodes.
-     */
-    public void findStartAndCalculateX() {
-        for (Strand start : strands.values()) {
-            if (start.getX() == 0) {
-                start.setX(1);
-                calculateXfromStart(start);
-            }
 
-        }
-
-
-    }
-
-    /**
-     * Calculate the x coordinates for the graph nodes starting at start.
-     *
-     * @param start the graph node to start at.
-     */
-    public void calculateXfromStart(Strand start) {
-        ArrayList<Strand> currentStrands = new ArrayList<>();
-        ArrayList<Strand> nextStrands = new ArrayList<>();
-        currentStrands.add(start);
-
-        while (!currentStrands.isEmpty()) {
-            for (Strand strand : currentStrands) {
-                for (StrandEdge edge : strand.getOutgoingEdges()) {
-                    Strand nextStrand = strands.get(edge.getEnd().getId());
-                    if (nextStrand.getX() < strand.getX() + 1) {
-                        nextStrand.setX(strand.getX() + strand.getSequence().length() + 1);
-                        nextStrands.add(nextStrand);
-                    }
-                }
-            }
-            currentStrands = nextStrands;
-            nextStrands = new ArrayList<>();
-
-        }
-
-    }
 
     /**
      * Getter for the genomes.
@@ -145,10 +105,14 @@ public class GenomeGraph {
             Genome genome = genomes.get(genomeId);
             if (genome != null) {
                 activeGenomes.add(genome);
+                genome.resetStrandX();
             } else {
                 unrecognizedGenomes.add(genomeId);
             }
 
+        }
+        for(Genome genome:activeGenomes){
+            genome.setStrandsX();
         }
         return unrecognizedGenomes;
 

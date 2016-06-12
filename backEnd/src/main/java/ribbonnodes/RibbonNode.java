@@ -100,7 +100,7 @@ public class RibbonNode {
      */
     public RibbonEdge getInEdge(int idFrom, int idTo) {
         for (RibbonEdge edge : inEdges) {
-            if (edge.getStart() == idFrom && edge.getEnd() == idTo) {
+            if (edge.getStart().getId() == idFrom && edge.getEnd().getId() == idTo) {
                 return edge;
             }
         }
@@ -117,7 +117,7 @@ public class RibbonNode {
      */
     public RibbonEdge getOutEdge(int idFrom, int idTo) {
         for (RibbonEdge edge : outEdges) {
-            if (edge.getStart() == idFrom && edge.getEnd() == idTo) {
+            if (edge.getStart().getId() == idFrom && edge.getEnd().getId() == idTo) {
                 return edge;
             }
         }
@@ -178,6 +178,9 @@ public class RibbonNode {
      */
     public void setOutEdges(ArrayList<RibbonEdge> outEdges) {
         this.outEdges = outEdges;
+        for(RibbonEdge edge: this.outEdges){
+            edge.setStart(this);
+        }
     }
 
     /**
@@ -195,7 +198,7 @@ public class RibbonNode {
      * @param edge Edge.
      */
     public void addEdge(RibbonEdge edge) {
-        if (edge.getEnd() == this.getId()) {
+        if (edge.getEnd() == this) {
             inEdges.add(edge);
         } else {
             outEdges.add(edge);
