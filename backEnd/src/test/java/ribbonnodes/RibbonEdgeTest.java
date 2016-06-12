@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,7 +24,10 @@ public class RibbonEdgeTest {
      */
     @Before
     public void setUp() throws Exception {
-        edge = new RibbonEdge(0, 1);
+        HashSet<String> genome = new HashSet<>(Arrays.asList("1"));
+        RibbonNode node1 = new RibbonNode(0, genome);
+        RibbonNode node2 = new RibbonNode(1, genome);
+        edge = new RibbonEdge(node1, node2);
 
     }
 

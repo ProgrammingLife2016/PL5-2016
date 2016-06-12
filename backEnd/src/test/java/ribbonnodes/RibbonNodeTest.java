@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
@@ -18,6 +17,7 @@ public class RibbonNodeTest {
 
     private RibbonNode node1;
     private RibbonNode node2;
+    private RibbonNode brokenNode;
     private RibbonEdge edge;
     private RibbonEdge edge2;
 
@@ -32,11 +32,12 @@ public class RibbonNodeTest {
         ArrayList<String> genomes = new ArrayList<>();
         genomes.add("genome1");
         genomes.add("genome2");
-		HashSet<String> genomeSet = new HashSet<String>(genomes);
+        HashSet<String> genomeSet = new HashSet<String>(genomes);
         node1 = new RibbonNode(0, genomeSet);
         node2 = new RibbonNode(1, genomeSet);
-        edge = new RibbonEdge(0, 1);
-        edge2 = new RibbonEdge(0, 6);
+        brokenNode = new RibbonNode(6, genomeSet);
+        edge = new RibbonEdge(node1, node2);
+        edge2 = new RibbonEdge(node1, brokenNode);
         node1.addEdge(edge);
         node1.addEdge(edge2);
         node2.addEdge(edge);
@@ -112,7 +113,7 @@ public class RibbonNodeTest {
      */
     @Test
     public void testAddEdge() throws Exception {
-        RibbonEdge edge2 = new RibbonEdge(1, 0);
+        RibbonEdge edge2 = new RibbonEdge(node2, node1);
         assertEquals(node1.getOutEdges().size(), 2);
         node1.addEdge(edge2);
         assertEquals(node1.getOutEdges().size(), 2);
@@ -126,9 +127,9 @@ public class RibbonNodeTest {
      */
     @Test
     public void testAddEdges() throws Exception {
-        RibbonEdge edge2 = new RibbonEdge(0, 1);
-        RibbonEdge edge3 = new RibbonEdge(0, 4);
-        RibbonEdge edge4 = new RibbonEdge(0, 2);
+        RibbonEdge edge2 = new RibbonEdge(node1, node2);
+        RibbonEdge edge3 = new RibbonEdge(node1, brokenNode);
+        RibbonEdge edge4 = new RibbonEdge(node1, node2);
         node1.addEdge(edge2);
         node1.addEdge(edge3);
         node1.addEdge(edge4);
@@ -178,8 +179,8 @@ public class RibbonNodeTest {
      */
     @Test
     public void testInOutSetters() {
-        RibbonEdge edge3 = new RibbonEdge(0, 6);
-        RibbonEdge edge4 = new RibbonEdge(7, 0);
+        RibbonEdge edge3 = new RibbonEdge(node1, brokenNode);
+        RibbonEdge edge4 = new RibbonEdge(brokenNode, node1);
         ArrayList<RibbonEdge> testEdges = new ArrayList<>();
         testEdges.add(edge3);
         testEdges.add(edge4);

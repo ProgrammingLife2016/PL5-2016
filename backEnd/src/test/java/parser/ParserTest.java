@@ -1,8 +1,7 @@
 package parser;
 
-import org.junit.Test;
-
 import genome.GenomeGraph;
+import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

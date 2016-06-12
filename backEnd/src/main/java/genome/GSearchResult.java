@@ -1,8 +1,8 @@
 package genome;
 
-import java.util.ArrayList;
-
 import genome.GraphSearcher.SearchType;
+
+import java.util.ArrayList;
 
 /**
  * The Class GSearchResult.

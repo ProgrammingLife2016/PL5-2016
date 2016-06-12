@@ -3,18 +3,17 @@ package mutation;
 import genome.GenomeGraph;
 import genome.Strand;
 import genome.StrandEdge;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import org.mockito.ArgumentCaptor;
-
 
 import static org.junit.Assert.assertEquals;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
 /**
  * 
  * @author Jeffrey Helgers.
@@ -60,6 +59,7 @@ public class MutationsTest {
 	/**
 	 * Test a graph with no mutation.
 	 */
+	@SuppressWarnings("CPD-START")
 	@Test
 	public void testNoMutation() {
 		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
@@ -116,10 +116,11 @@ public class MutationsTest {
 		Mockito.verify(strand1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.SNP);
 	}
-	
+
 	/**
 	 * Test a graph with a tandem duplication.
 	 */
+	@SuppressWarnings("CPD-END")
 	@Test
 	public void testMutationTandemDuplication() {
 		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
@@ -133,4 +134,5 @@ public class MutationsTest {
 		Mockito.verify(strand1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.TANDEMDUPLICATION);
 	}
+
 }

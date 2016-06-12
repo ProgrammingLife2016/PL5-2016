@@ -47,7 +47,7 @@ public class Edge {
      * Get the start id of an edge.
      * @return The start id.
      */
-    public int getStart() {
+    public int getStartId() {
         return startId;
     }
 
@@ -55,7 +55,7 @@ public class Edge {
      * Get the end id of an edge.
      * @return The end id.
      */
-    public int getEnd() {
+    public int getEndId() {
         return endId;
     }
 

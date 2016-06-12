@@ -1,10 +1,9 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.util.ArrayList;
+import genome.GFeatureSearchMatch;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
-import genome.GFeatureSearchMatch;
+import java.util.ArrayList;
 
 /**
  * The Class SearchResultObject.

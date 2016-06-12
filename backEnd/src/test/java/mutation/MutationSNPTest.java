@@ -1,12 +1,10 @@
 package mutation;
 
 import genome.Strand;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 

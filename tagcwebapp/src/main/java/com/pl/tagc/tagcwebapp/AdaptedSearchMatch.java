@@ -28,6 +28,7 @@ public class AdaptedSearchMatch {
 	 * @param feature the feature
 	 * @param subString the sub string
 	 */
+	@SuppressWarnings("CPD-START")
 	public AdaptedSearchMatch(Strand strand, GenomicFeature feature, String subString) {
 		this.setFeature(feature);
 		this.setSubString(subString);
@@ -84,6 +85,7 @@ public class AdaptedSearchMatch {
 	 *
 	 * @param strand the new strand
 	 */
+	@SuppressWarnings("CPD-END")
 	public void setStrand(Strand strand) {
 		this.strand = strand;
 	}

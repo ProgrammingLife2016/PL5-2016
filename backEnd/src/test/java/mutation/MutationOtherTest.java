@@ -1,7 +1,6 @@
 package mutation;
 
 import genome.Strand;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

@@ -1,9 +1,6 @@
 package database;
 
-import genome.Genome;
 import genome.GenomeMetadata;
-import genome.Strand;
-import genome.StrandEdge;
 import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
@@ -19,10 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -197,66 +192,66 @@ public class Database {
         }
     }
 
-    /**
-     * Returns the results from the query as nodes.
-     * @param query the Cypher-query to be done on the database
-     * @return the list of Strands returned by the query
-     */
-    public List<Strand> returnNodes(String query) {
-        List<Strand> result = new ArrayList<>();
-
-        try (Transaction ignored = graphDb.beginTx();
-              Result r = graphDb.execute(query)) {
-            while (r.hasNext()) {
-                Map<String, Object> row = r.next();
-                for (Object n : row.values()) {
-                    //result.add(new Strand(n));
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Returns the results from the query as edges.
-     * @param query the Cypher-query to be done on the database
-     * @return the list of StrandEdges returned by the query
-     */
-    public List<StrandEdge> returnEdges(String query) {
-        List<StrandEdge> result = new ArrayList<>();
-
-        try (Transaction ignored = graphDb.beginTx();
-             Result r = graphDb.execute(query)) {
-            while (r.hasNext()) {
-                Map<String, Object> row = r.next();
-                for (Object n : row.values()) {
-                    //result.add(new StrandEdge(n));
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Returns the results from the query as genomes.
-     * @param genomeName the id/name of the genome to be retrieved
-     * @return the requested genome
-     */
-    public Genome returnGenome(String genomeName) {
-        Genome genome = new Genome(genomeName);
-
-        try (Transaction ignored = graphDb.beginTx();
-             Result r = graphDb.execute("MATCH (n:Strand) WHERE \"" + genomeName
-                     + "\" IN n.genomes RETURN n")) {
-            while (r.hasNext()) {
-                Map<String, Object> row = r.next();
-                for (Object n : row.values()) {
-                    //genome.addStrand(new Strand(n));
-                }
-            }
-        }
-        return genome;
-    }
+//    /**
+//     * Returns the results from the query as nodes.
+//     * @param query the Cypher-query to be done on the database
+//     * @return the list of Strands returned by the query
+//     */
+//    public List<Strand> returnNodes(String query) {
+//        List<Strand> result = new ArrayList<>();
+//
+//        try (Transaction ignored = graphDb.beginTx();
+//              Result r = graphDb.execute(query)) {
+//            while (r.hasNext()) {
+//                Map<String, Object> row = r.next();
+//               for (Object n : row.values()) {
+//                   result.add(new Strand(n));
+//                }
+//            }
+//        }
+//        return result;
+//    }
+//
+//    /**
+//     * Returns the results from the query as edges.
+//     * @param query the Cypher-query to be done on the database
+//     * @return the list of StrandEdges returned by the query
+//     */
+//    public List<StrandEdge> returnEdges(String query) {
+//        List<StrandEdge> result = new ArrayList<>();
+//
+//        try (Transaction ignored = graphDb.beginTx();
+//             Result r = graphDb.execute(query)) {
+//            while (r.hasNext()) {
+//                Map<String, Object> row = r.next();
+////                for (Object n : row.values()) {
+////                    //result.add(new StrandEdge(n));
+////                }
+//            }
+//        }
+//        return result;
+//    }
+//
+//    /**
+//     * Returns the results from the query as genomes.
+//     * @param genomeName the id/name of the genome to be retrieved
+//     * @return the requested genome
+//     */
+//    public Genome returnGenome(String genomeName) {
+//        Genome genome = new Genome(genomeName);
+//
+//        try (Transaction ignored = graphDb.beginTx();
+//             Result r = graphDb.execute("MATCH (n:Strand) WHERE \"" + genomeName
+//                     + "\" IN n.genomes RETURN n")) {
+//            while (r.hasNext()) {
+//                Map<String, Object> row = r.next();
+////                for (Object n : row.values()) {
+////                    //genome.addStrand(new Strand(n));
+////                }
+//            }
+//        }
+//        return genome;
+//    }
 
     /**
      * Returns all genomes that descent from the selected genome/parent-id.

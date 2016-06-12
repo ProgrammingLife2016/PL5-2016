@@ -1,7 +1,7 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.util.List;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Interface that contracts the interaction between the frontend and the Backend.
@@ -15,9 +15,10 @@ public interface BackEndInterface {
      * @param minX      The minX to get the nodes from.
      * @param maxX      The maxX to get the nodes from.
      * @param zoomLevel The zoomLevel to calculate the Nodes for.
+     * @param isMiniMap determine wether this is a minimap call or not.
      * @return A list of RibbonNodes to draw.
      */
-	Response getRibbonNodes(int minX, int maxX, int zoomLevel, boolean isMiniMap);
+    Response getRibbonNodes(int minX, int maxX, int zoomLevel, boolean isMiniMap);
 
     /**
      * Sets the active genomes.
@@ -25,13 +26,13 @@ public interface BackEndInterface {
      * @param ids the ids
      * @return the array list object
      */
-	ArrayListObject setActiveGenomes(List<String> ids);
+    ArrayListObject setActiveGenomes(List<String> ids);
 
     /**
      * Load phylogenetic tree.
      *
      * @param treeId the tree id
-     * @return the phylogenetic tree 
+     * @return the phylogenetic tree
      */
     Response loadPhylogeneticTree(int treeId);
 
@@ -39,7 +40,7 @@ public interface BackEndInterface {
      * Search.
      *
      * @param searchString the search string
-     * @param searchType the search type
+     * @param searchType   the search type
      * @return the search result object
      */
     SearchResultObject search(String searchString, String searchType);
