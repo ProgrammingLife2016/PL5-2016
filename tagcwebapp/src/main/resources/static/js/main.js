@@ -6,7 +6,7 @@ var screenWidth = $(window).width();
 var screenHeight = $(window).height();
 var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
-var minimapNodes, cachedZoomNodes;
+var minimapNodes = {}, cachedZoomNodes, minimapCount;
 var currentMousePos = {x: -1, y: -1};
 var zoomLeft = 0;
 var zoomRight = 0;
@@ -186,6 +186,22 @@ $('document').ready(function () {
         zoom(-1, 5, center);
     });
 
+    $('#coordinateSelector').keyup(function(e) {
+        var code = e.keyCode || e.which;
+        if (code == 13) {
+            var left = Math.floor($(this).val() / minimapCount * $('#minimap').width());
+            var width = $('#minimap').width() / 100;
+            e.preventDefault();
+            zoomWidth = 1;
+            $('#minimap .slider').animate({
+                'left': left,
+                'width': width
+            }, 1000, function() {
+                updatezoomWindow();
+            });
+        }
+    });
+
     initialize();
 });
 
@@ -247,10 +263,13 @@ function calcHeight(nodes) {
  * @param nodes
  */
 var drawMinimap = function (nodes) {
+    debugger;
     if (nodes == null) {
         nodes = minimapNodes;
     } else {
         minimapNodes = nodes;
+        minimapCount = Object.keys(nodes).length;
+        $('#maxCoordinateInput').html(minimapCount);
         minimapHeight = calcHeight(nodes);
     }
     if (nodes == null || Object.keys(nodes).length < 1) {
