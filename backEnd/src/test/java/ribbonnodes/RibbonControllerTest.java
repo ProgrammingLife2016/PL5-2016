@@ -58,31 +58,31 @@ public class RibbonControllerTest {
 
     }
 
-    @Test
-    public void testUsability() throws Exception {
-        String gfaFile = "data/TB328.gfa";
-        GenomeGraph genomeGraph = Parser.parse(gfaFile);
-
-        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
-                new ArrayList<>(genomeGraph.getGenomes().keySet()));
-        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
-                null, 0));
-        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
-
-        if (gfaFile.equals("data/TB328.gfa")) {
-            TempReadWriteTree.readFile(dataTree,
-            genomeGraph.getStrands(), "data/tempTree.txt");
-        } else {
-            dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
-
-        }
-        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
-
-        genomeGraph.setGenomesAsActive(new ArrayList<>(
-            Arrays.asList("TKK_03_0059", "TKK-01-0058")));
-        ribbonController.getRibbonNodes(0, 10000000, 1, true);
-    }
+//    @Test
+//    public void testUsability() throws Exception {
+//        String gfaFile = "data/TB328.gfa";
+//        GenomeGraph genomeGraph = Parser.parse(gfaFile);
+//
+//        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
+//        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
+//                new ArrayList<>(genomeGraph.getGenomes().keySet()));
+//        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
+//                null, 0));
+//        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
+//
+//        if (gfaFile.equals("data/TB328.gfa")) {
+//            TempReadWriteTree.readFile(dataTree,
+//            genomeGraph.getStrands(), "data/tempTree.txt");
+//        } else {
+//            dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
+//
+//        }
+//        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
+//
+//        genomeGraph.setGenomesAsActive(new ArrayList<>(
+//            Arrays.asList("TKK_03_0059", "TKK-01-0058")));
+//        ribbonController.getRibbonNodes(0, 10000000, 1, true);
+//    }
 
     /**
      * Test that getRibbonNodes calls the right methods.

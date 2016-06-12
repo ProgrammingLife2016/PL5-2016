@@ -77,6 +77,7 @@ public abstract class RibbonNodeFactory {
             newEnd.setY(oldEnd.getY());
             newEnd.setOutEdges(nodesToCollapse.get(nodesToCollapse.size() - 1).getOutEdges());
             startNode.getOutEdges().get(0).setEnd(newEnd);
+            newEnd.addEdge(startNode.getOutEdges().get(0));
             newEnd.setVisible(false);
             return newEnd;
         }

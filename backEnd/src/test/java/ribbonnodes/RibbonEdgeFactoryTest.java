@@ -31,8 +31,8 @@ public class RibbonEdgeFactoryTest {
         RibbonNode node2 = new RibbonNode(1,genomeID);
         RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(node1, node2, genome);
 
-        assertEquals(edge.getStart(), 0);
-        assertEquals(edge.getEnd(), 1);
+        assertEquals(edge.getStart(), node1);
+        assertEquals(edge.getEnd(), node2);
         assertEquals(edge.getColor(), Color.decode("0xed00c3"));
 
     }
@@ -51,8 +51,8 @@ public class RibbonEdgeFactoryTest {
         RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(node1, node2, genome);
 
 
-        assertEquals(edge.getStart(), 0);
-        assertEquals(edge.getEnd(), 1);
+        assertEquals(edge.getStart(), node1);
+        assertEquals(edge.getEnd(), node2);
         assertEquals(edge.getColor(), Color.decode("0xff0000"));
 
     }
@@ -70,8 +70,8 @@ public class RibbonEdgeFactoryTest {
         RibbonNode node2 = new RibbonNode(1,genomeID);
         RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(node1, node2, genome);
 
-        assertEquals(edge.getStart(), 0);
-        assertEquals(edge.getEnd(), 1);
+        assertEquals(edge.getStart(), node1);
+        assertEquals(edge.getEnd(), node2);
         assertEquals(edge.getColor(), new Color(100, 100, 100));
 
     }
