@@ -5,6 +5,7 @@ import genome.Genome;
 import genome.GenomeGraph;
 import genome.Strand;
 import mutation.AbstractMutation;
+import mutation.Mutations;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,7 +72,9 @@ public class RibbonController {
         spreadYCoordinates(result, actIds);
         addEdges(result, isMiniMap);
         collapseRibbons(result, zoomLevel);
-        addMutationLabels(result, actIds);
+        Mutations mutations = new Mutations(result);
+        mutations.computeAllMutations();
+        addMutationLabels(result);
 
         System.out.println(result.size() + " nodes returned");
         return result;
@@ -286,26 +289,21 @@ public class RibbonController {
      * @param nodes      The nodes in the graph.
      * @param actGenomes The active genomes.
      */
-    protected void addMutationLabels(ArrayList<RibbonNode> nodes, ArrayList<String> actGenomes) {
-        for (RibbonNode node : nodes) {
-            if (!node.getStrands().isEmpty()) {
-                boolean mutationAdded = false;
-                Strand strand = node.getStrands().get(node.getStrands().size() - 1);
-                StringBuilder label = new StringBuilder();
-                label.append(System.lineSeparator());
-                for (AbstractMutation mutation : strand.getMutations()) {
-                    if (!Collections.disjoint(mutation.getReferenceGenomes(), actGenomes)
-                            && !Collections.disjoint(mutation.getOtherGenomes(), actGenomes)) {
-                        label.append(mutation.toString());
-                        label.append(", ");
-                        mutationAdded = true;
-                    }
-                }
-                if (mutationAdded) {
-                    label.setLength(label.length() - 2);
-                    node.setLabel(node.getLabel() + label.toString());
-                }
-            }
-        }
+    protected void addMutationLabels(ArrayList<RibbonNode> nodes) {
+    	for (RibbonNode node : nodes) {
+    		if (node.hasMutation()) {
+    			StringBuilder mutationLabel = new StringBuilder();
+    			for (AbstractMutation mutation : node.getMutations()) {
+    				mutationLabel.append(mutation.toString());
+    				mutationLabel.append(", ");
+    			}
+    			if (node.isVisible()) {
+    				node.setLabel(mutationLabel.toString() + node.getLabel());
+    			} else {
+    				RibbonNode withLabel = node.getInEdges().get(0).getStart();
+    				withLabel.setLabel(mutationLabel.toString() + withLabel.getLabel());
+    			}
+    		}
+    	}
     }
 }

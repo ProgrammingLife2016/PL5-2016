@@ -1,6 +1,7 @@
 package ribbonnodes;
 
 import genome.Strand;
+import mutation.AbstractMutation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -56,6 +57,11 @@ public class RibbonNode {
      * Draw the node or not.
      */
     private boolean isVisible;
+    
+    /**
+     * The mutation starting from this node.
+     */
+    private ArrayList<AbstractMutation> mutations;
 
     /**
      * Constructor for the RibbonNode.
@@ -73,6 +79,7 @@ public class RibbonNode {
         this.x = 0; //for now
         this.y = 0;
         this.isVisible = true;
+        mutations = new ArrayList<>();
     }
 
     /**
@@ -298,5 +305,29 @@ public class RibbonNode {
      */
     public void setVisible(boolean visible) {
         isVisible = visible;
+    }
+    
+    /**
+     * Get the mutations starting from this node.
+     * @return The mutations.
+     */
+    public ArrayList<AbstractMutation> getMutations() {
+    	return mutations;
+    }
+    
+    /**
+     * Add a mutation.
+     * @param mutation Added mutation.
+     */
+    public void addMutation(AbstractMutation mutation) {
+    	mutations.add(mutation);
+    }
+    
+    /**
+     * Checks if there is a mutation on this node.
+     * @return Boolean type.
+     */
+    public boolean hasMutation() {
+    	return mutations.size() > 0;
     }
 }

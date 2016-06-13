@@ -1,6 +1,7 @@
 package mutation;
 
-import genome.Strand;
+import ribbonnodes.RibbonNode;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -21,9 +22,9 @@ public class MutationIndelTest {
 	private MutationIndel mutation;
 	private HashSet<String> reference;
 	private HashSet<String> other;
-	private Strand start;
-	private Strand end;
-	private ArrayList<Strand> mutatedStrands;
+	private RibbonNode start;
+	private RibbonNode end;
+	private ArrayList<RibbonNode> mutatedRibbonNodes;
 	
 	/**
 	 * Setup the MutationIndel object.
@@ -32,13 +33,13 @@ public class MutationIndelTest {
 	public void setUp() {
 		reference = new HashSet<String>(Arrays.asList("Genome1"));
 		other = new HashSet<String>(Arrays.asList("Genome2"));
-		start = Mockito.mock(Strand.class);
-		end = Mockito.mock(Strand.class);
-		Strand mutate = Mockito.mock(Strand.class);
-		mutatedStrands = new ArrayList<>();
-		mutatedStrands.add(mutate);
+		start = Mockito.mock(RibbonNode.class);
+		end = Mockito.mock(RibbonNode.class);
+		RibbonNode mutate = Mockito.mock(RibbonNode.class);
+		mutatedRibbonNodes = new ArrayList<>();
+		mutatedRibbonNodes.add(mutate);
 		mutation = new MutationIndel(MutationType.INDEL, 
-				reference, other, start, end, mutatedStrands);
+				reference, other, start, end, mutatedRibbonNodes);
 	}
 
 	/**
@@ -64,7 +65,7 @@ public class MutationIndelTest {
 	@Test(expected = UnsupportedOperationException.class)
 	public void testWrongType() {
 		new MutationIndel(MutationType.TRANSLOCATION, reference, 
-				other, start, end, mutatedStrands);
+				other, start, end, mutatedRibbonNodes);
 	}
 	
 	/**

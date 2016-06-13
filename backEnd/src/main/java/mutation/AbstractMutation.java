@@ -1,6 +1,6 @@
 package mutation;
 
-import genome.Strand;
+import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,7 +24,7 @@ public abstract class AbstractMutation {
 	/**
 	 * The start strand.
 	 */
-	private Strand start;
+	private RibbonNode start;
 	
 	/**
 	 * The mutation type.
@@ -34,12 +34,12 @@ public abstract class AbstractMutation {
 	/**
 	 * The strands that are mutated.
 	 */
-	private ArrayList<Strand> mutatedStrands;
+	private ArrayList<RibbonNode> mutatedStrands;
 	
 	/**
 	 * The end strand if there is any.
 	 */
-	private Strand end;
+	private RibbonNode end;
 	
 	/**
 	 * Create a mutation.
@@ -49,7 +49,7 @@ public abstract class AbstractMutation {
 	 * @param start				The start Strand.
 	 */
 	public AbstractMutation(MutationType mutationType, HashSet<String> reference2, 
-			HashSet<String> other2, Strand start) {
+			HashSet<String> other2, RibbonNode start) {
 		this.mutationType = mutationType;
 		this.reference = reference2;
 		this.other = other2;
@@ -78,7 +78,7 @@ public abstract class AbstractMutation {
 	 * Get the start Strand from where the mutation starts.
 	 * @return The start Strand.
 	 */
-	public Strand getStartStrand() {
+	public RibbonNode getStartStrand() {
 		return start;
 	}
 	
@@ -86,7 +86,7 @@ public abstract class AbstractMutation {
 	 * Get the end Strand from where the mutation starts.
 	 * @return The end Strand.
 	 */
-	public Strand getEndStrand() {
+	public RibbonNode getEndStrand() {
 		if (mutationType.getBetween()) {
 			return end;
 		} else {
@@ -98,7 +98,7 @@ public abstract class AbstractMutation {
 	 * Set the end Strand from where the mutation starts.
 	 * @param end The new end Strand.
 	 */
-	public void setEndStrand(Strand end) {
+	public void setEndStrand(RibbonNode end) {
 		this.end = end;
 	}
 	
@@ -114,7 +114,7 @@ public abstract class AbstractMutation {
 	 * Get the Strands that are mutated by this mutation.
 	 * @return Mutated Strands.
 	 */
-	public ArrayList<Strand> getMutatedStrands() {
+	public ArrayList<RibbonNode> getMutatedStrands() {
 		return mutatedStrands;
 	}
 	
@@ -122,7 +122,7 @@ public abstract class AbstractMutation {
 	 * Set the mutated Strands.
 	 * @param mutatedStrands Mutated strands.
 	 */
-	public void setMutatedStrands(ArrayList<Strand> mutatedStrands) {
+	public void setMutatedStrands(ArrayList<RibbonNode> mutatedStrands) {
 		this.mutatedStrands = mutatedStrands;
 	}
 	

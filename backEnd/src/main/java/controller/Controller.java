@@ -66,8 +66,6 @@ public class Controller {
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);
-        Mutations mutations = new Mutations(genomeGraph);
-        mutations.computeAllMutations();
     }
 
     /**

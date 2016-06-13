@@ -1,6 +1,6 @@
 package mutation;
 
-import genome.Strand;
+import ribbonnodes.RibbonNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -20,10 +20,10 @@ public class MutationSNPTest {
 	private MutationSNP mutation;
 	private HashSet<String> reference;
 	private HashSet<String> other;
-	private Strand start;
-	private Strand end;
-	private Strand mutateReference;
-	private Strand mutateOther;
+	private RibbonNode start;
+	private RibbonNode end;
+	private RibbonNode mutateReference;
+	private RibbonNode mutateOther;
 	
 	/**
 	 * Setup the MutationSNP object.
@@ -32,16 +32,16 @@ public class MutationSNPTest {
 	public void setUp() {
 		reference = new HashSet<String>(Arrays.asList("Genome1"));
 		other = new HashSet<String>(Arrays.asList("Genome2"));
-		start = Mockito.mock(Strand.class);
-		end = Mockito.mock(Strand.class);
-		mutateReference = Mockito.mock(Strand.class);
-		mutateOther = Mockito.mock(Strand.class);
+		start = Mockito.mock(RibbonNode.class);
+		end = Mockito.mock(RibbonNode.class);
+		mutateReference = Mockito.mock(RibbonNode.class);
+		mutateOther = Mockito.mock(RibbonNode.class);
 		mutation = new MutationSNP(MutationType.SNP, reference, 
 				other, start, end, mutateReference, mutateOther);
 	}
 
 	/**
-	 * Test getting the start Strand.
+	 * Test getting the start RibbonNode.
 	 */
 	@Test
 	public void testGetStart() {
@@ -49,7 +49,7 @@ public class MutationSNPTest {
 	}
 	
 	/**
-	 * Test getting the end Strand.
+	 * Test getting the end RibbonNode.
 	 */
 	@Test
 	public void testGetEnd() {

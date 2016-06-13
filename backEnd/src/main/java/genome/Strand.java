@@ -4,8 +4,6 @@ package genome;
  * Created by Matthijs on 24-4-2016.
  */
 
-import mutation.AbstractMutation;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -58,10 +56,6 @@ public class Strand {
 	
 	/** The incoming edges. */
 	private ArrayList<StrandEdge> incomingEdges;
-	/**
-	 * The mutations on this Strand.
-	 */
-	private ArrayList<AbstractMutation> mutations;
 
 	/** The genomic features. */
 	private ArrayList<GenomicFeature> genomicFeatures = new ArrayList<GenomicFeature>();
@@ -97,7 +91,6 @@ public class Strand {
 		this.outgoingEdges = new ArrayList<>();
 		this.incomingEdges = new ArrayList<>();
 		this.x = 0;
-		this.mutations = new ArrayList<>();
 	}
 
 	/**
@@ -256,25 +249,6 @@ public class Strand {
 	 */
 	public void setX(int x) {
 		this.x = x;
-	}
-
-	/**
-	 * Get all the mutations started from this Strand.
-	 * 
-	 * @return Mutations.
-	 */
-	public ArrayList<AbstractMutation> getMutations() {
-		return mutations;
-	}
-
-	/**
-	 * Add a mutation to the mutations.
-	 * 
-	 * @param mutation
-	 *            The added mutation.
-	 */
-	public void addMutation(AbstractMutation mutation) {
-		mutations.add(mutation);
 	}
 
 //	/**

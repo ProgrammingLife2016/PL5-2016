@@ -1,6 +1,6 @@
 package mutation;
 
-import genome.Strand;
+import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,11 +23,11 @@ public class MutationSNP extends AbstractMutation {
 	 * @param fromOther			The changed Strand form the other Genome.
 	 */
 	public MutationSNP(MutationType mutationType, HashSet<String> hashSet, 
-			HashSet<String> hashSet2, Strand start, Strand end, 
-			Strand fromReference, Strand fromOther) {
+			HashSet<String> hashSet2, RibbonNode start, RibbonNode end, 
+			RibbonNode fromReference, RibbonNode fromOther) {
 		super(mutationType, hashSet, hashSet2, start);
 		if (mutationType.equals(MutationType.SNP)) {
-			ArrayList<Strand> mutatedStrands = new ArrayList<>();
+			ArrayList<RibbonNode> mutatedStrands = new ArrayList<>();
 			mutatedStrands.add(fromReference);
 			mutatedStrands.add(fromOther);
 			setMutatedStrands(mutatedStrands);

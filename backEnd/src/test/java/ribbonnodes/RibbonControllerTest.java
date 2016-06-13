@@ -272,20 +272,14 @@ public class RibbonControllerTest {
     @Test
     public void testAddMutationLabels() throws Exception {
     	RibbonNode node = Mockito.mock(RibbonNode.class);
-    	Strand strand = Mockito.mock(Strand.class);
     	AbstractMutation mutation = Mockito.mock(AbstractMutation.class);
     	
-    	Mockito.when(node.getStrands()).thenReturn(new ArrayList<>(Arrays.asList(strand)));
-    	Mockito.when(strand.getMutations()).thenReturn(new ArrayList<>(Arrays.asList(mutation)));
-    	Mockito.when(mutation.getReferenceGenomes()).thenReturn(
-    			new HashSet<String>(Arrays.asList("1")));
-    	Mockito.when(mutation.getOtherGenomes()).thenReturn(
-    			new HashSet<String>(Arrays.asList("2")));
+    	Mockito.when(node.hasMutation()).thenReturn(true);
+    	Mockito.when(node.isVisible()).thenReturn(true);
+    	Mockito.when(node.getMutations()).thenReturn(new ArrayList<>(Arrays.asList(mutation)));
     	
     	ArrayList<RibbonNode> nodes = new ArrayList<>(Arrays.asList(node));
-    	ArrayList<String> actGen = new ArrayList<>(Arrays.asList("1", "2"));
-    	
-    	controller.addMutationLabels(nodes, actGen);
+    	controller.addMutationLabels(nodes);
     	Mockito.verify(node, Mockito.times(1)).setLabel(Matchers.any());
     }
 }

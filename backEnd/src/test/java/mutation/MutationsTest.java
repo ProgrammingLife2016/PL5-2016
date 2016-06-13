@@ -1,8 +1,8 @@
 package mutation;
 
-import genome.GenomeGraph;
-import genome.Strand;
-import genome.StrandEdge;
+import ribbonnodes.RibbonEdge;
+import ribbonnodes.RibbonNode;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 /**
@@ -22,12 +23,11 @@ import static org.junit.Assert.assertEquals;
 public class MutationsTest {
 
 	private Mutations mutations;
-	private GenomeGraph graph;
-	private HashMap<Integer, Strand> strands;
-	private	Strand strand1;
-	private Strand strand2;
-	private Strand strand3;
-	private Strand strand4;
+	private ArrayList<RibbonNode> nodes;
+	private	RibbonNode node1;
+	private RibbonNode node2;
+	private RibbonNode node3;
+	private RibbonNode node4;
 	private ArgumentCaptor<AbstractMutation> captor;
 	
 	/**
@@ -36,24 +36,23 @@ public class MutationsTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		graph = Mockito.mock(GenomeGraph.class);
-		mutations = new Mutations(graph);
-		strand1 = Mockito.mock(Strand.class);
-		strand2 = Mockito.mock(Strand.class);
-		strand3 = Mockito.mock(Strand.class);
-		strand4 = Mockito.mock(Strand.class);
-		strands = new HashMap<>();
-		strands.put(0, strand1);
-		strands.put(1, strand2);
-		strands.put(2, strand3);
-		strands.put(3, strand4);
+		node1 = Mockito.mock(RibbonNode.class);
+		node2 = Mockito.mock(RibbonNode.class);
+		node3 = Mockito.mock(RibbonNode.class);
+		node4 = Mockito.mock(RibbonNode.class);
+		nodes = new ArrayList<>(Arrays.asList(node1, node2, node3, node4));
 		captor = new ArgumentCaptor<AbstractMutation>();
-		Mockito.when(graph.getStrands()).thenReturn(strands);
-		Mockito.when(strand1.getId()).thenReturn(0);
-		Mockito.when(strand2.getId()).thenReturn(1);
-		Mockito.when(strand3.getId()).thenReturn(2);
-		Mockito.when(strand4.getId()).thenReturn(3);
-		Mockito.when(strand1.getSequence()).thenReturn("tagc");
+		mutations = new Mutations(nodes);
+		
+		Mockito.when(node1.getGenomes()).thenReturn(new HashSet<>());
+		Mockito.when(node2.getGenomes()).thenReturn(new HashSet<>());
+		Mockito.when(node3.getGenomes()).thenReturn(new HashSet<>());
+		Mockito.when(node4.getGenomes()).thenReturn(new HashSet<>());
+		
+		Mockito.when(node1.getId()).thenReturn(1);
+		Mockito.when(node2.getId()).thenReturn(2);
+		Mockito.when(node3.getId()).thenReturn(3);
+		Mockito.when(node4.getId()).thenReturn(4);
 	}
 
 	/**
@@ -62,19 +61,16 @@ public class MutationsTest {
 	@SuppressWarnings("CPD-START")
 	@Test
 	public void testNoMutation() {
-		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
-						new StrandEdge(new Strand(0), new Strand(2)))));
-		Mockito.when(strand2.getOutgoingEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new StrandEdge(new Strand(1), 
-				new Strand(3)))));
-		Mockito.when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(strand4.getOutgoingEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(strand2.getSequence()).thenReturn("aa");
-		Mockito.when(strand3.getSequence()).thenReturn("ac");
-		Mockito.when(strand4.getSequence()).thenReturn("ag");
+		System.out.println(node1.getId());
+		Mockito.when(node1.getOutEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new RibbonEdge(node1, node2), 
+						new RibbonEdge(node1, node3))));
+		Mockito.when(node2.getOutEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new RibbonEdge(node2, node3))));
+		Mockito.when(node3.getOutEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(node4.getOutEdges()).thenReturn(new ArrayList<>());
 		mutations.computeAllMutations();
-		Mockito.verify(strand1, Mockito.never()).addMutation(Matchers.any());
+		Mockito.verify(node1, Mockito.never()).addMutation(Matchers.any());
 	}
 	
 	/**
@@ -82,17 +78,16 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationIndel() {
-		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
-						new StrandEdge(new Strand(0), new Strand(2)))));
-		Mockito.when(strand2.getOutgoingEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new StrandEdge(new Strand(0), 
-						new Strand(2)))));
-		Mockito.when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(strand2.getSequence()).thenReturn("aa");
-		Mockito.when(strand3.getSequence()).thenReturn("ac");
+		Mockito.when(node1.getOutEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new RibbonEdge(node1, node2), 
+						new RibbonEdge(node1, node3))));
+		Mockito.when(node2.getOutEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new RibbonEdge(node2, node3))));
+		Mockito.when(node3.getOutEdges()).thenReturn(new ArrayList<>());
+		Mockito.when(node4.getOutEdges()).thenReturn(new ArrayList<>());
+
 		mutations.computeAllMutations();
-		Mockito.verify(strand1).addMutation(captor.capture());
+		Mockito.verify(node1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.INDEL);
 	}
 	
@@ -101,38 +96,16 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationSNP() {
-		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
-						new StrandEdge(new Strand(0), new Strand(2)))));
-		Mockito.when(strand2.getOutgoingEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new StrandEdge(new Strand(1), new Strand(3)))));
-		Mockito.when(strand3.getOutgoingEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new StrandEdge(new Strand(2), new Strand(3)))));
-		Mockito.when(strand4.getOutgoingEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(strand2.getSequence()).thenReturn("a");
-		Mockito.when(strand3.getSequence()).thenReturn("c");
-		Mockito.when(strand4.getSequence()).thenReturn("aaa");
+		Mockito.when(node1.getOutEdges()).thenReturn(new ArrayList<>(
+				Arrays.asList(new RibbonEdge(node1, node2), 
+						new RibbonEdge(node1, node3))));
+		Mockito.when(node2.getOutEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new RibbonEdge(node2, node4))));
+		Mockito.when(node3.getOutEdges()).thenReturn(
+				new ArrayList<>(Arrays.asList(new RibbonEdge(node3, node4))));
+		Mockito.when(node4.getOutEdges()).thenReturn(new ArrayList<>());
 		mutations.computeAllMutations();
-		Mockito.verify(strand1).addMutation(captor.capture());
+		Mockito.verify(node1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.SNP);
 	}
-
-	/**
-	 * Test a graph with a tandem duplication.
-	 */
-	@SuppressWarnings("CPD-END")
-	@Test
-	public void testMutationTandemDuplication() {
-		Mockito.when(strand1.getOutgoingEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new StrandEdge(new Strand(0), new Strand(1)), 
-						new StrandEdge(new Strand(0), new Strand(2)))));
-		Mockito.when(strand2.getOutgoingEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(strand3.getOutgoingEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(strand2.getSequence()).thenReturn("a");
-		Mockito.when(strand3.getSequence()).thenReturn("tagc");
-		mutations.computeAllMutations();
-		Mockito.verify(strand1).addMutation(captor.capture());
-		assertEquals(captor.getValue().getMutationType(), MutationType.TANDEMDUPLICATION);
-	}
-
 }

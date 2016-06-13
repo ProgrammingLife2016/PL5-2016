@@ -1,6 +1,6 @@
 package mutation;
 
-import genome.Strand;
+import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +22,8 @@ public class MutationOther extends AbstractMutation {
 	 * @param mutatedStrands	The mutated Strands.
 	 */
 	public MutationOther(MutationType mutationType, HashSet<String> reference,
-			HashSet<String> hashSet, Strand start, ArrayList<Strand> mutatedStrands) {
+			HashSet<String> hashSet, RibbonNode start, 
+			ArrayList<RibbonNode> mutatedStrands) {
 		super(mutationType, reference, hashSet, start);
 		if (!mutationType.getBetween()) {
 			setMutatedStrands(mutatedStrands);
