@@ -1,6 +1,6 @@
 package database;
 
-import genome.GenomeMetadata;
+import metadata.GenomeMetadata;
 import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;

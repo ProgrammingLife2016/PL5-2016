@@ -1,5 +1,7 @@
 package genome;
 
+import metadata.GenomeMetadata;
+
 import java.util.ArrayList;
 
 // TODO: Auto-generated Javadoc
