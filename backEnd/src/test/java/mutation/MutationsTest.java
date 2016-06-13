@@ -9,9 +9,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
+import genome.Strand;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +30,8 @@ public class MutationsTest {
 	private RibbonNode node3;
 	private RibbonNode node4;
 	private ArgumentCaptor<AbstractMutation> captor;
+	private ArrayList<Strand> withSNP;
+	private ArrayList<Strand> withoutSNP;
 	
 	/**
 	 * Set up the mutation object.
@@ -43,6 +46,14 @@ public class MutationsTest {
 		nodes = new ArrayList<>(Arrays.asList(node1, node2, node3, node4));
 		captor = new ArgumentCaptor<AbstractMutation>();
 		mutations = new Mutations(nodes);
+		
+		Strand strandSNP = Mockito.mock(Strand.class);
+		Mockito.when(strandSNP.getSequence()).thenReturn("A");
+		Strand strandNoSNP = Mockito.mock(Strand.class);
+		Mockito.when(strandNoSNP.getSequence()).thenReturn("AA");
+		
+		withSNP = new ArrayList<>(Arrays.asList(strandSNP));
+		withoutSNP = new ArrayList<>(Arrays.asList(strandNoSNP));
 		
 		Mockito.when(node1.getGenomes()).thenReturn(new HashSet<>());
 		Mockito.when(node2.getGenomes()).thenReturn(new HashSet<>());
@@ -61,14 +72,11 @@ public class MutationsTest {
 	@SuppressWarnings("CPD-START")
 	@Test
 	public void testNoMutation() {
-		System.out.println(node1.getId());
+		RibbonEdge e1 = new RibbonEdge(node1, node2);
+		RibbonEdge e2 = new RibbonEdge(node1, node3);
 		Mockito.when(node1.getOutEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new RibbonEdge(node1, node2), 
-						new RibbonEdge(node1, node3))));
-		Mockito.when(node2.getOutEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new RibbonEdge(node2, node3))));
-		Mockito.when(node3.getOutEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(node4.getOutEdges()).thenReturn(new ArrayList<>());
+				Arrays.asList(e1, e2)));
+		Mockito.when(node2.getStrands()).thenReturn(withoutSNP);
 		mutations.computeAllMutations();
 		Mockito.verify(node1, Mockito.never()).addMutation(Matchers.any());
 	}
@@ -78,13 +86,14 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationIndel() {
+		RibbonEdge e1 = new RibbonEdge(node1, node2);
+		RibbonEdge e2 = new RibbonEdge(node1, node3);
+		RibbonEdge e3 = new RibbonEdge(node2, node3);
 		Mockito.when(node1.getOutEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new RibbonEdge(node1, node2), 
-						new RibbonEdge(node1, node3))));
+				Arrays.asList(e1, e2)));
 		Mockito.when(node2.getOutEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new RibbonEdge(node2, node3))));
-		Mockito.when(node3.getOutEdges()).thenReturn(new ArrayList<>());
-		Mockito.when(node4.getOutEdges()).thenReturn(new ArrayList<>());
+				new ArrayList<>(Arrays.asList(e3)));
+		Mockito.when(node2.getStrands()).thenReturn(withoutSNP);
 
 		mutations.computeAllMutations();
 		Mockito.verify(node1).addMutation(captor.capture());
@@ -96,14 +105,19 @@ public class MutationsTest {
 	 */
 	@Test
 	public void testMutationSNP() {
+		RibbonEdge e1 = new RibbonEdge(node1, node2);
+		RibbonEdge e2 = new RibbonEdge(node1, node3);
+		RibbonEdge e3 = new RibbonEdge(node2, node4);
+		RibbonEdge e4 = new RibbonEdge(node3, node4);
 		Mockito.when(node1.getOutEdges()).thenReturn(new ArrayList<>(
-				Arrays.asList(new RibbonEdge(node1, node2), 
-						new RibbonEdge(node1, node3))));
+				Arrays.asList(e1, e2)));
 		Mockito.when(node2.getOutEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new RibbonEdge(node2, node4))));
+				new ArrayList<>(Arrays.asList(e3)));
 		Mockito.when(node3.getOutEdges()).thenReturn(
-				new ArrayList<>(Arrays.asList(new RibbonEdge(node3, node4))));
-		Mockito.when(node4.getOutEdges()).thenReturn(new ArrayList<>());
+				new ArrayList<>(Arrays.asList(e4)));
+		Mockito.when(node2.getStrands()).thenReturn(withSNP);
+		Mockito.when(node3.getStrands()).thenReturn(withSNP);
+		
 		mutations.computeAllMutations();
 		Mockito.verify(node1).addMutation(captor.capture());
 		assertEquals(captor.getValue().getMutationType(), MutationType.SNP);

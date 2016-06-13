@@ -6,7 +6,6 @@ import datatree.TempReadWriteTree;
 import genome.GSearchResult;
 import genome.GenomeGraph;
 import genome.GraphSearcher.SearchType;
-import mutation.Mutations;
 import parser.Parser;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonController;

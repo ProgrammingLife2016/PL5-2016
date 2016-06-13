@@ -3,7 +3,6 @@ package ribbonnodes;
 import datatree.DataTree;
 import genome.Genome;
 import genome.GenomeGraph;
-import genome.Strand;
 import mutation.AbstractMutation;
 import org.junit.Before;
 import org.junit.Test;

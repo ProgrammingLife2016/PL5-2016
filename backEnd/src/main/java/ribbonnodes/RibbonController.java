@@ -8,7 +8,6 @@ import mutation.AbstractMutation;
 import mutation.Mutations;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 
@@ -287,7 +286,6 @@ public class RibbonController {
      * Adds the mutations to the labels.
      *
      * @param nodes      The nodes in the graph.
-     * @param actGenomes The active genomes.
      */
     protected void addMutationLabels(ArrayList<RibbonNode> nodes) {
     	for (RibbonNode node : nodes) {

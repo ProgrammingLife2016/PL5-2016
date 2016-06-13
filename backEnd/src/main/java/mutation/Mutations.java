@@ -23,7 +23,7 @@ public class Mutations {
     /**
      * Constructor to create.
      *
-     * @param graph The genome graph.
+     * @param nodes The nodes in the graph.
      */
     public Mutations(ArrayList<RibbonNode> nodes) {
         this.nodes = nodes;
@@ -35,9 +35,7 @@ public class Mutations {
      */
     public void computeAllMutations() {
     	for (RibbonNode node : nodes) {
-    		System.out.println("start");
     		findIndel(node);
-    		System.out.println("indel");
     		findSNP(node);
     	}
     }
