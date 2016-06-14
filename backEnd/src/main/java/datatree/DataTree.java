@@ -3,7 +3,6 @@ package datatree;
 import abstractdatastructure.TreeStructure;
 import genome.Genome;
 import genome.Strand;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -145,4 +144,34 @@ public class DataTree extends TreeStructure<DataNode> {
     public void setMinStrandsToReturn(int minStrandsToReturn) {
         this.minStrandsToReturn = minStrandsToReturn;
     }
+
+    
+	/**
+	 * Gets the patristic distance which is the sum of the length of the branches 
+	 * that connect the first and the second genome in the tree.
+	 *
+	 * @param firstGenome the first genome
+	 * @param secondGenome the second genome
+	 * @return the patristic distance
+	 */
+	public int getPatristicDistance(String firstGenome, String secondGenome) {
+		DataNode firstNode = getRoot();
+		DataNode secondNode = getRoot();
+		while (firstNode.equals(secondNode)) {
+			firstNode = firstNode.getChildWithGenome(firstGenome);
+			secondNode = secondNode.getChildWithGenome(secondGenome);
+		}
+		int patristicDistance = 2;
+		
+		while (firstNode != null) {
+			firstNode = firstNode.getChildWithGenome(firstGenome);
+			patristicDistance++;
+		}
+		
+		while (secondNode != null) {
+			secondNode = secondNode.getChildWithGenome(secondGenome);
+			patristicDistance++;
+		}
+		return patristicDistance;
+	}
 }

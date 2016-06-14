@@ -3,7 +3,6 @@ package phylogenetictree;
 import abstractdatastructure.TreeStructure;
 import net.sourceforge.olduvai.treejuxtaposer.TreeParser;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.Tree;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -159,5 +158,6 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
     		}
     	}
 	}
+
 }
 
