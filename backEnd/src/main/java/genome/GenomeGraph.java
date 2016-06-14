@@ -21,7 +21,7 @@ public class GenomeGraph {
     /**
      * The active genomes.
      */
-    private ArrayList<Genome> activeGenomes; //The current genomes selected in the GUI.
+    private ArrayList<ArrayList<Genome>> activeGenomes; //The current genomes selected in the GUI.
 
 
     /**
@@ -127,7 +127,7 @@ public class GenomeGraph {
      *
      * @return the active genomeIDS.
      */
-    public ArrayList<Genome> getActiveGenomes() {
+    public ArrayList<ArrayList<Genome>> getActiveGenomes() {
         return activeGenomes;
     }
 
@@ -138,17 +138,22 @@ public class GenomeGraph {
      * @param ids the new genomes as active
      * @return the list of unrecognized genomes
      */
-    public List<String> setGenomesAsActive(ArrayList<String> ids) {
+    public List<String> setGenomesAsActive(ArrayList<ArrayList<String>> ids) {
         List<String> unrecognizedGenomes = new ArrayList<String>();
-        this.activeGenomes = new ArrayList<Genome>();
-        for (String genomeId : ids) {
-            Genome genome = genomes.get(genomeId);
-            if (genome != null) {
-                activeGenomes.add(genome);
-            } else {
-                unrecognizedGenomes.add(genomeId);
-            }
-
+        this.activeGenomes = new ArrayList<>();
+        for (ArrayList<String> genomeIds : ids) {
+        	ArrayList<Genome> input = new ArrayList<>();
+        	for (String genomeId : genomeIds) {
+        		Genome genome = genomes.get(genomeId);
+                if (genome != null) {
+                    input.add(genome);
+                } else {
+                    unrecognizedGenomes.add(genomeId);
+                }
+        	}
+        	if (input.size() > 0) {
+            	activeGenomes.add(input);
+        	}
         }
         return unrecognizedGenomes;
 

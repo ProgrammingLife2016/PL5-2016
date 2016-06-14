@@ -159,5 +159,25 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
     		}
     	}
 	}
+    
+    public PhylogeneticNode getNodeWithId(int id) {
+    	return getNodeWithId(getRoot(), id);
+    }
+    
+    public PhylogeneticNode getNodeWithId(PhylogeneticNode node, int id) {
+    	if (node.getId() == id) {
+    		return node;
+    	} else {
+    		PhylogeneticNode n1 = getNodeWithId(node.getChildren().get(0), id);
+    		if (n1 != null) {
+    			return n1;
+    		}
+    		n1 = getNodeWithId(node.getChildren().get(1), id);
+    		if (n1 != null) {
+    			return n1;
+    		}
+    	}
+    	return null;
+    }
 }
 

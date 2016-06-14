@@ -57,7 +57,7 @@ public class DataNodeTest {
 
         DataNode testNode = new DataNode(phylo, null, 0);
         assertEquals(testNode.getGenomes(), phylo.getGenomes());
-        assertEquals(testNode.getChildWithGenome("1").getId(), child.getId());
+        assertEquals(testNode.getChildWithGenome(new ArrayList<>(Arrays.asList("1"))).getId(), child.getId());
     }
 
     /**
@@ -66,7 +66,7 @@ public class DataNodeTest {
      */
     @Test
     public void testGetChildWithGenome() throws Exception {
-        assertEquals(child, node.getChildWithGenome("1"));
+        assertEquals(child, node.getChildWithGenome(new ArrayList<>(Arrays.asList("1"))));
     }
 
     /**

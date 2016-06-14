@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Matchers;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -45,8 +47,8 @@ public class RibbonControllerTest {
     @Before
     public void setUp() throws Exception {
         graph = Mockito.mock(GenomeGraph.class);
-        ArrayList<Genome> genomes = new ArrayList<>();
-        genomes.add(new Genome("1"));
+        ArrayList<ArrayList<Genome>> genomes = new ArrayList<>();
+        genomes.add(new ArrayList<>(Arrays.asList(new Genome("1"))));
         Mockito.when(graph.getActiveGenomes()).thenReturn(genomes);
         tree = Mockito.mock(DataTree.class);
         controller = new RibbonController(graph, tree);
