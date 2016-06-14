@@ -2,6 +2,7 @@ package ribbonnodes;
 
 import genome.Strand;
 import mutation.AbstractMutation;
+import mutation.MutationIndel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -63,6 +64,8 @@ public class RibbonNode {
      */
     private ArrayList<AbstractMutation> mutations;
 
+    private boolean ySetByIndel;
+
     /**
      * Constructor for the RibbonNode.
      *
@@ -80,6 +83,7 @@ public class RibbonNode {
         this.y = 0;
         this.isVisible = true;
         mutations = new ArrayList<>();
+        ySetByIndel=false;
     }
 
     /**
@@ -89,6 +93,7 @@ public class RibbonNode {
      */
     public String getLabel() {
         StringBuilder newLabel = new StringBuilder();
+        newLabel.append(genomes.toString());
         for (int i = 0; i < label.length(); i += 40) {
             String sub = label.substring(i, Math.min(i + 40, label.length()));
             newLabel.append(sub);
@@ -329,5 +334,15 @@ public class RibbonNode {
      */
     public boolean hasMutation() {
     	return mutations.size() > 0;
+    }
+
+
+
+    public boolean isySetByIndel() {
+        return ySetByIndel;
+    }
+
+    public void setySetByIndel(boolean ySetByIndel) {
+        this.ySetByIndel = ySetByIndel;
     }
 }

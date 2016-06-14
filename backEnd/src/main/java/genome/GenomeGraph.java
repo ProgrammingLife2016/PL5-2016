@@ -101,7 +101,7 @@ public class GenomeGraph {
      */
     public List<String> setGenomesAsActive(ArrayList<String> ids) {
         List<String> unrecognizedGenomes = new ArrayList<String>();
-        this.activeGenomes = new ArrayList<Genome>();
+        this.activeGenomes = new ArrayList<>();
         for (String genomeId : ids) {
             Genome genome = genomes.get(genomeId);
             if (genome != null) {

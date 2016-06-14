@@ -1,6 +1,8 @@
 package ribbonnodes;
 
+import datatree.DataNode;
 import datatree.DataTree;
+import datatree.TempReadWriteTree;
 import genome.Genome;
 import genome.GenomeGraph;
 import mutation.AbstractMutation;
@@ -8,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
+import parser.Parser;
+import phylogenetictree.PhylogeneticTree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,31 +58,32 @@ public class RibbonControllerTest {
 
     }
 
-//    @Test
-//    public void testUsability() throws Exception {
-//        String gfaFile = "data/TB328.gfa";
-//        GenomeGraph genomeGraph = Parser.parse(gfaFile);
-//
-//        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
-//        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
-//                new ArrayList<>(genomeGraph.getGenomes().keySet()));
-//        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
-//                null, 0));
-//        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
-//
-//        if (gfaFile.equals("data/TB328.gfa")) {
-//            TempReadWriteTree.readFile(dataTree,
-//            genomeGraph.getStrands(), "data/tempTree.txt");
-//        } else {
-//            dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
-//
-//        }
-//        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
-//
-//        genomeGraph.setGenomesAsActive(new ArrayList<>(
-//            Arrays.asList("TKK_03_0059", "TKK-01-0058")));
-//        ribbonController.getRibbonNodes(0, 10000000, 1, true);
-//    }
+
+    @Test
+    public void testUsability() throws Exception {
+        String gfaFile = "data/TB328.gfa";
+        GenomeGraph genomeGraph = Parser.parse(gfaFile);
+
+        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
+        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
+                new ArrayList<>(genomeGraph.getGenomes().keySet()));
+        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
+                null, 0));
+        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
+
+        if (gfaFile.equals("data/TB328.gfa")) {
+            TempReadWriteTree.readFile(dataTree,
+            genomeGraph.getStrands(), "data/tempTree.txt");
+        } else {
+            dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
+
+        }
+        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
+
+        genomeGraph.setGenomesAsActive(new ArrayList<>(
+            Arrays.asList("TKK_03_0059", "TKK-01-0058")));
+        ribbonController.getRibbonNodes(0, 10000000, 1, true);
+    }
 
     /**
      * Test that getRibbonNodes calls the right methods.
@@ -131,27 +136,6 @@ public class RibbonControllerTest {
     }
 
 
-    /**
-     * Test if the getNodewithid works for an id that is contained and one that is not.
-     *
-     * @throws Exception if fail
-     */
-    @Test
-    public void testGetNodeWithId() throws Exception {
-    	HashSet<String> genomes = new HashSet<String>();
-        genomes.add("1");
-        ArrayList<RibbonNode> nodes = new ArrayList<>();
-        RibbonNode node1 = new RibbonNode(0, genomes);
-        RibbonNode node2 = new RibbonNode(1, genomes);
-        RibbonNode node3 = new RibbonNode(2, genomes);
-        nodes.add(node1);
-        nodes.add(node2);
-        nodes.add(node3);
-
-        assertEquals(controller.getNodeWithId(1, nodes, 0), node2);
-        assertEquals(controller.getNodeWithId(5, nodes, 0), null);
-        assertEquals(controller.getNodeWithId(1, nodes, 5), null);
-    }
 
 
     /**
