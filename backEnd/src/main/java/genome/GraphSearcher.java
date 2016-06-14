@@ -92,9 +92,7 @@ public final class GraphSearcher {
 					for (String subString : subStrings) {
 
 						if (displayName.contains(subString.toLowerCase())) {
-							GFeatureSearchMatch searchMatch = new GFeatureSearchMatch(strand, feature,
-									subString);
-							searchResult.addGFeatureSearchMatch(searchMatch);
+							searchResult.addGFeatureStrandSearchMatch(strand,feature,subString);
 						}
 
 					}

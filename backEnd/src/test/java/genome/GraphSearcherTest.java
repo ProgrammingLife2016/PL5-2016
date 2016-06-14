@@ -54,7 +54,7 @@ public class GraphSearcherTest {
 		GSearchResult searchResult = GraphSearcher.search("egg",
 				SearchType.GenomicFeatureSearch, genomeGraph);
 		
-		Strand strand = searchResult.getgFeatureSearchMatches().get(0).getStrand();
+		Strand strand = searchResult.getgFeatureSearchMatches().get(0).getStrands().get(0);
 		String featureName = strand.getGenomicFeatures().get(0).getDisplayName();
 		
 		assertTrue(searchResult.getgFeatureSearchMatches().size() == 1);
