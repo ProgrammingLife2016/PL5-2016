@@ -2,10 +2,6 @@ package datatree;
 
 import genome.Strand;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import org.junit.Before;
@@ -20,9 +16,9 @@ import org.mockito.Mockito;
  */
 public class TempReadDataTreeTest {
 
-	DataTree tree;
-	DataNode node;
-	HashMap<Integer, Strand> strands;
+	private DataTree tree;
+	private DataNode node;
+	private HashMap<Integer, Strand> strands;
 	
 	/**
 	 * Setting up the test data.

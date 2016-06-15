@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -111,6 +110,7 @@ public class ParserTest {
 		GenomicFeature feature = Parser.parseAnnotations("data/annotationsTest.gff").get(0); 
 		assertEquals(feature.getStart(), 2627279);
 		assertEquals(feature.getEnd(), 2632941);
-		assertEquals(feature.getDisplayName(), "displayName=DS9 5662 bp (4 orfs 2 IGs)  (electronically transferred)");
+		assertEquals(feature.getDisplayName(), 
+				"displayName=DS9 5662 bp (4 orfs 2 IGs)  (electronically transferred)");
 	}
 }

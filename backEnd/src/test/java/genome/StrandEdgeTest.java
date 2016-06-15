@@ -12,8 +12,8 @@ import static org.junit.Assert.assertTrue;
 public class StrandEdgeTest {
 
 	private StrandEdge strandEdge;
-	Strand strand1;
-	Strand strand2;
+	private Strand strand1;
+	private Strand strand2;
 
 	/**
 	 * Setting up the StrandEdge with whom we test.
@@ -52,7 +52,7 @@ public class StrandEdgeTest {
     }
     
     /**
-     * Test if the edge contains specific genomes;
+     * Test if the edge contains specific genomes.
      */
     @Test
     public void testContains() {

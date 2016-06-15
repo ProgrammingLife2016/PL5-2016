@@ -1,16 +1,12 @@
 package datatree;
 
-
 import genome.Strand;
 import parser.Parser;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
