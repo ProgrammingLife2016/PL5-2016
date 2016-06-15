@@ -1744,7 +1744,8 @@ function initSmits() {
                     var coords = secPosition(positionX + 0.01, (minAngle + maxAngle) / 2);
                     circle = new Smits.PhyloCanvas.Render.Circle(coords[0], coords[1], 5);
                     circle.type = 'node';
-                    circle.nodeId = node.id;
+                    circle.nodeId = node.name;
+                    console.log(node);
                     svg.draw(circle);
                 }
 

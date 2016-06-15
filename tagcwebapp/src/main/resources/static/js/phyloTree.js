@@ -168,6 +168,12 @@ function drawPhyloTree(root) {
             $(value).addClass('selected');
         }
     });
+
+    $('svg circle').each(function(key, value) {
+        if ($.inArray($(value).attr('nodeid'), selectedMiddleNodes) > -1) {
+            $(value).addClass('selected');
+        }
+    });
 }
 
 /**
@@ -213,7 +219,7 @@ function phyloToXml(nodeId, maxDepth, depth) {
     $.each(node.children, function(key, value) {
         childrenXml += phyloToXml(value, maxDepth, depth+1);
     });
-    return "<clade><color><red>"+ nodeId +"</red><green>"+ nodeId +"</green><blue>"+ nodeId +"</blue></color>"+ childrenXml +"</clade>";
+    return "<clade><name>"+ nodeId +"</name>"+ childrenXml +"</clade>";
 }
 
 /**
