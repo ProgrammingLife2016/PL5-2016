@@ -3,10 +3,9 @@ package genome;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// TODO: Auto-generated Javadoc
-
 /**
- * The Class GraphSearcher.
+ * The Class GraphSearcher. This class is a utility class that is responsible for searching the 
+ * genome data structures contained in the GenomeGraph class. 
  */
 public final class GraphSearcher {
 
@@ -17,30 +16,23 @@ public final class GraphSearcher {
 	}
 
 	/**
-	 * The Enum SearchType.
+	 * The Enum SearchType. The types of searches used to differentiate between different types
+	 * of searches that will be handled by different search functions in this class.
 	 */
 	public enum SearchType {
-
-		/** The Genomic feature search. */
 		GenomicFeatureSearch,
-
-		/** The Meta data search. */
 		MetaDataSearch,
-
-		/** The Mutation search. */
 		MutationSearch,
-
-		/** The Full search. */
 		FullSearch
 	}
 
 	/**
 	 * Search.
 	 *
-	 * @param searchString            the search string
+	 * @param searchString          the search string
 	 * @param searchType            the search type
-	 * @param genomeGraph the genome graph
-	 * @return the g search result
+	 * @param genomeGraph 			the genome graph
+	 * @return the search result which contains matches for the search string and search type 
 	 */
 	public static GSearchResult search(String searchString, SearchType searchType,
 			GenomeGraph genomeGraph) {
@@ -64,11 +56,11 @@ public final class GraphSearcher {
 	}
 
 	/**
-	 * Search genomic features.
+	 * Searches for genomic features for which the name matches the search string.
 	 *
 	 * @param searchResult the search result
 	 * @param searchString the search string
-	 * @param strands the strands
+	 * @param the strands in which the features will be searched  
 	 */
 	private static void searchGenomicFeatures(GSearchResult searchResult, String searchString,
 			HashMap<Integer, Strand> strands) {
