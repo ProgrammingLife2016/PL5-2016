@@ -65,7 +65,7 @@ public class DataTree extends TreeStructure<DataNode> {
      */
     public ArrayList<Strand> getStrands(int xMin, int xMax,
                                         ArrayList<String> genomeIDs, int level) {
-        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomeIDs, level), genomeIDs);
+        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomeIDs, level), genomeIDs, level);
 
     }
 
@@ -77,15 +77,20 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param nodes the nodes to filter.
      * @return A filtered list of nodes.
      */
-    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes, ArrayList<String> genomes) {
+    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes, ArrayList<String> genomes, int level) {
         ArrayList<Strand> result = new ArrayList<>();
         Strand leftAllGenomes = new Strand();
         Strand rightAllGenomes = new Strand();
         leftAllGenomes.setX(Integer.MIN_VALUE);
         rightAllGenomes.setX(Integer.MAX_VALUE);
+        int minSize = 0;
+        if (level < 5) {
+            minSize = 200 - level * 40;
+        }
 
         for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
+                if (strand.getSequence().length() > minSize) {
                 if (strand.getX() > xMin && strand.getX() < xMax) {
                     result.add(strand);
                 } else if (strand.getX() < xMin && strand.getX() > leftAllGenomes.getX()
@@ -94,6 +99,7 @@ public class DataTree extends TreeStructure<DataNode> {
                 } else if (strand.getX() > xMax && strand.getX() < rightAllGenomes.getX()
                         && strand.getGenomes().containsAll(genomes)) {
                     rightAllGenomes = strand;
+                }
                 }
             }
 

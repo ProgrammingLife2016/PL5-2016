@@ -1,5 +1,6 @@
 package ribbonnodes;
 
+import abstractdatastructure.Edge;
 import datatree.DataTree;
 import genome.Genome;
 import genome.GenomeGraph;
@@ -76,6 +77,7 @@ public class RibbonController {
 
         spreadYCoordinates(result, actIds);
 
+        result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getId()).compareTo(o2.getId()));
 
         System.out.println(result.size() + " nodes returned");
         return result;
@@ -168,14 +170,38 @@ public class RibbonController {
     protected void spreadYCoordinates(ArrayList<RibbonNode> nodes,
                                       ArrayList<String> activeGenomes) {
 
-        nodes.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
 
-        for (RibbonNode node : nodes) {
-            spreadYCoordinates(node, activeGenomes);
+        int level = 0;
+        while (activeGenomes.size() != level) {
+            for (RibbonNode node : nodes) {
+                if (node.getGenomes().size() == activeGenomes.size() - level) {
+                    if (!node.isyFixed()) {
+                        node.setY(findPreviousNodeSameGenomes(nodes, node).getY());
+                        node.setyFixed(true);
+                    }
+                    spreadYCoordinates(node, activeGenomes, level);
+                }
 
+            }
+
+            level++;
         }
 
 
+    }
+
+    protected RibbonNode findPreviousNodeSameGenomes(ArrayList<RibbonNode> nodes, RibbonNode node) {
+        int endIndex = nodes.indexOf(node);
+        RibbonNode result = node;
+        for (int i = 0; i < endIndex; i++) {
+            RibbonNode other = nodes.get(i);
+            if (other.getGenomes().size() == node.getGenomes().size() && other.getGenomes().containsAll(node.getGenomes())) {
+                result = other;
+            }
+
+        }
+
+        return result;
     }
 
     /**
@@ -183,29 +209,32 @@ public class RibbonController {
      * all others along the y coordinate associated with that genome.
      *
      * @param node          The node to calculate the Y for.
-     * @param activeGenomes The active genomes to spread out.
      */
     protected void spreadYCoordinates(RibbonNode node,
-                                      ArrayList<String> activeGenomes) {
-        if(node.getGenomes().size()==activeGenomes.size()){
+                                      ArrayList<String> activeGenomes,
+                                      int level) {
+
+        ArrayList<RibbonNode> nextNodes = new ArrayList<>();
+        if (level == 0) {
             node.setY(0);
             node.setyFixed(true);
         }
+        node.getOutEdges().sort((RibbonEdge o1, RibbonEdge o2) -> new Integer(o1.getWeight()).compareTo(o2.getWeight()));
+
         for (int i = 0; i < node.getOutEdges().size(); i++) {
             RibbonEdge edge = node.getOutEdges().get(i);
             RibbonNode endNode = edge.getEnd();
-            if (endNode.getGenomes().size() <= node.getGenomes().size()) { //split apart
-                int exponent = activeGenomes.indexOf(endNode.getGenomes().iterator().next());
-                int newY = (int) (Math.abs(node.getGenomes().size() - endNode.getGenomes().size()) * 20 * Math.pow(-1, exponent));
-                if(node.getOutEdges().size()>1&&endNode.getGenomes().size()==node.getGenomes().size()){
+            if (endNode.getGenomes().size() <= node.getGenomes().size() && !endNode.isyFixed()) {
+                int exponent = i;
+
+                int newY = (int) ((node.getGenomes().size() - endNode.getGenomes().size()) *
+                        5 * (activeGenomes.size() - level) *
+                        Math.pow(-1, exponent));
                     endNode.setyFixed(true);
-
-                }
                 endNode.setY(node.getY() + newY);
+                nextNodes.add(endNode);
+                }
 
-            } else if (endNode.getGenomes().size() > node.getGenomes().size()&&!endNode.isyFixed()) {//bring together
-                endNode.setY(endNode.getY() + ((node.getY() * node.getGenomes().size()) / endNode.getGenomes().size()));
-            }
 
         }
 
