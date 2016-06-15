@@ -171,7 +171,7 @@ body:not(.showButtons) .hButton {
 }
 
 input#coordinateSelector {
-    width: 50px;
+    width: 100px;
     height: 18px;
     font-size: 14px;
 }
@@ -182,4 +182,27 @@ input#coordinateSelector {
     top: 5px;
     font-size: 14px;
     z-index: 10000;
+}
+
+
+input#searchMutation {
+    height: 28px;
+    border-radius: 3px;
+    padding: 2px;
+    display: inline;
+    width: 204px;
+}
+
+.ui-autocomplete.ui-menu .ui-menu-item {
+    font-size: 13px;
+    height: 20px;
+    border-bottom: 1px solid black;
+    padding: 2px 0 0 5px;
+    line-height: initial;
+}
+
+.ui-autocomplete {
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }

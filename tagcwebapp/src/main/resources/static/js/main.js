@@ -6,7 +6,7 @@ var screenWidth = $(window).width();
 var screenHeight = $(window).height();
 var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
-var minimapNodes = {}, cachedZoomNodes, minimapCount;
+var minimapNodes = {}, cachedZoomNodes, maxMinimapSize;
 var currentMousePos = {x: -1, y: -1};
 var zoomLeft = 0;
 var zoomRight = 0;
@@ -189,16 +189,43 @@ $('document').ready(function () {
     $('#coordinateSelector').keyup(function(e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
-            var left = Math.floor($(this).val() / minimapCount * $('#minimap').width());
-            var width = $('#minimap').width() / 100;
             e.preventDefault();
-            zoomWidth = 1;
-            $('#minimap .slider').animate({
-                'left': left,
-                'width': width
-            }, 1000, function() {
-                updatezoomWindow();
+            goToX($(this).val(), 100);
+        }
+    });
+
+    $("#searchMutation").autocomplete({
+        source: function( request, response ) {
+            $.ajax({
+                url: url + 'api/search',
+                dataType: "JSON",
+                type: 'GET',
+                data: {
+                    searchString: request.term,
+                    searchType: 'GenomicFeatureSearch'
+                },
+                success: function(result) {
+                    var data = [];
+                    $.each(result.gFeatureSearchMatches, function(key, value) {
+                        data.push({label: value.feature.displayName, value: value.strands[0].x +"-"+ value.strands[value.strands.length - 1].x });
+                    });
+                    response( data );
+                }
             });
+        },
+        minLength: 3,
+        select: function( event, ui ) {
+            var coords = ui.item.value.split('-');
+            var zoom = Math.min(1000, Math.ceil(maxMinimapSize / (parseInt(coords[1]) - parseInt(coords[0]))));
+            goToX(coords[0], zoom);
+            $("#coordinateSelector").val(coords[0]);
+            setTimeout(function() { $('#searchMutation').val(""); }, 500);
+        },
+        open: function() {
+            $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+            $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
         }
     });
 
@@ -263,13 +290,12 @@ function calcHeight(nodes) {
  * @param nodes
  */
 var drawMinimap = function (nodes) {
-    debugger;
     if (nodes == null) {
         nodes = minimapNodes;
     } else {
         minimapNodes = nodes;
-        minimapCount = Object.keys(nodes).length;
-        $('#maxCoordinateInput').html(minimapCount);
+        maxMinimapSize = nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
+        $('#maxCoordinateInput').html(maxMinimapSize);
         minimapHeight = calcHeight(nodes);
     }
     if (nodes == null || Object.keys(nodes).length < 1) {
@@ -517,5 +543,17 @@ function fullSizeMinimap() {
     }, 1000, function () {
         zoom(1, 0, 1);
         screenResize();
+    });
+}
+
+function goToX(x, zoom) {
+    var left = Math.floor(x / maxMinimapSize * $('#minimap').width());
+    var width = $('#minimap').width() / zoom;
+    zoomWidth = 1;
+    $('#minimap .slider').animate({
+        'left': left,
+        'width': width
+    }, 1000, function() {
+        updatezoomWindow();
     });
 }

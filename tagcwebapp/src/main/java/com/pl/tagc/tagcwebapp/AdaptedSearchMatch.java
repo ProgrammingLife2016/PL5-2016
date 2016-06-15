@@ -3,6 +3,8 @@ package com.pl.tagc.tagcwebapp;
 import genome.GenomicFeature;
 import genome.Strand;
 
+import java.util.ArrayList;
+
 /**
  * The Class GFeatureSearchMatch.
  */
@@ -14,7 +16,7 @@ public class AdaptedSearchMatch {
 	private String subString;
 
 	/** The strand. */
-	private Strand strand;	
+	private ArrayList<Strand> strands;
 
 	/**
 	 * Instantiates a new adapted search match.
@@ -24,15 +26,15 @@ public class AdaptedSearchMatch {
 	/**
 	 * Instantiates a new g feature search match.
 	 *
-	 * @param strand the strand
+	 * @param strands the strands
 	 * @param feature the feature
 	 * @param subString the sub string
 	 */
 	@SuppressWarnings("CPD-START")
-	public AdaptedSearchMatch(Strand strand, GenomicFeature feature, String subString) {
+	public AdaptedSearchMatch(ArrayList<Strand> strands, GenomicFeature feature, String subString) {
 		this.setFeature(feature);
 		this.setSubString(subString);
-		this.setStrand(strand);
+		this.setStrands(strands);
 	}
 	/**
 	 * Gets the sub string.
@@ -76,17 +78,17 @@ public class AdaptedSearchMatch {
 	 *
 	 * @return the strand
 	 */
-	public Strand getStrand() {
-		return strand;
+	public ArrayList<Strand> getStrands() {
+		return strands;
 	}
 
 	/**
 	 * Sets the strand.
 	 *
-	 * @param strand the new strand
+	 * @param strands the new strand
 	 */
 	@SuppressWarnings("CPD-END")
-	public void setStrand(Strand strand) {
-		this.strand = strand;
+	public void setStrands(ArrayList<Strand> strands) {
+		this.strands = strands;
 	}
 }

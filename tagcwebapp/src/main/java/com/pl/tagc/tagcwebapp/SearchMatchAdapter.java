@@ -14,7 +14,7 @@ public class SearchMatchAdapter extends XmlAdapter<AdaptedSearchMatch, GFeatureS
 	public AdaptedSearchMatch marshal(GFeatureSearchMatch gMatch) throws Exception {
 		AdaptedSearchMatch match = new AdaptedSearchMatch();
 		match.setFeature(gMatch.getFeature());
-		match.setStrand(gMatch.getStrand());
+		match.setStrands(gMatch.getStrands());
 		match.setSubString(gMatch.getSubString());
 		return match;
 	}

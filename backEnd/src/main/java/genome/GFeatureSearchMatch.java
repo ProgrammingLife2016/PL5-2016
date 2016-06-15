@@ -1,5 +1,7 @@
 package genome;
 
+import java.util.ArrayList;
+
 /**
  * The Class GFeatureSearchMatch.
  */
@@ -11,7 +13,7 @@ public class GFeatureSearchMatch {
 	private String subString;
 
 	/** The strand. */
-	private Strand strand;
+	private ArrayList<Strand> strands;
 	
 	
 
@@ -23,14 +25,14 @@ public class GFeatureSearchMatch {
 	/**
 	 * Instantiates a new g feature search match.
 	 *
-	 * @param strand the strand
+	 * @param strands the strands
 	 * @param feature the feature
 	 * @param subString the sub string
 	 */
-	public GFeatureSearchMatch(Strand strand, GenomicFeature feature, String subString) {
+	public GFeatureSearchMatch(ArrayList<Strand> strands, GenomicFeature feature, String subString) {
 		this.setFeature(feature);
 		this.setSubString(subString);
-		this.setStrand(strand);
+		this.setStrands(strands);
 	}
 	/**
 	 * Gets the sub string.
@@ -74,16 +76,20 @@ public class GFeatureSearchMatch {
 	 *
 	 * @return the strand
 	 */
-	public Strand getStrand() {
-		return strand;
+	public ArrayList<Strand> getStrands() {
+		return strands;
 	}
 
 	/**
 	 * Sets the strand.
 	 *
-	 * @param strand the new strand
+	 * @param strands the new strand
 	 */
-	public void setStrand(Strand strand) {
-		this.strand = strand;
+	public void setStrands(ArrayList<Strand> strands) {
+		this.strands = strands;
+	}
+
+	public void addStrand(Strand strand){
+		strands.add(strand);
 	}
 }

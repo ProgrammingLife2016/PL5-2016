@@ -3,6 +3,7 @@ package genome;
 import genome.GraphSearcher.SearchType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The Class GSearchResult.
@@ -19,11 +20,25 @@ public class GSearchResult {
 	/**
 	 * Adds the g feature search match.
 	 *
-	 * @param searchMatch
 	 *            the search match
 	 */
-	public void addGFeatureSearchMatch(GFeatureSearchMatch searchMatch) {
-		gFeatureSearchMatches.add(searchMatch);
+	public void addGFeatureStrandSearchMatch(Strand strand, GenomicFeature feature, String subString) {
+		boolean contains = false;
+		for (GFeatureSearchMatch match : gFeatureSearchMatches) {
+			if (match.getFeature() == feature) {
+				match.addStrand(strand);
+				contains = true;
+				break;
+			}
+		}
+		if (!contains) {
+			GFeatureSearchMatch searchMatch = new GFeatureSearchMatch(
+					new ArrayList<>(Arrays.asList(strand)),
+					feature,
+					subString);
+			gFeatureSearchMatches.add(searchMatch);
+		}
+
 	}
 
 	/**

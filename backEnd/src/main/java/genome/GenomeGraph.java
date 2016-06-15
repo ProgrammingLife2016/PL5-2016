@@ -24,7 +24,12 @@ public class GenomeGraph {
     /**
      * The active genomes.
      */
-    private ArrayList<Genome> activeGenomes; //The current genomes selected in the GUI.
+    private ArrayList<Genome> activeGenomes;
+
+    /**
+     * The ids of the activeGenomes.
+     */
+    private ArrayList<String> activeGenomeIds;
 
 
     /**
@@ -33,6 +38,7 @@ public class GenomeGraph {
     public GenomeGraph() {
         strands = new HashMap<>();
         activeGenomes = new ArrayList<>();
+        activeGenomeIds = new ArrayList<>();
         genomes = new HashMap<>();
     }
 
@@ -100,6 +106,7 @@ public class GenomeGraph {
      * @return the list of unrecognized genomes
      */
     public List<String> setGenomesAsActive(ArrayList<String> ids) {
+        activeGenomeIds = ids;
         List<String> unrecognizedGenomes = new ArrayList<String>();
         this.activeGenomes = new ArrayList<Genome>();
         for (String genomeId : ids) {
@@ -173,5 +180,7 @@ public class GenomeGraph {
         return GraphSearcher.search(searchString, searchType, this);
     }
 
-
+    public ArrayList<String> getActiveGenomeIds() {
+        return activeGenomeIds;
+    }
 }

@@ -7,7 +7,10 @@ import org.junit.Test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertTrue;
 
@@ -32,8 +35,10 @@ public class GraphSearcherTest {
 		}
 		for (Strand strand : strands.values()) {
 			strand.addGenomicFeature(new GenomicFeature(0, 0, "test"));
+			strand.setGenomes(new HashSet<>(Arrays.asList("1")));
 		}
 		genomeGraph.setStrands(strands);
+		genomeGraph.setGenomesAsActive(new ArrayList<>(Arrays.asList("1")));
 	}
 
 	
@@ -49,7 +54,7 @@ public class GraphSearcherTest {
 		GSearchResult searchResult = GraphSearcher.search("egg",
 				SearchType.GenomicFeatureSearch, genomeGraph);
 		
-		Strand strand = searchResult.getgFeatureSearchMatches().get(0).getStrand();
+		Strand strand = searchResult.getgFeatureSearchMatches().get(0).getStrands().get(0);
 		String featureName = strand.getGenomicFeatures().get(0).getDisplayName();
 		
 		assertTrue(searchResult.getgFeatureSearchMatches().size() == 1);
