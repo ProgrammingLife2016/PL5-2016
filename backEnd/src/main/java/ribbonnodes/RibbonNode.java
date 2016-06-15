@@ -64,7 +64,7 @@ public class RibbonNode {
      */
     private ArrayList<AbstractMutation> mutations;
 
-    private boolean ySetByIndel;
+    private boolean yFixed;
 
     /**
      * Constructor for the RibbonNode.
@@ -83,7 +83,7 @@ public class RibbonNode {
         this.y = 0;
         this.isVisible = true;
         mutations = new ArrayList<>();
-        ySetByIndel=false;
+        yFixed=false;
     }
 
     /**
@@ -338,11 +338,11 @@ public class RibbonNode {
 
 
 
-    public boolean isySetByIndel() {
-        return ySetByIndel;
+    public boolean isyFixed() {
+        return yFixed;
     }
 
-    public void setySetByIndel(boolean ySetByIndel) {
-        this.ySetByIndel = ySetByIndel;
+    public void setyFixed(boolean yFixed) {
+        this.yFixed = yFixed;
     }
 }

@@ -186,6 +186,10 @@ public class RibbonController {
      */
     protected void spreadYCoordinates(RibbonNode node,
                                       ArrayList<String> activeGenomes) {
+        if(node.getGenomes().size()==activeGenomes.size()){
+            node.setY(0);
+            node.setyFixed(true);
+        }
         for (int i = 0; i < node.getOutEdges().size(); i++) {
             RibbonEdge edge = node.getOutEdges().get(i);
             RibbonNode endNode = edge.getEnd();
@@ -193,9 +197,9 @@ public class RibbonController {
                 int newY = (int) (Math.abs(node.getGenomes().size() - endNode.getGenomes().size()) * 20 * Math.pow(-1, i));
                 endNode.setY(node.getY() + newY);
                 if(node.getOutEdges().size()>1&&endNode.getGenomes().size()==node.getGenomes().size()){
-                    endNode.setySetByIndel(true);
+                    endNode.setyFixed(true);
                 }
-            } else if (endNode.getGenomes().size() > node.getGenomes().size()&&!endNode.isySetByIndel()) {//bring together
+            } else if (endNode.getGenomes().size() > node.getGenomes().size()&&!endNode.isyFixed()) {//bring together
                 endNode.setY(endNode.getY() + ((node.getY() * node.getGenomes().size()) / endNode.getGenomes().size()));
             }
 
