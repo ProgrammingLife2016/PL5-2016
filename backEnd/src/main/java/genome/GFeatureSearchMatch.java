@@ -1,7 +1,10 @@
 package genome;
 
 /**
- * The Class GFeatureSearchMatch.
+ * The Class GFeatureSearchMatch. This class represents a genomic feature search match for a 
+ * given string. It contains a substring of the search string used to search the genomic features,
+ * the genomic feature which has a name that contains the substring and the strand that 
+ * contains the feature. 
  */
 public class GFeatureSearchMatch {
 	/** The feature. */
@@ -16,16 +19,16 @@ public class GFeatureSearchMatch {
 	
 
 	/**
-	 * Instantiates a new g feature search match.
+	 * Instantiates a new genomic feature search match.
 	 */
 	public GFeatureSearchMatch() { }
 	
 	/**
-	 * Instantiates a new g feature search match.
+	 * Instantiates a new genomic feature search match.
 	 *
-	 * @param strand the strand
-	 * @param feature the feature
-	 * @param subString the sub string
+	 * @param strand the strand containing the genomic feature.
+	 * @param feature the genomic feature.
+	 * @param subString he substring that matched a substring in the name of the feature.
 	 */
 	public GFeatureSearchMatch(Strand strand, GenomicFeature feature, String subString) {
 		this.setFeature(feature);
