@@ -5,7 +5,6 @@ import genome.Genome;
 import genome.GenomeGraph;
 import genome.Strand;
 import mutation.AbstractMutation;
-import mutation.MutationIndel;
 import mutation.Mutations;
 
 import java.util.ArrayList;
@@ -66,15 +65,15 @@ public class RibbonController {
         }
 
         maxId = 0;
-        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);
+        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actIds, zoomLevel);
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result, isMiniMap);
         collapseRibbons(result, zoomLevel);
 
-
         Mutations mutations = new Mutations(result);
         mutations.computeAllMutations();
         addMutationLabels(result);
+
         spreadYCoordinates(result, actIds);
 
 
@@ -169,6 +168,8 @@ public class RibbonController {
     protected void spreadYCoordinates(ArrayList<RibbonNode> nodes,
                                       ArrayList<String> activeGenomes) {
 
+        nodes.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
+
         for (RibbonNode node : nodes) {
             spreadYCoordinates(node, activeGenomes);
 
@@ -194,7 +195,14 @@ public class RibbonController {
             RibbonEdge edge = node.getOutEdges().get(i);
             RibbonNode endNode = edge.getEnd();
             if (endNode.getGenomes().size() <= node.getGenomes().size()) { //split apart
-                int newY = (int) (Math.abs(node.getGenomes().size() - endNode.getGenomes().size()) * 20 * Math.pow(-1, i));
+                int exponent;
+                if (node.getGenomes().size() == activeGenomes.size()) {
+                    exponent = activeGenomes.indexOf(endNode.getGenomes().iterator().next());
+                }
+                else{
+                    exponent = i;
+                }
+                int newY = (int) (Math.abs(node.getGenomes().size() - endNode.getGenomes().size()) * 20 * Math.pow(-1, exponent));
                 endNode.setY(node.getY() + newY);
                 if(node.getOutEdges().size()>1&&endNode.getGenomes().size()==node.getGenomes().size()){
                     endNode.setyFixed(true);

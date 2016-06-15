@@ -45,7 +45,7 @@ public abstract class RibbonNodeFactory {
         RibbonNode startNode = nodesToCollapse.get(0);
         RibbonNode oldEnd = nodesToCollapse.get(nodesToCollapse.size() - 1);
         RibbonNode newEnd = new RibbonNode(oldEnd.getId(),
-                startNode.getGenomes());
+                oldEnd.getGenomes());
         if (nodesToCollapse.size() > 1) {
             for (int i = 1; i < nodesToCollapse.size(); i++) {
                 RibbonNode node2 = nodesToCollapse.get(i);
