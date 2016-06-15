@@ -162,6 +162,11 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
     	}
 	}
     
+    /**
+     * Find a node with a specific id.
+     * @param id The Id that needs to be found.
+     * @return The resulting node.
+     */
     public PhylogeneticNode getNodeWithId(int id) {
     	Queue<PhylogeneticNode> queue = new LinkedList<>();
     	queue.add(getRoot());
