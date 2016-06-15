@@ -123,9 +123,6 @@ public class Controller {
      */
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
     	System.out.println("Set active genomes");
-    	for (String q : activeGenomes) {
-    		System.out.println(q);
-    	}
     	ArrayList<ArrayList<String>> temp = new ArrayList<>();
     	for (String s : activeGenomes) {
     		if (s.startsWith("T")) {
@@ -133,7 +130,7 @@ public class Controller {
     		} else {
     			System.out.println("middle node selected");
     			Integer x = Integer.parseInt(s);
-    			System.out.println(x);
+    			System.out.println("With id: " + x);
     			PhylogeneticNode node = phylogeneticTree.getNodeWithId(x);
     			for (String a : node.getGenomes()) {
     				System.out.println(a);
