@@ -68,5 +68,19 @@ public class GenomesTest {
 		assertEquals("testId", genome.getId());
 
 	}
+	
+	/**
+	 * Test setting the x coordinates of the strands in the genome.
+	 */
+	@Test
+	public void testSetX() {
+		Strand s = new Strand(0);
+		s.setSequence("A");
+		genome.setStrands(new ArrayList<>(Arrays.asList(s, new Strand(1))));
+		genome.resetStrandX();
+		assertEquals(genome.getStrands().get(1).getX(), 0);
+		genome.setStrandsX();
+		assertEquals(genome.getStrands().get(1).getX(), 1);
+	}
 }
 
