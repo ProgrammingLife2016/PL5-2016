@@ -4,6 +4,7 @@ import ribbonnodes.RibbonEdge;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 
 /**
  * The Class AdaptedRibbonNode.
@@ -28,6 +29,11 @@ public class AdaptedRibbonNode {
      * The label.
      */
     private String label;
+
+	/**
+	 * The annotations within this node
+	 */
+	private ArrayList<String> annotations;
     
     /** The x coordinate. */
     private int x;
@@ -161,4 +167,33 @@ public class AdaptedRibbonNode {
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
+
+	/**
+	 * Getter for annotations.
+	 *
+	 * @return The annotations.
+	 */
+	public ArrayList<String> getAnnotations() {
+		return annotations;
+	}
+
+	/**
+	 * Setter for annotations.
+	 *
+	 * @param annotations The annotations to be set.
+	 */
+	public void setAnnotations(ArrayList<String> annotations) {
+		this.annotations = annotations;
+
+
+		//Temp Todo: Dit weghalen als annotations werken
+		this.annotations = new ArrayList<>();
+
+		Random rand = new Random();
+		for (int i=0; i<10; i++) {
+			if (rand.nextInt(2) == 1) {
+				this.annotations.add("Annotation"+ i);
+			}
+		}
+	}
 }

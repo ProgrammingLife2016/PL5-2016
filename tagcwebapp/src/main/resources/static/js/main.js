@@ -43,8 +43,8 @@ function screenResize() {
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#minimap').height($('#sub').height());
     if ($('#zoom').find('canvas').length) { //Update the canvas height and width in the zoom panel
-        $('#zoom').find('canvas')[0].height = $('#zoom').height();
-        $('#zoom').find('canvas')[0].width = $('#zoom').width();
+        $('#zoom').find('canvas')[0].height = $('#zoomWindow').height();
+        $('#zoom').find('canvas')[0].width = $('#zoomWindow').width();
         updatezoomWindow();
     }
 
@@ -160,7 +160,13 @@ $('document').ready(function () {
                 if (node.id != currentHoverNode) {
                     currentHoverNode = node.id;
                     var dialog = $('#nodeDialog');
-                    dialog.show().find('.message').html(node.label);
+                    var annotations = "<ul>";
+                    $.each(node.annotations, function(key, value) {
+                        annotations += "<li>"+ value +"</li>";
+                    });
+                    annotations += "</ul>";
+                    dialog.find('.message').html(node.label);
+                    dialog.find('.annotation').html(annotations);
                 }
                 return false;
             }
@@ -207,7 +213,10 @@ $('document').ready(function () {
                 success: function(result) {
                     var data = [];
                     $.each(result.gFeatureSearchMatches, function(key, value) {
-                        data.push({label: value.feature.displayName, value: value.strands[0].x +"-"+ value.strands[value.strands.length - 1].x });
+                        data.push({
+                            label: value.feature.displayName,
+                            value: value.strands[0].x +"-"+ value.strands[value.strands.length - 1].x
+                        });
                     });
                     response( data );
                 }
@@ -246,7 +255,6 @@ function pxToInt(css) {
  * @param nodes
  */
 var drawZoom = function (nodes) {
-    $('#nodeDialog').hide();
     if (nodes == null) {
         nodes = cachedZoomNodes;
     } else {
@@ -339,7 +347,13 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
             ctx.stroke();
 
             if (saveRealCoordinates) {
-                zoomNodeLocations.push({x: xPos, y: yPos, label: point.label, id: point.id});
+                zoomNodeLocations.push({
+                    x: xPos,
+                    y: yPos,
+                    label: point.label,
+                    id: point.id,
+                    annotations: point.annotations
+                });
             }
         }
 
