@@ -1,5 +1,7 @@
 package com.pl.tagc.tagcwebapp;
 
+import mutation.AbstractMutation;
+import mutation.MutationType;
 import ribbonnodes.RibbonEdge;
 
 import java.util.ArrayList;
@@ -20,9 +22,12 @@ public class AdaptedRibbonNode {
      * The edges.
      */
     private ArrayList<RibbonEdge> edges;
-    
+
     /** The genomes. */
     private HashSet<String> genomes;
+
+    /** The genomes. */
+    private ArrayList<String> mutations;
     
 	 /**
      * The label.
@@ -160,5 +165,26 @@ public class AdaptedRibbonNode {
      */
     public void setVisible(boolean visible) {
         isVisible = visible;
+    }
+
+    /**
+     * Getter for mutations.
+     *
+     * @return The list of set mutations.
+     */
+    public ArrayList<String> getMutations() {
+        return mutations;
+    }
+
+    /**
+     * Setter for mutations.
+     *
+     * @param mutations The list of mutations to be set.
+     */
+    public void setMutations(ArrayList<AbstractMutation> mutations) {
+        this.mutations = new ArrayList<String>();
+        for (AbstractMutation m: mutations) {
+            this.mutations.add(m.toString());
+        }
     }
 }
