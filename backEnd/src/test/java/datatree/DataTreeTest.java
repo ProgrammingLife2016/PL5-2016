@@ -2,7 +2,6 @@ package datatree;
 
 import genome.Genome;
 import genome.Strand;
-
 import org.junit.Before;
 import org.junit.Test;
 

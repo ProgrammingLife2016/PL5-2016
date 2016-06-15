@@ -1,8 +1,11 @@
 package genome;
+
 import genome.GraphSearcher.SearchType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 /**
  * The Class GenomeGraph.
  */
@@ -41,7 +44,7 @@ public class GenomeGraph {
     public HashMap<Integer, Strand> getStrands() {
         return strands;
     }
-    
+
     /**
      * Sets the strand nodes.
      *
@@ -61,48 +64,6 @@ public class GenomeGraph {
         strands.put(strand.getId(), strand);
     }
 
-
-    /**
-     * Method that finds the starting nodes and calculates the x coordinates for the graphnodes.
-     */
-    public void findStartAndCalculateX() {
-        for (Strand start : strands.values()) {
-            if (start.getX() == 0) {
-                start.setX(1);
-                calculateXfromStart(start);
-            }
-
-        }
-
-
-    }
-
-    /**
-     * Calculate the x coordinates for the graph nodes starting at start.
-     *
-     * @param start the graph node to start at.
-     */
-    public void calculateXfromStart(Strand start) {
-        ArrayList<Strand> currentStrands = new ArrayList<>();
-        ArrayList<Strand> nextStrands = new ArrayList<>();
-        currentStrands.add(start);
-
-        while (!currentStrands.isEmpty()) {
-            for (Strand strand : currentStrands) {
-                for (StrandEdge edge : strand.getOutgoingEdges()) {
-                    Strand nextStrand = strands.get(edge.getEnd().getId());
-                    if (nextStrand.getX() < strand.getX() + 1) {
-                        nextStrand.setX(strand.getX() + strand.getSequence().length() + 1);
-                        nextStrands.add(nextStrand);
-                    }
-                }
-            }
-            currentStrands = nextStrands;
-            nextStrands = new ArrayList<>();
-
-        }
-
-    }
 
     /**
      * Getter for the genomes.
@@ -155,6 +116,9 @@ public class GenomeGraph {
             	activeGenomes.add(input);
         	}
         }
+        for (ArrayList<Genome> genome : activeGenomes) {
+            genome.get(0).setStrandsX();
+        }
         return unrecognizedGenomes;
 
     }
@@ -172,47 +136,46 @@ public class GenomeGraph {
 
     }
 
-	/**
-	 * Gets the strand.
-	 *
-	 * @param id the id
-	 * @return the strand
-	 */
-	public Strand getStrand(int id) {
-		return strands.get(id);
-	}
+    /**
+     * Gets the strand.
+     *
+     * @param id the id
+     * @return the strand
+     */
+    public Strand getStrand(int id) {
+        return strands.get(id);
+    }
 
-	/**
-	 * Gets the genome.
-	 *
-	 * @param genomeId the genome id
-	 * @return the genome
-	 */
-	public Genome getGenome(String genomeId) {
-		return genomes.get(genomeId);
-	}
+    /**
+     * Gets the genome.
+     *
+     * @param genomeId the genome id
+     * @return the genome
+     */
+    public Genome getGenome(String genomeId) {
+        return genomes.get(genomeId);
+    }
 
-	/**
-	 * Annotate.
-	 *
-	 * @param genomeId the genome id
-	 * @param annotations the annotations
-	 */
-	public void annotate(String genomeId, List<GenomicFeature> annotations) {
-		StrandAnnotator.annotate(genomes.get(genomeId).getStrands(), annotations);
-	}
-	
-	/**
-	 * Search.
-	 *
-	 * @param searchString the search string
-	 * @param searchType the search type
-	 * @return the g search result
-	 */
-	public GSearchResult search(String searchString, SearchType searchType) {
-		return GraphSearcher.search(searchString, searchType, this);
-	}
+    /**
+     * Annotate.
+     *
+     * @param genomeId    the genome id
+     * @param annotations the annotations
+     */
+    public void annotate(String genomeId, List<GenomicFeature> annotations) {
+        StrandAnnotator.annotate(genomes.get(genomeId).getStrands(), annotations);
+    }
+
+    /**
+     * Search.
+     *
+     * @param searchString the search string
+     * @param searchType   the search type
+     * @return the g search result
+     */
+    public GSearchResult search(String searchString, SearchType searchType) {
+        return GraphSearcher.search(searchString, searchType, this);
+    }
 
 
-	
 }

@@ -1,8 +1,9 @@
 package com.pl.tagc.tagcwebapp;
 
-import java.awt.Color;
 import ribbonnodes.RibbonEdge;
+
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.awt.Color;
 
 /**
  * The Class RibbonEdgeAdapter.
@@ -17,8 +18,8 @@ public class RibbonEdgeAdapter extends XmlAdapter<AdaptedRibbonEdge, RibbonEdge>
     @Override
     public AdaptedRibbonEdge marshal(RibbonEdge edge) throws Exception {
     	AdaptedRibbonEdge adaptedEdge = new AdaptedRibbonEdge();
-    	adaptedEdge.setStartId(edge.getStart());
-    	adaptedEdge.setEndId(edge.getEnd());
+    	adaptedEdge.setStartId(edge.getStartId());
+    	adaptedEdge.setEndId(edge.getEndId());
         adaptedEdge.setWeight(edge.getWeight());
         adaptedEdge.setColor(parseColor(edge.getColor()));
         return adaptedEdge;

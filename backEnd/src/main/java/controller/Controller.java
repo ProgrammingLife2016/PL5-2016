@@ -6,15 +6,16 @@ import datatree.TempReadWriteTree;
 import genome.GSearchResult;
 import genome.GenomeGraph;
 import genome.GraphSearcher.SearchType;
-import parser.Parser;
 import mutation.Mutations;
 import phylogenetictree.PhylogeneticNode;
+import parser.Parser;
 import phylogenetictree.PhylogeneticTree;
+import ribbonnodes.RibbonController;
 import ribbonnodes.RibbonNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import ribbonnodes.RibbonController;
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -54,7 +55,6 @@ public class Controller {
         genomeGraph.annotate("MT_H37RV_BRD_V5.ref", 
         		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
-        genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
@@ -132,6 +132,7 @@ public class Controller {
     			Integer x = Integer.parseInt(s);
     			System.out.println("With id: " + x);
     			PhylogeneticNode node = phylogeneticTree.getNodeWithId(x);
+    			System.out.println("Leaves under this node:");
     			for (String a : node.getGenomes()) {
     				System.out.println(a);
     			}

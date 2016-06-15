@@ -7,13 +7,13 @@ import genome.Strand;
 import mutation.AbstractMutation;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.mockito.Matchers;
+import org.mockito.Mockito;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -59,20 +59,19 @@ public class RibbonControllerTest {
 //    public void testUsability() throws Exception {
 //        String gfaFile = "data/TB328.gfa";
 //        GenomeGraph genomeGraph = Parser.parse(gfaFile);
-//        genomeGraph.generateGenomes();
-//        genomeGraph.findStartAndCalculateX();
+//
 //        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
 //        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
 //                new ArrayList<>(genomeGraph.getGenomes().keySet()));
 //        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
 //                null, 0));
-//        dataTree.setMinStrandsToReturn(genomeGraph.getStrandNodes().size() / 8);
+//        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
 //
 //        if (gfaFile.equals("data/TB328.gfa")) {
-//            TempReadWriteTree.readFile(dataTree, 
-//            genomeGraph.getStrandNodes(), "data/tempTree.txt");
+//            TempReadWriteTree.readFile(dataTree,
+//            genomeGraph.getStrands(), "data/tempTree.txt");
 //        } else {
-//            dataTree.addStrands(new ArrayList<>(genomeGraph.getGenomes().values()));
+//            dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
 //
 //        }
 //        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
@@ -87,6 +86,7 @@ public class RibbonControllerTest {
      *
      * @throws Exception if fail.
      */
+    @SuppressWarnings("CPD-START")
     @Test
     public void testGetRibbonNodes() throws Exception {
         RibbonController testController = Mockito.mock(RibbonController.class);
@@ -120,8 +120,8 @@ public class RibbonControllerTest {
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
-        RibbonEdge edge1 = new RibbonEdge(0, 1);
-        RibbonEdge edge2 = new RibbonEdge(1, 2);
+        RibbonEdge edge1 = new RibbonEdge(node1, node2);
+        RibbonEdge edge2 = new RibbonEdge(node2, node3);
         node1.addEdge(edge1);
         node2.addEdge(edge1);
         node2.addEdge(edge2);
@@ -234,9 +234,9 @@ public class RibbonControllerTest {
         nodes.add(node2);
 
         assertEquals(node1.getOutEdges().size(), 0);
-        assertEquals(controller.addEdgeSetXReturnEnd(nodes, node1, new Genome("1"), false), node2);
+        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("1"), false), node2);
         assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 1);
-        assertEquals(controller.addEdgeSetXReturnEnd(nodes, node1, new Genome("2"), false), node2);
+        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("2"), false), node2);
         assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 2);
 
 
@@ -268,6 +268,7 @@ public class RibbonControllerTest {
      *
      * @throws Exception if fail.
      */
+    @SuppressWarnings("CPD-END")
     @Test
     public void testAddMutationLabels() throws Exception {
     	RibbonNode node = Mockito.mock(RibbonNode.class);

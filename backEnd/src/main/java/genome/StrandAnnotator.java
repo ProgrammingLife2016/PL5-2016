@@ -42,7 +42,7 @@ public final class StrandAnnotator {
 				}
 			}			
 		}
-		assert (features.isEmpty());
+		assert features.isEmpty();
 	}
 
 	private static void annotateStrand(Strand strand, LinkedHashSet<GenomicFeature> features) {

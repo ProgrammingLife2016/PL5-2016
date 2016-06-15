@@ -8,7 +8,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-
 import java.util.List;
 
 //The Java class will be hosted at the URI path "/api"
@@ -25,28 +24,26 @@ import java.util.List;
 @Path("/api")
 public class RestApi {
 
-	/**
-	 * Requests nodes that have their coordinates within the bounding box
-	 * defined by the parameters.
-	 *
-	 * @param xleft
-	 *            the left bound of the bounding box
-	 * @param xright
-	 *            the right bound of the bounding box
-	 * @param zoom
-	 *            the zoom level that decides which nodes get filtered
-	 * @return the node list object
-	 */
-	@GET
-	@Path("/getnodes")
-	@Produces("application/json")
-public Response requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
-		@DefaultValue("100") @QueryParam("xright") int xright,
-		@DefaultValue("1") @QueryParam("zoom") int zoom,
-		@DefaultValue("false") @QueryParam("isMiniMap") boolean isMiniMap) {
-		return BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom, isMiniMap);
-	}
-
+    /**
+     * Requests nodes that have their coordinates within the bounding box
+     * defined by the parameters.
+     *
+     * @param xleft     the left bound of the bounding box
+     * @param xright    the right bound of the bounding box
+     * @param zoom      the zoom level that decides which nodes get filtered
+     * @param isMiniMap determine wether this is a minimap call or not.
+     * @return the node list object
+     */
+    @GET
+    @Path("/getnodes")
+    @Produces("application/json")
+    public Response requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
+                                 @DefaultValue("100") @QueryParam("xright") int xright,
+                                 @DefaultValue("1") @QueryParam("zoom") int zoom,
+                                 @DefaultValue("false") @QueryParam("isMiniMap")
+                                 boolean isMiniMap) {
+        return BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom, isMiniMap);
+    }
 
 	/**
 	 * Uses the genome ids to set the genomes as active in the backend. Which means that 
@@ -99,4 +96,5 @@ public Response requestNodes(@DefaultValue("0") @QueryParam("xleft") int xleft,
 				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
 				.allow("OPTIONS").build();
 	}
+
 }

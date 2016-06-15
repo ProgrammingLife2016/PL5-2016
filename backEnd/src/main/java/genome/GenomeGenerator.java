@@ -39,7 +39,7 @@ public final class GenomeGenerator {
 					Genome genome = deriveGenome(strand, genomeId);
 					genomes.put(genomeId, genome);
 				} else {
-					assert (genomes.containsKey(genomeId));
+					assert genomes.containsKey(genomeId);
 				}
 
 			}

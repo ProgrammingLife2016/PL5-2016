@@ -33,6 +33,11 @@ public class AdaptedStrand {
 	private String referenceGenome;
 
 	/**
+	 * The sequence of this genome.
+	 */
+	private String sequence;
+
+	/**
 	 * Coordinate of this node in the refr genome.
 	 */
 	private int referenceCoordinate;
@@ -60,6 +65,7 @@ public class AdaptedStrand {
 	public AdaptedStrand(int id, String sequence, HashSet<String> newGenomes, 
 			String referenceGenome,	int referenceCoordinate) {
 		this.id = id;
+		this.sequence = sequence;
 		genomes = newGenomes;
 		this.referenceGenome = referenceGenome;
 		this.referenceCoordinate = referenceCoordinate;
@@ -166,6 +172,23 @@ public class AdaptedStrand {
 	 */
 	public void setX(int x) {
 		this.x = x;
-	} 
-	
+	}
+
+	/**
+	 * Get the sequence.
+	 *
+	 * @return The sequence.
+	 */
+	public String getSequence() {
+		return sequence;
+	}
+
+	/**
+	 * Setter for sequence.
+	 *
+	 * @param sequence sequence to set.
+	 */
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
+	}
 }

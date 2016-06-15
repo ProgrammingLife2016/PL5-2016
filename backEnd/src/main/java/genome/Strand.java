@@ -5,7 +5,6 @@ package genome;
  */
 
 import mutation.AbstractMutation;
-import org.neo4j.graphdb.Node;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -230,7 +229,7 @@ public class Strand {
 	 *            The added edge.
 	 */
 	public void addEdge(StrandEdge edge) {
-		assert (edge.contains(this));
+		assert edge.contains(this);
 		if (edge.getStart().equals(this)) {
 			outgoingEdges.add(edge);
 		}
@@ -322,7 +321,7 @@ public class Strand {
 	/**
 	 * Contains.
 	 *
-	 * @param genome the genome
+	 * @param id the genomeId to check for.
 	 * @return true, if successful
 	 */
 	private boolean contains(String id) {
