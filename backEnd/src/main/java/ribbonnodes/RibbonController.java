@@ -191,7 +191,6 @@ public class RibbonController {
             node.setY(0);
             node.setyFixed(true);
         }
-        int totalY=0;
         for (int i = 0; i < node.getOutEdges().size(); i++) {
             RibbonEdge edge = node.getOutEdges().get(i);
             RibbonNode endNode = edge.getEnd();
@@ -203,19 +202,13 @@ public class RibbonController {
 
                 }
                 endNode.setY(node.getY() + newY);
-                totalY += newY * endNode.getGenomes().size();
 
             } else if (endNode.getGenomes().size() > node.getGenomes().size()&&!endNode.isyFixed()) {//bring together
                 endNode.setY(endNode.getY() + ((node.getY() * node.getGenomes().size()) / endNode.getGenomes().size()));
             }
 
         }
-        if (node.getOutEdges().size() > 1) {
-            if(totalY/node.getGenomes().size()!=0){
-                RibbonNode flip= node.getOutEdges().get(0).getEnd();
-                flip.setY(node.getY()+(-1*(flip.getY()-node.getY())));
-            }
-        }
+
 
 
     }
