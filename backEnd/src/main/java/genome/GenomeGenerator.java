@@ -52,7 +52,8 @@ public final class GenomeGenerator {
      * Derive genome.
      *
      * @param startingStrand the starting strand from which to generate the genome using the edges
-     *                       connecting the strands and using the topological nature of the graph they represent
+     *                       connecting the strands and using the topological nature
+     *                       of the graph they represent.
      * @param genomeId       the genome id of the genome to be generated
      * @return the generated genome
      */

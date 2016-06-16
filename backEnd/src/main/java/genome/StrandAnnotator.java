@@ -14,7 +14,7 @@ public final class StrandAnnotator {
     private StrandAnnotator() {
     }
 
-    ;
+
 
     /**
      * Annotate.

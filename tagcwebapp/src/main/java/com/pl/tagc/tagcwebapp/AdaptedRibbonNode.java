@@ -37,6 +37,12 @@ public class AdaptedRibbonNode {
      */
     private String label;
 
+	/**
+	 * The annotations within this node.
+	 */
+	private ArrayList<String> annotations;
+    
+
     /**
      * The x coordinate.
      */
@@ -180,6 +186,24 @@ public class AdaptedRibbonNode {
         isVisible = visible;
     }
 
+	/**
+	 * Getter for annotations.
+	 *
+	 * @return The annotations.
+	 */
+	public ArrayList<String> getAnnotations() {
+		return annotations;
+	}
+
+	/**
+	 * Setter for annotations.
+	 *
+	 * @param annotations The annotations to be set.
+	 */
+	public void setAnnotations(ArrayList<String> annotations) {
+		this.annotations = annotations;
+
+	}
     /**
      * Getter for mutations.
      *

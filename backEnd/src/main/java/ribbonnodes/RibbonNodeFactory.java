@@ -1,5 +1,6 @@
 package ribbonnodes;
 
+import genome.GenomicFeature;
 import genome.Strand;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public abstract class RibbonNodeFactory {
         RibbonNode ribbon = new RibbonNode(id, actGen);
         ribbon.setX(strand.getX());
         ribbon.addStrand(strand);
+        for (GenomicFeature feature : strand.getGenomicFeatures()) {
+            ribbon.addAnnotation(feature.getDisplayName());
+        }
 
         return ribbon;
     }
@@ -48,6 +52,7 @@ public abstract class RibbonNodeFactory {
             for (int i = 1; i < nodesToCollapse.size(); i++) {
                 RibbonNode node2 = nodesToCollapse.get(i);
                 startNode.addStrands(node2.getStrands());
+                startNode.addAnnotations(node2.getAnnotations());
 
             }
             newEnd.setX(oldEnd.getX());

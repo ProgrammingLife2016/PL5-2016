@@ -108,6 +108,6 @@ public class ParserTest {
         assertEquals(feature.getStart(), 2627279);
         assertEquals(feature.getEnd(), 2632941);
         assertEquals(feature.getDisplayName(),
-                "displayName=DS9 5662 bp (4 orfs 2 IGs)  (electronically transferred)");
+                "DS9 5662 bp (4 orfs 2 IGs)  (electronically transferred)");
     }
 }

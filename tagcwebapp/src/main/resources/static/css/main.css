@@ -1019,6 +1019,8 @@ input[type="button"].small,
     position: relative;
     display: inline-block;
     margin-left: 1em;
+    color: #c0c0c0;
+    text-decoration: none;
 }
 
 #nav > ul > li a {

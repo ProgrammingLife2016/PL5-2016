@@ -10,14 +10,14 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 public class SearchMatchAdapter extends XmlAdapter<AdaptedSearchMatch, GFeatureSearchMatch> {
 
 
-    @Override
-    public AdaptedSearchMatch marshal(GFeatureSearchMatch gMatch) throws Exception {
-        AdaptedSearchMatch match = new AdaptedSearchMatch();
-        match.setFeature(gMatch.getFeature());
-        match.setStrand(gMatch.getStrand());
-        match.setSubString(gMatch.getSubString());
-        return match;
-    }
+	@Override
+	public AdaptedSearchMatch marshal(GFeatureSearchMatch gMatch) throws Exception {
+		AdaptedSearchMatch match = new AdaptedSearchMatch();
+		match.setFeature(gMatch.getFeature());
+		match.setStrands(gMatch.getStrands());
+		match.setSubString(gMatch.getSubString());
+		return match;
+	}
 
     @Override
     public GFeatureSearchMatch unmarshal(AdaptedSearchMatch arg0) throws Exception {

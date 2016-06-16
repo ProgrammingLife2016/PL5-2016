@@ -6,7 +6,7 @@ var screenWidth = $(window).width();
 var screenHeight = $(window).height();
 var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
-var minimapNodes = {}, cachedZoomNodes, minimapCount;
+var minimapNodes = {}, cachedZoomNodes, maxMinimapSize;
 var currentMousePos = {x: -1, y: -1};
 var zoomLeft = 0;
 var zoomRight = 0;
@@ -47,8 +47,8 @@ function screenResize() {
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#minimap').height($('#sub').height());
     if ($('#zoom').find('canvas').length) { //Update the canvas height and width in the zoom panel
-        $('#zoom').find('canvas')[0].height = $('#zoom').height();
-        $('#zoom').find('canvas')[0].width = $('#zoom').width();
+        $('#zoom').find('canvas')[0].height = $('#zoomWindow').height();
+        $('#zoom').find('canvas')[0].width = $('#zoomWindow').width();
         updatezoomWindow();
     }
 
@@ -158,6 +158,7 @@ $('document').ready(function () {
         var x = currentMousePos.x - $(this).position().left;
         var y = currentMousePos.y - $(this).position().top;
         var found = false;
+
         if (dragFrom != null) {
             var d = new Date();
             var time = d.getMilliseconds();
@@ -184,7 +185,13 @@ $('document').ready(function () {
                     if (node.id != currentHoverNode) {
                         currentHoverNode = node.id;
                         var dialog = $('#nodeDialog');
-                        dialog.show().find('.message').html(node.label);
+                        var annotations = "<ul>";
+                        $.each(node.annotations, function(key, value) {
+                            annotations += "<li>"+ value +"</li>";
+                        });
+                        annotations += "</ul>";
+                        dialog.find('.message').html(node.label);
+                        dialog.find('.annotation').html(annotations);
                     }
                     return false;
                 }
@@ -222,16 +229,46 @@ $('document').ready(function () {
     $('#coordinateSelector').keyup(function (e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
-            var left = Math.floor($(this).val() / minimapCount * $('#minimap').width());
-            var width = $('#minimap').width() / 100;
             e.preventDefault();
-            zoomWidth = 1;
-            $('#minimap .slider').animate({
-                'left': left,
-                'width': width
-            }, 1000, function () {
-                updatezoomWindow();
+            goToX($(this).val(), 100);
+        }
+    });
+
+    $("#searchMutation").autocomplete({
+        source: function( request, response ) {
+            $.ajax({
+                url: url + 'api/search',
+                dataType: "JSON",
+                type: 'GET',
+                data: {
+                    searchString: request.term,
+                    searchType: 'GenomicFeatureSearch'
+                },
+                success: function(result) {
+                    var data = [];
+                    $.each(result.gFeatureSearchMatches, function(key, value) {
+                        data.push({
+                            label: value.feature.displayName,
+                            value: value.strands[0].x +"-"+ value.strands[value.strands.length - 1].x
+                        });
+                    });
+                    response( data );
+                }
             });
+        },
+        minLength: 3,
+        select: function( event, ui ) {
+            var coords = ui.item.value.split('-');
+            var zoom = Math.min(1000, Math.ceil(maxMinimapSize / (parseInt(coords[1]) - parseInt(coords[0]))));
+            goToX(coords[0], zoom);
+            $("#coordinateSelector").val(coords[0]);
+            setTimeout(function() { $('#searchMutation').val(""); }, 500);
+        },
+        open: function() {
+            $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+            $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
         }
     });
 
@@ -258,7 +295,6 @@ function pxToInt(css) {
  * @param nodes
  */
 var drawZoom = function (nodes) {
-    $('#nodeDialog').hide();
     if (nodes == null) {
         nodes = cachedZoomNodes;
     } else {
@@ -306,8 +342,8 @@ var drawMinimap = function (nodes) {
         nodes = minimapNodes;
     } else {
         minimapNodes = nodes;
-        minimapCount = Object.keys(nodes).length;
-        $('#maxCoordinateInput').html(minimapCount);
+        maxMinimapSize = nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
+        $('#maxCoordinateInput').html(maxMinimapSize);
         minimapHeight = calcHeight(nodes);
     }
     if (nodes == null || Object.keys(nodes).length < 1) {
@@ -347,9 +383,15 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
 
         drawPoint(ctx, xPos, yPos, 1, point);
 
-        if (saveRealCoordinates) {
-            zoomNodeLocations.push({x: xPos, y: yPos, label: point.label, id: point.id});
-        }
+            if (saveRealCoordinates) {
+                zoomNodeLocations.push({
+                    x: xPos,
+                    y: yPos,
+                    label: point.label,
+                    id: point.id,
+                    annotations: point.annotations
+                });
+            }
 
 
         $.each(point.edges, function (key, edge) {
@@ -614,5 +656,17 @@ function fullSizeMinimap() {
     }, 1000, function () {
         zoom(1, 0, 1);
         screenResize();
+    });
+}
+
+function goToX(x, zoom) {
+    var left = Math.floor(x / maxMinimapSize * $('#minimap').width());
+    var width = $('#minimap').width() / zoom;
+    zoomWidth = 1;
+    $('#minimap .slider').animate({
+        'left': left,
+        'width': width
+    }, 1000, function() {
+        updatezoomWindow();
     });
 }
