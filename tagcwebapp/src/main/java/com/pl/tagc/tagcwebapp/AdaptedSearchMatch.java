@@ -3,18 +3,24 @@ package com.pl.tagc.tagcwebapp;
 import genome.GenomicFeature;
 import genome.Strand;
 
+import java.util.ArrayList;
+
 /**
  * The Class GFeatureSearchMatch.
  */
 public class AdaptedSearchMatch {
-	/** The feature. */
+	/**
+	 * The feature.
+	 */
 	private GenomicFeature feature;
-	
-	/** The sub string. */
-	private String subString;
 
 	/** The strand. */
-	private Strand strand;	
+	private ArrayList<Strand> strands;
+
+	/**
+	 * The sub string.
+	 */
+	private String subString;
 
 	/**
 	 * Instantiates a new adapted search match.
@@ -24,23 +30,34 @@ public class AdaptedSearchMatch {
 	/**
 	 * Instantiates a new g feature search match.
 	 *
-	 * @param strand the strand
+	 * @param strands the strands
 	 * @param feature the feature
 	 * @param subString the sub string
 	 */
 	@SuppressWarnings("CPD-START")
-	public AdaptedSearchMatch(Strand strand, GenomicFeature feature, String subString) {
+	public AdaptedSearchMatch(ArrayList<Strand> strands, GenomicFeature feature, String subString) {
 		this.setFeature(feature);
 		this.setSubString(subString);
-		this.setStrand(strand);
+		this.setStrands(strands);
 	}
+
+
 	/**
-	 * Gets the sub string.
+	 * Gets the strand.
 	 *
-	 * @return the sub string
+	 * @return the strand
 	 */
-	public String getSubString() {
-		return subString;
+	public ArrayList<Strand> getStrands() {
+		return strands;
+	}
+
+	/**
+	 * Sets the strand.
+	 *
+	 * @param strands the new strand
+	 */
+	public void setStrands(ArrayList<Strand> strands) {
+		this.strands = strands;
 	}
 
 	/**
@@ -51,7 +68,7 @@ public class AdaptedSearchMatch {
 	public void setSubString(String subString) {
 		this.subString = subString;
 	}
-	
+
 
 	/**
 	 * Gets the feature.
@@ -67,26 +84,10 @@ public class AdaptedSearchMatch {
 	 *
 	 * @param feature the new feature
 	 */
+	@SuppressWarnings("CPD-END")
 	public void setFeature(GenomicFeature feature) {
 		this.feature = feature;
 	}
 
-	/**
-	 * Gets the strand.
-	 *
-	 * @return the strand
-	 */
-	public Strand getStrand() {
-		return strand;
-	}
 
-	/**
-	 * Sets the strand.
-	 *
-	 * @param strand the new strand
-	 */
-	@SuppressWarnings("CPD-END")
-	public void setStrand(Strand strand) {
-		this.strand = strand;
-	}
 }

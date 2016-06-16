@@ -192,6 +192,7 @@ public class Parser {
                 }
                 String[] attributes = temp.split(";");
                 String displayName = attributes[attributes.length - 1];
+                displayName = displayName.substring(12, displayName.length());
                 list.add(new GenomicFeature(start, end, displayName));
             }
             reader.close();
@@ -202,6 +203,30 @@ public class Parser {
         return list;
     }
 
+
+    /**
+     * Parses the genome metadata.
+     *
+     * @param filePath the file path
+     * @return the hash map
+     */
+    public static HashMap<String, GenomeMetadata> parseGenomeMetadata(String filePath) {
+        HashMap<String, GenomeMetadata> hmap = new HashMap<String, GenomeMetadata>();
+        InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
+        CSVReader reader = new CSVReader(new InputStreamReader(in, StandardCharsets.UTF_8), ';');
+        String[] nextLine;
+        try {
+            while ((nextLine = reader.readNext()) != null) {
+                String genomeId = nextLine[0];
+                hmap.put(genomeId, new GenomeMetadata(nextLine));
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return hmap;
+    }
     /**
      * Writes an edge to the CSV-file.
      *
@@ -281,31 +306,10 @@ public class Parser {
         }
     }
 
-    /**
-     * Parses the genome metadata.
-     *
-     * @param filePath the file path
-     * @return the hash map
-     */
-    public static HashMap<String, GenomeMetadata> parseGenomeMetadata(String filePath) {
-        HashMap<String, GenomeMetadata> hmap = new HashMap<String, GenomeMetadata>();
-        InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
-        CSVReader reader = new CSVReader(new InputStreamReader(in, StandardCharsets.UTF_8), ';');
-        String[] nextLine;
-        try {
-            while ((nextLine = reader.readNext()) != null) {
-                String genomeId = nextLine[0];
-                hmap.put(genomeId, new GenomeMetadata(nextLine));
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        return hmap;
-    }
 
     /**
+
      * Reads the file as a graph in to an Controller.
      *
      * @param file The file that is read.

@@ -9,13 +9,13 @@ import org.meanbean.test.BeanTester;
  */
 public class PhylogeneticTreeObjectTest {
 
-	/**
-	 * Tests the getters and setters.
-	 */
-	@Test
-	public void test() {
-		BeanTester beanTester = new BeanTester();
-		beanTester.testBean(PhylogeneticTreeObject.class);
-	}
+    /**
+     * Tests the getters and setters.
+     */
+    @Test
+    public void test() {
+        BeanTester beanTester = new BeanTester();
+        beanTester.testBean(PhylogeneticTreeObject.class);
+    }
 
 }

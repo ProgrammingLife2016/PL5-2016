@@ -1,11 +1,10 @@
 package genome;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
- * The Class GraphSearcher. This class is a utility class that is responsible for searching the 
- * genome data structures contained in the GenomeGraph class. 
+ * The Class GraphSearcher. This class is a utility class that is responsible for searching the
+ * genome data structures contained in the GenomeGraph class.
  */
 public final class GraphSearcher {
 
@@ -13,6 +12,76 @@ public final class GraphSearcher {
 	 * Instantiates a new graph searcher.
 	 */
 	private GraphSearcher() {
+	}
+
+	/**
+	 * Search.
+	 *
+	 * @param searchString the search string
+	 * @param searchType   the search type
+	 * @param genomeGraph  the genome graph
+	 * @return the search result which contains matches for the search string and search type
+	 */
+	public static GSearchResult search(String searchString, SearchType searchType,
+									   GenomeGraph genomeGraph) {
+		GSearchResult searchResult = new GSearchResult();
+		searchResult.setSearchType(searchType);
+		switch (searchType) {
+			case FullSearch:
+				break;
+			case GenomicFeatureSearch:
+				searchGenomicFeatures(searchResult, searchString, genomeGraph);
+				break;
+			case MetaDataSearch:
+				break;
+			case MutationSearch:
+				break;
+			default:
+				break;
+
+		}
+		return searchResult;
+	}
+
+
+
+	/**
+	 * Search genomic features.
+	 *
+	 * @param searchResult the search result
+	 * @param searchString the search string
+	 * @param graph the graph to search
+	 */
+	private static void searchGenomicFeatures(GSearchResult searchResult,
+											  String searchString,
+											  GenomeGraph graph) {
+		for (Strand strand : graph.getStrands().values()) {
+			boolean relevant = false;
+			for (String id : graph.getActiveGenomeIds()) {
+				if (strand.getGenomes().contains(id)) {
+					relevant = true;
+					break;
+				}
+			}
+			if (relevant) {
+				ArrayList<GenomicFeature> features = strand.getGenomicFeatures();
+
+				for (GenomicFeature feature : features) {
+					String displayName = feature.getDisplayName().toLowerCase();
+					String[] subStrings = searchString.split("\\s+");
+
+					for (String subString : subStrings) {
+
+						if (displayName.contains(subString.toLowerCase())) {
+							searchResult.addGFeatureStrandSearchMatch(strand, feature, subString);
+						}
+
+					}
+
+				}
+			}
+			
+		}
 	}
 
 	/**
@@ -24,66 +93,5 @@ public final class GraphSearcher {
 		MetaDataSearch,
 		MutationSearch,
 		FullSearch
-	}
-
-	/**
-	 * Search.
-	 *
-	 * @param searchString          the search string
-	 * @param searchType            the search type
-	 * @param genomeGraph 			the genome graph
-	 * @return the search result which contains matches for the search string and search type 
-	 */
-	public static GSearchResult search(String searchString, SearchType searchType,
-			GenomeGraph genomeGraph) {
-		GSearchResult searchResult = new GSearchResult();
-		searchResult.setSearchType(searchType);
-		switch (searchType) {
-		case FullSearch:
-			break;
-		case GenomicFeatureSearch:
-			searchGenomicFeatures(searchResult, searchString, genomeGraph.getStrands());
-			break;
-		case MetaDataSearch:
-			break;
-		case MutationSearch:
-			break;
-		default:
-			break;
-
-		}
-		return searchResult;
-	}
-
-	/**
-	 * Searches for genomic features for which the name matches the search string.
-	 *
-	 * @param searchResult the search result
-	 * @param searchString the search string
-	 * @param the strands in which the features will be searched  
-	 */
-	private static void searchGenomicFeatures(GSearchResult searchResult, String searchString,
-			HashMap<Integer, Strand> strands) {
-		
-		for (Strand strand : strands.values()) {
-			ArrayList<GenomicFeature> features = strand.getGenomicFeatures();
-			
-			for (GenomicFeature feature : features) {
-				String displayName = feature.getDisplayName().toLowerCase();
-				String[] subStrings = searchString.split("\\s+");
-				
-				for (String subString : subStrings) {
-					
-					if (displayName.contains(subString.toLowerCase())) {
-						GFeatureSearchMatch searchMatch = new GFeatureSearchMatch(strand, feature,
-								subString);
-						searchResult.addGFeatureSearchMatch(searchMatch);
-					}
-					
-				}
-				
-			}
-			
-		}
 	}
 }

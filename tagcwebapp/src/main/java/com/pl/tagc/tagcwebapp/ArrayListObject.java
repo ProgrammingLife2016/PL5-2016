@@ -8,44 +8,50 @@ import java.util.List;
  */
 @XmlRootElement
 public class ArrayListObject {
-	
-	/** The id. */
-	@SuppressWarnings("unused")
-	private String id = "test";
-	
-	/** The c list. */
-	private List<String> list;
 
-	/**
-	 * Instantiates a new node list object.
-	 */
-	public ArrayListObject() {
-	}
+    /**
+     * The id.
+     */
+    @SuppressWarnings("unused")
+    private String id = "test";
 
-	/**
-	 * Instantiates a new node list object.
-	 *
-	 * @param list the c list
-	 */
-	public ArrayListObject(List<String> list) {
-		this.list = list;
-	}
+    /**
+     * The c list.
+     */
+    private List<String> list;
 
-	/**
-	 * Gets the c list.
-	 *
-	 * @return the c list
-	 */
-	public List<String> getlist() {
-		return list;
-	}
+    /**
+     * Instantiates a new node list object.
+     */
+    public ArrayListObject() {
+    }
 
-	/**
-	 * Sets the c list.
-	 *
-	 * @param list the new c list
-	 */
-	public void setlist(List<String> list) {
-		this.list = list;
-	};
+    /**
+     * Instantiates a new node list object.
+     *
+     * @param list the c list
+     */
+    public ArrayListObject(List<String> list) {
+        this.list = list;
+    }
+
+    /**
+     * Gets the c list.
+     *
+     * @return the c list
+     */
+    public List<String> getlist() {
+        return list;
+    }
+
+    /**
+     * Sets the c list.
+     *
+     * @param list the new c list
+     */
+    public void setlist(List<String> list) {
+        this.list = list;
+    }
+
+
 }

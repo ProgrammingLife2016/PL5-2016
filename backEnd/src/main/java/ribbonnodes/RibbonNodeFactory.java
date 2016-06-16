@@ -1,5 +1,6 @@
 package ribbonnodes;
 
+import genome.GenomicFeature;
 import genome.Strand;
 
 import java.util.ArrayList;
@@ -28,33 +29,13 @@ public abstract class RibbonNodeFactory {
         RibbonNode ribbon = new RibbonNode(id, actGen);
         ribbon.setX(strand.getX());
         ribbon.addStrand(strand);
+        for (GenomicFeature feature : strand.getGenomicFeatures()) {
+            ribbon.addAnnotation(feature.getDisplayName());
+        }
 
         return ribbon;
     }
 
-
-    /**
-     * For every genome contained in a Ribbonnode,
-     * make a copy containing only that genome and return it.
-     *
-     * @param node  the node to split.
-     * @param maxId The current max id in the ribbonnode graph (so no double ids get used).
-     * @return A list of ribbon Nodes containing only one genome.
-     */
-    public static ArrayList<RibbonNode> makeRibbonNodesFromSplit(RibbonNode node, int maxId) {
-        ArrayList<RibbonNode> result = new ArrayList<>();
-        for (String genome : node.getGenomes()) {
-            HashSet<String> ribbonGenome = new HashSet<String>();
-            ribbonGenome.add(genome);
-            RibbonNode ribbon = new RibbonNode(++maxId, ribbonGenome);
-            ribbon.setX(node.getX());
-            ribbon.addStrands(node.getStrands());
-            result.add(ribbon);
-        }
-        return result;
-
-
-    }
 
     /**
      * Collapse a group of nodes and lead all edges the right way.
@@ -66,11 +47,12 @@ public abstract class RibbonNodeFactory {
         RibbonNode startNode = nodesToCollapse.get(0);
         RibbonNode oldEnd = nodesToCollapse.get(nodesToCollapse.size() - 1);
         RibbonNode newEnd = new RibbonNode(oldEnd.getId(),
-                startNode.getGenomes());
+                oldEnd.getGenomes());
         if (nodesToCollapse.size() > 1) {
             for (int i = 1; i < nodesToCollapse.size(); i++) {
                 RibbonNode node2 = nodesToCollapse.get(i);
                 startNode.addStrands(node2.getStrands());
+                startNode.addAnnotations(node2.getAnnotations());
 
             }
             newEnd.setX(oldEnd.getX());

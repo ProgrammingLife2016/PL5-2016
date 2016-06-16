@@ -24,15 +24,15 @@ import java.util.Set;
 
 /**
  * @author user.
- *     This class creates and uses the database.
+ *         This class creates and uses the database.
  */
 public class Database {
 
-	/**
-	 * Path to the database.
-	 */
+    /**
+     * Path to the database.
+     */
     private String path;
-    
+
     /**
      * Connection to the database.
      */
@@ -40,18 +40,20 @@ public class Database {
 
     /**
      * Instantiates a new database.
+     *
      * @param databasePath Path of the database file.
      */
     public Database(String databasePath) {
-    	path = databasePath.toLowerCase();
-    	createDatabaseConnection(false);
+        path = databasePath.toLowerCase();
+        createDatabaseConnection(false);
     }
-    
+
     /**
      * Create a Database with its connection.
-     * @param databasePath Path of the databasefile.
-     * @param dataPath Input for the database.
-     * @param phyloPath Where the phylogenetic tree file is stored.
+     *
+     * @param databasePath  Path of the databasefile.
+     * @param dataPath      Input for the database.
+     * @param phyloPath     Where the phylogenetic tree file is stored.
      * @param useExistingDB if false, a new database will be created from the data.
      */
     public Database(String databasePath, String dataPath, String phyloPath, boolean useExistingDB) {
@@ -98,7 +100,7 @@ public class Database {
     /**
      * Delete a directory.
      *
-     * @param   dir  the filepath to delete
+     * @param dir the filepath to delete
      */
     private void deleteDirectory(File dir) {
         assert dir != null;
@@ -112,8 +114,7 @@ public class Database {
                 if (f.isDirectory()) {
                     //call recursively if it's a directory
                     deleteDirectory(f);
-                }
-                else {
+                } else {
                     //delete file otherwise
                     deleted = f.delete();
                 }
@@ -148,6 +149,7 @@ public class Database {
 
     /**
      * Inserts the nodes into the database.
+     *
      * @param file the filePath of the csv
      */
     private void insertNodes(String file) {
@@ -162,6 +164,7 @@ public class Database {
 
     /**
      * Inserts the edges into the database.
+     *
      * @param file the filePath of the csv
      */
     private void insertEdges(String file) {
@@ -176,6 +179,7 @@ public class Database {
 
     /**
      * Inserts the phylogenetic tree into the database.
+     *
      * @param file the filePath of the csv
      */
     private void insertPhyloTree(String file) {
@@ -255,6 +259,7 @@ public class Database {
 
     /**
      * Returns all genomes that descent from the selected genome/parent-id.
+     *
      * @param id the id/name of the genome/parent who's descendants should be returned
      * @return list of all descending genomes
      */
@@ -276,57 +281,58 @@ public class Database {
 
     /**
      * GraphDatabaseService getter.
+     *
      * @return GraphDatabaseService.
      */
     public GraphDatabaseService getGraphService() {
         return graphDb;
     }
 
-	/**
-	 * Gets the all genome metadata.
-	 *
-	 * @return the all genome metadata
-	 */
-	public HashMap<String, GenomeMetadata> getAllGenomeMetadata() {
-		HashMap<String, GenomeMetadata> hmap = new HashMap<String, GenomeMetadata>(); 
-		try (Transaction tx = graphDb.beginTx();
-				ResourceIterator<Node> it = graphDb.findNodes(DynamicLabel.label("GenomeMeta"));) {
+    /**
+     * Gets the all genome metadata.
+     *
+     * @return the all genome metadata
+     */
+    public HashMap<String, GenomeMetadata> getAllGenomeMetadata() {
+        HashMap<String, GenomeMetadata> hmap = new HashMap<String, GenomeMetadata>();
+        try (Transaction tx = graphDb.beginTx();
+             ResourceIterator<Node> it = graphDb.findNodes(DynamicLabel.label("GenomeMeta"));) {
 
-		while (it.hasNext()) {
-			Node n = it.next();
-			String genomeId = n.getProperty("id").toString();
-			String lineage = n.getProperty("lineage").toString();
-			hmap.put(genomeId, new GenomeMetadata(genomeId, lineage));
-		}
-		
-		tx.success();
-		return hmap;
-		}
-	}
+            while (it.hasNext()) {
+                Node n = it.next();
+                String genomeId = n.getProperty("id").toString();
+                String lineage = n.getProperty("lineage").toString();
+                hmap.put(genomeId, new GenomeMetadata(genomeId, lineage));
+            }
 
-	/**
-	 * Load genome metadata from resources.
-	 *
-	 * @param filePath the file path
-	 */
-	public void loadGenomeMetadataFromResources(String filePath) {
-		
-		InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
-		new File("temp").mkdir();
-		File temp = new File("temp/metadata.csv");
-		try {
-			temp.createNewFile();
-			Files.copy(in, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		try (Transaction tx = graphDb.beginTx()) {
+            tx.success();
+            return hmap;
+        }
+    }
+
+    /**
+     * Load genome metadata from resources.
+     *
+     * @param filePath the file path
+     */
+    public void loadGenomeMetadataFromResources(String filePath) {
+
+        InputStream in = Parser.class.getClassLoader().getResourceAsStream(filePath);
+        new File("temp").mkdir();
+        File temp = new File("temp/metadata.csv");
+        try {
+            temp.createNewFile();
+            Files.copy(in, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (Transaction tx = graphDb.beginTx()) {
             graphDb.execute("LOAD CSV WITH HEADERS FROM \'" + temp.toURI()
                     + "\' AS line FIELDTERMINATOR ';' \n CREATE (:GenomeMeta "
                     + " {id: line.`Specimen ID`, lineage: line.Lineage})");
             tx.success();
         }
-		
-	}
+
+    }
 }

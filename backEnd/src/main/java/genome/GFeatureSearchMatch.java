@@ -1,40 +1,81 @@
 package genome;
 
+import java.util.ArrayList;
+
 /**
- * The Class GFeatureSearchMatch. This class represents a genomic feature search match for a 
+ * The Class GFeatureSearchMatch. This class represents a genomic feature search match for a
  * given string. It contains a substring of the search string used to search the genomic features,
- * the genomic feature which has a name that contains the substring and the strand that 
- * contains the feature. 
+ * the genomic feature which has a name that contains the substring and the strand that
+ * contains the feature.
  */
 public class GFeatureSearchMatch {
-	/** The feature. */
+	/**
+	 * The feature.
+	 */
 	private GenomicFeature feature;
-	
-	/** The sub string. */
-	private String subString;
 
 	/** The strand. */
-	private Strand strand;
-	
-	
+	private ArrayList<Strand> strands;
+	/**
+	 * The sub string.
+	 */
+	private String subString;
+
+
+
+
 
 	/**
-	 * Instantiates a new genomic feature search match.
+	 * Instantiates a new g feature search match.
 	 */
 	public GFeatureSearchMatch() { }
 	
 	/**
-	 * Instantiates a new genomic feature search match.
+	 * Instantiates a new g feature search match.
 	 *
-	 * @param strand the strand containing the genomic feature.
-	 * @param feature the genomic feature.
-	 * @param subString he substring that matched a substring in the name of the feature.
+	 * @param strands the strands
+	 * @param feature the feature
+	 * @param subString the sub string
 	 */
-	public GFeatureSearchMatch(Strand strand, GenomicFeature feature, String subString) {
+	public GFeatureSearchMatch(ArrayList<Strand> strands,
+							   GenomicFeature feature,
+							   String subString) {
 		this.setFeature(feature);
 		this.setSubString(subString);
-		this.setStrand(strand);
+		this.setStrands(strands);
 	}
+
+
+
+
+	/**
+	 * Gets the strand.
+	 *
+	 * @return the strand
+	 */
+	public ArrayList<Strand> getStrands() {
+		return strands;
+	}
+
+	/**
+	 * Sets the strand.
+	 *
+	 * @param strands the new strand
+	 */
+	public void setStrands(ArrayList<Strand> strands) {
+		this.strands = strands;
+	}
+
+	/**
+	 * Add a strand to this search match.
+	 *
+	 * @param strand strand to add.
+	 */
+	public void addStrand(Strand strand) {
+		strands.add(strand);
+	}
+
+
 	/**
 	 * Gets the sub string.
 	 *
@@ -52,7 +93,7 @@ public class GFeatureSearchMatch {
 	public void setSubString(String subString) {
 		this.subString = subString;
 	}
-	
+
 
 	/**
 	 * Gets the feature.
@@ -72,21 +113,5 @@ public class GFeatureSearchMatch {
 		this.feature = feature;
 	}
 
-	/**
-	 * Gets the strand.
-	 *
-	 * @return the strand
-	 */
-	public Strand getStrand() {
-		return strand;
-	}
 
-	/**
-	 * Sets the strand.
-	 *
-	 * @param strand the new strand
-	 */
-	public void setStrand(Strand strand) {
-		this.strand = strand;
-	}
 }

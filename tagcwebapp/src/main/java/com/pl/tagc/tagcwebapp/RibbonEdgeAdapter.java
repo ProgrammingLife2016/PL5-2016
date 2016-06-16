@@ -17,9 +17,9 @@ public class RibbonEdgeAdapter extends XmlAdapter<AdaptedRibbonEdge, RibbonEdge>
 
     @Override
     public AdaptedRibbonEdge marshal(RibbonEdge edge) throws Exception {
-    	AdaptedRibbonEdge adaptedEdge = new AdaptedRibbonEdge();
-    	adaptedEdge.setStartId(edge.getStartId());
-    	adaptedEdge.setEndId(edge.getEndId());
+        AdaptedRibbonEdge adaptedEdge = new AdaptedRibbonEdge();
+        adaptedEdge.setStartId(edge.getStartId());
+        adaptedEdge.setEndId(edge.getEndId());
         adaptedEdge.setWeight(edge.getWeight());
         adaptedEdge.setColor(parseColor(edge.getColor()));
         return adaptedEdge;
@@ -27,6 +27,7 @@ public class RibbonEdgeAdapter extends XmlAdapter<AdaptedRibbonEdge, RibbonEdge>
 
     /**
      * Returns the hexadecimal string of a color.
+     *
      * @param color The color object
      * @return A string containing the hexadecimal of the color
      */

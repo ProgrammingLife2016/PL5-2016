@@ -1,4 +1,5 @@
 package genome;
+
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
@@ -7,13 +8,13 @@ import org.meanbean.test.BeanTester;
  */
 public class GenomicFeatureTest {
 
-	/**
-	 * Tests the getters and setters.
-	 */
-	@Test
-	public void test() {
-		BeanTester beanTester = new BeanTester();
-		beanTester.testBean(GenomicFeature.class);
-	}
+    /**
+     * Tests the getters and setters.
+     */
+    @Test
+    public void test() {
+        BeanTester beanTester = new BeanTester();
+        beanTester.testBean(GenomicFeature.class);
+    }
 
 }

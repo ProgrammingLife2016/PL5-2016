@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
-  <link rel="stylesheet" type="text/css" href="css/main.css" />
+  <link rel="stylesheet" type="text/css" href="css/main.css"/>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/phylo.css">
 
@@ -34,14 +34,24 @@
     <nav id="nav">
       <ul>
         <li class="current"><a href="index.htm">Home</a></li>
+        <li>
+          <a href="#" id="mutationLegenda">Legenda</a>
+          <div id="legendaCanvas">
+
+          </div>
+        </li>
         <li class="opener" id="showMetaDataDropdown">
           <a href="#">MetaData</a>
-          <ul></ul></li>
+          <ul></ul>
+        </li>
         <li>
           <a href="#" id="toggleButtons">
             <span class="hButton">Show Buttons</span>
             <span class="sButton">Hide Buttons</span>
           </a>
+        </li>
+        <li>
+          Search: <input type="text" id="searchMutation">
         </li>
       </ul>
     </nav>
@@ -53,7 +63,10 @@
     <section id="zoom">
       <div id="zoomWindow" class="genome"></div>
       <div id="nodeDialog">
+        <div class="messageLabel">Description</div>
         <div class="message"></div>
+        <div class="annotationLabel">Annotations</div>
+        <div class="annotation"></div>
       </div>
       <div id="zoomButtons" class="sButton">
         <button id="zoomIn">+</button><br />
@@ -72,11 +85,13 @@
               Genomes</button>
             <button id="expandPhyloView" type="button"
                     class="btn btn-default" data-dismiss="modal">+</button>
+            <ul id="phyloColorLegenda"></ul>
+            <div class="right">ZoomLevel<input type="number" id="phyloZoomLevel" value="6"></div>
           </div>
-          <ul id="phyloColorLegenda">
-
-          </ul>
         </div>
+        <ul id="selectedGenomeList">
+          <li class="firstLi">None selected</li>
+        </ul>
       </div>
       <div id="minimapContainer">
         <div id="minimap" class="mainGenome genome">
