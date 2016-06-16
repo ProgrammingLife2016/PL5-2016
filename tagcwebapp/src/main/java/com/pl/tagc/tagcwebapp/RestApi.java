@@ -55,8 +55,12 @@ public class RestApi {
      */
     @POST
     @Path("/setactivegenomes")
-    public ArrayListObject setActiveGenomes(@FormParam("names[]") List<String> ids) {
-        return BackEndAdapter.getInstance().setActiveGenomes(ids);
+    public Response setActiveGenomes(@FormParam("names[]") List<String> ids) {
+        return Response.ok() //200
+                .entity(BackEndAdapter.getInstance().setActiveGenomes(ids))
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
     }
 
     /**

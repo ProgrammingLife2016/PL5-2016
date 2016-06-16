@@ -183,3 +183,16 @@ input#coordinateSelector {
     font-size: 14px;
     z-index: 10000;
 }
+
+div#legendaCanvas {
+    display: none;
+    border: 6px solid #37c0fb;
+    border-top: none;
+    position: absolute;
+    background-color: #333;
+    background-image: -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.3)), url("../img/bg01.png");
+    background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.3)), url("../img/bg01.png");
+    background-image: -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.3)), url("../img/bg01.png");
+    background-image: linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.3)), url("../img/bg01.png");
+    padding: 10px;
+}

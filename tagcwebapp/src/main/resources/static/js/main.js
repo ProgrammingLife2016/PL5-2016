@@ -14,6 +14,8 @@ var zoomHeight = 0;
 var minimapHeight = 0;
 var zoomNodeLocations = [];
 var currentHoverNode = null;
+var mutations = ["SNP", "INDEL", "TANDEMDUPLICATION", "INTERSPERSEDDUPLICATION", "INVERSION", "TRANSLOCATION"];
+var mutColors = ["0000FF", "00FF00", "FF0000"];
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -202,6 +204,12 @@ $('document').ready(function () {
         }
     });
 
+    $('#mutationLegenda').hover(function() {
+        $('#legendaCanvas').show();
+    },function() {
+        $('#legendaCanvas').hide();
+    });
+
     initialize();
 });
 
@@ -263,7 +271,6 @@ function calcHeight(nodes) {
  * @param nodes
  */
 var drawMinimap = function (nodes) {
-    debugger;
     if (nodes == null) {
         nodes = minimapNodes;
     } else {
@@ -305,12 +312,10 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     $.each(points, function (id, point) {
         if (point.visible) {
 
-            ctx.beginPath();
-
             var xPos = xTranslate(point.x);
             var yPos = nodeHeight + point.y;
-            ctx.arc(xPos, yPos, 5, 0, 2 * Math.PI);
-            ctx.stroke();
+
+            drawPoint(ctx, xPos, yPos, 1, point.mutations);
 
             if (saveRealCoordinates) {
                 zoomNodeLocations.push({x: xPos, y: yPos, label: point.label, id: point.id});
@@ -334,6 +339,43 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
             }
         });
     });
+}
+
+function drawPoint(ctx, xPos, yPos, multiplier, pointMutations) {
+    ctx.beginPath();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.strokeStyle = '#000000';
+    if (!pointMutations || typeof pointMutations == "undefined" || pointMutations.length == 0) {
+        ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
+    } else {
+        var mutation = pointMutations[0].replace('"', '');
+        var index = mutations.indexOf(mutation);
+        var mutSize = mutColors.length;
+        var color = mutColors[index%mutSize];
+        ctx.fillStyle = '#'+ color;
+        switch (Math.floor(index / mutSize)) {
+            case 0: //Square
+                ctx.rect(xPos-5 * multiplier, yPos-5 * multiplier, 10 * multiplier, 10 * multiplier);
+                break;
+            case 1: //Triangle
+                ctx.moveTo(xPos, yPos - 6 * multiplier);
+                ctx.lineTo(xPos + 6 * multiplier, yPos + 6 * multiplier);
+                ctx.lineTo(xPos - 6 * multiplier, yPos + 6 * multiplier);
+                break;
+            case 2: //Square
+                ctx.moveTo(xPos - 6 * multiplier, yPos - 6 * multiplier);
+                ctx.lineTo(xPos + 6 * multiplier, yPos + 6 * multiplier);
+                ctx.moveTo(xPos - 6 * multiplier, yPos + 6 * multiplier);
+                ctx.lineTo(xPos + 6 * multiplier, yPos - 6 * multiplier);
+                ctx.strokeStyle = '#'+ color;
+                break;
+        }
+        ctx.fill();
+    }
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.strokeStyle = '#000000';
 }
 
 /**
@@ -473,6 +515,20 @@ function getNodes(boundingBox, callback) {
 function initialize() {
     initializeMinimap();
     initializeZoomWindow();
+    initLegendCanvas();
+    setInterval(function() { initLegendCanvas() }, 1000);
+}
+
+function initLegendCanvas() {
+    var height = mutations.length * 26 + 20;
+    $('#legendaCanvas').html('<canvas width="280px" height="'+ height +'px"></canvas>')
+    var canvas = $('#legendaCanvas').find('canvas');
+    var ctx = canvas[0].getContext("2d");
+    $.each(mutations, function(key, mutation) {
+        drawPoint(ctx, 15, 10 + key * 30, 2, [ mutation ]);
+        ctx.font="15px Georgia";
+        ctx.fillText(mutation, 35, 16 + key * 30);
+    });
 }
 
 /**
