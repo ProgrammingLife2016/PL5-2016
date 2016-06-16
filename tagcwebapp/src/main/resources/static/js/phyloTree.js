@@ -124,7 +124,7 @@ function drawPhyloTree(root) {
     resetSmits();
     var data = '<phyloxml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.phyloxml.org http://www.phyloxml.org/1.10/phyloxml.xsd" xmlns="http://www.phyloxml.org"><phylogeny rooted="false">';
     data += '<render><parameters><circular><bufferRadius>0.5</bufferRadius></circular><rectangular><alignRight>1</alignRight></rectangular></parameters>';
-    data += '<charts><genome type="binary" thickness="10"/><heatmap type="binary" thickness="10" disjointed="1" bufferSiblings="0.3"/></charts>';
+    data += '<charts><genome0 type="binary" thickness="10"/><genome1 type="binary" thickness="10"/><genome2 type="binary" thickness="10"/><genome3 type="binary" thickness="10"/></charts>';
     data += '<styles>'+ getPhyloColorStyles() +'</styles></render>';
     data += phyloToXml(root, 6, 0);
     data += '</phylogeny></phyloxml>';
@@ -175,6 +175,21 @@ function phyloToXml(nodeId, maxDepth, depth) {
                 return false;
             }
         });
+        var genomeCharts = "";
+        var colors = [];
+        if (node.children.length == 0) {
+            colors.push(color);
+        } else {
+            colors = getGenomeColors(nodeId, []);
+        }
+        for (var i=0; i<4; i++) {
+            var color = "none";
+            if (colors.length > i) {
+                color = colors[i];
+            }
+            genomeCharts += "<genome" + i + ">color" + color + "</genome" + i + ">";
+        }
+
         return ""+
             "<clade>"+
                 "<name>"+ node.name +"</name>"+
@@ -183,9 +198,7 @@ function phyloToXml(nodeId, maxDepth, depth) {
                     "<uri>#"+ nodeId +"</uri>"+
                     "<desc>"+ node.name +"</desc>"+
                 "</annotation>"+
-            "<chart>"+
-                "<genome>color"+ color +"</genome>"+
-            "</chart>"+
+            "<chart>"+ genomeCharts +"</chart>"+
 
             "</clade>";
     }

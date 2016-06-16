@@ -68,7 +68,7 @@ function getPhyloColorStyles() {
     $.each(phyloColorList, function(key, color) {
         result += '<color'+ color +' fill="#'+ color +'" stroke="#'+ color +'"/>';
     });
-    result += '<none fill="#FFF" stroke="#CCC" />';
+    result += '<colornone fill="#f7f7f7" stroke="#f7f7f7" />';
     return result;
 }
 
@@ -79,4 +79,28 @@ function drawPhyloLegenda() {
     $.each(metaData[activeMeta], function(name, color) {
         legenda.append('<li><div style="background-color: #'+ color +'"></div>'+ name +'</li>');
     });
+}
+
+function getGenomeColors(nodeId, colors) {
+    var node = phyloTree[nodeId];
+    if (node.children && node.children.length > 0) {
+        $.each(node.children, function(key, value) {
+            colors = getGenomeColors(value, colors);
+        });
+    } else {
+        var color = "none";
+        $.each(phyloColors, function(key, value) {
+            if (node.name == value.genome) {
+                color = value.color;
+                return false;
+            }
+        });
+        if (color != "none") {
+            var index = $.inArray(color, colors);
+            if (index == -1) {
+                colors.push(color);
+            }
+        }
+    }
+    return colors;
 }
