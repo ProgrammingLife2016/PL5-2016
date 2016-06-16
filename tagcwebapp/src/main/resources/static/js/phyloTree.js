@@ -96,6 +96,10 @@ $("document").ready(function () {
             selectMiddleNode($(this).data('id'));
         }
     });
+
+    $('#phyloZoomLevel').change(function() {
+        resizePhyloTree();
+    });
 });
 
 function selectGenome(genome) {
@@ -162,9 +166,10 @@ function drawPhyloTree(root) {
     svgCanvas.find('svg').remove();
     phyloRoot = root;
     initSmits();
+    var depth = $('#phyloZoomLevel').val();
     var data = '<phyloxml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.phyloxml.org http://www.phyloxml.org/1.10/phyloxml.xsd" xmlns="http://www.phyloxml.org"><phylogeny rooted="false">';
     data += '<render><parameters><circular><bufferRadius>0.5</bufferRadius></circular><rectangular><alignRight>1</alignRight></rectangular></parameters><charts><genome type="binary" thickness="10"/><heatmap type="binary" thickness="10" disjointed="1" bufferSiblings="0.3"/></charts><styles><lin1 fill="#ed00c3" stroke="#000000"/><lin2 fill="#0000ff" stroke="#000000"/><lin3 fill="#500079" stroke="#000000"/><lin4 fill="#ff0000" stroke="#000000"/><none fill="#FFF" stroke="#CCC" /><heat1 fill="#00FF00"></heat1><heat2 fill="#11EE00"></heat2><heat3 fill="#22DD00"></heat3><heat4 fill="#33CC00"></heat4><heat5 fill="#44BB00"></heat5><heat6 fill="#55AA00"></heat6><heat7 fill="#669900"></heat7><heat8 fill="#778800"></heat8><heat9 fill="#887700"></heat9><heat10 fill="#996600"></heat10><heat11 fill="#AA5500"></heat11><heat12 fill="#BB4400"></heat12><heat13 fill="#CC3300"></heat13><heat14 fill="#DD2200"></heat14><heat15 fill="#EE1100"></heat15><heat16 fill="#FF0000"></heat16></styles></render>';
-    data += phyloToXml(root, 6, 0);
+    data += phyloToXml(root, depth, 0);
     data += '</phylogeny></phyloxml>';
 
     var dataObject = {
@@ -185,8 +190,9 @@ function drawPhyloTree(root) {
         }
     });
 
-    $('svg circle').each(function (key, value) {
-        if ($.inArray($(value).attr('nodeid'), selectedMiddleNodes) > -1) {
+    $('svg circle').each(function(key, value) {
+        var nodeId = parseInt($(value).attr('nodeid'));
+        if ($.inArray(nodeId, selectedMiddleNodes) > -1) {
             $(value).addClass('selected');
         }
     });
