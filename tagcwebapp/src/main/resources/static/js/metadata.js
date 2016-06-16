@@ -2,8 +2,9 @@
  * Created by Thomas on 16-06-16.
  */
 
-var phyloColors = [];
 var phyloColorList = [];
+var metaData = {};
+var activeMeta = "";
 
 $('document').ready(function() {
     loadMetaData();
@@ -18,16 +19,11 @@ function loadMetaData() {
         var result = {};
         var html = "";
         $.each(data.list.entry, function(key, meta) {
+            html += '<li><a href="#" onclick="setPhyloColors(\''+ meta.key +'\')">'+ meta.key +'</a></li>';
             if (meta.value == "[]") {
                 result[meta.key] = [];
-                html += '<li><a href="#">'+ meta.key +'</a></li>';
             } else {
                 result[meta.key] = meta.value.replace('[', '').replace(']', '').split(', ');
-                html += '<li class="opener"><a href="#" style="display: block;">'+ meta.key +'</a><ul class="dropotron">';
-                $.each(result[meta.key], function(x, val) {
-                    html += '<li><a href="#">'+ val +'</a></li>';
-                });
-                html += '</ul></li>';
             }
         });
         $('#showMetaDataDropdown').find('ul').html(html);
@@ -40,14 +36,10 @@ function loadMetaData() {
         setPhyloColors("lineage");
     });
 
-
-    $('#showMetaDataDropdown').find('li').click(function(e) {
-        e.preventDefault();
-        setPhyloColors($(this).html());
-    });
 }
 
 function setPhyloColors(metadata) {
+    activeMeta = metadata;
     $.ajax({
         url: url + 'api/getgenomecolors',
         dataType: 'JSON',
@@ -66,6 +58,23 @@ function setPhyloColors(metadata) {
                 phyloColorList.push(meta.value);
             }
         });
+        drawPhyloLegenda();
         resizePhyloTree();
+    });
+}
+
+function getPhyloColorStyles() {
+    var result = "";
+    $.each(phyloColorList, function(key, color) {
+        result += '<color'+ color +' fill="#'+ color +'" stroke="#'+ color +'"/>';
+    });
+    result += '<none fill="#FFF" stroke="#CCC" />';
+    return result;
+}
+
+function drawPhyloLegenda() {
+    var legenda = $('#phyloColorLegenda');
+    $.each(metaData[activeMeta], function(key, color) {
+        legenda.append('<li style="background-color: "#'+ color.color +'">'+ color.name +'</li>');
     });
 }

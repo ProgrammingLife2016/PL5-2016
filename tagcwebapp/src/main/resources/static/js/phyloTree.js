@@ -9,8 +9,6 @@ var selectedGenomes = [];
 var phyloColors = [];
 
 $("document").ready(function() {
-    //Set the global variable containing all the phyloColors mapped to the genomes
-    setLineages();
 
     //Load the phylogenic Tree
     $.ajax({
@@ -20,7 +18,6 @@ $("document").ready(function() {
     }).done(function(data) {
         data.id = -1;
         parsePhyloTree(data);
-        drawPhyloTree(-1);
     });
 
     //Add an onclick on the links in the phyloTree, zooming in or selecting the genomes
@@ -126,7 +123,9 @@ function drawPhyloTree(root) {
     phyloRoot = root;
     resetSmits();
     var data = '<phyloxml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.phyloxml.org http://www.phyloxml.org/1.10/phyloxml.xsd" xmlns="http://www.phyloxml.org"><phylogeny rooted="false">';
-    data += '<render><parameters><circular><bufferRadius>0.5</bufferRadius></circular><rectangular><alignRight>1</alignRight></rectangular></parameters><charts><genome type="binary" thickness="10"/><heatmap type="binary" thickness="10" disjointed="1" bufferSiblings="0.3"/></charts><styles><lin1 fill="#ed00c3" stroke="#000000"/><lin2 fill="#0000ff" stroke="#000000"/><lin3 fill="#500079" stroke="#000000"/><lin4 fill="#ff0000" stroke="#000000"/><none fill="#FFF" stroke="#CCC" /><heat1 fill="#00FF00"></heat1><heat2 fill="#11EE00"></heat2><heat3 fill="#22DD00"></heat3><heat4 fill="#33CC00"></heat4><heat5 fill="#44BB00"></heat5><heat6 fill="#55AA00"></heat6><heat7 fill="#669900"></heat7><heat8 fill="#778800"></heat8><heat9 fill="#887700"></heat9><heat10 fill="#996600"></heat10><heat11 fill="#AA5500"></heat11><heat12 fill="#BB4400"></heat12><heat13 fill="#CC3300"></heat13><heat14 fill="#DD2200"></heat14><heat15 fill="#EE1100"></heat15><heat16 fill="#FF0000"></heat16></styles></render>';
+    data += '<render><parameters><circular><bufferRadius>0.5</bufferRadius></circular><rectangular><alignRight>1</alignRight></rectangular></parameters>';
+    data += '<charts><genome type="binary" thickness="10"/><heatmap type="binary" thickness="10" disjointed="1" bufferSiblings="0.3"/></charts>';
+    data += '<styles>'+ getPhyloColorStyles() +'</styles></render>';
     data += phyloToXml(root, 6, 0);
     data += '</phylogeny></phyloxml>';
 
@@ -169,11 +168,10 @@ function phyloToXml(nodeId, maxDepth, depth) {
     }
     if (node.children.length == 0 || depth == maxDepth) {
         heat = Math.min(16, node.count / 2);
-        var heatmap = (node.count > 1)?"<heatmap>heat"+ heat +"</heatmap>":"<heatmap>none</heatmap>";
-        lineage = 'none';
+        color = 'none';
         $.each(phyloColors, function(key, value) {
             if (node.name == value.genome) {
-                lineage = value.lineage;
+                color = value.color;
                 return false;
             }
         });
@@ -186,8 +184,7 @@ function phyloToXml(nodeId, maxDepth, depth) {
                     "<desc>"+ node.name +"</desc>"+
                 "</annotation>"+
             "<chart>"+
-                "<genome>"+ lineage +"</genome>"+
-                heatmap +
+                "<genome>color"+ color +"</genome>"+
             "</chart>"+
 
             "</clade>";

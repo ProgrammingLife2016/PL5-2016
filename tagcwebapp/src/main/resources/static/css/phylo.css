@@ -28,3 +28,9 @@ svg a.selected text {
     margin: 30px;
     overflow: visible;
 }
+
+ul#phyloColorLegenda {
+    position: absolute;
+    top: 40px;
+    padding-left: 30px;
+}
