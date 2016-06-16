@@ -18,6 +18,8 @@ var dragFrom = null;
 var dragStartTime = null;
 var mutations = ["SNP", "INDEL", "TANDEMDUPLICATION", "INTERSPERSEDDUPLICATION", "INVERSION", "TRANSLOCATION"];
 var mutColors = ["0000FF", "00FF00", "FF0000"];
+var minY = 0;
+var maxY = 0;
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -376,11 +378,16 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     if (saveRealCoordinates) {
         zoomNodeLocations = [];
     }
+    var yTrans = 1;
+    var yHeight = Math.max(Math.abs(minY), maxY);
+    if (yHeight > $(c).height() / 2) {
+        yTrans = $(c).height() / 2 / yHeight;
+    }
 
     $.each(points, function (id, point) {
 
         var xPos = xTranslate(point.x);
-        var yPos = nodeHeight + point.y;
+        var yPos = nodeHeight + point.y * yTrans;
 
         drawPoint(ctx, xPos, yPos, 1, point);
 
@@ -402,9 +409,14 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
             }
             if (target) {
                 ctx.beginPath();
-                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y);
-                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y);
-                ctx.lineWidth = edge.weight;
+                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y * yTrans);
+                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y * yTrans);
+                var selected = (selectedGenomes.length + selectedMiddleNodes.length);
+                if (selected > 8) {
+                    ctx.lineWidth = Math.max(1, Math.ceil(edge.weight / ((selectedGenomes.length + selectedMiddleNodes.length) / 3)));
+                } else {
+                    ctx.lineWidth = edge.weight;
+                }
                 ctx.strokeStyle = '#' + edge.color;
                 ctx.stroke();
                 ctx.lineWidth = 1;
@@ -570,6 +582,8 @@ function parseNodeData(nodes) {
     }
 
     $.each(nodes, function (key, value) {
+        minY = Math.min(minY, value.y);
+        maxY = Math.max(maxY, value.y);
         result[value.id] = value;
     });
     return result;

@@ -72,7 +72,7 @@ div#minimapContainer {
 
 #nodeDialog .message {
     width: 50%;
-    font-size: 10px;
+    font-size: 13px;
     position: relative;
     border-right: 1px solid black;
     height: 100%;
@@ -80,6 +80,7 @@ div#minimapContainer {
     box-sizing: border-box;
     display: inline-block;
     overflow: auto;
+    word-wrap: break-word;
 }
 
 #nodeDialog .messageLabel {
@@ -118,7 +119,7 @@ div#minimapContainer {
 
 #nodeDialog .annotation {
     width: 49%;
-    font-size: 10px;
+    font-size: 13px;
     position: relative;
     height: 100%;
     display: inline-block;
