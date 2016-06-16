@@ -75,6 +75,21 @@ public class RestApi {
     }
 
     /**
+     * Returns a Hashmap mapping genomes to color.
+     * @return the list      List of unrecognized genomes.
+     */
+    @GET
+    @Path("/getgenomecolors")
+    @Produces("application/json")
+    public Response getMetaGenomeColors(@DefaultValue("lineage") @QueryParam("metadata") String metaData) {
+        return Response.ok()
+                .entity(BackEndAdapter.getInstance().getAllGenomeColors(metaData))
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+    }
+
+    /**
      * Request phylogenetic tree.
      *
      * @param treeId the tree id

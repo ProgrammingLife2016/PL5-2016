@@ -5,7 +5,9 @@ import genome.GSearchResult;
 import genome.GraphSearcher.SearchType;
 
 import javax.ws.rs.core.Response;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -89,5 +91,9 @@ public final class BackEndAdapter implements BackEndInterface {
 	public MetaDataObject getMetaDataMap() {
 		return new MetaDataObject(controller.getMetaDataController().getMetaDataMap());
 	}
-	
+
+	public MetaDataColorObject getAllGenomeColors(String metaData) {
+		return new MetaDataColorObject(controller.getMetaDataController().
+				getAllGenomeColors(metaData));
+	}
 }
