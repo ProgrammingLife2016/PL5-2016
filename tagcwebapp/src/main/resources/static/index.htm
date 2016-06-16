@@ -26,74 +26,76 @@
 
 <div id="page-wrapper">
 
-    <!-- Header -->
-    <div id="header">
+  <!-- Header -->
+  <div id="header">
 
-        <!-- Nav -->
-        <nav id="nav">
-            <ul>
-                <li class="current"><a href="index.htm">Home</a></li>
-                <li>
-                    <a href="#" id="mutationLegenda">Legenda</a>
-                    <div id="legendaCanvas">
+    <!-- Nav -->
+    <nav id="nav">
+      <ul>
+        <li class="current"><a href="index.htm">Home</a></li>
+        <li><a href="#">Link</a> <!--<ul>--> <!--<li><a href="#">Lorem dolor</a></li>-->
+          <!--<li><a href="#">Magna phasellus</a></li>--> <!--<li><a href="#">Etiam sed tempus</a></li>-->
+          <!--<li>--> <!--<a href="#">Submenu</a>--> <!--<ul>--> <!--<li><a href="#">Lorem dolor</a></li>-->
+          <!--<li><a href="#">Phasellus magna</a></li>--> <!--<li><a href="#">Magna phasellus</a></li>-->
+          <!--<li><a href="#">Etiam nisl</a></li>--> <!--<li><a href="#">Veroeros feugiat</a></li>-->
+          <!--</ul>--> <!--</li>--> <!--<li><a href="#">Veroeros feugiat</a></li>-->
+          <!--</ul>--></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+        <li>
+          <a href="#" id="toggleButtons">
+            <span class="hButton">Show Buttons</span>
+            <span class="sButton">Hide Buttons</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
-                    </div>
-                </li>
-                <li>
-                    <a href="#" id="toggleButtons">
-                        <span class="hButton">Show Buttons</span>
-                        <span class="sButton">Hide Buttons</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+  </div>
 
-    </div>
+  <div id="main">
+    <!-- Banner -->
+    <section id="zoom">
+      <div id="zoomWindow" class="genome"></div>
+      <div id="nodeDialog">
+        <div class="message"></div>
+      </div>
+      <div id="zoomButtons" class="sButton">
+        <button id="zoomIn">+</button><br />
+        <button id="zoomOut">-</button>
+      </div>
+    </section>
 
-    <div id="main">
-        <!-- Banner -->
-        <section id="zoom">
-            <div id="zoomWindow" class="genome"></div>
-            <div id="nodeDialog">
-                <div class="message"></div>
-            </div>
-            <div id="zoomButtons" class="sButton">
-                <button id="zoomIn">+</button>
-                <br/>
-                <button id="zoomOut">-</button>
-            </div>
-        </section>
-
-        <!-- Highlights -->
-        <section id="sub">
-            <div id="phylogenyContainer">
-                <div id="svgCanvas">
-                    <div id="phyloBackButton">
-                        <button value="back">back</button>
-                    </div>
-                    <div id="phyloButtons">
-                        <button id="compGenomesButton" type="button"
-                                class="btn btn-default" data-dismiss="modal">Compare
-                            Genomes
-                        </button>
-                        <button id="expandPhyloView" type="button"
-                                class="btn btn-default" data-dismiss="modal">+
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div id="minimapContainer">
-                <div id="minimap" class="mainGenome genome">
-                    <div class="coordinateSelector">
-                        Goto: <input type="number" id="coordinateSelector"> of
-                        <span id="maxCoordinateInput">0</span>
-                    </div>
-                    <div class="slider"></div>
-                    <div class="canvasContainer"></div>
-                </div>
-            </div>
-        </section>
-    </div>
+    <!-- Highlights -->
+    <section id="sub">
+      <div id="phylogenyContainer">
+        <div id="svgCanvas">
+          <div id="phyloBackButton"><button value="back">back</button></div>
+          <div id="phyloButtons">
+            <button id="compGenomesButton" type="button"
+                    class="btn btn-default" data-dismiss="modal">Compare
+              Genomes</button>
+            <button id="expandPhyloView" type="button"
+                    class="btn btn-default" data-dismiss="modal">+</button>
+          </div>
+        </div>
+        <ul id="selectedGenomeList">
+          <li class="firstLi">None selected</li>
+        </ul>
+      </div>
+      <div id="minimapContainer">
+        <div id="minimap" class="mainGenome genome">
+          <div class="coordinateSelector">
+            Goto: <input type="number" id="coordinateSelector"> of
+            <span id="maxCoordinateInput">0</span>
+          </div>
+          <div class="slider"></div>
+          <div class="canvasContainer"></div>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
 
 <!-- Modal -->
