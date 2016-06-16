@@ -4,6 +4,8 @@ package genome;
  * Created by Matthijs on 24-4-2016.
  */
 
+import mutation.AbstractMutation;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +59,11 @@ public class Strand {
 	/** The incoming edges. */
 	private ArrayList<StrandEdge> incomingEdges;
 
+	/**
+	 * The mutations on this Strand.
+	 */
+	private ArrayList<AbstractMutation> mutations;
+
 	/** The genomic features. */
 	private ArrayList<GenomicFeature> genomicFeatures = new ArrayList<GenomicFeature>();
 	
@@ -91,6 +98,8 @@ public class Strand {
 		this.outgoingEdges = new ArrayList<>();
 		this.incomingEdges = new ArrayList<>();
 		this.x = 0;
+		this.mutations = new ArrayList<>();
+
 	}
 
 	/**
@@ -101,21 +110,7 @@ public class Strand {
 	public Strand(int id) {
 		this.id = id;
 	}
-//	/**
-//	 * Constructor to create a new strand.
-//	 *
-//	 * @param o
-//	 *            The Object (returned by the Cypherquery) from which a strand
-//	 *            should be created.
-//	 */
-//	public Strand(Object o) {
-//		Node no = (Node) o;
-//		this.id = java.lang.Math.toIntExact((long) no.getProperty("id"));
-//		this.sequence = (String) no.getProperty("sequence");
-//		// String genomes = (String) no.getProperty("genomes");
-//		this.referenceGenome = (String) no.getProperty("refGenome");
-//		this.referenceCoordinate = java.lang.Math.toIntExact((long) no.getProperty("refCoor"));
-//	}
+
 
 	/**
 	 * Get the node id.
@@ -251,21 +246,26 @@ public class Strand {
 		this.x = x;
 	}
 
-//	/**
-//	 *  
-//	 * @return the string
-//	 * @see java.lang.Object#toString()
-//	 */
-//	public String toString() {
-//		String result = "" + referenceCoordinate;
-//		for (GenomicFeature feature : genomicFeatures) {
-//			result = result + " " + feature.toString();
-//		}
-//		return result + "\n";
-//	}
+	/**
+	 * Get all the mutations started from this Strand.
+	 *
+	 * @return Mutations.
+	 */
+	public ArrayList<AbstractMutation> getMutations() {
+		return mutations;
+	}
 
 	/**
-	 *  
+	 * Add a mutation to the mutations.
+	 *
+	 * @param mutation The added mutation.
+	 */
+	public void addMutation(AbstractMutation mutation) {
+		mutations.add(mutation);
+	}
+
+	/**
+	 *
 	 * @return the string
 	 * @see java.lang.Object#toString()
 	 */
