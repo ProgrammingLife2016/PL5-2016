@@ -15,9 +15,11 @@
 
 #svgcanvas {
     position: relative;
-    width: 100%;
+    width: 85%;
     height: 100%;
-    margin: 0px;
+    margin: 0;
+    display: inline-block;
+    float: left;
 }
 
 svg a.selected text {
@@ -29,10 +31,40 @@ svg a.selected text {
     overflow: visible;
 }
 
+#selectedGenomeList {
+    width: 15%;
+    height: 100%;
+    margin: 0;
+    display: inline-block;
+    float: right;
+    padding: 5px;
+    border-left: 1px solid black;
+    font-size: 18px;
+    line-height: 18px;
+}
+
 circle.selected {
     fill: green;
 }
 
 svg circle {
     cursor: pointer;
+}
+
+#selectedGenomeList li {
+    border-bottom: 1px solid #bbb;
+    cursor: pointer;
+    width: 100%;
+}
+
+#selectedGenomeList li.firstLi {
+    display: none;
+}
+
+#selectedGenomeList li:only-child {
+    display: list-item;
+}
+
+#selectedGenomeList li:hover {
+    background-color: #ddd;
 }
