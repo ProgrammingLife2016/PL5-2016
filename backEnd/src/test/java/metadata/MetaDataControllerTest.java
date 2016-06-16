@@ -9,7 +9,11 @@ import org.junit.Test;
 import parser.Parser;
 
 import java.awt.Color;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by user on 16/06/16.

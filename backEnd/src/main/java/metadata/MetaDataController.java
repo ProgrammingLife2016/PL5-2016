@@ -166,20 +166,25 @@ public class MetaDataController {
      * @return the color of this genome
      */
     public Color getColor(Genome genome, String metaDataType) {
-        if(!genome.hasMetadata()) {
+        if (!genome.hasMetadata()) {
             return Color.GRAY;
         }
         return colorMap.get(metaDataType + ":" + genome.getMetadata().returnField(metaDataType));
     }
 
     /**
-     * Returns a hashmap from (Genome id -> Color).
+     * Returns a hashmap mapping metadatetypes to their possible values.
      * @return the hashmap
      */
     public Map<String, HashSet<String>> getMetaDataMap() {
         return allValues;
     }
 
+    /**
+     * Returns a hashmap from (Genome id -> Color).
+     * @param metaDataType the metadata type on which the colors should be based
+     * @return The hashmap mapping genomes to colors
+     */
     public HashMap<String, Color> getAllGenomeColors(String metaDataType) {
         HashMap<String, Color> out = new HashMap<>();
         for (Genome g : genomes) {
