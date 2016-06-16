@@ -57,6 +57,16 @@ public class Genome {
     }
 
     /**
+     * Sets the strands.
+     *
+     * @param strands the new strands
+     */
+    public void setStrands(ArrayList<Strand> strands) {
+        this.strands = strands;
+
+    }
+
+    /**
      * Get the id.
      *
      * @return Id.
@@ -74,7 +84,6 @@ public class Genome {
         this.id = id;
     }
 
-
     /**
      * Gets the metadata.
      *
@@ -83,7 +92,6 @@ public class Genome {
     public GenomeMetadata getMetadata() {
         return metadata;
     }
-
 
     /**
      * Sets the metadata.
@@ -101,17 +109,6 @@ public class Genome {
      */
     public boolean hasMetadata() {
         return this.metadata != null;
-    }
-
-
-    /**
-     * Sets the strands.
-     *
-     * @param strands the new strands
-     */
-    public void setStrands(ArrayList<Strand> strands) {
-        this.strands = strands;
-
     }
 
     /**

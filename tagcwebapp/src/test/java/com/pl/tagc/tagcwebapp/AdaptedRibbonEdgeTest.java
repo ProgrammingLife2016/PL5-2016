@@ -8,13 +8,13 @@ import org.meanbean.test.BeanTester;
  */
 public class AdaptedRibbonEdgeTest {
 
-	/**
-	 * Tests the getters and setters.
-	 */
-	@Test
-	public void test() {
-		BeanTester beanTester = new BeanTester();
-		beanTester.testBean(AdaptedRibbonEdge.class);
-	}
+    /**
+     * Tests the getters and setters.
+     */
+    @Test
+    public void test() {
+        BeanTester beanTester = new BeanTester();
+        beanTester.testBean(AdaptedRibbonEdge.class);
+    }
 
 }

@@ -23,7 +23,9 @@ public class DataTreeTest {
     private DataNode root; //root of the tree;
     private DataNode child1; //child of the tree;
     private DataNode child2; //child of the tree;
-    private ArrayList<ArrayList<Genome>> active; //genomes contained in the tree;
+    private ArrayList<ArrayList<Genome>> genomeIDs; //genomes contained in the tree;
+
+
     private Strand strand1; //a strand to test data return.
     private Strand strand2; //a strand to test data return.
     private Strand strand12; //a strand to test data return.
@@ -40,7 +42,7 @@ public class DataTreeTest {
         Genome genome2 = new Genome("2");
 
         String[] strand1Genomes = {"1"};
-		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strand1Genomes));
+        HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strand1Genomes));
         strand1 = new Strand(1, "tagc", genomeSet, "1", 0);
 
         String[] strand2Genomes = {"2"};
@@ -60,10 +62,11 @@ public class DataTreeTest {
         genomes.add(genome1);
         genomes.add(genome2);
 
-        active = new ArrayList<>();
-        active.add(new ArrayList<>(Arrays.asList(genome1)));
-        active.add(new ArrayList<>(Arrays.asList(genome2)));
-        
+
+        genomeIDs = new ArrayList<>();
+        genomeIDs.add(new ArrayList<>(Arrays.asList(genome1)));
+        genomeIDs.add(new ArrayList<>(Arrays.asList(genome2)));
+
         root = new DataNode(null, 0);
         child1 = new DataNode(root, 0);
         child2 = new DataNode(root, 1);
@@ -116,10 +119,11 @@ public class DataTreeTest {
     @Test
     public void testGetDataNodes() throws Exception {
 
-        assertEquals(tree.getStrands(0, 10, active, 0).size(), 1);
-        assertEquals(tree.getStrands(4, 4, active, 0).size(), 1);
-        assertEquals(tree.getStrands(5, 10, active, 0).size(), 1);
-        assertEquals(tree.getStrands(1, 11, active, 1).size(), 3);
+        assertEquals(tree.getStrands(-1, 10, genomeIDs, 20).size(), 3);
+        assertEquals(tree.getStrands(4, 4, genomeIDs, 0).size(), 0);
+        assertEquals(tree.getStrands(5, 10, genomeIDs, 0).size(), 0);
+        assertEquals(tree.getStrands(5, 10, genomeIDs, 20).size(), 1);
+
     }
 
     /**
@@ -129,10 +133,11 @@ public class DataTreeTest {
      */
     @Test
     public void testFilterStrandsFromNodes() throws Exception {
-        assertEquals(tree.getDataNodesForGenomes(active, 0).size(), 1);
-        assertEquals(tree.getDataNodesForGenomes(active, 1).size(), 3);
+        assertEquals(tree.getDataNodesForGenomes(genomeIDs, 0).size(), 1);
+        assertEquals(tree.getDataNodesForGenomes(genomeIDs, 1).size(), 3);
         ArrayList<Strand> testArray = tree.filterStrandsFromNodes(0, 1,
-                tree.getDataNodesForGenomes(active, 1));
+                tree.getDataNodesForGenomes(genomeIDs, 1), genomeIDs, 20);
+
         assertEquals(testArray.size(), 3);
         assertTrue(testArray.contains(strand2));
         assertTrue(testArray.contains(strand12));
@@ -149,8 +154,8 @@ public class DataTreeTest {
     public void testFilterStrandsFromNodesMultiple() throws Exception {
 
         for (int i = 1; i < 5; i++) {
-            ArrayList<Strand> testArray = tree.filterStrandsFromNodes(5, 5,
-                    tree.getDataNodesForGenomes(active, i));
+            ArrayList<Strand> testArray = tree.filterStrandsFromNodes(-10, 50,
+                    tree.getDataNodesForGenomes(genomeIDs, i), genomeIDs, 40);
 
             assertEquals(testArray.size(), 3);
         }
@@ -165,11 +170,11 @@ public class DataTreeTest {
      */
     @Test
     public void testGetDataNodesForGenomes() throws Exception {
-        assertEquals(tree.getDataNodesForGenomes(active, 0).size(), 1);
-        assertEquals(tree.getDataNodesForGenomes(active, 1).size(), 3);
+        assertEquals(tree.getDataNodesForGenomes(genomeIDs, 0).size(), 1);
+        assertEquals(tree.getDataNodesForGenomes(genomeIDs, 1).size(), 3);
 
         for (int i = 1; i < 5; i++) {
-            Set<DataNode> testArray = tree.getDataNodesForGenomes(active, i);
+            Set<DataNode> testArray = tree.getDataNodesForGenomes(genomeIDs, i);
             assertEquals(testArray.size(), 3);
             for (DataNode node : testArray) {
                 assertEquals(node.getStrands().size(), 1);
@@ -184,7 +189,8 @@ public class DataTreeTest {
      */
     @Test
     public void testGetDataNodesForGenome() throws Exception {
-        assertEquals(tree.getDataNodesForGenome(active.get(0), 0).size(), 1);
-        assertEquals(tree.getDataNodesForGenome(active.get(0), 1).size(), 2);
+        assertEquals(tree.getDataNodesForGenome(genomeIDs.get(0), 0).size(), 1);
+        assertEquals(tree.getDataNodesForGenome(genomeIDs.get(0), 1).size(), 2);
+
     }
 }

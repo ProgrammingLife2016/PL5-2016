@@ -29,7 +29,7 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     /**
      * Initialize this node from tree node, recursively.
      *
-     * @param parent The parent of this node, root having null.
+     * @param parent      The parent of this node, root having null.
      * @param childNumber Childnumber.
      */
     public AbstractTreeNode(T parent, int childNumber) {
@@ -44,7 +44,7 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     /**
      * Generates the id of this node breath first based on the id of the parent node, root being 0.
      *
-     * @param parent The parent of this node.
+     * @param parent      The parent of this node.
      * @param childNumber The childnumber.
      * @return The generated id, root being 0.
      */
@@ -56,6 +56,7 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
 
 
     }
+
     /**
      * Get node with id through depth first search.
      *
@@ -68,7 +69,7 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
             return (T) this;
         } else if (this.getChildren().size() != 0) {
             for (T obj : this.getChildren()) {
-                T child =  obj;
+                T child = obj;
                 if (child.getId() == id) {
                     return child;
                 }
@@ -92,6 +93,15 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     }
 
     /**
+     * Set the children of this node.
+     *
+     * @param children The children to set.
+     */
+    public void setChildren(ArrayList<T> children) {
+        this.children = children;
+    }
+
+    /**
      * Adds child node.
      *
      * @param node the node
@@ -100,7 +110,6 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
         children.add(node);
     }
 
-
     /**
      * Get the id of this node.
      *
@@ -108,6 +117,15 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Set the id.
+     *
+     * @param id The id to set.
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -129,27 +147,11 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     }
 
     /**
-     * Set the id.
-     *
-     * @param id The id to set.
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Set the children of this node.
-     * @param children The children to set.
-     */
-    public void setChildren(ArrayList<T> children) {
-        this.children = children;
-    }
-    
-    /**
      * Remove child from the child array.
+     *
      * @param child The removed child.
      */
     public void removeChild(AbstractTreeNode<T> child) {
-    	children.remove(child);
+        children.remove(child);
     }
 }

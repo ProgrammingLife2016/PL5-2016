@@ -8,13 +8,13 @@ import org.meanbean.test.BeanTester;
  */
 public class AdaptedPhylogeneticNodeTest {
 
-	/**
-	 * Tests the getters and setters.
-	 */
-	@Test
-	public void test() {
-		BeanTester beanTester = new BeanTester();
-		beanTester.testBean(AdaptedPhylogeneticNode.class);
-	}
+    /**
+     * Tests the getters and setters.
+     */
+    @Test
+    public void test() {
+        BeanTester beanTester = new BeanTester();
+        beanTester.testBean(AdaptedPhylogeneticNode.class);
+    }
 
 }
