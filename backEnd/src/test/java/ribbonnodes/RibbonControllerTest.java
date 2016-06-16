@@ -1,17 +1,11 @@
 package ribbonnodes;
 
-import datatree.DataNode;
 import datatree.DataTree;
-import datatree.TempReadWriteTree;
 import genome.Genome;
 import genome.GenomeGraph;
-import mutation.AbstractMutation;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
-import parser.Parser;
-import phylogenetictree.PhylogeneticTree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +13,6 @@ import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 /**
  * Test class to test the ribbonController.
