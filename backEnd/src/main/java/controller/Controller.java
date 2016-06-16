@@ -7,12 +7,14 @@ import genome.GSearchResult;
 import genome.GenomeGraph;
 import genome.GraphSearcher.SearchType;
 import mutation.Mutations;
+import phylogenetictree.PhylogeneticNode;
 import parser.Parser;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonController;
 import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /**
  * Created by Matthijs on 24-4-2016.
@@ -120,6 +122,24 @@ public class Controller {
      * @return the list   	The list of unrecognized genomes.
      */
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
-        return genomeGraph.setGenomesAsActive(activeGenomes);
+    	System.out.println("Set active genomes");
+    	ArrayList<ArrayList<String>> temp = new ArrayList<>();
+    	for (String s : activeGenomes) {
+    		if (s.startsWith("T")) {
+    			temp.add(new ArrayList<>(Arrays.asList(s)));
+    		} else {
+    			System.out.println("middle node selected");
+    			Integer x = Integer.parseInt(s);
+    			System.out.println("With id: " + x);
+    			PhylogeneticNode node = phylogeneticTree.getNodeWithId(x);
+    			System.out.println("Leaves under this node:");
+    			for (String a : node.getGenomes()) {
+    				System.out.println(a);
+    			}
+    			temp.add(phylogeneticTree.getNodeWithId(x).getGenomes());
+    		}
+    		
+    	}
+        return genomeGraph.setGenomesAsActive(temp);
     }
 }

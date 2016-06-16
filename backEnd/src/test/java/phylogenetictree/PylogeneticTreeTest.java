@@ -108,4 +108,12 @@ public class PylogeneticTreeTest {
         PhylogeneticTree testTree = new PhylogeneticTree(testRoot);
         assertEquals(testRoot, testTree.getRoot());
     }
+    
+    /**
+     * Test get a node in the tree with its id.
+     */
+    @Test
+    public void testGetNodeWithId() {
+    	assertEquals(tree.getNodeWithId(2).getId(), 2);
+    }
 }

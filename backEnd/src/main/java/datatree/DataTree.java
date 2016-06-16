@@ -63,7 +63,7 @@ public class DataTree extends TreeStructure<DataNode> {
      * @return A list of datanodes that pertain to the parameters.
      */
     public ArrayList<Strand> getStrands(int xMin, int xMax,
-                                        ArrayList<Genome> genomes, int level) {
+                                        ArrayList<ArrayList<Genome>> genomes, int level) {
         return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomes, level));
 
     }
@@ -101,9 +101,9 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param level   the maximum level in the tree.
      * @return The full datanodes.
      */
-    public Set<DataNode> getDataNodesForGenomes(ArrayList<Genome> genomes, int level) {
+    public Set<DataNode> getDataNodesForGenomes(ArrayList<ArrayList<Genome>> genomes, int level) {
         Set<DataNode> result = new HashSet<>();
-        for (Genome genome : genomes) {
+        for (ArrayList<Genome> genome : genomes) {
             result.addAll(getDataNodesForGenome(genome, level));
         }
         return result;
@@ -117,14 +117,18 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param level  The zoomlevel in the tree.
      * @return The list of unfiltered dataNodes.
      */
-    public Set<DataNode> getDataNodesForGenome(Genome genome, int level) {
+    public Set<DataNode> getDataNodesForGenome(ArrayList<Genome> genome, int level) {
+    	ArrayList<String> ids = new ArrayList<>();
+    	for (Genome g : genome) {
+    		ids.add(g.getId());
+    	}
         Set<DataNode> result = new HashSet<>();
         DataNode currentNode = getRoot();
         int totalStrands = 0;
         while (currentNode.getLevel() <= level) {
             result.add(currentNode);
             totalStrands += currentNode.getStrands().size();
-            currentNode = currentNode.getChildWithGenome(genome.getId());
+            currentNode = currentNode.getChildWithGenome(ids);
             if (currentNode == null) {
                 break;
             }

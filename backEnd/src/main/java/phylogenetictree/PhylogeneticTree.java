@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 /**
@@ -159,5 +161,25 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
     		}
     	}
 	}
+    
+    /**
+     * Find a node with a specific id.
+     * @param id The Id that needs to be found.
+     * @return The resulting node.
+     */
+    public PhylogeneticNode getNodeWithId(int id) {
+    	Queue<PhylogeneticNode> queue = new LinkedList<>();
+    	queue.add(getRoot());
+    	while (!queue.isEmpty()) {
+    		PhylogeneticNode node = queue.poll();
+    		if (node.getId() == id) {
+    			return node;
+    		}
+    		for (PhylogeneticNode n : node.getChildren()) {
+    			queue.add(n);
+    		}
+    	}
+    	return null;
+    }
 }
 

@@ -74,9 +74,9 @@ public class DataNode extends AbstractTreeNode<DataNode> {
      * @param genome The genome to find.
      * @return The child if a child contains this genome, otherwise null.
      */
-    public DataNode getChildWithGenome(String genome) {
+    public DataNode getChildWithGenome(ArrayList<String> genome) {
         for (DataNode child : getChildren()) {
-            if (child.getGenomes().contains(genome)) {
+            if (child.getGenomes().containsAll(genome)) {
                 return child;
             }
         }
