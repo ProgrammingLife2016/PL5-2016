@@ -42,6 +42,7 @@ public abstract class AbstractMutation {
      */
     private RibbonNode end;
 
+	/** The convergence map. */
 	private Map<String, Double> convergenceMap;
 
     /**
@@ -148,7 +149,22 @@ public abstract class AbstractMutation {
     }
 
 
+	/**
+	 * Sets the convergence map.
+	 *
+	 * @param convergenceMap the convergence map
+	 */
 	public void setConvergenceMap(Map<String, Double> convergenceMap) {
 		this.convergenceMap = convergenceMap;
+	}
+
+
+	/**
+	 * Gets the convergence map.
+	 *
+	 * @return the convergence map
+	 */
+	public Map<String, Double> getConvergenceMap() {
+		return convergenceMap;
 	}
 }

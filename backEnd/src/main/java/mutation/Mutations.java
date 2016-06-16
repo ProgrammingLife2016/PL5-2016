@@ -116,7 +116,7 @@ public class Mutations {
 	 */
 	public void detectConvergence() {
 	       for (RibbonNode node : nodes) {
-	            for(AbstractMutation mutation: node.getMutations()) {
+	            for (AbstractMutation mutation: node.getMutations()) {
 	            	ConvergenceIndicator.computeConvergenceLevels(mutation, dataTree);
 	            }
 	        }

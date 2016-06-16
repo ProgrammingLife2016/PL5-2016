@@ -4,7 +4,6 @@ import datatree.DataTree;
 import genome.Genome;
 import genome.GenomeGraph;
 import genome.Strand;
-import mutation.Mutations;
 
 import java.util.ArrayList;
 
