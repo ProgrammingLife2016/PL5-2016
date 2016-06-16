@@ -172,9 +172,10 @@ body:not(.showButtons) .hButton {
 }
 
 input#coordinateSelector {
-    width: 50px;
+    width: 100px;
     height: 18px;
     font-size: 14px;
+    display: inline;
 }
 
 #minimap .coordinateSelector {
