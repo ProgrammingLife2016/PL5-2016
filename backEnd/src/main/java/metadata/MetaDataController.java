@@ -176,8 +176,16 @@ public class MetaDataController {
      * Returns a hashmap mapping metadatetypes to their possible values.
      * @return the hashmap
      */
-    public Map<String, HashSet<String>> getMetaDataMap() {
-        return allValues;
+    public Map<String, String> getMetaDataMap() {
+        Map<String, String> out = new HashMap<>();
+        for(String id : colorMap.keySet()) {
+            String hex = Integer.toHexString(colorMap.get(id).getRGB() & 0xffffff);
+            while (hex.length() < 6) {
+                hex = "0" + hex;
+            }
+            out.put(id, hex);
+        }
+        return out;
     }
 
     /**

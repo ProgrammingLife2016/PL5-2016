@@ -16,7 +16,7 @@ public class MetaDataObject {
 	private String id = "test";
 
 	/** The c list. */
-	private Map<String, HashSet<String>> list;
+	private Map<String, String> list;
 
 	/**
 	 * Instantiates a new node list object.
@@ -29,7 +29,7 @@ public class MetaDataObject {
 	 *
 	 * @param list the c list
 	 */
-	public MetaDataObject(Map<String, HashSet<String>> list) {
+	public MetaDataObject(Map<String, String> list) {
 		this.list = list;
 	}
 
@@ -38,7 +38,7 @@ public class MetaDataObject {
 	 *
 	 * @return the c list
 	 */
-	public Map<String, HashSet<String>> getlist() {
+	public Map<String, String> getlist() {
 		return list;
 	}
 
@@ -47,7 +47,7 @@ public class MetaDataObject {
 	 *
 	 * @param list the new c list
 	 */
-	public void setlist(Map<String, HashSet<String>> list) {
+	public void setlist(Map<String, String> list) {
 		this.list = list;
 	};
 }
