@@ -3,6 +3,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -10,13 +12,17 @@ import static org.junit.Assert.assertEquals;
 public class StrandEdgeTest {
 
 	private StrandEdge strandEdge;
+	private Strand strand1;
+	private Strand strand2;
 
 	/**
 	 * Setting up the StrandEdge with whom we test.
 	 */
     @Before
     public void setUp() {
-    	strandEdge = new StrandEdge(new Strand(1), new Strand(2));
+    	strand1 = new Strand(1);
+    	strand2 = new Strand(2);
+    	strandEdge = new StrandEdge(strand1, strand2);
     }
     
     /**
@@ -43,5 +49,15 @@ public class StrandEdgeTest {
     	assertEquals(strandEdge.getWeight(), 1);
     	strandEdge.setWeight(10);
     	assertEquals(strandEdge.getWeight(), 10);
+    }
+    
+    /**
+     * Test if the edge contains specific genomes.
+     */
+    @Test
+    public void testContains() {
+    	assertTrue(strandEdge.contains(strand1));
+    	assertTrue(strandEdge.contains(strand2));
+    	assertFalse(strandEdge.contains(new Strand(1)));
     }
 }

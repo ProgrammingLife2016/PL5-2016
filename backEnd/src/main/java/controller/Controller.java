@@ -2,7 +2,7 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
-import datatree.TempReadWriteTree;
+import datatree.TempReadDataTree;
 import genome.GSearchResult;
 import genome.GenomeGraph;
 import genome.GraphSearcher.SearchType;
@@ -58,7 +58,7 @@ public class Controller {
                 null, 0));
 
         if (gfaFile.equals("data/TB328.gfa")) {
-            TempReadWriteTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
+        	TempReadDataTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
         } else {
             dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
 

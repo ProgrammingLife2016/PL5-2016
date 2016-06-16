@@ -1,16 +1,12 @@
 package datatree;
 
-
 import genome.Strand;
 import parser.Parser;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,51 +16,13 @@ import java.util.HashMap;
  * @author Jeffrey Helgers.
  * Temporary class that reads and writes the datatree.
  */
-public final class TempReadWriteTree {
+public final class TempReadDataTree {
 
 	/**
 	 * Constructor to create the tree.
 	 */
-	private TempReadWriteTree() {
+	private TempReadDataTree() {
 		
-	}
-	/**
-	 * Write the whole tree.
-	 * @param root Root node.
-	 */
-	public static void writeTree(DataNode root) {
-		try {
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-				    new FileOutputStream("outfilename"), StandardCharsets.UTF_8));
-			writeNode(root, writer);
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Write a node.
-	 * @param node Written node.
-	 * @param writer The writer.
-	 */
-	private static void writeNode(DataNode node, BufferedWriter writer) {
-		StringBuilder line = new StringBuilder();
-		line.append(node.getId());
-		line.append(" ");
-		for (Strand strand : node.getStrands()) {
-			line.append(strand.getId());
-			line.append(";");
-		}
-		line.append("\n");
-		try {
-			writer.write(line.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		for (DataNode child : node.getChildren()) {
-			writeNode(child, writer);
-		}
 	}
 	
 	/**
