@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import datatree.DataTree;
+
 /**
  * The Class AllMutations.
  *
@@ -19,14 +21,17 @@ public class Mutations {
      * The genome graph.
      */
     private ArrayList<RibbonNode> nodes;
+	private DataTree dataTree;
 
     /**
      * Constructor to create.
      *
      * @param nodes The nodes in the graph.
+     * @param dataTree 
      */
-    public Mutations(ArrayList<RibbonNode> nodes) {
+    public Mutations(ArrayList<RibbonNode> nodes, DataTree dataTree) {
         this.nodes = nodes;
+        this.dataTree = dataTree;
     }
 
     /**
@@ -105,4 +110,15 @@ public class Mutations {
             }
         }
     }
+
+	/**
+	 * Detects evolutionary convergence.
+	 */
+	public void detectConvergence() {
+	       for (RibbonNode node : nodes) {
+	            for(AbstractMutation mutation: node.getMutations()) {
+	            	ConvergenceIndicator.computeConvergenceLevels(mutation, dataTree);
+	            }
+	        }
+	}
 }

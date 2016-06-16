@@ -19,6 +19,8 @@ import java.util.List;
  * Created by Matthijs on 24-4-2016.
  */
 
+import mutation.Mutations;
+
 /**
  * Controller. This class connects the classes together.
  */
@@ -45,11 +47,11 @@ public class Controller {
     private RibbonController ribbonController;
 
 
-    /**
+        /**
      * Constructor.
      */
     public Controller() {
-        String gfaFile = "data/TB328.gfa";
+        String gfaFile = "data/TB10.gfa";
         genomeGraph = Parser.parse(gfaFile);
         genomeGraph.annotate("MT_H37RV_BRD_V5.ref",
                 Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
@@ -78,8 +80,13 @@ public class Controller {
      * @return The list of ribbonNodes.
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
-                                                int zoomLevel, boolean isMiniMap) {
-        return ribbonController.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap);
+                                                int zoomLevel, boolean isMiniMap) {    	
+    	ArrayList<RibbonNode> result = ribbonController.getRibbonNodes(
+    			minX, maxX, zoomLevel, isMiniMap);
+		Mutations mutations = new Mutations(result, dataTree);
+        mutations.computeAllMutations();
+        mutations.detectConvergence();
+        return result;
     }
 
     /**

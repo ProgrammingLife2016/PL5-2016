@@ -73,9 +73,6 @@ public class RibbonController {
         addEdges(result, isMiniMap);
         collapseRibbons(result, minX, maxX);
 
-        Mutations mutations = new Mutations(result);
-        mutations.computeAllMutations();
-
         spreadYCoordinates(result, actIds);
 
         result.sort((RibbonNode o1, RibbonNode o2) ->
