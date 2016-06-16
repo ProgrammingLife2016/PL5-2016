@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * The Class AdaptedPhylogeneticNode.
  */
 @XmlType(propOrder = {"nameLabel", "originalChildOrder",
-        "children", "distance", "annotation", "id"})
+        "children", "annotation", "id"})
 public class AdaptedPhylogeneticNode {
 
     /**

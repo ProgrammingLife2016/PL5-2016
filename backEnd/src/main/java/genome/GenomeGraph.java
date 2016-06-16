@@ -111,27 +111,30 @@ public class GenomeGraph {
         List<String> unrecognizedGenomes = new ArrayList<String>();
         this.activeGenomes = new ArrayList<>();
         this.activeGenomeIds = new ArrayList<>();
-
-        for (ArrayList<String> genomeIds : ids) {
-            ArrayList<Genome> input = new ArrayList<>();
-            for (String genomeId : genomeIds) {
-                Genome genome = genomes.get(genomeId);
-                if (genome != null) {
-                    input.add(genome);
-                    if (!activeGenomeIds.contains(genome.getId())) {
-                        activeGenomeIds.add(genome.getId());
+        if (ids != null) {
+            for (ArrayList<String> genomeIds : ids) {
+                ArrayList<Genome> input = new ArrayList<>();
+                for (String genomeId : genomeIds) {
+                    Genome genome = genomes.get(genomeId);
+                    if (genome != null) {
+                        input.add(genome);
+                        genome.resetStrandX();
+                        if (!activeGenomeIds.contains(genome.getId())) {
+                            activeGenomeIds.add(genome.getId());
+                        }
+                    } else {
+                        unrecognizedGenomes.add(genomeId);
                     }
-                } else {
-                    unrecognizedGenomes.add(genomeId);
+                }
+                if (input.size() > 0) {
+                    activeGenomes.add(input);
                 }
             }
-            if (input.size() > 0) {
-                activeGenomes.add(input);
+            for (ArrayList<Genome> genome : activeGenomes) {
+                genome.get(0).setStrandsX();
             }
         }
-        for (ArrayList<Genome> genome : activeGenomes) {
-            genome.get(0).setStrandsX();
-        }
+        System.out.println("New genomes to compare: " + activeGenomeIds.toString());
         return unrecognizedGenomes;
     }
 
