@@ -1,6 +1,5 @@
 package ribbonnodes;
 
-import abstractdatastructure.Edge;
 import datatree.DataTree;
 import genome.Genome;
 import genome.GenomeGraph;
@@ -69,7 +68,7 @@ public class RibbonController {
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actIds, zoomLevel);
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result, isMiniMap);
-        collapseRibbons(result, zoomLevel);
+        collapseRibbons(result, minX,maxX);
 
         Mutations mutations = new Mutations(result);
         mutations.computeAllMutations();
@@ -112,10 +111,10 @@ public class RibbonController {
      * Collapses the ribbon Nodes and edges in nodes.
      *
      * @param nodes     The ribbonNode Graph to collapse.
-     * @param zoomLevel The zoomlevel.
+     *
      */
     @SuppressWarnings("checkstyle:methodlength")
-    protected void collapseRibbons(ArrayList<RibbonNode> nodes, int zoomLevel) {
+    protected void collapseRibbons(ArrayList<RibbonNode> nodes, int minX, int maxX) {
         System.out.println(nodes.size() + " Before collapsing");
 
         ArrayList<RibbonNode> newNodes = new ArrayList<>();
@@ -123,12 +122,12 @@ public class RibbonController {
         for (int i = 0; i < nodes.size(); i++) {
             RibbonNode node = nodes.get(i);
 
-            if (node != null) {
+            if (node != null && node.getX() > minX && node.getX() < maxX) {
                 ArrayList<RibbonNode> nodesToCollapse = new ArrayList<>();
                 nodesToCollapse.add(node);
                 while (node.getOutEdges().size() == 1) {
                     RibbonNode other = node.getOutEdges().get(0).getEnd();
-                    if (other != null) {
+                    if (other != null&& other.getX() > minX && other.getX() < maxX) {
                         if (other.getInEdges().size() == 1) {
                             nodesToCollapse.add(other);
                             node = other;
@@ -219,7 +218,7 @@ public class RibbonController {
             node.setY(0);
             node.setyFixed(true);
         }
-        node.getOutEdges().sort((RibbonEdge o1, RibbonEdge o2) -> new Integer(o1.getWeight()).compareTo(o2.getWeight()));
+        node.getOutEdges().sort((RibbonEdge o1, RibbonEdge o2) -> new Integer(o2.getWeight()).compareTo(o1.getWeight()));
 
         for (int i = 0; i < node.getOutEdges().size(); i++) {
             RibbonEdge edge = node.getOutEdges().get(i);

@@ -15,10 +15,7 @@ import java.util.concurrent.ForkJoinPool;
  */
 public class DataTree extends TreeStructure<DataNode> {
 
-    /**
-     * The minimal amount of strands to return.
-     */
-    private int minStrandsToReturn = 0;
+
 
     /**
      * Default constructor.
@@ -84,22 +81,28 @@ public class DataTree extends TreeStructure<DataNode> {
         leftAllGenomes.setX(Integer.MIN_VALUE);
         rightAllGenomes.setX(Integer.MAX_VALUE);
         int minSize = 0;
-        if (level < 5) {
-            minSize = 200 - level * 40;
+        if (level < 40) {
+            minSize = 200 - level * 5;
         }
 
         for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
                 if (strand.getSequence().length() > minSize) {
-                if (strand.getX() > xMin && strand.getX() < xMax) {
+                    if (strand.getX() < xMin && strand.getX() > leftAllGenomes.getX()
+                            && strand.getGenomes().containsAll(genomes)) {
+                        leftAllGenomes = strand;
+                    }
+                    if (strand.getX() > xMax && strand.getX() < rightAllGenomes.getX()
+                            && strand.getGenomes().containsAll(genomes)) {
+                        rightAllGenomes = strand;
+                    }
+                    if (strand.getX() > xMin && strand.getX() < xMax) {
                     result.add(strand);
-                } else if (strand.getX() < xMin && strand.getX() > leftAllGenomes.getX()
-                        && strand.getGenomes().containsAll(genomes)) {
-                    leftAllGenomes = strand;
-                } else if (strand.getX() > xMax && strand.getX() < rightAllGenomes.getX()
-                        && strand.getGenomes().containsAll(genomes)) {
-                    rightAllGenomes = strand;
-                }
+                    } else if (strand.getX() > leftAllGenomes.getX() && strand.getX() < rightAllGenomes.getX()
+                            && strand.getSequence().length() > 200) {
+                        result.add(strand);
+
+                    }
                 }
             }
 
@@ -107,9 +110,6 @@ public class DataTree extends TreeStructure<DataNode> {
 
         if(leftAllGenomes.getX()!=Integer.MIN_VALUE) {
             result.add(leftAllGenomes);
-            for(StrandEdge edge:leftAllGenomes.getOutgoingEdges()){
-                result.add(edge.getEnd());
-            }
         }
         if(rightAllGenomes.getX()!=Integer.MAX_VALUE) {
             result.add(rightAllGenomes);
@@ -156,20 +156,11 @@ public class DataTree extends TreeStructure<DataNode> {
                 break;
             }
         }
-        if (totalStrands < minStrandsToReturn) {
-            result = getDataNodesForGenome(genome, level + 1);
-        }
+
         return result;
 
 
     }
 
-    /**
-     * Set the minimal strands to return.
-     *
-     * @param minStrandsToReturn The minimal strands amount to return.
-     */
-    public void setMinStrandsToReturn(int minStrandsToReturn) {
-        this.minStrandsToReturn = minStrandsToReturn;
-    }
+
 }

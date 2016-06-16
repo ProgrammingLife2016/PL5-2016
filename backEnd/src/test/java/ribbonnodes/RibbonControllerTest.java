@@ -69,7 +69,6 @@ public class RibbonControllerTest {
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
         DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
-        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
 
         if (gfaFile.equals("data/TB328.gfa")) {
             TempReadWriteTree.readFile(dataTree,
@@ -102,7 +101,7 @@ public class RibbonControllerTest {
                 new ArrayList<>(),
                 new ArrayList<>(Arrays.asList("1")));
         Mockito.verify(testController, Mockito.times(1)).addEdges(new ArrayList<>(), false);
-        Mockito.verify(testController, Mockito.times(1)).collapseRibbons(new ArrayList<>(), 10);
+        Mockito.verify(testController, Mockito.times(1)).collapseRibbons(new ArrayList<>(), -1, 10);
 
 
     }
@@ -131,7 +130,7 @@ public class RibbonControllerTest {
         node2.addEdge(edge2);
         node3.addEdge(edge2);
         assertEquals(3, nodes.size());
-        controller.collapseRibbons(nodes, 1);
+        controller.collapseRibbons(nodes, -1, 10);
         assertEquals(2, nodes.size());
     }
 

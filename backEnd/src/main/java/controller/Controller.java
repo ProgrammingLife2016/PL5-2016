@@ -47,7 +47,7 @@ public class Controller {
      * Constructor.
      */
     public Controller() {
-        String gfaFile = "data/TB10.gfa";
+        String gfaFile = "data/TB328.gfa";
         genomeGraph = Parser.parse(gfaFile);
         genomeGraph.annotate("MT_H37RV_BRD_V5.ref", 
         		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
@@ -56,7 +56,6 @@ public class Controller {
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
-        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
 
         if (gfaFile.equals("data/TB328.gfa")) {
             TempReadWriteTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
