@@ -10,7 +10,11 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import datatree.DataTree;
 
 /**
- * The Class ConvergenceIndicator.
+ * This class is a utility class that computes the convergence levels. It computes and 
+ * sets the convergence map for a mutation. This map has key value pairs where the key is the
+ * genome for which possible convergent evolution has been detected and a convergence level as
+ * value. The higher this value the higher the chance that this mutation was due to convergent
+ * evolution for that genome.
  */
 public final class ConvergenceIndicator {
 
@@ -20,7 +24,7 @@ public final class ConvergenceIndicator {
 	private ConvergenceIndicator() { }
 	
 	/**
-	 * Compute convergence levels.
+	 * Computes the convergence levels for the mutation using the DataTree.
 	 *
 	 * @param mutation the mutation
 	 * @param tree the tree
@@ -47,9 +51,12 @@ public final class ConvergenceIndicator {
 	}
 
 	/**
-	 * Gets the convergence map.
+	 * Computes and returns the convergence map of genome ids as keys and convergence levels as 
+	 * values. The convergence level is the distance in standard deviations of the average 
+	 * patristic distance of the genome compared to the average patristic distances of the other 
+	 * genomes.
 	 *
-	 * @param genomeIDs the genome i ds
+	 * @param genomeIDs the genome ids
 	 * @param averageDistanceArray the average distance array
 	 * @return the convergence map
 	 */
@@ -73,7 +80,7 @@ public final class ConvergenceIndicator {
 	}
 
 	/**
-	 * Gets the average patristic distances.
+	 * Gets the average patristic distances for each genome to all the other genomes.
 	 *
 	 * @param genomeIDs the genome i ds
 	 * @param tree the tree
