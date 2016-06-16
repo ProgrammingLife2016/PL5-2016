@@ -11,7 +11,6 @@ import java.util.HashSet;
  */
 public class AdaptedRibbonNode {
 
-
     /**
      * The name of this genome, "" if not a leaf.
      */

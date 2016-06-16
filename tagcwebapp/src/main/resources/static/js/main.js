@@ -341,6 +341,7 @@ var drawMinimap = function (nodes) {
     if (nodes == null) {
         nodes = minimapNodes;
     } else {
+        minimapNodes = {};
         minimapNodes = nodes;
         maxMinimapSize = nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
         $('#maxCoordinateInput').html(maxMinimapSize);
@@ -383,15 +384,15 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
 
         drawPoint(ctx, xPos, yPos, 1, point);
 
-            if (saveRealCoordinates) {
-                zoomNodeLocations.push({
-                    x: xPos,
-                    y: yPos,
-                    label: point.label,
-                    id: point.id,
-                    annotations: point.annotations
-                });
-            }
+        if (saveRealCoordinates) {
+            zoomNodeLocations.push({
+                x: xPos,
+                y: yPos,
+                label: point.label,
+                id: point.id,
+                annotations: point.annotations
+            });
+        }
 
 
         $.each(point.edges, function (key, edge) {
@@ -515,9 +516,9 @@ function zoom(direction, zoomAmount, xMousePos) {
  */
 function updatezoomWindow() {
     if (minimapNodes) {
-       var zoom = updateZoomValues();
-       var boundingBox = {xleft: Math.floor(zoomLeft), xright: Math.ceil(zoomRight), zoom: Math.ceil(zoom), isMiniMap: false};
-       getNodes(boundingBox, drawZoom);
+        var zoom = updateZoomValues();
+        var boundingBox = {xleft: Math.floor(zoomLeft), xright: Math.ceil(zoomRight), zoom: Math.ceil(zoom), isMiniMap: false};
+        getNodes(boundingBox, drawZoom);
     }
 }
 

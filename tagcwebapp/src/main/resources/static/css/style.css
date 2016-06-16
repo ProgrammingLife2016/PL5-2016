@@ -181,7 +181,6 @@ input#coordinateSelector {
     z-index: 10000;
 }
 
-
 input#searchMutation {
     height: 28px;
     border-radius: 3px;
@@ -239,4 +238,10 @@ input[type="number"] {
     padding: 0.75em;
     text-decoration: none;
     width: 100%;
+}
+
+.dropotron li {
+    padding: 5px;
+    border-bottom: 1px solid #cecece;
+    line-height: 20px;
 }

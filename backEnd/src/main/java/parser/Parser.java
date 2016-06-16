@@ -3,7 +3,7 @@ package parser;
 import com.opencsv.CSVReader;
 import genome.GenomeGenerator;
 import genome.GenomeGraph;
-import genome.GenomeMetadata;
+import metadata.GenomeMetadata;
 import genome.GenomicFeature;
 import genome.Strand;
 import genome.StrandEdge;
@@ -203,6 +203,7 @@ public class Parser {
         return list;
     }
 
+
     /**
      * Parses the genome metadata.
      *
@@ -217,8 +218,7 @@ public class Parser {
         try {
             while ((nextLine = reader.readNext()) != null) {
                 String genomeId = nextLine[0];
-                String lineage = nextLine[21];
-                hmap.put(genomeId, new GenomeMetadata(genomeId, lineage));
+                hmap.put(genomeId, new GenomeMetadata(nextLine));
             }
             reader.close();
         } catch (IOException e) {
@@ -227,7 +227,6 @@ public class Parser {
 
         return hmap;
     }
-
     /**
      * Writes an edge to the CSV-file.
      *
@@ -307,7 +306,10 @@ public class Parser {
         }
     }
 
+
+
     /**
+
      * Reads the file as a graph in to an Controller.
      *
      * @param file The file that is read.

@@ -1,6 +1,7 @@
 package genome;
 
 import genome.GraphSearcher.SearchType;
+import metadata.GenomeMetadata;
 
 import java.util.ArrayList;
 import java.util.HashMap;

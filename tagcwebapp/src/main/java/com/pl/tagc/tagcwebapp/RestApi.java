@@ -41,7 +41,7 @@ public class RestApi {
                                  @DefaultValue("100") @QueryParam("xright") int xright,
                                  @DefaultValue("1") @QueryParam("zoom") int zoom,
                                  @DefaultValue("false") @QueryParam("isMiniMap")
-                                 boolean isMiniMap) {
+                                         boolean isMiniMap) {
         return BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom, isMiniMap);
     }
 
@@ -64,6 +64,38 @@ public class RestApi {
                 .allow("OPTIONS").build();
     }
 
+
+    /**
+     * Returns a Hashmap mapping genomes to color.
+     * @return the list      List of unrecognized genomes.
+     */
+    @GET
+    @Path("/getmetadatamap")
+    @Produces("application/json")
+    public Response getMetaDataMap() {
+        return Response.ok()
+                .entity(BackEndAdapter.getInstance().getMetaDataMap())
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+    }
+
+    /**
+     * Returns a Hashmap mapping genomes to color.
+     * @param metaData The metadata to get the the colors for.
+     * @return the List of unrecognized genomes.
+     */
+    @GET
+    @Path("/getgenomecolors")
+    @Produces("application/json")
+    public Response getMetaGenomeColors(@DefaultValue("lineage")
+                                        @QueryParam("metadata") String metaData) {
+        return Response.ok()
+                .entity(BackEndAdapter.getInstance().getAllGenomeColors(metaData))
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+    }
 
     /**
      * Request phylogenetic tree.
