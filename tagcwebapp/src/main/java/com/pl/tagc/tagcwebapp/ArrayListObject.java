@@ -53,5 +53,5 @@ public class ArrayListObject {
         this.list = list;
     }
 
-    ;
+
 }

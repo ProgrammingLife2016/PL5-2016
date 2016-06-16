@@ -67,11 +67,11 @@ public class GFeatureSearchMatch {
 	}
 
 	/**
-	 * Add a strand to this search match
+	 * Add a strand to this search match.
 	 *
 	 * @param strand strand to add.
 	 */
-	public void addStrand(Strand strand){
+	public void addStrand(Strand strand) {
 		strands.add(strand);
 	}
 

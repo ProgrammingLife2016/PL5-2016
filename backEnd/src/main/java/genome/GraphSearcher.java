@@ -55,17 +55,14 @@ public final class GraphSearcher {
 	private static void searchGenomicFeatures(GSearchResult searchResult,
 											  String searchString,
 											  GenomeGraph graph) {
-
 		for (Strand strand : graph.getStrands().values()) {
 			boolean relevant = false;
-
 			for (String id : graph.getActiveGenomeIds()) {
 				if (strand.getGenomes().contains(id)) {
 					relevant = true;
 					break;
 				}
 			}
-
 			if (relevant) {
 				ArrayList<GenomicFeature> features = strand.getGenomicFeatures();
 
@@ -76,7 +73,7 @@ public final class GraphSearcher {
 					for (String subString : subStrings) {
 
 						if (displayName.contains(subString.toLowerCase())) {
-							searchResult.addGFeatureStrandSearchMatch(strand,feature,subString);
+							searchResult.addGFeatureStrandSearchMatch(strand, feature, subString);
 						}
 
 					}

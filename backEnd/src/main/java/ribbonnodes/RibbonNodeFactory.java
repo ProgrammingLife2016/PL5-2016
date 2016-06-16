@@ -29,7 +29,7 @@ public abstract class RibbonNodeFactory {
         RibbonNode ribbon = new RibbonNode(id, actGen);
         ribbon.setX(strand.getX());
         ribbon.addStrand(strand);
-        for(GenomicFeature feature:strand.getGenomicFeatures()){
+        for (GenomicFeature feature : strand.getGenomicFeatures()) {
             ribbon.addAnnotation(feature.getDisplayName());
         }
 
