@@ -1,9 +1,6 @@
 package database;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import genome.Genome;
-import genome.Strand;
-import genome.StrandEdge;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -18,7 +15,6 @@ import org.neo4j.tooling.GlobalGraphOperations;
 
 import java.io.File;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -38,6 +34,16 @@ public class DatabaseTest {
     }
 
     /**
+     * Deletes the created database.
+     */
+    @AfterClass
+    public static void deleteDB() {
+        db.deleteDatabase();
+        File f = new File("test.db");
+        Assert.assertTrue(!f.exists());
+    }
+
+    /**
      * The actual tests, currently checks if file indeed gets created.
      */
     @Test
@@ -49,7 +55,8 @@ public class DatabaseTest {
     /**
      * Test if opening an existing database works.
      */
-    @Test @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @Test
+    @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void testDBOpening() {
         ResourceIterator<Node> allNodes;
         db.getGraphService().shutdown();
@@ -163,6 +170,51 @@ public class DatabaseTest {
         Assert.assertEquals(8, i);
     }
 
+//    /**
+//     * Test if nodes get retrieved correctly.
+//     */
+//    @Test
+//    public void testNodeRetrieval() {
+//        List<Strand> strands = db.returnNodes("MATCH (n:Strand) RETURN n");
+//        Assert.assertEquals(1, strands.get(0).getId());
+//        Assert.assertEquals(2, strands.get(1).getId());
+//        Assert.assertEquals(3, strands.get(2).getId());
+//        Assert.assertEquals(3, strands.size());
+//
+//        strands = db.returnNodes("MATCH (n {id: 1}) RETURN n");
+//        Assert.assertEquals(1, strands.get(0).getId());
+//        Assert.assertEquals(1, strands.size());
+//    }
+
+//    /**
+//     * Test if all relationships get retrieved correctly.
+//     */
+//    @Test
+//    public void testRelaRetrieval() {
+//        List<StrandEdge> strandEdges = db.returnEdges("MATCH (a)-[b:GENOME]->(c) RETURN b");
+//        Assert.assertEquals(1, strandEdges.get(0).getStart());
+//        Assert.assertEquals(2, strandEdges.get(0).getEnd());
+//        Assert.assertEquals(2, strandEdges.get(1).getStart());
+//        Assert.assertEquals(3, strandEdges.get(1).getEnd());
+//        Assert.assertEquals(2, strandEdges.size());
+//    }
+
+    /**
+     * Test if all relationships get retrieved correctly.
+     */
+//    @Test
+//    public void testGenomeRetrieval() {
+//        Genome genome = db.returnGenome("AA");
+//          Assert.assertEquals("AA", genome.getId());
+////        Assert.assertEquals(1, genome.getStrands().get(0).getId());
+////        Assert.assertEquals(2, genome.getStrands().get(1).getId());
+////        Assert.assertEquals(3, genome.getStrands().get(2).getId());
+//
+//        genome = db.returnGenome("BB");
+//        Assert.assertEquals("BB", genome.getId());
+////        Assert.assertEquals(3, genome.getStrands().get(0).getId());
+//    }
+
     /**
      * Test if the phylogenetic tree gets inserted correctly in the database.
      */
@@ -201,51 +253,6 @@ public class DatabaseTest {
         Assert.assertEquals(i, 8);
     }
 
-//    /**
-//     * Test if nodes get retrieved correctly.
-//     */
-//    @Test
-//    public void testNodeRetrieval() {
-//        List<Strand> strands = db.returnNodes("MATCH (n:Strand) RETURN n");
-//        Assert.assertEquals(1, strands.get(0).getId());
-//        Assert.assertEquals(2, strands.get(1).getId());
-//        Assert.assertEquals(3, strands.get(2).getId());
-//        Assert.assertEquals(3, strands.size());
-//
-//        strands = db.returnNodes("MATCH (n {id: 1}) RETURN n");
-//        Assert.assertEquals(1, strands.get(0).getId());
-//        Assert.assertEquals(1, strands.size());
-//    }
-
-//    /**
-//     * Test if all relationships get retrieved correctly.
-//     */
-//    @Test
-//    public void testRelaRetrieval() {
-//        List<StrandEdge> strandEdges = db.returnEdges("MATCH (a)-[b:GENOME]->(c) RETURN b");
-//        Assert.assertEquals(1, strandEdges.get(0).getStart());
-//        Assert.assertEquals(2, strandEdges.get(0).getEnd());
-//        Assert.assertEquals(2, strandEdges.get(1).getStart());
-//        Assert.assertEquals(3, strandEdges.get(1).getEnd());
-//        Assert.assertEquals(2, strandEdges.size());
-//    }
-
-    /**
-     * Test if all relationships get retrieved correctly.
-     */
-    @Test
-    public void testGenomeRetrieval() {
-        Genome genome = db.returnGenome("AA");
-          Assert.assertEquals("AA", genome.getId());
-//        Assert.assertEquals(1, genome.getStrands().get(0).getId());
-//        Assert.assertEquals(2, genome.getStrands().get(1).getId());
-//        Assert.assertEquals(3, genome.getStrands().get(2).getId());
-
-        genome = db.returnGenome("BB");
-        Assert.assertEquals("BB", genome.getId());
-//        Assert.assertEquals(3, genome.getStrands().get(0).getId());
-    }
-
     /**
      * Test if all relationships get retrieved correctly.
      */
@@ -257,14 +264,5 @@ public class DatabaseTest {
         Assert.assertEquals(db.returnDescGenome("3"), wanted);
         wanted.add("DD");
         Assert.assertEquals(db.returnDescGenome("2"), wanted);
-    }
-    /**
-     * Deletes the created database.
-     */
-    @AfterClass
-    public static void deleteDB() {
-        db.deleteDatabase();
-        File f = new File("test.db");
-        Assert.assertTrue(!f.exists());
     }
 }

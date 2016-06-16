@@ -2,19 +2,19 @@ package controller;
 
 import datatree.DataNode;
 import datatree.DataTree;
-import datatree.TempReadWriteTree;
+import datatree.TempReadDataTree;
 import genome.GSearchResult;
 import genome.GenomeGraph;
 import genome.GraphSearcher.SearchType;
 import parser.Parser;
-import mutation.Mutations;
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
+import ribbonnodes.RibbonController;
 import ribbonnodes.RibbonNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import ribbonnodes.RibbonController;
 /**
  * Created by Matthijs on 24-4-2016.
  */
@@ -49,27 +49,23 @@ public class Controller {
      * Constructor.
      */
     public Controller() {
-        String gfaFile = "data/TB10.gfa";
+        String gfaFile = "data/TB328.gfa";
         genomeGraph = Parser.parse(gfaFile);
-        genomeGraph.annotate("MT_H37RV_BRD_V5.ref", 
-        		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
+        genomeGraph.annotate("MT_H37RV_BRD_V5.ref",
+                Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
-        genomeGraph.findStartAndCalculateX();
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
         dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
-        dataTree.setMinStrandsToReturn(genomeGraph.getStrands().size() / 8);
 
         if (gfaFile.equals("data/TB328.gfa")) {
-            TempReadWriteTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
+            TempReadDataTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
         } else {
             dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);
-        Mutations mutations = new Mutations(genomeGraph);
-        mutations.computeAllMutations();
     }
 
     /**
@@ -81,8 +77,8 @@ public class Controller {
      * @param isMiniMap Boolean if this is the minimap.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, 
-    		int zoomLevel, boolean isMiniMap) {
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
+                                                int zoomLevel, boolean isMiniMap) {
         return ribbonController.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap);
     }
 
@@ -90,7 +86,7 @@ public class Controller {
      * Search.
      *
      * @param searchString the search string
-     * @param searchType the search type
+     * @param searchType   the search type
      * @return the g search result
      */
     public GSearchResult search(String searchString, SearchType searchType) {
@@ -122,23 +118,24 @@ public class Controller {
      * @return the list   	The list of unrecognized genomes.
      */
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
-    	System.out.println("Set active genomes");
-    	ArrayList<ArrayList<String>> temp = new ArrayList<>();
-    	for (String s : activeGenomes) {
-    		if (s.startsWith("T")) {
-    			temp.add(new ArrayList<>(Arrays.asList(s)));
-    		} else {
-    			System.out.println("middle node selected");
-    			Integer x = Integer.parseInt(s);
-    			System.out.println("With id: " + x);
-    			PhylogeneticNode node = phylogeneticTree.getNodeWithId(x);
-    			for (String a : node.getGenomes()) {
-    				System.out.println(a);
-    			}
-    			temp.add(phylogeneticTree.getNodeWithId(x).getGenomes());
-    		}
-    		
-    	}
+        System.out.println("Set active genomes");
+        ArrayList<ArrayList<String>> temp = new ArrayList<>();
+        for (String s : activeGenomes) {
+            if (s.startsWith("T")) {
+                temp.add(new ArrayList<>(Arrays.asList(s)));
+            } else {
+                System.out.println("middle node selected");
+                Integer x = Integer.parseInt(s);
+                System.out.println("With id: " + x);
+                PhylogeneticNode node = phylogeneticTree.getNodeWithId(x);
+                System.out.println("Leaves under this node:");
+                for (String a : node.getGenomes()) {
+                    System.out.println(a);
+                }
+                temp.add(phylogeneticTree.getNodeWithId(x).getGenomes());
+            }
+
+        }
         return genomeGraph.setGenomesAsActive(temp);
     }
 }

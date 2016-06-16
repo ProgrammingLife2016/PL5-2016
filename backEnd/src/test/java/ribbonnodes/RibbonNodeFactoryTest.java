@@ -1,7 +1,6 @@
 package ribbonnodes;
 
 import genome.Strand;
-
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -49,23 +48,6 @@ public class RibbonNodeFactoryTest {
      * @throws Exception if fail.
      */
 
-    @Test
-    public void testMakeRibbonNodesFromSplit() throws Exception {
-        String[] genomeArray = {"1", "2"};
-        HashSet<String> genomes = new HashSet<String>(Arrays.asList(genomeArray));
-        Strand strand = new Strand(0, "asdf", genomes, "1", 0);
-        RibbonNode node = new RibbonNode(0, new HashSet<String>(Arrays.asList(genomeArray)));
-        node.addStrand(strand);
-        ArrayList<RibbonNode> splitNodes = RibbonNodeFactory.makeRibbonNodesFromSplit(node, 0);
-        assertEquals(splitNodes.size(), 2);
-        assertTrue(splitNodes.get(0).getGenomes().contains("1"));
-        assertTrue(splitNodes.get(1).getGenomes().contains("2"));
-        assertEquals(splitNodes.get(0).getId(), 1);
-        assertEquals(splitNodes.get(1).getId(), 2);
-        assertEquals(splitNodes.get(0).getStrands().get(0), strand);
-        assertEquals(splitNodes.get(1).getStrands().get(0), strand);
-
-    }
 
     /**
      * Test if two nodes are correctly collapsed in to one.
@@ -75,27 +57,30 @@ public class RibbonNodeFactoryTest {
     @Test
     public void testCollapseNodes() throws Exception {
         RibbonNode node1 = new RibbonNode(0, new HashSet<String>(Arrays.asList("1")));
-        node1.setX(1);
         RibbonNode node2 = new RibbonNode(1, new HashSet<String>(Arrays.asList("1")));
-        node2.setId(2);
+        RibbonNode node3 = new RibbonNode(2, new HashSet<String>(Arrays.asList("1")));
+        node1.setX(1);
+        node2.setX(2);
+        node3.setX(3);
+
         String[] genomeArray = {"1", "2"};
         HashSet<String> genomes = new HashSet<String>(Arrays.asList(genomeArray));
         Strand strand = new Strand(0, "asdf", genomes, "1", 0);
         node2.addStrand(strand);
-        RibbonEdge edge = new RibbonEdge(0, 1);
+
+        RibbonEdge edge = new RibbonEdge(node1, node2);
         node1.addEdge(edge);
         node2.addEdge(edge);
-
-        RibbonEdge edge2 = new RibbonEdge(1, 2);
+        RibbonEdge edge2 = new RibbonEdge(node2, node3);
         node2.addEdge(edge2);
-
+        node3.addEdge(edge2);
 
 
         RibbonNode collapsedNode = RibbonNodeFactory.collapseNodes(
-        		new ArrayList<>(Arrays.asList(node1, node2)));
-        assertNotNull(collapsedNode.getOutEdge(0, 2));
+                new ArrayList<>(Arrays.asList(node1, node2, node3)));
+        assertNotNull(collapsedNode.getInEdge(0, 2));
         assertEquals(node1.getStrands().get(0), strand);
-        assertEquals(collapsedNode.getX(), (int) (node1.getX() + node1.getLabel().length() * 0.8));
+        assertEquals(collapsedNode.getX(), (int) (node3.getX()));
 
     }
 }

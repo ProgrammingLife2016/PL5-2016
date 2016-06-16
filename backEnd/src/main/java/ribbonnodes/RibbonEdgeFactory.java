@@ -34,13 +34,13 @@ public abstract class RibbonEdgeFactory {
     /**
      * Create and return a Ribbonedge.
      *
-     * @param startID The starting id of the edge.
-     * @param endID   The end id of the edge.
-     * @param genome  The genome to color the edge for.
+     * @param start  The starting node of the edge.
+     * @param end    The ending node of the edge.
+     * @param genome The genome to color the edge for.
      * @return The Created edge.
      */
-    public static RibbonEdge createRibbonEdge(int startID, int endID, Genome genome) {
-        RibbonEdge edge = new RibbonEdge(startID, endID);
+    public static RibbonEdge createRibbonEdge(RibbonNode start, RibbonNode end, Genome genome) {
+        RibbonEdge edge = new RibbonEdge(start, end);
         edge.setColor(getColorForGenome(genome));
         return edge;
     }

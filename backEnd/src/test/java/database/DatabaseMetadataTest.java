@@ -25,18 +25,6 @@ public class DatabaseMetadataTest {
         db = new Database("test.db");
     }
 
-    
-    /**
-     * Tests if the metadata gets retrieved correctly.
-     */
-    @Test
-    public void testLoadGenomeMetadataFromCSV() {
-        db.loadGenomeMetadataFromResources("data/metadata.csv");
-        HashMap<String, GenomeMetadata> metadata = db.getAllGenomeMetadata();
-        Assert.assertTrue(metadata.get("TKK-01-0055") != null); 
-        Assert.assertEquals(metadata.get("TKK-01-0055").getLineage(), "LIN 2");        
-    }
-
     /**
      * Deletes the created database.
      */
@@ -45,5 +33,16 @@ public class DatabaseMetadataTest {
         db.deleteDatabase();
         File f = new File("test.db");
         Assert.assertTrue(!f.exists());
+    }
+
+    /**
+     * Tests if the metadata gets retrieved correctly.
+     */
+    @Test
+    public void testLoadGenomeMetadataFromCSV() {
+        db.loadGenomeMetadataFromResources("data/metadata.csv");
+        HashMap<String, GenomeMetadata> metadata = db.getAllGenomeMetadata();
+        Assert.assertTrue(metadata.get("TKK-01-0055") != null);
+        Assert.assertEquals(metadata.get("TKK-01-0055").getLineage(), "LIN 2");
     }
 }

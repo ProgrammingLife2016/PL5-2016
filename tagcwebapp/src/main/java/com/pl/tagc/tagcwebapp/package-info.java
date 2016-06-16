@@ -2,11 +2,11 @@
  * Gives the package Info.
  */
 @XmlJavaTypeAdapters({
-    @XmlJavaTypeAdapter(value = PhylogeneticNodeAdapter.class, type = PhylogeneticNode.class),
-    @XmlJavaTypeAdapter(value = RibbonNodeAdapter.class, type = RibbonNode.class),
-    @XmlJavaTypeAdapter(value = StrandAdapter.class, type = Strand.class),
-    @XmlJavaTypeAdapter(value = RibbonEdgeAdapter.class, type = RibbonEdge.class),
-    @XmlJavaTypeAdapter(value = SearchMatchAdapter.class, type = GFeatureSearchMatch.class)
+        @XmlJavaTypeAdapter(value = PhylogeneticNodeAdapter.class, type = PhylogeneticNode.class),
+        @XmlJavaTypeAdapter(value = RibbonNodeAdapter.class, type = RibbonNode.class),
+        @XmlJavaTypeAdapter(value = StrandAdapter.class, type = Strand.class),
+        @XmlJavaTypeAdapter(value = RibbonEdgeAdapter.class, type = RibbonEdge.class),
+        @XmlJavaTypeAdapter(value = SearchMatchAdapter.class, type = GFeatureSearchMatch.class)
 })
 package com.pl.tagc.tagcwebapp;
 

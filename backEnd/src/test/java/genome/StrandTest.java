@@ -1,9 +1,13 @@
 package genome;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import mutation.AbstractMutation;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import java.util.Arrays;
+import java.util.HashSet;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -21,7 +25,7 @@ public class StrandTest {
     @Before
     public void setUp() {
         String[] genomes = {"ref1", "ref2"};
-		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(genomes));
+        HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(genomes));
         strand = new Strand(1, "AA", genomeSet, "ref1", 0);
     }
 
@@ -53,7 +57,7 @@ public class StrandTest {
         assertTrue(strand.getGenomes().contains("ref1"));
         assertTrue(strand.getGenomes().contains("ref2"));
         String[] temp = {"ref3", "ref4"};
-		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(temp));
+        HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(temp));
         strand.setGenomes(genomeSet);
         assertTrue(strand.getGenomes().contains("ref3"));
         assertTrue(strand.getGenomes().contains("ref4"));
@@ -100,5 +104,16 @@ public class StrandTest {
         StrandEdge edge = new StrandEdge(strand, new Strand(2));
         strand.addEdge(edge);
         assertEquals(strand.getOutgoingEdges().get(0), edge);
+    }
+
+    /**
+     * Test getting the mutations on this strand.
+     */
+    @Test
+    public void testMutation() {
+        AbstractMutation mutation = Mockito.mock(AbstractMutation.class);
+        strand.addMutation(mutation);
+        assertEquals(strand.getMutations().size(), 1);
+        assertEquals(strand.getMutations().get(0), mutation);
     }
 }

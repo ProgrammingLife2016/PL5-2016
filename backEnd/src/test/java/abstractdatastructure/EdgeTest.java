@@ -42,7 +42,7 @@ public class EdgeTest {
      */
     @Test
     public void testGetStart() throws Exception {
-        assertEquals(1, edge.getStart());
+        assertEquals(1, edge.getStartId());
 
     }
 
@@ -53,7 +53,7 @@ public class EdgeTest {
      */
     @Test
     public void testGetEnd() throws Exception {
-        assertEquals(2, edge.getEnd());
+        assertEquals(2, edge.getEndId());
     }
 
     /**
@@ -74,9 +74,9 @@ public class EdgeTest {
      */
     @Test
     public void testSetStartId() throws Exception {
-        assertEquals(1, edge.getStart());
+        assertEquals(1, edge.getStartId());
         edge.setStartId(4);
-        assertEquals(4, edge.getStart());
+        assertEquals(4, edge.getStartId());
     }
 
 
@@ -87,8 +87,8 @@ public class EdgeTest {
      */
     @Test
     public void testSetEndId() throws Exception {
-        assertEquals(2, edge.getEnd());
+        assertEquals(2, edge.getEndId());
         edge.setEndId(4);
-        assertEquals(4, edge.getEnd());
+        assertEquals(4, edge.getEndId());
     }
 }

@@ -34,29 +34,6 @@ public abstract class RibbonNodeFactory {
 
 
     /**
-     * For every genome contained in a Ribbonnode,
-     * make a copy containing only that genome and return it.
-     *
-     * @param node  the node to split.
-     * @param maxId The current max id in the ribbonnode graph (so no double ids get used).
-     * @return A list of ribbon Nodes containing only one genome.
-     */
-    public static ArrayList<RibbonNode> makeRibbonNodesFromSplit(RibbonNode node, int maxId) {
-        ArrayList<RibbonNode> result = new ArrayList<>();
-        for (String genome : node.getGenomes()) {
-            HashSet<String> ribbonGenome = new HashSet<String>();
-            ribbonGenome.add(genome);
-            RibbonNode ribbon = new RibbonNode(++maxId, ribbonGenome);
-            ribbon.setX(node.getX());
-            ribbon.addStrands(node.getStrands());
-            result.add(ribbon);
-        }
-        return result;
-
-
-    }
-
-    /**
      * Collapse a group of nodes and lead all edges the right way.
      *
      * @param nodesToCollapse The nodes to collapse in to the first node of the array.
@@ -66,17 +43,18 @@ public abstract class RibbonNodeFactory {
         RibbonNode startNode = nodesToCollapse.get(0);
         RibbonNode oldEnd = nodesToCollapse.get(nodesToCollapse.size() - 1);
         RibbonNode newEnd = new RibbonNode(oldEnd.getId(),
-                startNode.getGenomes());
+                oldEnd.getGenomes());
         if (nodesToCollapse.size() > 1) {
             for (int i = 1; i < nodesToCollapse.size(); i++) {
                 RibbonNode node2 = nodesToCollapse.get(i);
                 startNode.addStrands(node2.getStrands());
 
             }
-            newEnd.setX(startNode.getX() + (int) (startNode.getLabel().length() * 0.8));
+            newEnd.setX(oldEnd.getX());
             newEnd.setY(oldEnd.getY());
             newEnd.setOutEdges(nodesToCollapse.get(nodesToCollapse.size() - 1).getOutEdges());
-            startNode.getOutEdges().get(0).setEndId(newEnd.getId());
+            startNode.getOutEdges().get(0).setEnd(newEnd);
+            newEnd.addEdge(startNode.getOutEdges().get(0));
             newEnd.setVisible(false);
             return newEnd;
         }

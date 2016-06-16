@@ -1,25 +1,25 @@
 <html>
 
 <head>
-  <title>TAGC - PL</title>
-  <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
-  <link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
-  <link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <title>TAGC - PL</title>
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
-  <link rel="stylesheet" type="text/css" href="css/main.css" />
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <link rel="stylesheet" type="text/css" href="css/phylo.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/phylo.css">
 
-  <script src="js/jquery.js" type="application/javascript"></script>
-  <script src="js/jquery-ui.min.js" type="application/javascript"></script>
-  <script src="js/bootstrap.min.js" type="application/javascript"></script>
-  <script src="js/raphael-min.js" type="text/javascript"></script>
-  <script src="js/jsphylosvg.js" type="text/javascript"></script>
+    <script src="js/jquery.js" type="application/javascript"></script>
+    <script src="js/jquery-ui.min.js" type="application/javascript"></script>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="js/raphael-min.js" type="text/javascript"></script>
+    <script src="js/jsphylosvg.js" type="text/javascript"></script>
 
-  <script src="js/main.js" type="application/javascript"></script>
-  <script src="js/phyloTree.js" type="text/javascript"></script>
+    <script src="js/main.js" type="application/javascript"></script>
+    <script src="js/phyloTree.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -86,6 +86,10 @@
       </div>
       <div id="minimapContainer">
         <div id="minimap" class="mainGenome genome">
+          <div class="coordinateSelector">
+            Goto: <input type="number" id="coordinateSelector"> of
+            <span id="maxCoordinateInput">0</span>
+          </div>
           <div class="slider"></div>
           <div class="canvasContainer"></div>
         </div>
@@ -96,23 +100,23 @@
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
-
-  </div>
 
 </div>
 

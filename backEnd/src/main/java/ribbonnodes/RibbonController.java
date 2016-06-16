@@ -4,15 +4,9 @@ import datatree.DataTree;
 import genome.Genome;
 import genome.GenomeGraph;
 import genome.Strand;
-import mutation.AbstractMutation;
-import ribbonnodes.RibbonEdge;
-import ribbonnodes.RibbonEdgeFactory;
-import ribbonnodes.RibbonNode;
-import ribbonnodes.RibbonNodeFactory;
+import mutation.Mutations;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Collections;
 
 
 /**
@@ -58,11 +52,15 @@ public class RibbonController {
      * @param isMiniMap Boolean if this is the minimap.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, 
-    		int zoomLevel, boolean isMiniMap) {
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
+                                                int zoomLevel, boolean isMiniMap) {
 
 
         ArrayList<ArrayList<Genome>> actGen = genomeGraph.getActiveGenomes();
+
+        if (isMiniMap) {
+            zoomLevel = 3;
+        }
 
         ArrayList<String> actIds = new ArrayList<>();
         for (ArrayList<Genome> genome : actGen) {
@@ -70,16 +68,19 @@ public class RibbonController {
         }
 
         maxId = 0;
-        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel + 1);
+        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel);
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
-        spreadYCoordinates(result, actIds);
         addEdges(result, isMiniMap);
+        collapseRibbons(result, minX, maxX);
 
+        Mutations mutations = new Mutations(result);
+        mutations.computeAllMutations();
 
-        collapseRibbons(result, zoomLevel);
+        spreadYCoordinates(result, actIds);
 
+        result.sort((RibbonNode o1, RibbonNode o2) ->
+                new Integer(o1.getId()).compareTo(o2.getId()));
 
-        addMutationLabels(result, actIds);
         System.out.println(result.size() + " nodes returned");
         return result;
 
@@ -113,31 +114,28 @@ public class RibbonController {
      * Collapses the ribbon Nodes and edges in nodes.
      *
      * @param nodes The ribbonNode Graph to collapse.
-     * @param zoomLevel The zoomlevel.
+     * @param minX  The minimal x value to collapse.
+     * @param maxX  The maximal x value to collapse.
      */
     @SuppressWarnings("checkstyle:methodlength")
-    protected void collapseRibbons(ArrayList<RibbonNode> nodes, int zoomLevel) {
+    protected void collapseRibbons(ArrayList<RibbonNode> nodes, int minX, int maxX) {
         System.out.println(nodes.size() + " Before collapsing");
 
-        HashMap<Integer, RibbonNode> ribbonHash = new HashMap<>();
-        for (RibbonNode node : nodes) {
-            ribbonHash.put(node.getId(), node);
-        }
+        ArrayList<RibbonNode> newNodes = new ArrayList<>();
 
-        for (int id : ribbonHash.keySet()) {
-            RibbonNode node = ribbonHash.get(id);
-            if (node != null) {
+        for (int i = 0; i < nodes.size(); i++) {
+            RibbonNode node = nodes.get(i);
+
+            if (node != null && node.getX() > minX && node.getX() < maxX) {
                 ArrayList<RibbonNode> nodesToCollapse = new ArrayList<>();
                 nodesToCollapse.add(node);
-                int length = node.getLabel().length();
-                while (node.getOutEdges().size() == 1 && length < 10000 / zoomLevel) {
-                    RibbonNode other = ribbonHash.get(node.getOutEdges().get(0).getEnd());
-                    if (other != null) {
+                while (node.getOutEdges().size() == 1) {
+                    RibbonNode other = node.getOutEdges().get(0).getEnd();
+                    if (other != null && other.getX() > minX && other.getX() < maxX) {
                         if (other.getInEdges().size() == 1) {
                             nodesToCollapse.add(other);
                             node = other;
-                            length += node.getLabel().length();
-                            ribbonHash.put(other.getId(), null);
+                            nodes.remove(other);
                         } else {
                             break;
                         }
@@ -149,36 +147,17 @@ public class RibbonController {
                 }
 
                 RibbonNode newNode = RibbonNodeFactory.collapseNodes(nodesToCollapse);
+
                 if (newNode != null) {
-                    ribbonHash.put(newNode.getId(), newNode);
+                    newNodes.add(newNode);
+
                 }
             }
         }
-        nodes.clear();
-        for (RibbonNode node : ribbonHash.values()) {
-            if (node != null) {
-                nodes.add(node);
-            }
-        }
-    }
+        nodes.addAll(newNodes);
+        System.out.println(nodes.size() + " After collapsing");
 
-    /**
-     * Return a node with a certain id contained in a Ribbon Graph.
-     *
-     * @param id       The id to return for.
-     * @param nodes    The RibbonGraph.
-     * @param minIndex The minimal index to start looking (for speedup)
-     * @return null if that id is not found.
-     */
 
-    protected RibbonNode getNodeWithId(int id, ArrayList<RibbonNode> nodes, int minIndex) {
-        for (int i = minIndex; i < nodes.size(); i++) {
-            RibbonNode node = nodes.get(i);
-            if (node.getId() == id) {
-                return node;
-            }
-        }
-        return null;
     }
 
 
@@ -191,25 +170,86 @@ public class RibbonController {
      */
     protected void spreadYCoordinates(ArrayList<RibbonNode> nodes,
                                       ArrayList<String> activeGenomes) {
-        ArrayList<RibbonNode> splitNodes = new ArrayList<>();
-        ArrayList<RibbonNode> newNodes = new ArrayList<>();
-        for (RibbonNode node : nodes) {
-            if (node.getGenomes().size() != activeGenomes.size()) {
-                ArrayList<RibbonNode> ribbonSplitCopies =
-                        RibbonNodeFactory.makeRibbonNodesFromSplit(node, maxId);
-                for (RibbonNode splitNode : ribbonSplitCopies) {
-                    int genIndex = activeGenomes.indexOf(splitNode.getGenomes().iterator().next());
-                    int newY = (int) ((Math.ceil((genIndex + 1) / 2.) * 20)
-                            * Math.pow(-1, genIndex));
-                    splitNode.setY(newY);
+
+
+        int level = 0;
+        while (activeGenomes.size() != level) {
+            for (RibbonNode node : nodes) {
+                if (node.getGenomes().size() == activeGenomes.size() - level) {
+                    if (!node.isyFixed()) {
+                        node.setY(findPreviousNodeSameGenomes(nodes, node).getY());
+                        node.setyFixed(true);
+                    }
+                    spreadYCoordinates(node, activeGenomes, level);
                 }
-                maxId += ribbonSplitCopies.size();
-                splitNodes.add(node);
-                newNodes.addAll(ribbonSplitCopies);
+
             }
+
+            level++;
         }
-        nodes.removeAll(splitNodes);
-        nodes.addAll(newNodes);
+
+
+    }
+
+    /**
+     * Find the closest node to the left that has the same genomes.
+     *
+     * @param nodes The RibbonNode graph.
+     * @param node  Node to find the closest for.
+     * @return The first node to the left, or same node if not found.
+     */
+    protected RibbonNode findPreviousNodeSameGenomes(ArrayList<RibbonNode> nodes,
+                                                     RibbonNode node) {
+        int endIndex = nodes.indexOf(node);
+        RibbonNode result = node;
+        for (int i = 0; i < endIndex; i++) {
+            RibbonNode other = nodes.get(i);
+            if (other.getGenomes().size() == node.getGenomes().size()
+                    && other.getGenomes().containsAll(node.getGenomes())) {
+                result = other;
+            }
+
+        }
+
+        return result;
+    }
+
+    /**
+     * Place all the nodes in common in the middle, and copy and distribute
+     * all others along the y coordinate associated with that genome.
+     *
+     * @param node          The node to calculate the Y for.
+     * @param activeGenomes The ids of the active genomes.
+     * @param level         the zoomlevel.
+     */
+    protected void spreadYCoordinates(RibbonNode node,
+                                      ArrayList<String> activeGenomes,
+                                      int level) {
+
+        ArrayList<RibbonNode> nextNodes = new ArrayList<>();
+        if (level == 0) {
+            node.setY(0);
+            node.setyFixed(true);
+        }
+        node.getOutEdges().sort((RibbonEdge o1, RibbonEdge o2) ->
+                new Integer(o2.getWeight()).compareTo(o1.getWeight()));
+
+        for (int i = 0; i < node.getOutEdges().size(); i++) {
+            RibbonEdge edge = node.getOutEdges().get(i);
+            RibbonNode endNode = edge.getEnd();
+            if (endNode.getGenomes().size() <= node.getGenomes().size() && !endNode.isyFixed()) {
+                int exponent = i;
+
+                int newY = (int) ((node.getGenomes().size() - endNode.getGenomes().size())
+                        * 5 * (activeGenomes.size() - level)
+                        * Math.pow(-1, exponent));
+                endNode.setyFixed(true);
+                endNode.setY(node.getY() + newY);
+                nextNodes.add(endNode);
+            }
+
+
+        }
 
 
     }
@@ -218,7 +258,7 @@ public class RibbonController {
     /**
      * Calculate and add edges to a ribbonGraph.
      *
-     * @param nodes the RibbinGraph to calculate edges for.
+     * @param nodes     the RibbinGraph to calculate edges for.
      * @param isMiniMap Boolean if this is the minimap.
      */
 
@@ -227,7 +267,7 @@ public class RibbonController {
         for (ArrayList<Genome> genome : genomeGraph.getActiveGenomes()) {
             RibbonNode currentNode = findNextNodeWithGenome(nodes, genome.get(0), -1);
             while (currentNode != null) {
-                currentNode = addEdgeSetXReturnEnd(nodes, currentNode, genome.get(0), isMiniMap);
+                currentNode = addEdgeReturnEnd(nodes, currentNode, genome.get(0), isMiniMap);
             }
 
         }
@@ -242,35 +282,28 @@ public class RibbonController {
      * @param nodes       The RibbonGraph.
      * @param currentNode The start node of the edge.
      * @param genome      The genome to find an edge for.
-     * @param isMiniMap Boolean if this is the minimap.
+     * @param isMiniMap   Boolean if this is the minimap.
      * @return The end node of the edge.
      */
-    protected RibbonNode addEdgeSetXReturnEnd(ArrayList<RibbonNode> nodes,
-                               RibbonNode currentNode, Genome genome, boolean isMiniMap) {
+    protected RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes,
+                                          RibbonNode currentNode,
+                                          Genome genome,
+                                          boolean isMiniMap) {
         RibbonNode next = findNextNodeWithGenome(nodes, genome, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {
                 RibbonEdge edge = RibbonEdgeFactory.createRibbonEdge(
-                        currentNode.getId(),
-                        next.getId(),
+                        currentNode,
+                        next,
                         genome);
                 currentNode.addEdge(edge);
                 next.addEdge(edge);
-                if (!isMiniMap) {
-                    if (next.getInEdges().isEmpty()) {
-                        next.setX(currentNode.getX() + currentNode.getLabel().length());
-                    } else if (next.getX() < currentNode.getX() + currentNode.getLabel().length()) {
-                        next.setX(currentNode.getX() + currentNode.getLabel().length());
-                    }
-                }
+
             } else {
-                if (!isMiniMap && next.getX() 
-                		< currentNode.getX() + currentNode.getLabel().length()) {
-                    next.setX(currentNode.getX() + currentNode.getLabel().length());
-                }
+
                 RibbonEdge edge = currentNode.getOutEdge(currentNode.getId(), next.getId());
                 RibbonEdge colorEdge = RibbonEdgeFactory.createRibbonEdge(
-                        currentNode.getId(), next.getId(), genome);
+                        currentNode, next, genome);
                 edge.addGenomeToEdge(colorEdge.getColor());
             }
         }
@@ -287,7 +320,7 @@ public class RibbonController {
      */
     protected RibbonNode findNextNodeWithGenome(ArrayList<RibbonNode> nodes,
                                                 Genome genome, int currentIndex) {
-    
+
         for (int i = currentIndex + 1; i < nodes.size(); i++) {
             if (nodes.get(i).getGenomes().contains(genome.getId())) {
                 return nodes.get(i);
@@ -297,32 +330,5 @@ public class RibbonController {
 
     }
 
-    /**
-     * Adds the mutations to the labels.
-     *
-     * @param nodes      The nodes in the graph.
-     * @param actGenomes The active genomes.
-     */
-    protected void addMutationLabels(ArrayList<RibbonNode> nodes, ArrayList<String> actGenomes) {
-        for (RibbonNode node : nodes) {
-            if (!node.getStrands().isEmpty()) {
-                boolean mutationAdded = false;
-                Strand strand = node.getStrands().get(node.getStrands().size() - 1);
-                StringBuilder label = new StringBuilder();
-                label.append(System.lineSeparator());
-                for (AbstractMutation mutation : strand.getMutations()) {
-                    if (!Collections.disjoint(mutation.getReferenceGenomes(), actGenomes)
-                            && !Collections.disjoint(mutation.getOtherGenomes(), actGenomes)) {
-                        label.append(mutation.toString());
-                        label.append(", ");
-                        mutationAdded = true;
-                    }
-                }
-                if (mutationAdded) {
-                    label.setLength(label.length() - 2);
-                    node.setLabel(node.getLabel() + label.toString());
-                }
-            }
-        }
-    }
+
 }
