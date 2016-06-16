@@ -109,8 +109,8 @@ $('document').ready(function () {
         } else if ($(currentHover).is('#zoomWindow')) {
             var ratio = $('#minimap .slider').width() / $('#zoom').width();
             e.preventDefault();
-            var left = Math.floor(currentMousePos.x - $(currentHover).position().left) * ratio;
-            zoom(e.originalEvent.wheelDelta, 1, pxToInt($('#minimap .slider').css('left') + left));
+            var left = (currentMousePos.x - $(currentHover).position().left) * ratio;
+            zoom(e.originalEvent.wheelDelta, 1, pxToInt($('#minimap .slider').css('left')) + left);
             updateZoomValues();
             drawZoom(null);
         }
@@ -337,7 +337,7 @@ function zoom(direction, zoomAmount, xMousePos) {
 
     var newWidth = Math.max(1, Math.min(maxWidth, zoomWidth / 100 * maxWidth));
 
-    var left = parseInt(slider.css('left').replace('px', ''));
+    var left = parseFloat(slider.css('left').replace('px', ''));
     var difference = Math.abs(currentWidth - newWidth);
 
     //If zooming in the zoomField should zoom towards the cursor
@@ -358,7 +358,7 @@ function zoom(direction, zoomAmount, xMousePos) {
     left += Math.min(0, maxWidth - (left + newWidth)); //Fix slider going out of right screen.
     left = Math.max(0, Math.min(maxWidth, left));
     slider.css('left', left + 'px');
-    slider.width(parseInt(newWidth) + 'px');
+    slider.width(newWidth + 'px');
     clearTimeout(zoomTimeout);
     //If not zooming anymore, update the ZoomWindow with new data.
     if (zoomAmount != 0) {
@@ -373,9 +373,9 @@ function zoom(direction, zoomAmount, xMousePos) {
  */
 function updatezoomWindow() {
     if (minimapNodes) {
-        var zoom = updateZoomValues();
-        var boundingBox = {xleft: zoomLeft, xright: zoomRight, zoom: zoom, isMiniMap: false};
-        getNodes(boundingBox, drawZoom);
+       var zoom = updateZoomValues();
+       var boundingBox = {xleft: Math.floor(zoomLeft), xright: Math.ceil(zoomRight), zoom: Math.ceil(zoom), isMiniMap: false};
+       getNodes(boundingBox, drawZoom);
     }
 }
 
@@ -391,9 +391,9 @@ function updateZoomValues() {
     var totalWidth = $('#minimap').width();
     var sliderLeft = pxToInt(slider.css('left'));
     var xWidth = minimapNodes[Object.keys(minimapNodes)[Object.keys(minimapNodes).length - 1]].x;
-    zoomLeft = Math.floor(sliderLeft / totalWidth * xWidth);
-    zoomRight = Math.floor((sliderLeft + slider.width()) / totalWidth * xWidth);
-    return Math.round(totalWidth / slider.width());
+    zoomLeft = (sliderLeft / totalWidth * xWidth);
+    zoomRight = ((sliderLeft + slider.width()) / totalWidth * xWidth);
+    return (totalWidth / slider.width());
 }
 
 /**
