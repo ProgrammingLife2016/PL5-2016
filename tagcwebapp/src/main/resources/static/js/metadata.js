@@ -19,12 +19,12 @@ function loadMetaData() {
         var result = {};
         var html = "";
         $.each(data.list.entry, function(key, meta) {
-            html += '<li><a href="#" onclick="setPhyloColors(\''+ meta.key +'\')">'+ meta.key +'</a></li>';
-            if (meta.value == "[]") {
-                result[meta.key] = [];
-            } else {
-                result[meta.key] = meta.value.replace('[', '').replace(']', '').split(', ');
+            var splitted = meta.key.split(':');
+            if (!result[splitted[0]]) {
+                html += '<li><a href="#" onclick="setPhyloColors(\''+ splitted[0] +'\')">'+ splitted[0] +'</a></li>';
+                result[splitted[0]] = {};
             }
+            result[splitted[0]][splitted[1]] = meta.value;
         });
         $('#showMetaDataDropdown').find('ul').html(html);
         $('#nav > ul').dropotron({
@@ -74,7 +74,9 @@ function getPhyloColorStyles() {
 
 function drawPhyloLegenda() {
     var legenda = $('#phyloColorLegenda');
-    $.each(metaData[activeMeta], function(key, color) {
-        legenda.append('<li style="background-color: "#'+ color.color +'">'+ color.name +'</li>');
+    legenda.html("");
+    legenda.append('<li><b>'+ activeMeta +'</b></li>');
+    $.each(metaData[activeMeta], function(name, color) {
+        legenda.append('<li><div style="background-color: #'+ color +'"></div>'+ name +'</li>');
     });
 }
