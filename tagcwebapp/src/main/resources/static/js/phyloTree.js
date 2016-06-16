@@ -89,7 +89,6 @@ $("document").ready(function() {
     });
 
     $('body').on('click', '#selectedGenomeList li:not(".firstLi")', function() {
-        console.log('test');
         if ($(this).hasClass('genome')) {
             selectGenome($(this).data('name'));
         } else {
