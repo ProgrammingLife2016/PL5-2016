@@ -516,7 +516,6 @@ function initialize() {
     initializeMinimap();
     initializeZoomWindow();
     initLegendCanvas();
-    setInterval(function() { initLegendCanvas() }, 1000);
 }
 
 function initLegendCanvas() {
@@ -525,7 +524,7 @@ function initLegendCanvas() {
     var canvas = $('#legendaCanvas').find('canvas');
     var ctx = canvas[0].getContext("2d");
     $.each(mutations, function(key, mutation) {
-        drawPoint(ctx, 15, 10 + key * 30, 2, [ mutation ]);
+        drawPoint(ctx, 15, 10 + key * 30, 2, {visible: 1, mutations: [ mutation ]});
         ctx.font="15px Georgia";
         ctx.fillText(mutation, 35, 16 + key * 30);
     });
