@@ -381,7 +381,7 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     var yTrans = 1;
     var yHeight = Math.max(Math.abs(minY), maxY);
     if (yHeight > $(c).height() / 2) {
-        yTrans = $(c).height() / 2 / yHeight;
+        yTrans = $(c).height() / 2.3 / yHeight;
     }
 
     $.each(points, function (id, point) {
