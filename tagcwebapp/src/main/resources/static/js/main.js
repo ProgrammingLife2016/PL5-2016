@@ -263,7 +263,6 @@ function calcHeight(nodes) {
  * @param nodes
  */
 var drawMinimap = function (nodes) {
-    debugger;
     if (nodes == null) {
         nodes = minimapNodes;
     } else {
