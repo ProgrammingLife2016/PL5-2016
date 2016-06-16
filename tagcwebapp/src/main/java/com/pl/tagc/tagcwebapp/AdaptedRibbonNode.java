@@ -204,16 +204,6 @@ public class AdaptedRibbonNode {
 	public void setAnnotations(ArrayList<String> annotations) {
 		this.annotations = annotations;
 
-
-		//Temp Todo: Dit weghalen als annotations werken
-		this.annotations = new ArrayList<>();
-
-		Random rand = new Random();
-		for (int i=0; i<10; i++) {
-			if (rand.nextInt(2) == 1) {
-				this.annotations.add("Annotation"+ i);
-			}
-		}
 	}
     /**
      * Getter for mutations.

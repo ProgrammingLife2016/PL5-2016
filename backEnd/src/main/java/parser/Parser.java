@@ -192,6 +192,7 @@ public class Parser {
                 }
                 String[] attributes = temp.split(";");
                 String displayName = attributes[attributes.length - 1];
+                displayName = displayName.substring(12, displayName.length() - 1);
                 list.add(new GenomicFeature(start, end, displayName));
             }
             reader.close();
