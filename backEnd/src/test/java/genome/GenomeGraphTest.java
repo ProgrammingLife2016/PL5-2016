@@ -67,10 +67,11 @@ public class GenomeGraphTest {
      */
     @Test
     public void testGetActiveGenomes() {
-    	ArrayList<String> active = new ArrayList<>(Arrays.asList("ref1", "ref2"));
+    	ArrayList<ArrayList<String>> active = new ArrayList<>();
+		active.add(new ArrayList<>(Arrays.asList("ref1", "ref2")));
     	List<String> notPresent = data.setGenomesAsActive(active);
     	assertEquals(data.getActiveGenomes().size(), 1);
-    	assertEquals(data.getActiveGenomes().get(0).getId(), "ref1");
+    	assertEquals(data.getActiveGenomes().get(0).get(0).getId(), "ref1");
     	assertEquals(notPresent.size(), 1);
     	assertEquals(notPresent.get(0), "ref2");
     }

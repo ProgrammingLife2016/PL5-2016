@@ -56,15 +56,15 @@ public class RibbonController {
                                                 int zoomLevel, boolean isMiniMap) {
 
 
-        ArrayList<Genome> actGen = genomeGraph.getActiveGenomes();
+        ArrayList<ArrayList<Genome>> actGen = genomeGraph.getActiveGenomes();
 
         ArrayList<String> actIds = new ArrayList<>();
-        for (Genome genome : actGen) {
-            actIds.add(genome.getId());
+        for (ArrayList<Genome> genome : actGen) {
+            actIds.add(genome.get(0).getId());
         }
 
         maxId = 0;
-        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actIds, zoomLevel);
+        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel);
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result, isMiniMap);
         collapseRibbons(result, minX,maxX);
@@ -250,11 +250,10 @@ public class RibbonController {
 
     protected void addEdges(ArrayList<RibbonNode> nodes, boolean isMiniMap) {
         nodes.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
-        for (Genome genome : genomeGraph.getActiveGenomes()) {
-            RibbonNode currentNode = findNextNodeWithGenome(nodes, genome, -1);
+        for (ArrayList<Genome> genome : genomeGraph.getActiveGenomes()) {
+            RibbonNode currentNode = findNextNodeWithGenome(nodes, genome.get(0), -1);
             while (currentNode != null) {
-                currentNode = addEdgeReturnEnd(nodes, currentNode, genome, isMiniMap);
-
+                currentNode = addEdgeReturnEnd(nodes, currentNode, genome.get(0), isMiniMap);
             }
 
         }
@@ -307,6 +306,7 @@ public class RibbonController {
      */
     protected RibbonNode findNextNodeWithGenome(ArrayList<RibbonNode> nodes,
                                                 Genome genome, int currentIndex) {
+    
         for (int i = currentIndex + 1; i < nodes.size(); i++) {
             if (nodes.get(i).getGenomes().contains(genome.getId())) {
                 return nodes.get(i);

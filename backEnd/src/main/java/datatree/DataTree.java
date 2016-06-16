@@ -3,7 +3,6 @@ package datatree;
 import abstractdatastructure.TreeStructure;
 import genome.Genome;
 import genome.Strand;
-import genome.StrandEdge;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -56,13 +55,14 @@ public class DataTree extends TreeStructure<DataNode> {
      *
      * @param xMin    The minimal x value.
      * @param xMax    The maximal x value.
-     * @param genomeIDs The genomes to filter for.
+     * @param genomes The genomes to filter for.
      * @param level   The maximum tree level to zoom to.
      * @return A list of datanodes that pertain to the parameters.
      */
     public ArrayList<Strand> getStrands(int xMin, int xMax,
-                                        ArrayList<String> genomeIDs, int level) {
-        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomeIDs, level), genomeIDs, level);
+                                        ArrayList<ArrayList<Genome>> genomes, int level) {
+        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomes, level), genomes, level);
+
 
     }
 
@@ -74,7 +74,7 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param nodes the nodes to filter.
      * @return A filtered list of nodes.
      */
-    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes, ArrayList<String> genomes, int level) {
+    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes, ArrayList<ArrayList<Genome>> genomes, int level) {
         ArrayList<Strand> result = new ArrayList<>();
         Strand leftAllGenomes = new Strand();
         Strand rightAllGenomes = new Strand();
@@ -85,15 +85,22 @@ public class DataTree extends TreeStructure<DataNode> {
             minSize = 200 - level * 20;
         }
 
+        HashSet<String> genomeIDs = new HashSet<>();
+        for (ArrayList<Genome> list : genomes) {
+            for (Genome genome : list) {
+                genomeIDs.add(genome.getId());
+            }
+        }
+
         for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
                 if (strand.getSequence().length() > minSize) {
                     if (strand.getX() < xMin && strand.getX() > leftAllGenomes.getX()
-                            && strand.getGenomes().containsAll(genomes)) {
+                            && strand.getGenomes().containsAll(genomeIDs)) {
                         leftAllGenomes = strand;
                     }
                     if (strand.getX() > xMax && strand.getX() < rightAllGenomes.getX()
-                            && strand.getGenomes().containsAll(genomes)) {
+                            && strand.getGenomes().containsAll(genomeIDs)) {
                         rightAllGenomes = strand;
                     }
                     if (strand.getX() >= xMin && strand.getX() <= xMax) {
@@ -128,9 +135,10 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param level   the maximum level in the tree.
      * @return The full datanodes.
      */
-    public Set<DataNode> getDataNodesForGenomes(ArrayList<String> genomes, int level) {
+
+    public Set<DataNode> getDataNodesForGenomes(ArrayList<ArrayList<Genome>> genomes, int level) {
         Set<DataNode> result = new HashSet<>();
-        for (String genome : genomes) {
+        for (ArrayList<Genome> genome : genomes) {
             result.addAll(getDataNodesForGenome(genome, level));
         }
         return result;
@@ -144,14 +152,20 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param level  The zoomlevel in the tree.
      * @return The list of unfiltered dataNodes.
      */
-    public Set<DataNode> getDataNodesForGenome(String genome, int level) {
+
+    public Set<DataNode> getDataNodesForGenome(ArrayList<Genome> genome, int level) {
+        ArrayList<String> ids = new ArrayList<>();
+        for (Genome g : genome) {
+            ids.add(g.getId());
+        }
         Set<DataNode> result = new HashSet<>();
         DataNode currentNode = getRoot();
         int totalStrands = 0;
         while (currentNode.getLevel() <= level) {
             result.add(currentNode);
             totalStrands += currentNode.getStrands().size();
-            currentNode = currentNode.getChildWithGenome(genome);
+
+            currentNode = currentNode.getChildWithGenome(ids);
             if (currentNode == null) {
                 break;
             }
