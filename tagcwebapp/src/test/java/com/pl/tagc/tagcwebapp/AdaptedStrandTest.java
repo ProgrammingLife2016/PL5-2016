@@ -9,13 +9,13 @@ import org.meanbean.test.BeanTester;
  */
 public class AdaptedStrandTest {
 
-	/**
-	 * Tests the getters and setters.
-	 */
-	@Test
-	public void test() {
-		BeanTester beanTester = new BeanTester();
-		beanTester.testBean(AdaptedStrand.class);
-	}
+    /**
+     * Tests the getters and setters.
+     */
+    @Test
+    public void test() {
+        BeanTester beanTester = new BeanTester();
+        beanTester.testBean(AdaptedStrand.class);
+    }
 
 }

@@ -7,6 +7,7 @@ import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import java.util.ArrayList;
 
 // TODO: Auto-generated Javadoc
+
 /**
  * Created by Matthijs on 4-5-2016.
  * A node in the phylogenetic tree. Stores a name if the node is a leaf.
@@ -28,11 +29,11 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      */
     private double distance;
 
-   
+
     /**
      * Instantiates a new phylogenetic node.
      *
-     * @param parent the parent
+     * @param parent      the parent
      * @param childNumber the child number
      */
     public PhylogeneticNode(PhylogeneticNode parent, int childNumber) {
@@ -54,7 +55,7 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
                             final double distance, int childNumber) {
 
         super(parent, childNumber);
-        nameLabel = node.getName();        
+        nameLabel = node.getName();
         this.distance = distance;
         genomes = new ArrayList<>();
 
@@ -115,7 +116,15 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
         return null;
     }
 
-   
+    /**
+     * returns a string of lenght 0 if the node is not a leaf.
+     *
+     * @return the node name label
+     */
+    public String getNameLabel() {
+        return nameLabel;
+    }
+
     /**
      * Sets the name label.
      *
@@ -124,15 +133,6 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
     public void setNameLabel(String nameLabel) {
         this.nameLabel = nameLabel;
         checkLeaf();
-    }
-
-    /**
-     * returns a string of lenght 0 if the node is not a leaf.
-     *
-     * @return the node name label
-     */
-    public String getNameLabel() {
-        return nameLabel;
     }
 
     /**
@@ -152,13 +152,14 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
     public ArrayList<String> getGenomes() {
         return genomes;
     }
-    
+
     /**
      * Set the genomes.
+     *
      * @param genomes New genomes.
      */
     public void setGenomes(ArrayList<String> genomes) {
-    	this.genomes = genomes;
+        this.genomes = genomes;
     }
 
     /**
@@ -172,7 +173,6 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
             this.getParent().addGenome(genome);
         }
     }
-
 
 
 }

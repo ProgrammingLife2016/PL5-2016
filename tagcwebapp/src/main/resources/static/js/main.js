@@ -14,6 +14,10 @@ var zoomHeight = 0;
 var minimapHeight = 0;
 var zoomNodeLocations = [];
 var currentHoverNode = null;
+var dragFrom = null;
+var dragStartTime = null;
+var mutations = ["SNP", "INDEL", "TANDEMDUPLICATION", "INTERSPERSEDDUPLICATION", "INVERSION", "TRANSLOCATION"];
+var mutColors = ["0000FF", "00FF00", "FF0000"];
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -61,7 +65,7 @@ function screenResize() {
         if (treeRedrawTimeout) {
             clearTimeout(treeRedrawTimeout);
         }
-        treeRedrawTimeout = setTimeout(function() {
+        treeRedrawTimeout = setTimeout(function () {
             resizePhyloTree();
         }, 500);
 
@@ -109,8 +113,8 @@ $('document').ready(function () {
         } else if ($(currentHover).is('#zoomWindow')) {
             var ratio = $('#minimap .slider').width() / $('#zoom').width();
             e.preventDefault();
-            var left = Math.floor(currentMousePos.x - $(currentHover).position().left) * ratio;
-            zoom(e.originalEvent.wheelDelta, 1, pxToInt($('#minimap .slider').css('left') + left));
+            var left = (currentMousePos.x - $(currentHover).position().left) * ratio;
+            zoom(e.originalEvent.wheelDelta, 1, pxToInt($('#minimap .slider').css('left')) + left);
             updateZoomValues();
             drawZoom(null);
         }
@@ -154,39 +158,68 @@ $('document').ready(function () {
         var x = currentMousePos.x - $(this).position().left;
         var y = currentMousePos.y - $(this).position().top;
         var found = false;
-        $.each(zoomNodeLocations, function (key, node) {
-            if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
-                found = true;
-                if (node.id != currentHoverNode) {
-                    currentHoverNode = node.id;
-                    var dialog = $('#nodeDialog');
-                    dialog.show().find('.message').html(node.label);
-                }
-                return false;
+        if (dragFrom != null) {
+            var d = new Date();
+            var time = d.getMilliseconds();
+            if (time - dragStartTime > 1) {
+                var diff = dragFrom - currentMousePos.x;
+                dragFrom = currentMousePos.x;
+                var ratio = $('#minimap .slider').width() / $('#zoom').width();
+                var left = diff * ratio;
+                console.log(diff +'-'+ left);
+                var maxLeft = $('#minimap').width() - $('#minimap .slider').width();
+                var newLeft = Math.min(maxLeft, Math.max(0, pxToInt($('#minimap .slider').css('left')) + left));
+                $('#minimap .slider').css('left', newLeft +'px');
+                updateZoomValues();
+                drawZoom(null);
+                clearTimeout(zoomTimeout);
+                zoomTimeout = setTimeout(function () {
+                    updatezoomWindow();
+                }, 500);
             }
-        });
-        if (!found) {
-            currentHoverNode = -1;
+        } else {
+            $.each(zoomNodeLocations, function (key, node) {
+                if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
+                    found = true;
+                    if (node.id != currentHoverNode) {
+                        currentHoverNode = node.id;
+                        var dialog = $('#nodeDialog');
+                        dialog.show().find('.message').html(node.label);
+                    }
+                    return false;
+                }
+            });
+            if (!found) {
+                currentHoverNode = -1;
+            }
         }
     });
 
-    $('#toggleButtons').click(function() {
+    $('#toggleButtons').click(function () {
         $('body').toggleClass('showButtons');
     });
 
-    $('#zoomIn').click(function() {
+    $('#zoomIn').click(function () {
         var slider = $('#minimap .slider');
         var center = Math.floor(pxToInt(slider.css('left')) + slider.width() / 2);
         zoom(1, 5, center);
     });
 
-    $('#zoomOut').click(function() {
+    $('#zoomOut').click(function () {
         var slider = $('#minimap .slider');
         var center = Math.floor(pxToInt(slider.css('left')) + slider.width() / 2);
         zoom(-1, 5, center);
     });
 
-    $('#coordinateSelector').keyup(function(e) {
+    $('#zoom').mousedown(function() {
+        dragFrom = currentMousePos.x;
+        var d = new Date();
+        dragStartTime = d.getMilliseconds();
+    }).mouseup(function() {
+        dragStartTime = null;
+        dragFrom = null;
+    });
+    $('#coordinateSelector').keyup(function (e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
             var left = Math.floor($(this).val() / minimapCount * $('#minimap').width());
@@ -196,10 +229,16 @@ $('document').ready(function () {
             $('#minimap .slider').animate({
                 'left': left,
                 'width': width
-            }, 1000, function() {
+            }, 1000, function () {
                 updatezoomWindow();
             });
         }
+    });
+
+    $('#mutationLegenda').hover(function () {
+        $('#legendaCanvas').show();
+    }, function () {
+        $('#legendaCanvas').hide();
     });
 
     initialize();
@@ -263,7 +302,6 @@ function calcHeight(nodes) {
  * @param nodes
  */
 var drawMinimap = function (nodes) {
-    debugger;
     if (nodes == null) {
         nodes = minimapNodes;
     } else {
@@ -303,19 +341,16 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     }
 
     $.each(points, function (id, point) {
-        if (point.visible) {
 
-            ctx.beginPath();
+        var xPos = xTranslate(point.x);
+        var yPos = nodeHeight + point.y;
 
-            var xPos = xTranslate(point.x);
-            var yPos = nodeHeight + point.y;
-            ctx.arc(xPos, yPos, 5, 0, 2 * Math.PI);
-            ctx.stroke();
+        drawPoint(ctx, xPos, yPos, 1, point);
 
-            if (saveRealCoordinates) {
-                zoomNodeLocations.push({x: xPos, y: yPos, label: point.label, id: point.id});
-            }
+        if (saveRealCoordinates) {
+            zoomNodeLocations.push({x: xPos, y: yPos, label: point.label, id: point.id});
         }
+
 
         $.each(point.edges, function (key, edge) {
             var target = points[edge.startId];
@@ -334,6 +369,52 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
             }
         });
     });
+}
+
+/**
+ * Draw a point in the canvas, this can be a circle, square or triangle in different colors, based on the mutation
+ * @param ctx The canvas object
+ * @param xPos The x to draw it
+ * @param yPos The y to draw it
+ * @param multiplier How big it should be drawn
+ * @param point The pointData
+ */
+function drawPoint(ctx, xPos, yPos, multiplier, point) {
+    ctx.beginPath();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.strokeStyle = '#000000';
+    var pointMutations = point.mutations;
+    if (point.visible && ( !pointMutations || typeof pointMutations == "undefined" || pointMutations.length == 0)) {
+        ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
+    } else if (pointMutations) {
+        var mutation = pointMutations[0].replace('"', '');
+        var index = mutations.indexOf(mutation);
+        var mutSize = mutColors.length;
+        var color = mutColors[index % mutSize];
+        ctx.fillStyle = '#' + color;
+        switch (Math.floor(index / mutSize)) {
+            case 0: //Square
+                ctx.rect(xPos - 5 * multiplier, yPos - 5 * multiplier, 10 * multiplier, 10 * multiplier);
+                break;
+            case 1: //Triangle
+                ctx.moveTo(xPos, yPos - 6 * multiplier);
+                ctx.lineTo(xPos + 6 * multiplier, yPos + 6 * multiplier);
+                ctx.lineTo(xPos - 6 * multiplier, yPos + 6 * multiplier);
+                break;
+            case 2: //Square
+                ctx.moveTo(xPos - 6 * multiplier, yPos - 6 * multiplier);
+                ctx.lineTo(xPos + 6 * multiplier, yPos + 6 * multiplier);
+                ctx.moveTo(xPos - 6 * multiplier, yPos + 6 * multiplier);
+                ctx.lineTo(xPos + 6 * multiplier, yPos - 6 * multiplier);
+                ctx.strokeStyle = '#' + color;
+                break;
+        }
+        ctx.fill();
+    }
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.strokeStyle = '#000000';
 }
 
 /**
@@ -356,7 +437,7 @@ function zoom(direction, zoomAmount, xMousePos) {
 
     var newWidth = Math.max(1, Math.min(maxWidth, zoomWidth / 100 * maxWidth));
 
-    var left = parseInt(slider.css('left').replace('px', ''));
+    var left = parseFloat(slider.css('left').replace('px', ''));
     var difference = Math.abs(currentWidth - newWidth);
 
     //If zooming in the zoomField should zoom towards the cursor
@@ -377,7 +458,7 @@ function zoom(direction, zoomAmount, xMousePos) {
     left += Math.min(0, maxWidth - (left + newWidth)); //Fix slider going out of right screen.
     left = Math.max(0, Math.min(maxWidth, left));
     slider.css('left', left + 'px');
-    slider.width(parseInt(newWidth) + 'px');
+    slider.width(newWidth + 'px');
     clearTimeout(zoomTimeout);
     //If not zooming anymore, update the ZoomWindow with new data.
     if (zoomAmount != 0) {
@@ -392,9 +473,9 @@ function zoom(direction, zoomAmount, xMousePos) {
  */
 function updatezoomWindow() {
     if (minimapNodes) {
-        var zoom = updateZoomValues();
-        var boundingBox = {xleft: zoomLeft, xright: zoomRight, zoom: zoom, isMiniMap: false};
-        getNodes(boundingBox, drawZoom);
+       var zoom = updateZoomValues();
+       var boundingBox = {xleft: Math.floor(zoomLeft), xright: Math.ceil(zoomRight), zoom: Math.ceil(zoom), isMiniMap: false};
+       getNodes(boundingBox, drawZoom);
     }
 }
 
@@ -410,9 +491,9 @@ function updateZoomValues() {
     var totalWidth = $('#minimap').width();
     var sliderLeft = pxToInt(slider.css('left'));
     var xWidth = minimapNodes[Object.keys(minimapNodes)[Object.keys(minimapNodes).length - 1]].x;
-    zoomLeft = Math.floor(sliderLeft / totalWidth * xWidth);
-    zoomRight = Math.floor((sliderLeft + slider.width()) / totalWidth * xWidth);
-    return Math.round(totalWidth / slider.width());
+    zoomLeft = (sliderLeft / totalWidth * xWidth);
+    zoomRight = ((sliderLeft + slider.width()) / totalWidth * xWidth);
+    return (totalWidth / slider.width());
 }
 
 /**
@@ -473,6 +554,22 @@ function getNodes(boundingBox, callback) {
 function initialize() {
     initializeMinimap();
     initializeZoomWindow();
+    initLegendCanvas();
+}
+
+/**
+ * Draw the canvas in which the different mutationDrawings are shown
+ */
+function initLegendCanvas() {
+    var height = mutations.length * 26 + 20;
+    $('#legendaCanvas').html('<canvas width="280px" height="' + height + 'px"></canvas>')
+    var canvas = $('#legendaCanvas').find('canvas');
+    var ctx = canvas[0].getContext("2d");
+    $.each(mutations, function (key, mutation) {
+        drawPoint(ctx, 15, 10 + key * 30, 2, {visible: 1, mutations: [mutation]});
+        ctx.font = "15px Georgia";
+        ctx.fillText(mutation, 35, 16 + key * 30);
+    });
 }
 
 /**

@@ -23,6 +23,7 @@ public class DataNodeTest {
 
     /**
      * Setting up the test class.
+     *
      * @throws Exception if fail.
      */
     @Before
@@ -55,26 +56,29 @@ public class DataNodeTest {
 
         DataNode testNode = new DataNode(phylo, null, 0);
         assertEquals(testNode.getGenomes(), phylo.getGenomes());
-        assertEquals(testNode.getChildWithGenome("1").getId(), child.getId());
+        assertEquals(testNode.getChildWithGenomes(new ArrayList<>(
+                Arrays.asList("1"))).getId(), child.getId());
     }
 
     /**
      * Test getting the child with specific genome.
+     *
      * @throws Exception if fail.
      */
     @Test
     public void testGetChildWithGenome() throws Exception {
-        assertEquals(child, node.getChildWithGenome("1"));
+        assertEquals(child, node.getChildWithGenomes(new ArrayList<>(Arrays.asList("1"))));
     }
 
     /**
      * Test setting the strands.
+     *
      * @throws Exception if fail.
      */
     @Test
     public void testSetStrands() throws Exception {
         String[] strandGenomes = {"1"};
-		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strandGenomes));
+        HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strandGenomes));
         Strand strand = new Strand(1, "tagc", genomeSet, "1", 0);
         ArrayList<Strand> strands = new ArrayList<>();
         strands.add(strand);
@@ -86,6 +90,7 @@ public class DataNodeTest {
 
     /**
      * Test setting the level.
+     *
      * @throws Exception if fail.
      */
     @Test
@@ -97,6 +102,7 @@ public class DataNodeTest {
 
     /**
      * Test setting the genomes.
+     *
      * @throws Exception if fail.
      */
     @Test

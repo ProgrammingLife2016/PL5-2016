@@ -29,7 +29,14 @@ public class TreeStructure<T extends AbstractTreeNode> {
         this.root = root;
     }
 
-
+    /**
+     * Get the root of the tree.
+     *
+     * @return The root.
+     */
+    public T getRoot() {
+        return root;
+    }
 
     /**
      * Set the root.
@@ -38,15 +45,6 @@ public class TreeStructure<T extends AbstractTreeNode> {
      */
     public void setRoot(T node) {
         root = node;
-    }
-
-    /**
-     * Get the root of the tree.
-     *
-     * @return The root.
-     */
-    public T getRoot() {
-        return root;
     }
 
 
