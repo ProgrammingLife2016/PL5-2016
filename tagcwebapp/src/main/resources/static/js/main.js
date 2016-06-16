@@ -14,13 +14,10 @@ var zoomHeight = 0;
 var minimapHeight = 0;
 var zoomNodeLocations = [];
 var currentHoverNode = null;
-<<<<<<< HEAD
 var dragFrom = null;
 var dragStartTime = null;
-=======
 var mutations = ["SNP", "INDEL", "TANDEMDUPLICATION", "INTERSPERSEDDUPLICATION", "INVERSION", "TRANSLOCATION"];
 var mutColors = ["0000FF", "00FF00", "FF0000"];
->>>>>>> master
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -214,7 +211,6 @@ $('document').ready(function () {
         zoom(-1, 5, center);
     });
 
-<<<<<<< HEAD
     $('#zoom').mousedown(function() {
         dragFrom = currentMousePos.x;
         var d = new Date();
@@ -222,7 +218,7 @@ $('document').ready(function () {
     }).mouseup(function() {
         dragStartTime = null;
         dragFrom = null;
-=======
+    });
     $('#coordinateSelector').keyup(function (e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
@@ -243,7 +239,6 @@ $('document').ready(function () {
         $('#legendaCanvas').show();
     }, function () {
         $('#legendaCanvas').hide();
->>>>>>> master
     });
 
     initialize();
