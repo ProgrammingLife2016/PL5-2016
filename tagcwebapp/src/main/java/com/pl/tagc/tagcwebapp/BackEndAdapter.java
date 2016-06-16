@@ -89,12 +89,18 @@ public final class BackEndAdapter implements BackEndInterface {
         return resultObject;
     }
 
-
-
+    /**
+     * Get the datamap and put it in a JAXB readable object
+     * @return a JAXB readable MetaDataMap
+     */
 	public MetaDataObject getMetaDataMap() {
 		return new MetaDataObject(controller.getMetaDataController().getMetaDataMap());
 	}
 
+    /**
+     * Get the colors for the given metadata and put it in a JAXB readable object
+     * @return a JAXB readable ColorMap
+     */
 	public MetaDataColorObject getAllGenomeColors(String metaData) {
 		return new MetaDataColorObject(controller.getMetaDataController().
 				getAllGenomeColors(metaData));

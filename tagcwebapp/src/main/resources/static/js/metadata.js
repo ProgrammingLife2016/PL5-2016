@@ -10,6 +10,9 @@ $('document').ready(function() {
     loadMetaData();
 });
 
+/**
+ * Load the metaData, store this in the menu for selection.
+ */
 function loadMetaData() {
     $.ajax({
         url: url + 'api/getmetadatamap',
@@ -38,6 +41,10 @@ function loadMetaData() {
 
 }
 
+/**
+ * Set all the colors based on the given metadata
+ * @param metadata
+ */
 function setPhyloColors(metadata) {
     activeMeta = metadata;
     $.ajax({
@@ -63,6 +70,10 @@ function setPhyloColors(metadata) {
     });
 }
 
+/**
+ * GetPhyloXml for all different colors
+ * @returns {string}
+ */
 function getPhyloColorStyles() {
     var result = "";
     $.each(phyloColorList, function(key, color) {
@@ -72,6 +83,9 @@ function getPhyloColorStyles() {
     return result;
 }
 
+/**
+ * Draw the legenda for phyloColors
+ */
 function drawPhyloLegenda() {
     var legenda = $('#phyloColorLegenda');
     legenda.html("");
@@ -81,6 +95,12 @@ function drawPhyloLegenda() {
     });
 }
 
+/**
+ * Get the genome colors
+ * @param nodeId
+ * @param colors
+ * @returns {*}
+ */
 function getGenomeColors(nodeId, colors) {
     var node = phyloTree[nodeId];
     if (node.children && node.children.length > 0) {
