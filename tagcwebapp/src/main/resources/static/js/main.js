@@ -340,6 +340,14 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     });
 }
 
+/**
+ * Draw a point in the canvas, this can be a circle, square or triangle in different colors, based on the mutation
+ * @param ctx The canvas object
+ * @param xPos The x to draw it
+ * @param yPos The y to draw it
+ * @param multiplier How big it should be drawn
+ * @param point The pointData
+ */
 function drawPoint(ctx, xPos, yPos, multiplier, point) {
     ctx.beginPath();
     ctx.fillStyle = '#FFFFFF';
@@ -518,6 +526,9 @@ function initialize() {
     initLegendCanvas();
 }
 
+/**
+ * Draw the canvas in which the different mutationDrawings are shown
+ */
 function initLegendCanvas() {
     var height = mutations.length * 26 + 20;
     $('#legendaCanvas').html('<canvas width="280px" height="'+ height +'px"></canvas>')
