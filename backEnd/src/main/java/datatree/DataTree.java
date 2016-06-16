@@ -14,10 +14,6 @@ import java.util.concurrent.ForkJoinPool;
  */
 public class DataTree extends TreeStructure<DataNode> {
 
-    /**
-     * The minimal amount of strands to return.
-     */
-    private int minStrandsToReturn = 0;
 
     /**
      * Default constructor.
@@ -63,29 +59,73 @@ public class DataTree extends TreeStructure<DataNode> {
      * @return A list of datanodes that pertain to the parameters.
      */
     public ArrayList<Strand> getStrands(int xMin, int xMax,
-                                        ArrayList<Genome> genomes, int level) {
-        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomes, level));
+                                        ArrayList<ArrayList<Genome>> genomes, int level) {
+        return filterStrandsFromNodes(xMin, xMax,
+                getDataNodesForGenomes(genomes, level), genomes, level);
+
 
     }
 
     /**
      * Remove unwanted strands from the nodes.
      *
-     * @param xMin  the minimal id of the strands.
-     * @param xMax  the maximal id of the strands.
-     * @param nodes the nodes to filter.
+     * @param xMin    the minimal id of the strands.
+     * @param xMax    the maximal id of the strands.
+     * @param nodes   the nodes to filter.
+     * @param genomes The phylo nodes selected.
+     * @param level   The zoomlevel.
      * @return A filtered list of nodes.
      */
-    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes) {
+    @SuppressWarnings("checkstyle:methodlength")
+    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax,
+                                                    Set<DataNode> nodes,
+                                                    ArrayList<ArrayList<Genome>> genomes, int level) {
         ArrayList<Strand> result = new ArrayList<>();
+        Strand leftAllGenomes = new Strand();
+        Strand rightAllGenomes = new Strand();
+        leftAllGenomes.setX(Integer.MIN_VALUE);
+        rightAllGenomes.setX(Integer.MAX_VALUE);
+        int minSize = 0;
+        if (level < 10) {
+            minSize = 200 - level * 20;
+        }
+
+        HashSet<String> genomeIDs = new HashSet<>();
+        for (ArrayList<Genome> list : genomes) {
+            for (Genome genome : list) {
+                genomeIDs.add(genome.getId());
+            }
+        }
 
         for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
-                if (strand.getX() > xMin - 10000 && strand.getX() < xMax + 10000) {
-                    result.add(strand);
+                if (strand.getSequence().length() > minSize) {
+                    if (strand.getX() < xMin && strand.getX() > leftAllGenomes.getX()
+                            && strand.getGenomes().containsAll(genomeIDs)) {
+                        leftAllGenomes = strand;
+                    }
+                    if (strand.getX() > xMax && strand.getX() < rightAllGenomes.getX()
+                            && strand.getGenomes().containsAll(genomeIDs)) {
+                        rightAllGenomes = strand;
+                    }
+                    if (strand.getX() >= xMin && strand.getX() <= xMax) {
+                        result.add(strand);
+                    } else if (strand.getX() > leftAllGenomes.getX()
+                            && strand.getX() < rightAllGenomes.getX()
+                            && strand.getSequence().length() > 200) {
+                        result.add(strand);
+
+                    }
                 }
             }
 
+        }
+
+        if (leftAllGenomes.getX() != Integer.MIN_VALUE) {
+            result.add(leftAllGenomes);
+        }
+        if (rightAllGenomes.getX() != Integer.MAX_VALUE) {
+            result.add(rightAllGenomes);
         }
 
 
@@ -101,9 +141,10 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param level   the maximum level in the tree.
      * @return The full datanodes.
      */
-    public Set<DataNode> getDataNodesForGenomes(ArrayList<Genome> genomes, int level) {
+
+    public Set<DataNode> getDataNodesForGenomes(ArrayList<ArrayList<Genome>> genomes, int level) {
         Set<DataNode> result = new HashSet<>();
-        for (Genome genome : genomes) {
+        for (ArrayList<Genome> genome : genomes) {
             result.addAll(getDataNodesForGenome(genome, level));
         }
         return result;
@@ -117,32 +158,29 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param level  The zoomlevel in the tree.
      * @return The list of unfiltered dataNodes.
      */
-    public Set<DataNode> getDataNodesForGenome(Genome genome, int level) {
+
+    public Set<DataNode> getDataNodesForGenome(ArrayList<Genome> genome, int level) {
+        ArrayList<String> ids = new ArrayList<>();
+        for (Genome g : genome) {
+            ids.add(g.getId());
+        }
         Set<DataNode> result = new HashSet<>();
         DataNode currentNode = getRoot();
         int totalStrands = 0;
         while (currentNode.getLevel() <= level) {
             result.add(currentNode);
             totalStrands += currentNode.getStrands().size();
-            currentNode = currentNode.getChildWithGenome(genome.getId());
+
+            currentNode = currentNode.getChildWithGenome(ids);
             if (currentNode == null) {
                 break;
             }
         }
-        if (totalStrands < minStrandsToReturn) {
-            result = getDataNodesForGenome(genome, level + 1);
-        }
+
         return result;
 
 
     }
 
-    /**
-     * Set the minimal strands to return.
-     *
-     * @param minStrandsToReturn The minimal strands amount to return.
-     */
-    public void setMinStrandsToReturn(int minStrandsToReturn) {
-        this.minStrandsToReturn = minStrandsToReturn;
-    }
+
 }

@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
  * The Class GraphSearcherTest.
  */
 public class GraphSearcherTest {
-	
+
 	/** The strands. */
 	private HashMap<Integer, Strand> strands = new HashMap<Integer, Strand>();
 	
@@ -38,7 +38,13 @@ public class GraphSearcherTest {
 			strand.setGenomes(new HashSet<>(Arrays.asList("1")));
 		}
 		genomeGraph.setStrands(strands);
-		genomeGraph.setGenomesAsActive(new ArrayList<>(Arrays.asList("1")));
+		ArrayList<ArrayList<String>> actGen = new ArrayList<>();
+		actGen.add(new ArrayList<>(Arrays.asList("1")));
+
+		Genome genome = new Genome("1");
+		genomeGraph.setGenomes(new HashMap<>());
+		genomeGraph.getGenomes().put("1", genome);
+		genomeGraph.setGenomesAsActive(actGen);
 	}
 
 	
@@ -83,5 +89,6 @@ public class GraphSearcherTest {
 		constructor.setAccessible(true);
 		constructor.newInstance();
 	}
+
 
 }

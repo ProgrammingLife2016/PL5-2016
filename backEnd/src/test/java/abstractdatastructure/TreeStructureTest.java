@@ -24,6 +24,7 @@ public class TreeStructureTest {
 
     /**
      * Setting up the tree.
+     *
      * @throws Exception Exception.
      */
     @Before
@@ -57,6 +58,7 @@ public class TreeStructureTest {
 
     /**
      * Test getting a specific node.
+     *
      * @throws Exception Exception.
      */
     @Test
@@ -67,6 +69,7 @@ public class TreeStructureTest {
 
     /**
      * Test setting the root.
+     *
      * @throws Exception Exception.
      */
     @Test
@@ -78,6 +81,7 @@ public class TreeStructureTest {
 
     /**
      * Test getting the root.
+     *
      * @throws Exception Exception.
      */
     @Test

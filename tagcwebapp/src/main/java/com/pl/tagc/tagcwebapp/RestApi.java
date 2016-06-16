@@ -45,7 +45,6 @@ public class RestApi {
         return BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom, isMiniMap);
     }
 
-
     /**
      * Uses the genome ids to set the genomes as active in the backend. Which means that
      * they will be used to generate the ribbongraph when getnodes is called.
@@ -55,13 +54,16 @@ public class RestApi {
      */
     @POST
     @Path("/setactivegenomes")
+    @Produces("application/json")
     public Response setActiveGenomes(@FormParam("names[]") List<String> ids) {
+        ArrayListObject result = BackEndAdapter.getInstance().setActiveGenomes(ids);
         return Response.ok() //200
-                .entity(BackEndAdapter.getInstance().setActiveGenomes(ids))
+                .entity(result)
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
                 .allow("OPTIONS").build();
     }
+
 
     /**
      * Request phylogenetic tree.
@@ -88,11 +90,13 @@ public class RestApi {
     @Path("/search")
     @Produces("application/json")
     public Response search(@QueryParam("searchString") String searchString,
-                                     @QueryParam("searchType") String searchType) {
+                           @QueryParam("searchType") String searchType) {
+        SearchResultObject result = BackEndAdapter.getInstance().search(searchString, searchType);
         return Response.ok() //200
-                .entity(BackEndAdapter.getInstance().search(searchString, searchType))
+                .entity(result)
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
                 .allow("OPTIONS").build();
     }
+
 }

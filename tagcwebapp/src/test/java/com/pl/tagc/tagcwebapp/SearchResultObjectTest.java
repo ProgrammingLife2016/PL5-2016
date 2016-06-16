@@ -9,13 +9,13 @@ import org.meanbean.test.BeanTester;
  */
 public class SearchResultObjectTest {
 
-	/**
-	 * Tests the getters and setters.
-	 */
-	@Test
-	public void test() {
-		BeanTester beanTester = new BeanTester();
-		beanTester.testBean(SearchResultObject.class);
-	}
+    /**
+     * Tests the getters and setters.
+     */
+    @Test
+    public void test() {
+        BeanTester beanTester = new BeanTester();
+        beanTester.testBean(SearchResultObject.class);
+    }
 
 }

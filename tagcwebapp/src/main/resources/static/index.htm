@@ -1,115 +1,127 @@
 <html>
 
 <head>
-  <title>TAGC - PL</title>
-  <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
-  <link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
-  <link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <title>TAGC - PL</title>
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
-  <link rel="stylesheet" type="text/css" href="css/main.css" />
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <link rel="stylesheet" type="text/css" href="css/phylo.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/phylo.css">
 
-  <script src="js/jquery.js" type="application/javascript"></script>
-  <script src="js/jquery-ui.min.js" type="application/javascript"></script>
-  <script src="js/bootstrap.min.js" type="application/javascript"></script>
-  <script src="js/raphael-min.js" type="text/javascript"></script>
-  <script src="js/jsphylosvg.js" type="text/javascript"></script>
+    <script src="js/jquery.js" type="application/javascript"></script>
+    <script src="js/jquery-ui.min.js" type="application/javascript"></script>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="js/raphael-min.js" type="text/javascript"></script>
+    <script src="js/jsphylosvg.js" type="text/javascript"></script>
 
-  <script src="js/main.js" type="application/javascript"></script>
-  <script src="js/phyloTree.js" type="text/javascript"></script>
+    <script src="js/main.js" type="application/javascript"></script>
+    <script src="js/phyloTree.js" type="text/javascript"></script>
 </head>
 
 <body>
 
 <div id="page-wrapper">
 
-  <!-- Header -->
-  <div id="header">
 
-    <!-- Nav -->
-    <nav id="nav">
-      <ul>
-        <li class="current"><a href="index.htm">Home</a></li>
-        <li>
-          <a href="#" id="toggleButtons">
-            <span class="hButton">Show Buttons</span>
-            <span class="sButton">Hide Buttons</span>
-          </a>
-        </li>
-        <li>
-          Search: <input type="text" id="searchMutation">
-        </li>
-      </ul>
-    </nav>
 
-  </div>
+    <!-- Header -->
+    <div id="header">
 
-  <div id="main">
-    <!-- Banner -->
-    <section id="zoom">
-      <div id="zoomWindow" class="genome"></div>
-      <div id="nodeDialog">
-        <div class="messageLabel">Description</div>
-        <div class="message"></div>
-        <div class="annotationLabel">Annotations</div>
-        <div class="annotation"></div>
-      </div>
-      <div id="zoomButtons" class="sButton">
-        <button id="zoomIn">+</button><br />
-        <button id="zoomOut">-</button>
-      </div>
-    </section>
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>
+                <li class="current"><a href="index.htm">Home</a></li>
+                <li>
+                    <a href="#" id="mutationLegenda">Legenda</a>
+                    <div id="legendaCanvas">
 
-    <!-- Highlights -->
-    <section id="sub">
-      <div id="phylogenyContainer">
-        <div id="svgCanvas">
-          <div id="phyloBackButton"><button value="back">back</button></div>
-          <div id="phyloButtons">
-            <button id="compGenomesButton" type="button"
-                    class="btn btn-default" data-dismiss="modal">Compare
-              Genomes</button>
-            <button id="expandPhyloView" type="button"
-                    class="btn btn-default" data-dismiss="modal">+</button>
-          </div>
-        </div>
-      </div>
-      <div id="minimapContainer">
-        <div id="minimap" class="mainGenome genome">
-          <div class="coordinateSelector">
-            Goto: <input type="number" id="coordinateSelector"> of
-            <span id="maxCoordinateInput">0</span>
-          </div>
-          <div class="slider"></div>
-          <div class="canvasContainer"></div>
-        </div>
-      </div>
-    </section>
-  </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" id="toggleButtons">
+                        <span class="hButton">Show Buttons</span>
+                        <span class="sButton">Hide Buttons</span>
+                    </a>
+                </li>
+                <li>
+                    Search: <input type="text" id="searchMutation">
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+    <div id="main">
+        <!-- Banner -->
+        <section id="zoom">
+            <div id="zoomWindow" class="genome"></div>
+            <div id="nodeDialog">
+                <div class="messageLabel">Description</div>
+                <div class="message"></div>
+                <div class="annotationLabel">Annotations</div>
+                <div class="annotation"></div>
+            </div>
+            <div id="zoomButtons" class="sButton">
+                <button id="zoomIn">+</button><br />
+                <button id="zoomOut">-</button>
+            </div>
+        </section>
+
+        <!-- Highlights -->
+        <section id="sub">
+            <div id="phylogenyContainer">
+                <div id="svgCanvas">
+                    <div id="phyloBackButton"><button value="back">back</button></div>
+                    <div id="phyloButtons">
+                        <button id="compGenomesButton" type="button"
+                                class="btn btn-default" data-dismiss="modal">Compare
+                            Genomes</button>
+                        <button id="expandPhyloView" type="button"
+                                class="btn btn-default" data-dismiss="modal">+</button>
+                        <div class="right">ZoomLevel<input type="number" id="phyloZoomLevel" value="6"></div>
+                    </div>
+                </div>
+                <ul id="selectedGenomeList">
+                    <li class="firstLi">None selected</li>
+                </ul>
+            </div>
+            <div id="minimapContainer">
+                <div id="minimap" class="mainGenome genome">
+                    <div class="coordinateSelector">
+                        Goto: <input type="number" id="coordinateSelector"> of
+                        <span id="maxCoordinateInput">0</span>
+                    </div>
+                    <div class="slider"></div>
+                    <div class="canvasContainer"></div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
-
-  </div>
 
 </div>
 

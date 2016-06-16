@@ -2,10 +2,9 @@ package genome;
 
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
-
 /**
- * The Class GraphSearcher.
+ * The Class GraphSearcher. This class is a utility class that is responsible for searching the
+ * genome data structures contained in the GenomeGraph class.
  */
 public final class GraphSearcher {
 
@@ -16,51 +15,35 @@ public final class GraphSearcher {
 	}
 
 	/**
-	 * The Enum SearchType.
-	 */
-	public enum SearchType {
-
-		/** The Genomic feature search. */
-		GenomicFeatureSearch,
-
-		/** The Meta data search. */
-		MetaDataSearch,
-
-		/** The Mutation search. */
-		MutationSearch,
-
-		/** The Full search. */
-		FullSearch
-	}
-
-	/**
 	 * Search.
 	 *
-	 * @param searchString            the search string
-	 * @param searchType            the search type
-	 * @param genomeGraph the genome graph
-	 * @return the g search result
+	 * @param searchString the search string
+	 * @param searchType   the search type
+	 * @param genomeGraph  the genome graph
+	 * @return the search result which contains matches for the search string and search type
 	 */
 	public static GSearchResult search(String searchString, SearchType searchType,
-			GenomeGraph genomeGraph) {
+									   GenomeGraph genomeGraph) {
 		GSearchResult searchResult = new GSearchResult();
 		searchResult.setSearchType(searchType);
 		switch (searchType) {
-		case FullSearch:
-			break;
-		case GenomicFeatureSearch:
-			searchGenomicFeatures(searchResult, searchString, genomeGraph);
-			break;
-		case MetaDataSearch:
-			break;
-		case MutationSearch:
-			break;
-		default:
-			break;
+			case FullSearch:
+				break;
+			case GenomicFeatureSearch:
+				searchGenomicFeatures(searchResult, searchString, genomeGraph);
+				break;
+			case MetaDataSearch:
+				break;
+			case MutationSearch:
+				break;
+			default:
+				break;
 
 		}
 		return searchResult;
 	}
+
+
 
 	/**
 	 * Search genomic features.
@@ -101,5 +84,16 @@ public final class GraphSearcher {
 			}
 			
 		}
+	}
+
+	/**
+	 * The Enum SearchType. The types of searches used to differentiate between different types
+	 * of searches that will be handled by different search functions in this class.
+	 */
+	public enum SearchType {
+		GenomicFeatureSearch,
+		MetaDataSearch,
+		MutationSearch,
+		FullSearch
 	}
 }

@@ -48,23 +48,6 @@ public class RibbonNodeFactoryTest {
      * @throws Exception if fail.
      */
 
-    @Test
-    public void testMakeRibbonNodesFromSplit() throws Exception {
-        String[] genomeArray = {"1", "2"};
-        HashSet<String> genomes = new HashSet<String>(Arrays.asList(genomeArray));
-        Strand strand = new Strand(0, "asdf", genomes, "1", 0);
-        RibbonNode node = new RibbonNode(0, new HashSet<String>(Arrays.asList(genomeArray)));
-        node.addStrand(strand);
-        ArrayList<RibbonNode> splitNodes = RibbonNodeFactory.makeRibbonNodesFromSplit(node, 0);
-        assertEquals(splitNodes.size(), 2);
-        assertTrue(splitNodes.get(0).getGenomes().contains("1"));
-        assertTrue(splitNodes.get(1).getGenomes().contains("2"));
-        assertEquals(splitNodes.get(0).getId(), 1);
-        assertEquals(splitNodes.get(1).getId(), 2);
-        assertEquals(splitNodes.get(0).getStrands().get(0), strand);
-        assertEquals(splitNodes.get(1).getStrands().get(0), strand);
-
-    }
 
     /**
      * Test if two nodes are correctly collapsed in to one.

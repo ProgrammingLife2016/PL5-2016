@@ -53,8 +53,8 @@ public class RibbonNodeTest {
      */
     @Test
     public void testGetLabel() throws Exception {
-        assertEquals("node1\n", node1.getLabel());
-        assertEquals("node2\n", node2.getLabel());
+        assertEquals("[genome2, genome1] node1", node1.getLabel());
+        assertEquals("[genome2, genome1] node2", node2.getLabel());
     }
 
     /**
@@ -78,9 +78,9 @@ public class RibbonNodeTest {
      */
     @Test
     public void testSetLabel() throws Exception {
-        assertEquals("node1\n", node1.getLabel());
+        assertEquals("[genome2, genome1] node1", node1.getLabel());
         node1.setLabel("testLabel");
-        assertEquals("testLabel\n", node1.getLabel());
+        assertEquals("[genome2, genome1] testLabel", node1.getLabel());
 
     }
 

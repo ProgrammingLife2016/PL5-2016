@@ -9,14 +9,18 @@ import java.util.ArrayList;
  * The Class GFeatureSearchMatch.
  */
 public class AdaptedSearchMatch {
-	/** The feature. */
+	/**
+	 * The feature.
+	 */
 	private GenomicFeature feature;
-	
-	/** The sub string. */
-	private String subString;
 
 	/** The strand. */
 	private ArrayList<Strand> strands;
+
+	/**
+	 * The sub string.
+	 */
+	private String subString;
 
 	/**
 	 * Instantiates a new adapted search match.
@@ -36,42 +40,7 @@ public class AdaptedSearchMatch {
 		this.setSubString(subString);
 		this.setStrands(strands);
 	}
-	/**
-	 * Gets the sub string.
-	 *
-	 * @return the sub string
-	 */
-	public String getSubString() {
-		return subString;
-	}
 
-	/**
-	 * Sets the sub string.
-	 *
-	 * @param subString the new sub string
-	 */
-	public void setSubString(String subString) {
-		this.subString = subString;
-	}
-	
-
-	/**
-	 * Gets the feature.
-	 *
-	 * @return the feature
-	 */
-	public GenomicFeature getFeature() {
-		return feature;
-	}
-
-	/**
-	 * Sets the feature.
-	 *
-	 * @param feature the new feature
-	 */
-	public void setFeature(GenomicFeature feature) {
-		this.feature = feature;
-	}
 
 	/**
 	 * Gets the strand.
@@ -87,8 +56,38 @@ public class AdaptedSearchMatch {
 	 *
 	 * @param strands the new strand
 	 */
-	@SuppressWarnings("CPD-END")
 	public void setStrands(ArrayList<Strand> strands) {
 		this.strands = strands;
 	}
+
+	/**
+	 * Sets the sub string.
+	 *
+	 * @param subString the new sub string
+	 */
+	public void setSubString(String subString) {
+		this.subString = subString;
+	}
+
+
+	/**
+	 * Gets the feature.
+	 *
+	 * @return the feature
+	 */
+	public GenomicFeature getFeature() {
+		return feature;
+	}
+
+	/**
+	 * Sets the feature.
+	 *
+	 * @param feature the new feature
+	 */
+	@SuppressWarnings("CPD-END")
+	public void setFeature(GenomicFeature feature) {
+		this.feature = feature;
+	}
+
+
 }

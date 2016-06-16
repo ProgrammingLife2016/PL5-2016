@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 public class SearchMatchAdapter extends XmlAdapter<AdaptedSearchMatch, GFeatureSearchMatch> {
 
- 
+
 	@Override
 	public AdaptedSearchMatch marshal(GFeatureSearchMatch gMatch) throws Exception {
 		AdaptedSearchMatch match = new AdaptedSearchMatch();
@@ -19,10 +19,10 @@ public class SearchMatchAdapter extends XmlAdapter<AdaptedSearchMatch, GFeatureS
 		return match;
 	}
 
-	@Override
-	public GFeatureSearchMatch unmarshal(AdaptedSearchMatch arg0) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public GFeatureSearchMatch unmarshal(AdaptedSearchMatch arg0) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

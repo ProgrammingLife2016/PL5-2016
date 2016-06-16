@@ -12,16 +12,16 @@ import java.util.ArrayList;
  */
 public class DataNode extends AbstractTreeNode<DataNode> {
 
-	/**
-	 * The strands contained in this node.
-	 */
+    /**
+     * The strands contained in this node.
+     */
     private ArrayList<Strand> strands;
-    
+
     /**
      * The genomeIds contained in this node.
      */
     private ArrayList<String> genomes;
-    
+
     /**
      * The level of this node in the tree, root having level 0.
      */
@@ -74,9 +74,9 @@ public class DataNode extends AbstractTreeNode<DataNode> {
      * @param genome The genome to find.
      * @return The child if a child contains this genome, otherwise null.
      */
-    public DataNode getChildWithGenome(String genome) {
+    public DataNode getChildWithGenome(ArrayList<String> genome) {
         for (DataNode child : getChildren()) {
-            if (child.getGenomes().contains(genome)) {
+            if (child.getGenomes().containsAll(genome)) {
                 return child;
             }
         }
@@ -136,6 +136,15 @@ public class DataNode extends AbstractTreeNode<DataNode> {
     }
 
     /**
+     * Set the genomes contained in this node.
+     *
+     * @param genomes The genomes.
+     */
+    public void setGenomes(ArrayList<String> genomes) {
+        this.genomes = genomes;
+    }
+
+    /**
      * The level of this node.
      *
      * @return the level
@@ -154,21 +163,12 @@ public class DataNode extends AbstractTreeNode<DataNode> {
     }
 
     /**
-     * Set the genomes contained in this node.
+     * Adds the genome id.
      *
-     * @param genomes The genomes.
+     * @param string the string
      */
-    public void setGenomes(ArrayList<String> genomes) {
-        this.genomes = genomes;
-    }
+    public void addGenomeId(String string) {
+        genomes.add(string);
 
-	/**
-	 * Adds the genome id.
-	 *
-	 * @param string the string
-	 */
-	public void addGenomeId(String string) {
-		genomes.add(string);
-		
-	}
+    }
 }
