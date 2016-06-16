@@ -98,6 +98,7 @@ public class DataTree extends TreeStructure<DataNode> {
             }
         }
 
+
         for (DataNode node : nodes) {
             for (Strand strand : node.getStrands()) {
                 if (strand.getSequence().length() > minSize) {
@@ -165,13 +166,11 @@ public class DataTree extends TreeStructure<DataNode> {
         for (Genome g : genome) {
             ids.add(g.getId());
         }
+
         Set<DataNode> result = new HashSet<>();
         DataNode currentNode = getRoot();
-        int totalStrands = 0;
         while (currentNode.getLevel() <= level) {
             result.add(currentNode);
-            totalStrands += currentNode.getStrands().size();
-
             currentNode = currentNode.getChildWithGenome(ids);
             if (currentNode == null) {
                 break;

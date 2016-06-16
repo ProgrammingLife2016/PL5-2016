@@ -80,5 +80,6 @@ public class GenomeGraphTest {
         assertEquals(data.getActiveGenomes().get(0).get(0).getId(), "ref1");
         assertEquals(notPresent.size(), 1);
         assertEquals(notPresent.get(0), "ref2");
+        data.setGenomesAsActive(null);
     }
 }

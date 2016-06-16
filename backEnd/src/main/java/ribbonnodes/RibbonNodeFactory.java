@@ -24,7 +24,7 @@ public abstract class RibbonNodeFactory {
                                                       Strand strand,
                                                       ArrayList<String> activeGenomes) {
 
-        HashSet<String> actGen = strand.getGenomes();
+        HashSet<String> actGen = (HashSet<String>) strand.getGenomes().clone();
         actGen.retainAll(activeGenomes);
         RibbonNode ribbon = new RibbonNode(id, actGen);
         ribbon.setX(strand.getX());
