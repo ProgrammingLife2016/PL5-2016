@@ -65,6 +65,7 @@ public class RestApi {
      */
     @GET
     @Path("/getmetadatamap")
+    @Produces("application/json")
     public Response getMetaDataMap() {
         return Response.ok()
                 .entity(BackEndAdapter.getInstance().getMetaDataMap())
