@@ -183,3 +183,9 @@ input#coordinateSelector {
     font-size: 14px;
     z-index: 10000;
 }
+
+.dropotron li {
+    padding: 5px;
+    border-bottom: 1px solid #cecece;
+    line-height: 20px;
+}

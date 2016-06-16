@@ -6,10 +6,10 @@ var phyloRoot;
 var currentNode = -1;
 var back = [];
 var selectedGenomes = [];
-var lineages = [];
+var phyloColors = [];
 
 $("document").ready(function() {
-    //Set the global variable containing all the lineages mapped to the genomes
+    //Set the global variable containing all the phyloColors mapped to the genomes
     setLineages();
 
     //Load the phylogenic Tree
@@ -171,7 +171,7 @@ function phyloToXml(nodeId, maxDepth, depth) {
         heat = Math.min(16, node.count / 2);
         var heatmap = (node.count > 1)?"<heatmap>heat"+ heat +"</heatmap>":"<heatmap>none</heatmap>";
         lineage = 'none';
-        $.each(lineages, function(key, value) {
+        $.each(phyloColors, function(key, value) {
             if (node.name == value.genome) {
                 lineage = value.lineage;
                 return false;
@@ -280,10 +280,10 @@ function resetSmits() {
 }
 
 /**
- * Temp: TODO: function to set all the lineages mapped to the genomes, should be done through the REST API.
+ * Temp: TODO: function to set all the phyloColors mapped to the genomes, should be done through the REST API.
  */
-function setLineages() {
-    lineages = [{'genome':"TKK_03_0042", 'lineage':"lin4"},
+function setColors() {
+    phyloColors = [{'genome':"TKK_03_0042", 'lineage':"lin4"},
         {'genome':"TKK_03_0160", 'lineage':"lin2"},
         {'genome':"TKK_03_0040", 'lineage':"lin2"},
         {'genome':"TKK-01-0039", 'lineage':"lin2"},
