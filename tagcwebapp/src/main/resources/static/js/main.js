@@ -165,7 +165,9 @@ $('document').ready(function () {
                 var ratio = $('#minimap .slider').width() / $('#zoom').width();
                 var left = diff * ratio;
                 console.log(diff +'-'+ left);
-                $('#minimap .slider').css('left', Math.max(0, pxToInt($('#minimap .slider').css('left')) + left) +'px');
+                var maxLeft = $('#minimap').width() - $('#minimap .slider').width();
+                var newLeft = Math.min(maxLeft, Math.max(0, pxToInt($('#minimap .slider').css('left')) + left));
+                $('#minimap .slider').css('left', newLeft +'px');
                 updateZoomValues();
                 drawZoom(null);
                 clearTimeout(zoomTimeout);

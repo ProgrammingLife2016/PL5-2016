@@ -83,6 +83,7 @@ body, html {
     border-bottom: 7px solid rgba(27, 27, 27, 0.75);
     box-sizing: border-box;
     height: 300px;
+    cursor: pointer;
 }
 
 div#minimapContainer {
