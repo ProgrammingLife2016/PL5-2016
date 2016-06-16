@@ -41,7 +41,7 @@ public class RestApi {
                                  @DefaultValue("100") @QueryParam("xright") int xright,
                                  @DefaultValue("1") @QueryParam("zoom") int zoom,
                                  @DefaultValue("false") @QueryParam("isMiniMap")
-                                 boolean isMiniMap) {
+                                         boolean isMiniMap) {
         return BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom, isMiniMap);
     }
 
@@ -57,6 +57,20 @@ public class RestApi {
     @Path("/setactivegenomes")
     public ArrayListObject setActiveGenomes(@FormParam("names[]") List<String> ids) {
         return BackEndAdapter.getInstance().setActiveGenomes(ids);
+    }
+
+    /**
+     * Returns a Hashmap mapping genomes to color.
+     * @return the list      List of unrecognized genomes.
+     */
+    @GET
+    @Path("/getmetadatamap")
+    public Response getMetaDataMap() {
+        return Response.ok()
+                .entity(BackEndAdapter.getInstance().getMetaDataMap())
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
     }
 
     /**

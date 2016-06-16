@@ -17,14 +17,16 @@ public class MetaDataController {
 
     private Map<String, HashSet<String>> allValues = new HashMap<>();
     private Map<String, Color> colorMap = new HashMap<>();
+    private List<Genome> genomes;
 
     /**
      * constructor.
-     * @param genomes list of the genomes for which the MetaData is relevant
+     * @param inputGenomes list of the genomes for which the MetaData is relevant
      */
-    MetaDataController(List<Genome> genomes) {
+    public MetaDataController(List<Genome> inputGenomes) {
+        genomes = inputGenomes;
         initializeHashMap();
-        fillHashMap(genomes);
+        fillHashMap();
         fillColormap();
     }
 
@@ -58,7 +60,7 @@ public class MetaDataController {
         allValues.put("xdrType", new HashSet<>());
     }
 
-    private void fillHashMap(List<Genome> genomes) {
+    private void fillHashMap() {
         for (Genome g : genomes) {
             if (g.getMetadata() != null) {
                 allValues.get("age").add(g.getMetadata().getAge());
@@ -164,6 +166,25 @@ public class MetaDataController {
      * @return the color of this genome
      */
     public Color getColor(Genome genome, String metaDataType) {
+        if(!genome.hasMetadata()) {
+            return Color.GRAY;
+        }
         return colorMap.get(metaDataType + ":" + genome.getMetadata().returnField(metaDataType));
+    }
+
+    /**
+     * Returns a hashmap from (Genome id -> Color).
+     * @return the hashmap
+     */
+    public Map<String, HashSet<String>> getMetaDataMap() {
+        return allValues;
+    }
+
+    public HashMap<String, Color> getAllGenomeColors(String metaDataType) {
+        HashMap<String, Color> out = new HashMap<>();
+        for (Genome g : genomes) {
+            out.put(g.getId(), getColor(g, metaDataType));
+        }
+        return out;
     }
 }

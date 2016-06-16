@@ -9,10 +9,7 @@ import org.junit.Test;
 import parser.Parser;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by user on 16/06/16.
@@ -325,5 +322,25 @@ public class MetaDataControllerTest {
                 "lineage"));
         Assert.assertEquals(Color.decode("0x0000ff"), mdc.getColor(currentGenomes.get(8),
                 "lineage"));
+    }
+
+    /**
+     * Tests if we correctly color the genomes based on lineage.
+     */
+    @Test
+    public void testReturnAllColors() {
+        HashMap<String, Color> wanted = new HashMap<>();
+        wanted.put("TKK_02_0018", Color.decode("0xff0000"));
+        wanted.put("TKK_02_0007", Color.decode("0xff0000"));
+        wanted.put("TKK_02_0006", Color.decode("0xff0000"));
+        wanted.put("TKK_02_0008", Color.decode("0xff0000"));
+        wanted.put("TKK_02_0010", Color.decode("0x0000ff"));
+        wanted.put("TKK_02_0001", Color.decode("0x0000ff"));
+        wanted.put("TKK_02_0025", Color.decode("0xff0000"));
+        wanted.put("TKK_02_0002", Color.decode("0x0000ff"));
+        wanted.put("TKK_02_0005", Color.decode("0xff0000"));
+        wanted.put("TKK_02_0004", Color.decode("0xff0000"));
+        wanted.put("MT_H37RV_BRD_V5.ref", Color.GRAY);
+        Assert.assertEquals(wanted, mdc.getAllGenomeColors("lineage"));
     }
 }

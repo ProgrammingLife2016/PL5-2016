@@ -7,7 +7,9 @@ import genome.GraphSearcher.SearchType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -86,6 +88,10 @@ public final class BackEndAdapter implements BackEndInterface {
 			ba = new BackEndAdapter();
 			BackEndAdapter.controller = controller;
 		}
+	}
+
+	public Map<String, HashSet<String>> getMetaDataMap() {
+		return controller.getMetaDataController().getMetaDataMap();
 	}
 	
 }

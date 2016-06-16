@@ -1,11 +1,14 @@
 package controller;
 
+import com.google.inject.internal.util.Lists;
 import datatree.DataNode;
 import datatree.DataTree;
 import datatree.TempReadWriteTree;
 import genome.GSearchResult;
+import genome.Genome;
 import genome.GenomeGraph;
 import genome.GraphSearcher.SearchType;
+import metadata.MetaDataController;
 import mutation.Mutations;
 import parser.Parser;
 import phylogenetictree.PhylogeneticTree;
@@ -43,6 +46,10 @@ public class Controller {
      */
     private RibbonController ribbonController;
 
+    /**
+     * The metaData controller.
+     */
+    private MetaDataController metaDataController;
 
     /**
      * Constructor.
@@ -68,6 +75,9 @@ public class Controller {
         ribbonController = new RibbonController(genomeGraph, dataTree);
         Mutations mutations = new Mutations(genomeGraph);
         mutations.computeAllMutations();
+
+        List<Genome> genomes = Lists.newArrayList(genomeGraph.getGenomes().values());
+        metaDataController = new MetaDataController(genomes);
     }
 
     /**
@@ -122,4 +132,13 @@ public class Controller {
     public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
         return genomeGraph.setGenomesAsActive(activeGenomes);
     }
+
+    /**
+     * Getter for the MetaDataController.
+     * @return the metaDataController
+     */
+    public MetaDataController getMetaDataController() {
+        return metaDataController;
+    }
+
 }
