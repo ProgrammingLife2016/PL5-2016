@@ -2,6 +2,8 @@ package com.pl.tagc.tagcwebapp;
 
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
+import org.meanbean.test.Configuration;
+import org.meanbean.test.ConfigurationBuilder;
 
 /**
  * The Class AdaptedRibbonNodeTest.
@@ -14,7 +16,8 @@ public class AdaptedRibbonNodeTest {
 	@Test
 	public void test() {
 		BeanTester beanTester = new BeanTester();
-		beanTester.testBean(AdaptedRibbonNode.class);
+		Configuration config = new ConfigurationBuilder().ignoreProperty("mutations").build();
+		beanTester.testBean(AdaptedRibbonNode.class,config);
 	}
 
 }
