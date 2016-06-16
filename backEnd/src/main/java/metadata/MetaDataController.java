@@ -178,7 +178,7 @@ public class MetaDataController {
      */
     public Map<String, String> getMetaDataMap() {
         Map<String, String> out = new HashMap<>();
-        for(String id : colorMap.keySet()) {
+        for (String id : colorMap.keySet()) {
             String hex = Integer.toHexString(colorMap.get(id).getRGB() & 0xffffff);
             while (hex.length() < 6) {
                 hex = "0" + hex;

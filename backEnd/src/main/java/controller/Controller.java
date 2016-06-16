@@ -9,7 +9,6 @@ import genome.Genome;
 import genome.GenomeGraph;
 import genome.GraphSearcher.SearchType;
 import metadata.MetaDataController;
-import mutation.Mutations;
 import parser.Parser;
 import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;

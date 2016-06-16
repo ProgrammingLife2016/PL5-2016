@@ -82,12 +82,14 @@ public class RestApi {
 
     /**
      * Returns a Hashmap mapping genomes to color.
-     * @return the list      List of unrecognized genomes.
+     * @param metaData The metadata to get the the colors for.
+     * @return the List of unrecognized genomes.
      */
     @GET
     @Path("/getgenomecolors")
     @Produces("application/json")
-    public Response getMetaGenomeColors(@DefaultValue("lineage") @QueryParam("metadata") String metaData) {
+    public Response getMetaGenomeColors(@DefaultValue("lineage")
+                                        @QueryParam("metadata") String metaData) {
         return Response.ok()
                 .entity(BackEndAdapter.getInstance().getAllGenomeColors(metaData))
                 .header("Access-Control-Allow-Origin", "*")

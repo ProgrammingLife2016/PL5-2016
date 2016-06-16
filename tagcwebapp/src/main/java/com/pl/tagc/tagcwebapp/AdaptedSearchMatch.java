@@ -17,10 +17,6 @@ public class AdaptedSearchMatch {
 	/** The strand. */
 	private ArrayList<Strand> strands;
 
-	/**
-	 * The sub string.
-	 */
-	private String subString;
 
 	/**
 	 * Instantiates a new adapted search match.
@@ -32,12 +28,10 @@ public class AdaptedSearchMatch {
 	 *
 	 * @param strands the strands
 	 * @param feature the feature
-	 * @param subString the sub string
 	 */
 	@SuppressWarnings("CPD-START")
-	public AdaptedSearchMatch(ArrayList<Strand> strands, GenomicFeature feature, String subString) {
+	public AdaptedSearchMatch(ArrayList<Strand> strands, GenomicFeature feature) {
 		this.setFeature(feature);
-		this.setSubString(subString);
 		this.setStrands(strands);
 	}
 
@@ -60,14 +54,6 @@ public class AdaptedSearchMatch {
 		this.strands = strands;
 	}
 
-	/**
-	 * Sets the sub string.
-	 *
-	 * @param subString the new sub string
-	 */
-	public void setSubString(String subString) {
-		this.subString = subString;
-	}
 
 
 	/**

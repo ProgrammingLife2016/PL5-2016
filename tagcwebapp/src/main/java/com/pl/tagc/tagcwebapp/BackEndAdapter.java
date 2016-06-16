@@ -5,8 +5,8 @@ import genome.GSearchResult;
 import genome.GraphSearcher.SearchType;
 
 import javax.ws.rs.core.Response;
-import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -90,16 +90,17 @@ public final class BackEndAdapter implements BackEndInterface {
     }
 
     /**
-     * Get the datamap and put it in a JAXB readable object
-     * @return a JAXB readable MetaDataMap
+     * Get the datamap and put it in a JAXB readable object.
+     * @return a JAXB readable MetaDataMap.
      */
 	public MetaDataObject getMetaDataMap() {
 		return new MetaDataObject(controller.getMetaDataController().getMetaDataMap());
 	}
 
     /**
-     * Get the colors for the given metadata and put it in a JAXB readable object
-     * @return a JAXB readable ColorMap
+     * Get the colors for the given metadata and put it in a JAXB readable object.
+     * @param metaData Sting of metadata to get the color for.
+     * @return a JAXB readable ColorMap.
      */
 	public MetaDataColorObject getAllGenomeColors(String metaData) {
 		return new MetaDataColorObject(controller.getMetaDataController().

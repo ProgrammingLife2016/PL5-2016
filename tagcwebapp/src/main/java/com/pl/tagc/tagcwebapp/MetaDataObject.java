@@ -1,8 +1,6 @@
 package com.pl.tagc.tagcwebapp;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 /**

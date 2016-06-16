@@ -15,7 +15,6 @@ public class SearchMatchAdapter extends XmlAdapter<AdaptedSearchMatch, GFeatureS
 		AdaptedSearchMatch match = new AdaptedSearchMatch();
 		match.setFeature(gMatch.getFeature());
 		match.setStrands(gMatch.getStrands());
-		match.setSubString(gMatch.getSubString());
 		return match;
 	}
 

@@ -21,7 +21,6 @@ public class PhylogeneticNodeAdapter extends XmlAdapter<AdaptedPhylogeneticNode,
     public AdaptedPhylogeneticNode marshal(PhylogeneticNode node) throws Exception {
         AdaptedPhylogeneticNode adaptedNode = new AdaptedPhylogeneticNode();
         adaptedNode.setNameLabel(node.getNameLabel());
-        adaptedNode.setDistance(node.getDistance());
         adaptedNode.setChildren(node.getChildren());
         adaptedNode.setId(node.getId());
         boolean isFirstChild = true;
