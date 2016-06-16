@@ -71,8 +71,13 @@ public class RibbonController {
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result, isMiniMap);
         collapseRibbons(result, minX, maxX);
-        Mutations mutations = new Mutations(result);
-        mutations.computeAllMutations();
+        if(isMiniMap&&result.size()<100){
+            return getRibbonNodes(minX,maxX,20,false);
+        }
+        if(!isMiniMap) {
+            Mutations mutations = new Mutations(result);
+            mutations.computeAllMutations();
+        }
         spreadYCoordinates(result, actIds);
 
         result.sort((RibbonNode o1, RibbonNode o2) ->
