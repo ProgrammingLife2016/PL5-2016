@@ -52,7 +52,8 @@ public final class GraphSearcher {
 	 * @param searchString the search string
 	 * @param graph the graph to search
 	 */
-	private static void searchGenomicFeatures(GSearchResult searchResult, String searchString,
+	private static void searchGenomicFeatures(GSearchResult searchResult,
+											  String searchString,
 											  GenomeGraph graph) {
 
 		for (Strand strand : graph.getStrands().values()) {

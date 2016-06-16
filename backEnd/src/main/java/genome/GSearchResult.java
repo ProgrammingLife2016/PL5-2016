@@ -23,10 +23,14 @@ public class GSearchResult {
 
 	/**
 	 * Adds the g feature search match.
+	 * @param strand The strand to add to the feature
+	 * @param feature The genomic feature to match.
+	 * @param subString The substring that was searched.
 	 *
-	 *            the search match
 	 */
-	public void addGFeatureStrandSearchMatch(Strand strand, GenomicFeature feature, String subString) {
+	public void addGFeatureStrandSearchMatch(Strand strand,
+											 GenomicFeature feature,
+											 String subString) {
 		boolean contains = false;
 		for (GFeatureSearchMatch match : gFeatureSearchMatches) {
 			if (match.getFeature() == feature) {

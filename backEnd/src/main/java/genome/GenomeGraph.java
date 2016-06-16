@@ -188,6 +188,11 @@ public class GenomeGraph {
         return GraphSearcher.search(searchString, searchType, this);
     }
 
+    /**
+     * Get the ids of the active genomes.
+     *
+     * @return The arraylist of the active genome ids.
+     */
     public ArrayList<String> getActiveGenomeIds() {
         return activeGenomeIds;
     }

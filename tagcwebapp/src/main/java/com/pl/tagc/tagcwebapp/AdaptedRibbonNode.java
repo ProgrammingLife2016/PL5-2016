@@ -39,7 +39,7 @@ public class AdaptedRibbonNode {
     private String label;
 
 	/**
-	 * The annotations within this node
+	 * The annotations within this node.
 	 */
 	private ArrayList<String> annotations;
     

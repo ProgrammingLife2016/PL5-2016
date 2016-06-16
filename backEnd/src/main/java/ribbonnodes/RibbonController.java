@@ -55,7 +55,6 @@ public class RibbonController {
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
                                                 int zoomLevel, boolean isMiniMap) {
 
-
         ArrayList<ArrayList<Genome>> actGen = genomeGraph.getActiveGenomes();
 
         if (isMiniMap) {
@@ -72,18 +71,14 @@ public class RibbonController {
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result, isMiniMap);
         collapseRibbons(result, minX, maxX);
-
         Mutations mutations = new Mutations(result);
         mutations.computeAllMutations();
-
         spreadYCoordinates(result, actIds);
 
         result.sort((RibbonNode o1, RibbonNode o2) ->
                 new Integer(o1.getId()).compareTo(o2.getId()));
-
         System.out.println(result.size() + " nodes returned");
         return result;
-
     }
 
     /**

@@ -37,7 +37,9 @@ public class GFeatureSearchMatch {
 	 * @param feature the feature
 	 * @param subString the sub string
 	 */
-	public GFeatureSearchMatch(ArrayList<Strand> strands, GenomicFeature feature, String subString) {
+	public GFeatureSearchMatch(ArrayList<Strand> strands,
+							   GenomicFeature feature,
+							   String subString) {
 		this.setFeature(feature);
 		this.setSubString(subString);
 		this.setStrands(strands);
@@ -64,6 +66,11 @@ public class GFeatureSearchMatch {
 		this.strands = strands;
 	}
 
+	/**
+	 * Add a strand to this search match
+	 *
+	 * @param strand strand to add.
+	 */
 	public void addStrand(Strand strand){
 		strands.add(strand);
 	}

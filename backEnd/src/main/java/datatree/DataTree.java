@@ -79,7 +79,8 @@ public class DataTree extends TreeStructure<DataNode> {
     @SuppressWarnings("checkstyle:methodlength")
     public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax,
                                                     Set<DataNode> nodes,
-                                                    ArrayList<ArrayList<Genome>> genomes, int level) {
+                                                    ArrayList<ArrayList<Genome>> genomes,
+                                                    int level) {
         ArrayList<Strand> result = new ArrayList<>();
         Strand leftAllGenomes = new Strand();
         Strand rightAllGenomes = new Strand();
