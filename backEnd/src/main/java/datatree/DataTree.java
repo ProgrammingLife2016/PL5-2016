@@ -81,8 +81,8 @@ public class DataTree extends TreeStructure<DataNode> {
         leftAllGenomes.setX(Integer.MIN_VALUE);
         rightAllGenomes.setX(Integer.MAX_VALUE);
         int minSize = 0;
-        if (level < 40) {
-            minSize = 200 - level * 5;
+        if (level < 10) {
+            minSize = 200 - level * 20;
         }
 
         for (DataNode node : nodes) {
@@ -96,7 +96,7 @@ public class DataTree extends TreeStructure<DataNode> {
                             && strand.getGenomes().containsAll(genomes)) {
                         rightAllGenomes = strand;
                     }
-                    if (strand.getX() > xMin && strand.getX() < xMax) {
+                    if (strand.getX() >= xMin && strand.getX() <= xMax) {
                     result.add(strand);
                     } else if (strand.getX() > leftAllGenomes.getX() && strand.getX() < rightAllGenomes.getX()
                             && strand.getSequence().length() > 200) {

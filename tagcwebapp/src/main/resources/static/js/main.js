@@ -310,17 +310,16 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     }
 
     $.each(points, function (id, point) {
-        if (point.visible) {
 
-            var xPos = xTranslate(point.x);
-            var yPos = nodeHeight + point.y;
+        var xPos = xTranslate(point.x);
+        var yPos = nodeHeight + point.y;
 
-            drawPoint(ctx, xPos, yPos, 1, point.mutations);
+        drawPoint(ctx, xPos, yPos, 1, point);
 
-            if (saveRealCoordinates) {
-                zoomNodeLocations.push({x: xPos, y: yPos, label: point.label, id: point.id});
-            }
+        if (saveRealCoordinates) {
+            zoomNodeLocations.push({x: xPos, y: yPos, label: point.label, id: point.id});
         }
+
 
         $.each(point.edges, function (key, edge) {
             var target = points[edge.startId];
@@ -341,13 +340,14 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     });
 }
 
-function drawPoint(ctx, xPos, yPos, multiplier, pointMutations) {
+function drawPoint(ctx, xPos, yPos, multiplier, point) {
     ctx.beginPath();
     ctx.fillStyle = '#FFFFFF';
     ctx.strokeStyle = '#000000';
-    if (!pointMutations || typeof pointMutations == "undefined" || pointMutations.length == 0) {
+    var pointMutations = point.mutations;
+    if (point.visible && ( !pointMutations || typeof pointMutations == "undefined" || pointMutations.length == 0)) {
         ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
-    } else {
+    } else if (pointMutations){
         var mutation = pointMutations[0].replace('"', '');
         var index = mutations.indexOf(mutation);
         var mutSize = mutColors.length;

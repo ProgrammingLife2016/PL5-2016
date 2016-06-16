@@ -2,7 +2,6 @@ package ribbonnodes;
 
 import genome.Strand;
 import mutation.AbstractMutation;
-import mutation.MutationIndel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -92,15 +91,7 @@ public class RibbonNode {
      * @return Label.
      */
     public String getLabel() {
-        StringBuilder newLabel = new StringBuilder();
-        newLabel.append(genomes.toString());
-        for (int i = 0; i < label.length(); i += 40) {
-            String sub = label.substring(i, Math.min(i + 40, label.length()));
-            newLabel.append(sub);
-            newLabel.append("\n");
-        }
-
-        return newLabel.toString();
+        return this.genomes.toString() + " " + label;
     }
 
     /**

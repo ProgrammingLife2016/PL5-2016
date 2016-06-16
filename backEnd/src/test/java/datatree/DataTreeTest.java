@@ -121,10 +121,10 @@ public class DataTreeTest {
     @Test
     public void testGetDataNodes() throws Exception {
 
-        assertEquals(tree.getStrands(0, 10, genomeIDs, 0).size(), 1);
-        assertEquals(tree.getStrands(4, 4, genomeIDs, 0).size(), 1);
-        assertEquals(tree.getStrands(5, 10, genomeIDs, 0).size(), 1);
-        assertEquals(tree.getStrands(1, 11, genomeIDs, 1).size(), 3);
+        assertEquals(tree.getStrands(-1, 10, genomeIDs, 20).size(), 3);
+        assertEquals(tree.getStrands(4, 4, genomeIDs, 0).size(), 0);
+        assertEquals(tree.getStrands(5, 10, genomeIDs, 0).size(), 0);
+        assertEquals(tree.getStrands(5, 10, genomeIDs, 20).size(), 1);
     }
 
     /**
@@ -137,7 +137,7 @@ public class DataTreeTest {
         assertEquals(tree.getDataNodesForGenomes(genomeIDs, 0).size(), 1);
         assertEquals(tree.getDataNodesForGenomes(genomeIDs, 1).size(), 3);
         ArrayList<Strand> testArray = tree.filterStrandsFromNodes(0, 1,
-                tree.getDataNodesForGenomes(genomeIDs, 1),genomeIDs,5);
+                tree.getDataNodesForGenomes(genomeIDs, 1),genomeIDs,20);
         assertEquals(testArray.size(), 3);
         assertTrue(testArray.contains(strand2));
         assertTrue(testArray.contains(strand12));
@@ -154,8 +154,8 @@ public class DataTreeTest {
     public void testFilterStrandsFromNodesMultiple() throws Exception {
 
         for (int i = 1; i < 5; i++) {
-            ArrayList<Strand> testArray = tree.filterStrandsFromNodes(5, 5,
-                    tree.getDataNodesForGenomes(genomeIDs, i),genomeIDs,5);
+            ArrayList<Strand> testArray = tree.filterStrandsFromNodes(-10, 50,
+                    tree.getDataNodesForGenomes(genomeIDs, i),genomeIDs,40);
 
             assertEquals(testArray.size(), 3);
         }
