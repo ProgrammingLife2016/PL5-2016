@@ -14,6 +14,8 @@ var zoomHeight = 0;
 var minimapHeight = 0;
 var zoomNodeLocations = [];
 var currentHoverNode = null;
+var dragFrom = null;
+var dragStartTime = null;
 var mutations = ["SNP", "INDEL", "TANDEMDUPLICATION", "INTERSPERSEDDUPLICATION", "INVERSION", "TRANSLOCATION"];
 var mutColors = ["0000FF", "00FF00", "FF0000"];
 
@@ -156,19 +158,40 @@ $('document').ready(function () {
         var x = currentMousePos.x - $(this).position().left;
         var y = currentMousePos.y - $(this).position().top;
         var found = false;
-        $.each(zoomNodeLocations, function (key, node) {
-            if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
-                found = true;
-                if (node.id != currentHoverNode) {
-                    currentHoverNode = node.id;
-                    var dialog = $('#nodeDialog');
-                    dialog.show().find('.message').html(node.label);
-                }
-                return false;
+        if (dragFrom != null) {
+            var d = new Date();
+            var time = d.getMilliseconds();
+            if (time - dragStartTime > 1) {
+                var diff = dragFrom - currentMousePos.x;
+                dragFrom = currentMousePos.x;
+                var ratio = $('#minimap .slider').width() / $('#zoom').width();
+                var left = diff * ratio;
+                console.log(diff +'-'+ left);
+                var maxLeft = $('#minimap').width() - $('#minimap .slider').width();
+                var newLeft = Math.min(maxLeft, Math.max(0, pxToInt($('#minimap .slider').css('left')) + left));
+                $('#minimap .slider').css('left', newLeft +'px');
+                updateZoomValues();
+                drawZoom(null);
+                clearTimeout(zoomTimeout);
+                zoomTimeout = setTimeout(function () {
+                    updatezoomWindow();
+                }, 500);
             }
-        });
-        if (!found) {
-            currentHoverNode = -1;
+        } else {
+            $.each(zoomNodeLocations, function (key, node) {
+                if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
+                    found = true;
+                    if (node.id != currentHoverNode) {
+                        currentHoverNode = node.id;
+                        var dialog = $('#nodeDialog');
+                        dialog.show().find('.message').html(node.label);
+                    }
+                    return false;
+                }
+            });
+            if (!found) {
+                currentHoverNode = -1;
+            }
         }
     });
 
@@ -188,6 +211,14 @@ $('document').ready(function () {
         zoom(-1, 5, center);
     });
 
+    $('#zoom').mousedown(function() {
+        dragFrom = currentMousePos.x;
+        var d = new Date();
+        dragStartTime = d.getMilliseconds();
+    }).mouseup(function() {
+        dragStartTime = null;
+        dragFrom = null;
+    });
     $('#coordinateSelector').keyup(function (e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
