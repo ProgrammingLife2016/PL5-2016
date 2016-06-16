@@ -51,8 +51,8 @@ public class Controller {
     public Controller() {
         String gfaFile = "data/TB328.gfa";
         genomeGraph = Parser.parse(gfaFile);
-        genomeGraph.annotate("MT_H37RV_BRD_V5.ref", 
-        		Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
+        genomeGraph.annotate("MT_H37RV_BRD_V5.ref",
+                Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
@@ -60,7 +60,7 @@ public class Controller {
                 null, 0));
 
         if (gfaFile.equals("data/TB328.gfa")) {
-        	TempReadDataTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
+            TempReadDataTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
         } else {
             dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
 
@@ -77,8 +77,8 @@ public class Controller {
      * @param isMiniMap Boolean if this is the minimap.
      * @return The list of ribbonNodes.
      */
-    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX, 
-    		int zoomLevel, boolean isMiniMap) {
+    public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
+                                                int zoomLevel, boolean isMiniMap) {
         return ribbonController.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap);
     }
 
@@ -86,7 +86,7 @@ public class Controller {
      * Search.
      *
      * @param searchString the search string
-     * @param searchType the search type
+     * @param searchType   the search type
      * @return the g search result
      */
     public GSearchResult search(String searchString, SearchType searchType) {

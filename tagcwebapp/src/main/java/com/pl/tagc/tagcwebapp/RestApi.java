@@ -45,25 +45,24 @@ public class RestApi {
         return BackEndAdapter.getInstance().getRibbonNodes(xleft, xright, zoom, isMiniMap);
     }
 
-	/**
-	 * Uses the genome ids to set the genomes as active in the backend. Which means that
-	 * they will be used to generate the ribbongraph when getnodes is called.
-	 *
-	 * @param ids the genome ids
-	 * @return the list      List of unrecognized genomes.
-	 */
-	@POST
-	@Path("/setactivegenomes")
-	@Produces("application/json")
-	public Response setActiveGenomes(@FormParam("names[]") List<String> ids) {
-		ArrayListObject result = BackEndAdapter.getInstance().setActiveGenomes(ids);
-		return Response.ok() //200
-				.entity(result)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-				.allow("OPTIONS").build();
-	}
-
+    /**
+     * Uses the genome ids to set the genomes as active in the backend. Which means that
+     * they will be used to generate the ribbongraph when getnodes is called.
+     *
+     * @param ids the genome ids
+     * @return the list      List of unrecognized genomes.
+     */
+    @POST
+    @Path("/setactivegenomes")
+    @Produces("application/json")
+    public Response setActiveGenomes(@FormParam("names[]") List<String> ids) {
+        ArrayListObject result = BackEndAdapter.getInstance().setActiveGenomes(ids);
+        return Response.ok() //200
+                .entity(result)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+    }
 
 
     /**
@@ -76,28 +75,28 @@ public class RestApi {
     @Path("/getphylogenetictree")
     @Produces("application/json")
     public Response requestPhylogeneticTree(@DefaultValue("1") @QueryParam("treeId") int treeId) {
-		return BackEndAdapter.getInstance().loadPhylogeneticTree(treeId);
+        return BackEndAdapter.getInstance().loadPhylogeneticTree(treeId);
 
-	}
+    }
 
-	/**
-	 * Request phylogenetic tree.
-	 *
-	 * @param searchString the search string
-	 * @param searchType   the search type
-	 * @return the response
-	 */
-	@GET
-	@Path("/search")
-	@Produces("application/json")
-	public Response search(@QueryParam("searchString") String searchString,
-						   @QueryParam("searchType") String searchType) {
-		SearchResultObject result = BackEndAdapter.getInstance().search(searchString, searchType);
-		return Response.ok() //200
-				.entity(result)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-				.allow("OPTIONS").build();
-	}
+    /**
+     * Request phylogenetic tree.
+     *
+     * @param searchString the search string
+     * @param searchType   the search type
+     * @return the response
+     */
+    @GET
+    @Path("/search")
+    @Produces("application/json")
+    public Response search(@QueryParam("searchString") String searchString,
+                           @QueryParam("searchType") String searchType) {
+        SearchResultObject result = BackEndAdapter.getInstance().search(searchString, searchType);
+        return Response.ok() //200
+                .entity(result)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+    }
 
 }

@@ -42,7 +42,7 @@ public class DataTreeTest {
         Genome genome2 = new Genome("2");
 
         String[] strand1Genomes = {"1"};
-		HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strand1Genomes));
+        HashSet<String> genomeSet = new HashSet<String>(Arrays.asList(strand1Genomes));
         strand1 = new Strand(1, "tagc", genomeSet, "1", 0);
 
         String[] strand2Genomes = {"2"};
@@ -66,7 +66,7 @@ public class DataTreeTest {
         genomeIDs = new ArrayList<>();
         genomeIDs.add(new ArrayList<>(Arrays.asList(genome1)));
         genomeIDs.add(new ArrayList<>(Arrays.asList(genome2)));
-        
+
         root = new DataNode(null, 0);
         child1 = new DataNode(root, 0);
         child2 = new DataNode(root, 1);
@@ -136,7 +136,7 @@ public class DataTreeTest {
         assertEquals(tree.getDataNodesForGenomes(genomeIDs, 0).size(), 1);
         assertEquals(tree.getDataNodesForGenomes(genomeIDs, 1).size(), 3);
         ArrayList<Strand> testArray = tree.filterStrandsFromNodes(0, 1,
-                tree.getDataNodesForGenomes(genomeIDs, 1),genomeIDs,20);
+                tree.getDataNodesForGenomes(genomeIDs, 1), genomeIDs, 20);
 
         assertEquals(testArray.size(), 3);
         assertTrue(testArray.contains(strand2));
@@ -155,7 +155,7 @@ public class DataTreeTest {
 
         for (int i = 1; i < 5; i++) {
             ArrayList<Strand> testArray = tree.filterStrandsFromNodes(-10, 50,
-                    tree.getDataNodesForGenomes(genomeIDs, i),genomeIDs,40);
+                    tree.getDataNodesForGenomes(genomeIDs, i), genomeIDs, 40);
 
             assertEquals(testArray.size(), 3);
         }

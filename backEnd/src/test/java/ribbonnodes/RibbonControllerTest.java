@@ -94,7 +94,8 @@ public class RibbonControllerTest {
                 new ArrayList<>(),
                 new ArrayList<>(Arrays.asList("1")));
         Mockito.verify(testController, Mockito.times(1)).addEdges(new ArrayList<>(), false);
-        Mockito.verify(testController, Mockito.times(1)).collapseRibbons(new ArrayList<>(), 0, 1000);
+        Mockito.verify(testController,
+                Mockito.times(1)).collapseRibbons(new ArrayList<>(), 0, 1000);
 
 
     }
@@ -128,8 +129,6 @@ public class RibbonControllerTest {
     }
 
 
-
-
     /**
      * Assert the nodes are split to one ribbon with common nodes in the middle,
      * and other ribbons placed at their respective Ys containing only one genome.
@@ -153,7 +152,7 @@ public class RibbonControllerTest {
         controller.spreadYCoordinates(nodes, actGen);
         assertEquals(nodes.size(), 3);
 
-       
+
     }
 
     /**
@@ -163,7 +162,7 @@ public class RibbonControllerTest {
      */
     @Test
     public void testAddEdges() throws Exception {
-    	HashSet<String> genomes = new HashSet<String>();
+        HashSet<String> genomes = new HashSet<String>();
         genomes.add("1");
         ArrayList<RibbonNode> nodes = new ArrayList<>();
         RibbonNode node1 = new RibbonNode(0, genomes);
@@ -225,7 +224,7 @@ public class RibbonControllerTest {
 
         assertEquals(controller.findNextNodeWithGenome(nodes, new Genome("2"), 1), node3);
     }
- 
+
 
     /**
      * Test the adding of mutation labels. Empty for now.

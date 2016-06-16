@@ -33,8 +33,6 @@ public abstract class RibbonNodeFactory {
     }
 
 
-
-
     /**
      * Collapse a group of nodes and lead all edges the right way.
      *

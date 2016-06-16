@@ -57,12 +57,15 @@ public class RibbonNode {
      * Draw the node or not.
      */
     private boolean isVisible;
-    
+
     /**
      * The mutation starting from this node.
      */
     private ArrayList<AbstractMutation> mutations;
 
+    /**
+     * Find if y is already set.
+     */
     private boolean yFixed;
 
     /**
@@ -82,7 +85,7 @@ public class RibbonNode {
         this.y = 0;
         this.isVisible = true;
         mutations = new ArrayList<>();
-        yFixed=false;
+        yFixed = false;
     }
 
     /**
@@ -92,6 +95,16 @@ public class RibbonNode {
      */
     public String getLabel() {
         return this.genomes.toString() + " " + label;
+    }
+
+    /**
+     * Set the label.
+     *
+     * @param label Label.
+     */
+    public void setLabel(String label) {
+        this.label = label;
+
     }
 
     /**
@@ -110,7 +123,6 @@ public class RibbonNode {
         return null;
     }
 
-
     /**
      * Get specific Outedge.
      *
@@ -125,17 +137,6 @@ public class RibbonNode {
             }
         }
         return null;
-    }
-
-
-    /**
-     * Set the label.
-     *
-     * @param label Label.
-     */
-    public void setLabel(String label) {
-        this.label = label;
-
     }
 
     /**
@@ -166,15 +167,6 @@ public class RibbonNode {
     }
 
     /**
-     * Get the incoming edges.
-     *
-     * @return InEdges.
-     */
-    public ArrayList<RibbonEdge> getInEdges() {
-        return inEdges;
-    }
-
-    /**
      * Set the outgoing edges.
      *
      * @param outEdges New outgoing edges.
@@ -184,6 +176,15 @@ public class RibbonNode {
         for (RibbonEdge edge : this.outEdges) {
             edge.setStart(this);
         }
+    }
+
+    /**
+     * Get the incoming edges.
+     *
+     * @return InEdges.
+     */
+    public ArrayList<RibbonEdge> getInEdges() {
+        return inEdges;
     }
 
     /**
@@ -302,37 +303,49 @@ public class RibbonNode {
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
-    
+
     /**
      * Get the mutations starting from this node.
+     *
      * @return The mutations.
      */
     public ArrayList<AbstractMutation> getMutations() {
-    	return mutations;
+        return mutations;
     }
-    
+
     /**
      * Add a mutation.
+     *
      * @param mutation Added mutation.
      */
     public void addMutation(AbstractMutation mutation) {
-    	mutations.add(mutation);
+        mutations.add(mutation);
     }
-    
+
     /**
      * Checks if there is a mutation on this node.
+     *
      * @return Boolean type.
      */
     public boolean hasMutation() {
-    	return mutations.size() > 0;
+        return mutations.size() > 0;
     }
 
 
-
+    /**
+     * Don't change this nodes y anymore if true.
+     *
+     * @return if y is already fixed.
+     */
     public boolean isyFixed() {
         return yFixed;
     }
 
+    /**
+     * Set yfixed.
+     *
+     * @param yFixed the boolean.
+     */
     public void setyFixed(boolean yFixed) {
         this.yFixed = yFixed;
     }

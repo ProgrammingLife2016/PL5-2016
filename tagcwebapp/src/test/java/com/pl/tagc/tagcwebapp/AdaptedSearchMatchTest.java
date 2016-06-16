@@ -8,13 +8,13 @@ import org.meanbean.test.BeanTester;
  */
 public class AdaptedSearchMatchTest {
 
-	/**
-	 * Tests the getters and setters.
-	 */
-	@Test
-	public void test() {
-		BeanTester beanTester = new BeanTester();
-		beanTester.testBean(AdaptedSearchMatch.class);
-	}
+    /**
+     * Tests the getters and setters.
+     */
+    @Test
+    public void test() {
+        BeanTester beanTester = new BeanTester();
+        beanTester.testBean(AdaptedSearchMatch.class);
+    }
 
 }

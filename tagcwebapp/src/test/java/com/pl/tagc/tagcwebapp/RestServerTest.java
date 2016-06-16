@@ -11,19 +11,19 @@ import static org.junit.Assert.assertTrue;
  */
 public class RestServerTest {
 
-	/**
-	 * Test rest server.
-	 */
-	@Test
-	public void testRestServer() {
-		Exception ex = null;
-	    try {
-			@SuppressWarnings("unused")
-			RestServer server = new RestServer();
-			server.startServer();
-	    } catch (Exception e) {
-	        ex = e;
-	    }
-	    assertTrue(ex == null);
-	}
+    /**
+     * Test rest server.
+     */
+    @Test
+    public void testRestServer() {
+        Exception ex = null;
+        try {
+            @SuppressWarnings("unused")
+            RestServer server = new RestServer();
+            server.startServer();
+        } catch (Exception e) {
+            ex = e;
+        }
+        assertTrue(ex == null);
+    }
 }

@@ -15,372 +15,366 @@ import java.util.List;
  */
 public class Strand {
 
-	/**
-	 * Node id.
-	 */
-	private int id;
+    /**
+     * Node id.
+     */
+    private int id;
 
-	/**
-	 * The x coordinate of this Strand.
-	 */
-	private int x;
+    /**
+     * The x coordinate of this Strand.
+     */
+    private int x;
 
-	/**
-	 * Dna in node.
-	 */
-	private String sequence;
+    /**
+     * Dna in node.
+     */
+    private String sequence;
 
-	/**
-	 * Genomes that contain this node.
-	 */
-	private HashSet<String> genomes;
+    /**
+     * Genomes that contain this node.
+     */
+    private HashSet<String> genomes;
 
-	/**
-	 * The refrence genome of this node.
-	 */
-	private String referenceGenome;
+    /**
+     * The refrence genome of this node.
+     */
+    private String referenceGenome;
 
-	/** The start coordinate. */
-	private int startCoordinate;
-	
-	/** The end coordinate. */
-	private int endCoordinate;
+    /**
+     * The start coordinate.
+     */
+    private int startCoordinate;
 
-	/**
-	 * Amount of genomes that contain this node.
-	 */
-	private int weight;
+    /**
+     * The end coordinate.
+     */
+    private int endCoordinate;
 
-	/**
-	 * The edges going out of this strand.
-	 */
-	private ArrayList<StrandEdge> outgoingEdges;
-	
-	/** The incoming edges. */
-	private ArrayList<StrandEdge> incomingEdges;
+    /**
+     * Amount of genomes that contain this node.
+     */
+    private int weight;
 
-	/**
-	 * The mutations on this Strand.
-	 */
-	private ArrayList<AbstractMutation> mutations;
+    /**
+     * The edges going out of this strand.
+     */
+    private ArrayList<StrandEdge> outgoingEdges;
 
-	/** The genomic features. */
-	private ArrayList<GenomicFeature> genomicFeatures = new ArrayList<GenomicFeature>();
-	
-	/**
-	 * Instantiates a new strand.
-	 */
-	public Strand() { }
-	
-	/**
-	 * Constructor to create a node.
-	 *
-	 * @param id
-	 *            The node id.
-	 * @param sequence
-	 *            The sequence of the node.
-	 * @param newGenomes
-	 *            The genomes id's passing through.
-	 * @param referenceGenome
-	 *            The reference genome id.
-	 * @param startCoordinate
-	 *            the reference coordinate.
-	 */
-	public Strand(int id, String sequence, HashSet<String> newGenomes, String referenceGenome,
-			int startCoordinate) {
-		this.id = id;
-		this.sequence = sequence;
-		genomes = newGenomes;
-		this.referenceGenome = referenceGenome;
-		this.startCoordinate = startCoordinate;
-		this.endCoordinate = startCoordinate + sequence.length() - 1;
-		this.weight = genomes.size();
-		this.outgoingEdges = new ArrayList<>();
-		this.incomingEdges = new ArrayList<>();
-		this.x = 0;
-		this.mutations = new ArrayList<>();
+    /**
+     * The incoming edges.
+     */
+    private ArrayList<StrandEdge> incomingEdges;
 
-	}
+    /**
+     * The mutations on this Strand.
+     */
+    private ArrayList<AbstractMutation> mutations;
 
-	/**
-	 * Instantiates a new strand.
-	 *
-	 * @param id the id
-	 */
-	public Strand(int id) {
-		this.id = id;
-	}
+    /**
+     * The genomic features.
+     */
+    private ArrayList<GenomicFeature> genomicFeatures = new ArrayList<GenomicFeature>();
 
+    /**
+     * Instantiates a new strand.
+     */
+    public Strand() {
+    }
 
-	/**
-	 * Get the node id.
-	 *
-	 * @return The node id.
-	 */
-	public int getId() {
-		return id;
-	}
+    /**
+     * Constructor to create a node.
+     *
+     * @param id              The node id.
+     * @param sequence        The sequence of the node.
+     * @param newGenomes      The genomes id's passing through.
+     * @param referenceGenome The reference genome id.
+     * @param startCoordinate the reference coordinate.
+     */
+    public Strand(int id, String sequence, HashSet<String> newGenomes, String referenceGenome,
+                  int startCoordinate) {
+        this.id = id;
+        this.sequence = sequence;
+        genomes = newGenomes;
+        this.referenceGenome = referenceGenome;
+        this.startCoordinate = startCoordinate;
+        this.endCoordinate = startCoordinate + sequence.length() - 1;
+        this.weight = genomes.size();
+        this.outgoingEdges = new ArrayList<>();
+        this.incomingEdges = new ArrayList<>();
+        this.x = 0;
+        this.mutations = new ArrayList<>();
 
-	/**
-	 * Get the sequence from the node.
-	 *
-	 * @return The sequence.
-	 */
-	public String getSequence() {
-		return sequence;
-	}
+    }
 
-	/**
-	 * Get the genomes passing through the node.
-	 *
-	 * @return The genomes id's.
-	 */
-	public HashSet<String> getGenomes() {
-		return genomes;
-	}
-
-	/**
-	 * Get the weight of the node.
-	 *
-	 * @return The weight.
-	 */
-	public int getWeight() {
-		return weight;
-	}
-
-	/**
-	 * Get the reference genome.
-	 *
-	 * @return The reference genome id.
-	 */
-	public String getReferenceGenome() {
-		return referenceGenome;
-	}
-
-	/**
-	 * Set the reference genome id.
-	 *
-	 * @param referenceGenome
-	 *            The refrence genome id.
-	 */
-	public void setReferenceGenome(String referenceGenome) {
-		this.referenceGenome = referenceGenome;
-	}
+    /**
+     * Instantiates a new strand.
+     *
+     * @param id the id
+     */
+    public Strand(int id) {
+        this.id = id;
+    }
 
 
-	/**
-	 * Set the node id.
-	 *
-	 * @param id
-	 *            The node id.
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+    /**
+     * Get the node id.
+     *
+     * @return The node id.
+     */
+    public int getId() {
+        return id;
+    }
 
-	/**
-	 * Set the sequence.
-	 *
-	 * @param sequence
-	 *            The sequence.
-	 */
-	public void setSequence(String sequence) {
-		this.sequence = sequence;
-	}
+    /**
+     * Set the node id.
+     *
+     * @param id The node id.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	/**
-	 * Set the genomes id's passing through.
-	 *
-	 * @param newGenomes
-	 *            The genomes id's.
-	 */
-	public void setGenomes(HashSet<String> newGenomes) {
-		genomes = new HashSet<String>(newGenomes);
-		this.weight = genomes.size();
+    /**
+     * Get the sequence from the node.
+     *
+     * @return The sequence.
+     */
+    public String getSequence() {
+        return sequence;
+    }
 
-	}
+    /**
+     * Set the sequence.
+     *
+     * @param sequence The sequence.
+     */
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
+    }
 
-	/**
-	 * Set the weight.
-	 *
-	 * @param weight
-	 *            The weight.
-	 */
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
+    /**
+     * Get the genomes passing through the node.
+     *
+     * @return The genomes id's.
+     */
+    public HashSet<String> getGenomes() {
+        return genomes;
+    }
 
-	/**
-	 * Add an edge to the edges.
-	 *
-	 * @param edge
-	 *            The added edge.
-	 */
-	public void addEdge(StrandEdge edge) {
-		assert edge.contains(this);
-		if (edge.getStart().equals(this)) {
-			outgoingEdges.add(edge);
-		}
-		else {
-			incomingEdges.add(edge);
-		}
-	}
+    /**
+     * Set the genomes id's passing through.
+     *
+     * @param newGenomes The genomes id's.
+     */
+    public void setGenomes(HashSet<String> newGenomes) {
+        genomes = new HashSet<String>(newGenomes);
+        this.weight = genomes.size();
 
+    }
 
-	/**
-	 * Getter for x.
-	 *
-	 * @return the x coordinate of this strand.
-	 */
-	public int getX() {
-		return x;
-	}
+    /**
+     * Get the weight of the node.
+     *
+     * @return The weight.
+     */
+    public int getWeight() {
+        return weight;
+    }
 
-	/**
-	 * The setter for x.
-	 *
-	 * @param x
-	 *            The x to set this nodes x coordinate to.
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
+    /**
+     * Set the weight.
+     *
+     * @param weight The weight.
+     */
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 
-	/**
-	 * Get all the mutations started from this Strand.
-	 *
-	 * @return Mutations.
-	 */
-	public ArrayList<AbstractMutation> getMutations() {
-		return mutations;
-	}
+    /**
+     * Get the reference genome.
+     *
+     * @return The reference genome id.
+     */
+    public String getReferenceGenome() {
+        return referenceGenome;
+    }
 
-	/**
-	 * Add a mutation to the mutations.
-	 *
-	 * @param mutation The added mutation.
-	 */
-	public void addMutation(AbstractMutation mutation) {
-		mutations.add(mutation);
-	}
+    /**
+     * Set the reference genome id.
+     *
+     * @param referenceGenome The refrence genome id.
+     */
+    public void setReferenceGenome(String referenceGenome) {
+        this.referenceGenome = referenceGenome;
+    }
 
-	/**
-	 *
-	 * @return the string
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		return "" + id;
-	}
-
-	/**
-	 * Gets the genomic features.
-	 *
-	 * @return the genomic features
-	 */
-	public ArrayList<GenomicFeature> getGenomicFeatures() {
-		return genomicFeatures;
-	}
-
-	/**
-	 * Adds the genomic feature.
-	 *
-	 * @param genomicFeature the genomic feature
-	 */
-	public void addGenomicFeature(GenomicFeature genomicFeature) {
-		genomicFeatures.add(genomicFeature);
-	}
+    /**
+     * Add an edge to the edges.
+     *
+     * @param edge The added edge.
+     */
+    public void addEdge(StrandEdge edge) {
+        assert edge.contains(this);
+        if (edge.getStart().equals(this)) {
+            outgoingEdges.add(edge);
+        } else {
+            incomingEdges.add(edge);
+        }
+    }
 
 
-	/**
-	 * Contains.
-	 *
-	 * @param id the genomeId to check for.
-	 * @return true, if successful
-	 */
-	private boolean contains(String id) {
-		return genomes.contains(id);
-	}
+    /**
+     * Getter for x.
+     *
+     * @return the x coordinate of this strand.
+     */
+    public int getX() {
+        return x;
+    }
 
-	/**
-	 * Gets the outgoing edges.
-	 *
-	 * @return the outgoing edges
-	 */
-	public ArrayList<StrandEdge> getOutgoingEdges() {
-		return outgoingEdges;
-	}
+    /**
+     * The setter for x.
+     *
+     * @param x The x to set this nodes x coordinate to.
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * Get all the mutations started from this Strand.
+     *
+     * @return Mutations.
+     */
+    public ArrayList<AbstractMutation> getMutations() {
+        return mutations;
+    }
+
+    /**
+     * Add a mutation to the mutations.
+     *
+     * @param mutation The added mutation.
+     */
+    public void addMutation(AbstractMutation mutation) {
+        mutations.add(mutation);
+    }
+
+    /**
+     * @return the string
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return "" + id;
+    }
+
+    /**
+     * Gets the genomic features.
+     *
+     * @return the genomic features
+     */
+    public ArrayList<GenomicFeature> getGenomicFeatures() {
+        return genomicFeatures;
+    }
+
+    /**
+     * Adds the genomic feature.
+     *
+     * @param genomicFeature the genomic feature
+     */
+    public void addGenomicFeature(GenomicFeature genomicFeature) {
+        genomicFeatures.add(genomicFeature);
+    }
 
 
-	/**
-	 * Gets the next strands with.
-	 *
-	 * @param genomeId the genome
-	 * @return the next strands with
-	 */
-	public List<Strand> getNextStrandsWith(String genomeId) {
-		ArrayList<Strand> strands = new ArrayList<Strand>();
-		for (StrandEdge edge: outgoingEdges) {
-			Strand neighbor = edge.getEnd();
-			if (neighbor.contains(genomeId)) {
-				strands.add(neighbor);
-			}
-		}
-		return strands;
-		
-	}
-	
-	/**
-	 * Gets the previous strands with.
-	 *
-	 * @param genome the genome
-	 * @return the previous strands with
-	 */
-	public List<Strand> getPreviousStrandsWith(String genome) {
-		ArrayList<Strand> strands = new ArrayList<Strand>();
-		for (StrandEdge edge: incomingEdges) {
-			Strand neighbor = edge.getStart();
-			if (neighbor.contains(genome)) {
-				strands.add(neighbor);
-			}
-		}
-		return strands;
-		
-	}
+    /**
+     * Contains.
+     *
+     * @param id the genomeId to check for.
+     * @return true, if successful
+     */
+    private boolean contains(String id) {
+        return genomes.contains(id);
+    }
 
-	/**
-	 * Gets the start coordinate.
-	 *
-	 * @return the start coordinate
-	 */
-	public int getStartCoordinate() {
-		return startCoordinate;
-	}
+    /**
+     * Gets the outgoing edges.
+     *
+     * @return the outgoing edges
+     */
+    public ArrayList<StrandEdge> getOutgoingEdges() {
+        return outgoingEdges;
+    }
 
-	/**
-	 * Sets the start coordinate.
-	 *
-	 * @param startCoordinate the new start coordinate
-	 */
-	public void setStartCoordinate(int startCoordinate) {
-		this.startCoordinate = startCoordinate;
-	}
 
-	/**
-	 * Gets the end coordinate.
-	 *
-	 * @return the end coordinate
-	 */
-	public int getEndCoordinate() {
-		return endCoordinate;
-	}
+    /**
+     * Gets the next strands with.
+     *
+     * @param genomeId the genome
+     * @return the next strands with
+     */
+    public List<Strand> getNextStrandsWith(String genomeId) {
+        ArrayList<Strand> strands = new ArrayList<Strand>();
+        for (StrandEdge edge : outgoingEdges) {
+            Strand neighbor = edge.getEnd();
+            if (neighbor.contains(genomeId)) {
+                strands.add(neighbor);
+            }
+        }
+        return strands;
 
-	/**
-	 * Sets the end coordinate.
-	 *
-	 * @param endCoordinate the new end coordinate
-	 */
-	public void setEndCoordinate(int endCoordinate) {
-		this.endCoordinate = endCoordinate;
-	}
+    }
+
+    /**
+     * Gets the previous strands with.
+     *
+     * @param genome the genome
+     * @return the previous strands with
+     */
+    public List<Strand> getPreviousStrandsWith(String genome) {
+        ArrayList<Strand> strands = new ArrayList<Strand>();
+        for (StrandEdge edge : incomingEdges) {
+            Strand neighbor = edge.getStart();
+            if (neighbor.contains(genome)) {
+                strands.add(neighbor);
+            }
+        }
+        return strands;
+
+    }
+
+    /**
+     * Gets the start coordinate.
+     *
+     * @return the start coordinate
+     */
+    public int getStartCoordinate() {
+        return startCoordinate;
+    }
+
+    /**
+     * Sets the start coordinate.
+     *
+     * @param startCoordinate the new start coordinate
+     */
+    public void setStartCoordinate(int startCoordinate) {
+        this.startCoordinate = startCoordinate;
+    }
+
+    /**
+     * Gets the end coordinate.
+     *
+     * @return the end coordinate
+     */
+    public int getEndCoordinate() {
+        return endCoordinate;
+    }
+
+    /**
+     * Sets the end coordinate.
+     *
+     * @param endCoordinate the new end coordinate
+     */
+    public void setEndCoordinate(int endCoordinate) {
+        this.endCoordinate = endCoordinate;
+    }
 }

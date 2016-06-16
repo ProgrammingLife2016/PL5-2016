@@ -10,14 +10,14 @@ import org.meanbean.test.ConfigurationBuilder;
  */
 public class AdaptedRibbonNodeTest {
 
-	/**
-	 * Tests the getters and setters.
-	 */
-	@Test
-	public void test() {
-		BeanTester beanTester = new BeanTester();
-		Configuration config = new ConfigurationBuilder().ignoreProperty("mutations").build();
-		beanTester.testBean(AdaptedRibbonNode.class,config);
-	}
+    /**
+     * Tests the getters and setters.
+     */
+    @Test
+    public void test() {
+        BeanTester beanTester = new BeanTester();
+        Configuration config = new ConfigurationBuilder().ignoreProperty("mutations").build();
+        beanTester.testBean(AdaptedRibbonNode.class, config);
+    }
 
 }

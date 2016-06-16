@@ -63,7 +63,7 @@ function screenResize() {
         if (treeRedrawTimeout) {
             clearTimeout(treeRedrawTimeout);
         }
-        treeRedrawTimeout = setTimeout(function() {
+        treeRedrawTimeout = setTimeout(function () {
             resizePhyloTree();
         }, 500);
 
@@ -172,23 +172,23 @@ $('document').ready(function () {
         }
     });
 
-    $('#toggleButtons').click(function() {
+    $('#toggleButtons').click(function () {
         $('body').toggleClass('showButtons');
     });
 
-    $('#zoomIn').click(function() {
+    $('#zoomIn').click(function () {
         var slider = $('#minimap .slider');
         var center = Math.floor(pxToInt(slider.css('left')) + slider.width() / 2);
         zoom(1, 5, center);
     });
 
-    $('#zoomOut').click(function() {
+    $('#zoomOut').click(function () {
         var slider = $('#minimap .slider');
         var center = Math.floor(pxToInt(slider.css('left')) + slider.width() / 2);
         zoom(-1, 5, center);
     });
 
-    $('#coordinateSelector').keyup(function(e) {
+    $('#coordinateSelector').keyup(function (e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
             var left = Math.floor($(this).val() / minimapCount * $('#minimap').width());
@@ -198,15 +198,15 @@ $('document').ready(function () {
             $('#minimap .slider').animate({
                 'left': left,
                 'width': width
-            }, 1000, function() {
+            }, 1000, function () {
                 updatezoomWindow();
             });
         }
     });
 
-    $('#mutationLegenda').hover(function() {
+    $('#mutationLegenda').hover(function () {
         $('#legendaCanvas').show();
-    },function() {
+    }, function () {
         $('#legendaCanvas').hide();
     });
 
@@ -355,15 +355,15 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
     var pointMutations = point.mutations;
     if (point.visible && ( !pointMutations || typeof pointMutations == "undefined" || pointMutations.length == 0)) {
         ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
-    } else if (pointMutations){
+    } else if (pointMutations) {
         var mutation = pointMutations[0].replace('"', '');
         var index = mutations.indexOf(mutation);
         var mutSize = mutColors.length;
-        var color = mutColors[index%mutSize];
-        ctx.fillStyle = '#'+ color;
+        var color = mutColors[index % mutSize];
+        ctx.fillStyle = '#' + color;
         switch (Math.floor(index / mutSize)) {
             case 0: //Square
-                ctx.rect(xPos-5 * multiplier, yPos-5 * multiplier, 10 * multiplier, 10 * multiplier);
+                ctx.rect(xPos - 5 * multiplier, yPos - 5 * multiplier, 10 * multiplier, 10 * multiplier);
                 break;
             case 1: //Triangle
                 ctx.moveTo(xPos, yPos - 6 * multiplier);
@@ -375,7 +375,7 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
                 ctx.lineTo(xPos + 6 * multiplier, yPos + 6 * multiplier);
                 ctx.moveTo(xPos - 6 * multiplier, yPos + 6 * multiplier);
                 ctx.lineTo(xPos + 6 * multiplier, yPos - 6 * multiplier);
-                ctx.strokeStyle = '#'+ color;
+                ctx.strokeStyle = '#' + color;
                 break;
         }
         ctx.fill();
@@ -531,12 +531,12 @@ function initialize() {
  */
 function initLegendCanvas() {
     var height = mutations.length * 26 + 20;
-    $('#legendaCanvas').html('<canvas width="280px" height="'+ height +'px"></canvas>')
+    $('#legendaCanvas').html('<canvas width="280px" height="' + height + 'px"></canvas>')
     var canvas = $('#legendaCanvas').find('canvas');
     var ctx = canvas[0].getContext("2d");
-    $.each(mutations, function(key, mutation) {
-        drawPoint(ctx, 15, 10 + key * 30, 2, {visible: 1, mutations: [ mutation ]});
-        ctx.font="15px Georgia";
+    $.each(mutations, function (key, mutation) {
+        drawPoint(ctx, 15, 10 + key * 30, 2, {visible: 1, mutations: [mutation]});
+        ctx.font = "15px Georgia";
         ctx.fillText(mutation, 35, 16 + key * 30);
     });
 }

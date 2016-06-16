@@ -104,18 +104,18 @@ public class GenomeGraph {
         this.activeGenomes = new ArrayList<>();
 
         for (ArrayList<String> genomeIds : ids) {
-        	ArrayList<Genome> input = new ArrayList<>();
-        	for (String genomeId : genomeIds) {
-        		Genome genome = genomes.get(genomeId);
+            ArrayList<Genome> input = new ArrayList<>();
+            for (String genomeId : genomeIds) {
+                Genome genome = genomes.get(genomeId);
                 if (genome != null) {
                     input.add(genome);
                 } else {
                     unrecognizedGenomes.add(genomeId);
                 }
-        	}
-        	if (input.size() > 0) {
-            	activeGenomes.add(input);
-        	}
+            }
+            if (input.size() > 0) {
+                activeGenomes.add(input);
+            }
         }
         for (ArrayList<Genome> genome : activeGenomes) {
             genome.get(0).setStrandsX();

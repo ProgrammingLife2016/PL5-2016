@@ -34,6 +34,16 @@ public class DatabaseTest {
     }
 
     /**
+     * Deletes the created database.
+     */
+    @AfterClass
+    public static void deleteDB() {
+        db.deleteDatabase();
+        File f = new File("test.db");
+        Assert.assertTrue(!f.exists());
+    }
+
+    /**
      * The actual tests, currently checks if file indeed gets created.
      */
     @Test
@@ -45,7 +55,8 @@ public class DatabaseTest {
     /**
      * Test if opening an existing database works.
      */
-    @Test @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @Test
+    @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void testDBOpening() {
         ResourceIterator<Node> allNodes;
         db.getGraphService().shutdown();
@@ -159,44 +170,6 @@ public class DatabaseTest {
         Assert.assertEquals(8, i);
     }
 
-    /**
-     * Test if the phylogenetic tree gets inserted correctly in the database.
-     */
-    @Test
-    @SuppressWarnings("checkstyle:methodlength")
-    public void testPhyloStructure() {
-        Iterable<Relationship> allRelas;
-        Set<String> strands = new HashSet<>();
-        strands.add("0|1");
-        strands.add("1|AA");
-        strands.add("1|2");
-        strands.add("2|3");
-        strands.add("3|BB");
-        strands.add("3|CC");
-        strands.add("2|DD");
-
-        int i = 1;
-
-        try (Transaction tx = db.getGraphService().beginTx()) {
-            //fetch all relationships from the graph
-            allRelas = GlobalGraphOperations.at(db.getGraphService()).getAllRelationships();
-
-            //check if all relationships/edges are indeed in the database
-            for (Relationship a : allRelas) {
-                if (a.isType(DynamicRelationshipType.withName("PHYLOPARENT"))) {
-                    String coordinates = a.getStartNode().getProperty("genome") + "|"
-                            + a.getEndNode().getProperty("genome");
-                    Assert.assertTrue(strands.contains(coordinates));
-                    i++;
-                }
-            }
-            tx.success();
-        }
-
-        //Make sure no extra edges are inserted
-        Assert.assertEquals(i, 8);
-    }
-
 //    /**
 //     * Test if nodes get retrieved correctly.
 //     */
@@ -243,6 +216,44 @@ public class DatabaseTest {
 //    }
 
     /**
+     * Test if the phylogenetic tree gets inserted correctly in the database.
+     */
+    @Test
+    @SuppressWarnings("checkstyle:methodlength")
+    public void testPhyloStructure() {
+        Iterable<Relationship> allRelas;
+        Set<String> strands = new HashSet<>();
+        strands.add("0|1");
+        strands.add("1|AA");
+        strands.add("1|2");
+        strands.add("2|3");
+        strands.add("3|BB");
+        strands.add("3|CC");
+        strands.add("2|DD");
+
+        int i = 1;
+
+        try (Transaction tx = db.getGraphService().beginTx()) {
+            //fetch all relationships from the graph
+            allRelas = GlobalGraphOperations.at(db.getGraphService()).getAllRelationships();
+
+            //check if all relationships/edges are indeed in the database
+            for (Relationship a : allRelas) {
+                if (a.isType(DynamicRelationshipType.withName("PHYLOPARENT"))) {
+                    String coordinates = a.getStartNode().getProperty("genome") + "|"
+                            + a.getEndNode().getProperty("genome");
+                    Assert.assertTrue(strands.contains(coordinates));
+                    i++;
+                }
+            }
+            tx.success();
+        }
+
+        //Make sure no extra edges are inserted
+        Assert.assertEquals(i, 8);
+    }
+
+    /**
      * Test if all relationships get retrieved correctly.
      */
     @Test
@@ -253,14 +264,5 @@ public class DatabaseTest {
         Assert.assertEquals(db.returnDescGenome("3"), wanted);
         wanted.add("DD");
         Assert.assertEquals(db.returnDescGenome("2"), wanted);
-    }
-    /**
-     * Deletes the created database.
-     */
-    @AfterClass
-    public static void deleteDB() {
-        db.deleteDatabase();
-        File f = new File("test.db");
-        Assert.assertTrue(!f.exists());
     }
 }

@@ -34,10 +34,10 @@ public class Mutations {
      * From all the start Strands.
      */
     public void computeAllMutations() {
-    	for (RibbonNode node : nodes) {
-    		findIndel(node);
-    		findSNP(node);
-    	}
+        for (RibbonNode node : nodes) {
+            findIndel(node);
+            findSNP(node);
+        }
     }
 
     /**
@@ -80,7 +80,7 @@ public class Mutations {
      * @param strands All the strands.
      */
     private void findIndel(RibbonNode node) {
-    	for (RibbonEdge edge1 : node.getOutEdges()) {
+        for (RibbonEdge edge1 : node.getOutEdges()) {
             for (RibbonEdge edge2 : node.getOutEdges()) {
                 if (!edge1.equals(edge2)) {
                     RibbonNode end = edge1.getEnd();

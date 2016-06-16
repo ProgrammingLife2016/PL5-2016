@@ -49,7 +49,6 @@ public class RibbonNodeFactoryTest {
      */
 
 
-
     /**
      * Test if two nodes are correctly collapsed in to one.
      *

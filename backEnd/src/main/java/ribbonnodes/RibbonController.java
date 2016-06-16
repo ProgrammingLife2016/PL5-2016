@@ -58,6 +58,10 @@ public class RibbonController {
 
         ArrayList<ArrayList<Genome>> actGen = genomeGraph.getActiveGenomes();
 
+        if (isMiniMap) {
+            zoomLevel = 3;
+        }
+
         ArrayList<String> actIds = new ArrayList<>();
         for (ArrayList<Genome> genome : actGen) {
             actIds.add(genome.get(0).getId());
@@ -67,14 +71,15 @@ public class RibbonController {
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel);
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result, isMiniMap);
-        collapseRibbons(result, minX,maxX);
+        collapseRibbons(result, minX, maxX);
 
         Mutations mutations = new Mutations(result);
         mutations.computeAllMutations();
 
         spreadYCoordinates(result, actIds);
 
-        result.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getId()).compareTo(o2.getId()));
+        result.sort((RibbonNode o1, RibbonNode o2) ->
+                new Integer(o1.getId()).compareTo(o2.getId()));
 
         System.out.println(result.size() + " nodes returned");
         return result;
@@ -108,8 +113,9 @@ public class RibbonController {
     /**
      * Collapses the ribbon Nodes and edges in nodes.
      *
-     * @param nodes     The ribbonNode Graph to collapse.
-     *
+     * @param nodes The ribbonNode Graph to collapse.
+     * @param minX  The minimal x value to collapse.
+     * @param maxX  The maximal x value to collapse.
      */
     @SuppressWarnings("checkstyle:methodlength")
     protected void collapseRibbons(ArrayList<RibbonNode> nodes, int minX, int maxX) {
@@ -125,7 +131,7 @@ public class RibbonController {
                 nodesToCollapse.add(node);
                 while (node.getOutEdges().size() == 1) {
                     RibbonNode other = node.getOutEdges().get(0).getEnd();
-                    if (other != null&& other.getX() > minX && other.getX() < maxX) {
+                    if (other != null && other.getX() > minX && other.getX() < maxX) {
                         if (other.getInEdges().size() == 1) {
                             nodesToCollapse.add(other);
                             node = other;
@@ -153,8 +159,6 @@ public class RibbonController {
 
 
     }
-
-
 
 
     /**
@@ -187,12 +191,21 @@ public class RibbonController {
 
     }
 
-    protected RibbonNode findPreviousNodeSameGenomes(ArrayList<RibbonNode> nodes, RibbonNode node) {
+    /**
+     * Find the closest node to the left that has the same genomes.
+     *
+     * @param nodes The RibbonNode graph.
+     * @param node  Node to find the closest for.
+     * @return The first node to the left, or same node if not found.
+     */
+    protected RibbonNode findPreviousNodeSameGenomes(ArrayList<RibbonNode> nodes,
+                                                     RibbonNode node) {
         int endIndex = nodes.indexOf(node);
         RibbonNode result = node;
         for (int i = 0; i < endIndex; i++) {
             RibbonNode other = nodes.get(i);
-            if (other.getGenomes().size() == node.getGenomes().size() && other.getGenomes().containsAll(node.getGenomes())) {
+            if (other.getGenomes().size() == node.getGenomes().size()
+                    && other.getGenomes().containsAll(node.getGenomes())) {
                 result = other;
             }
 
@@ -206,6 +219,8 @@ public class RibbonController {
      * all others along the y coordinate associated with that genome.
      *
      * @param node          The node to calculate the Y for.
+     * @param activeGenomes The ids of the active genomes.
+     * @param level         the zoomlevel.
      */
     protected void spreadYCoordinates(RibbonNode node,
                                       ArrayList<String> activeGenomes,
@@ -216,7 +231,8 @@ public class RibbonController {
             node.setY(0);
             node.setyFixed(true);
         }
-        node.getOutEdges().sort((RibbonEdge o1, RibbonEdge o2) -> new Integer(o2.getWeight()).compareTo(o1.getWeight()));
+        node.getOutEdges().sort((RibbonEdge o1, RibbonEdge o2) ->
+                new Integer(o2.getWeight()).compareTo(o1.getWeight()));
 
         for (int i = 0; i < node.getOutEdges().size(); i++) {
             RibbonEdge edge = node.getOutEdges().get(i);
@@ -224,21 +240,19 @@ public class RibbonController {
             if (endNode.getGenomes().size() <= node.getGenomes().size() && !endNode.isyFixed()) {
                 int exponent = i;
 
-                int newY = (int) ((node.getGenomes().size() - endNode.getGenomes().size()) *
-                        5 * (activeGenomes.size() - level) *
-                        Math.pow(-1, exponent));
-                    endNode.setyFixed(true);
+                int newY = (int) ((node.getGenomes().size() - endNode.getGenomes().size())
+                        * 5 * (activeGenomes.size() - level)
+                        * Math.pow(-1, exponent));
+                endNode.setyFixed(true);
                 endNode.setY(node.getY() + newY);
                 nextNodes.add(endNode);
-                }
+            }
 
 
         }
 
 
-
     }
-
 
 
     /**
@@ -306,7 +320,7 @@ public class RibbonController {
      */
     protected RibbonNode findNextNodeWithGenome(ArrayList<RibbonNode> nodes,
                                                 Genome genome, int currentIndex) {
-    
+
         for (int i = currentIndex + 1; i < nodes.size(); i++) {
             if (nodes.get(i).getGenomes().contains(genome.getId())) {
                 return nodes.get(i);

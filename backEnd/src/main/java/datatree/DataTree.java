@@ -15,7 +15,6 @@ import java.util.concurrent.ForkJoinPool;
 public class DataTree extends TreeStructure<DataNode> {
 
 
-
     /**
      * Default constructor.
      *
@@ -61,7 +60,8 @@ public class DataTree extends TreeStructure<DataNode> {
      */
     public ArrayList<Strand> getStrands(int xMin, int xMax,
                                         ArrayList<ArrayList<Genome>> genomes, int level) {
-        return filterStrandsFromNodes(xMin, xMax, getDataNodesForGenomes(genomes, level), genomes, level);
+        return filterStrandsFromNodes(xMin, xMax,
+                getDataNodesForGenomes(genomes, level), genomes, level);
 
 
     }
@@ -69,12 +69,17 @@ public class DataTree extends TreeStructure<DataNode> {
     /**
      * Remove unwanted strands from the nodes.
      *
-     * @param xMin  the minimal id of the strands.
-     * @param xMax  the maximal id of the strands.
-     * @param nodes the nodes to filter.
+     * @param xMin    the minimal id of the strands.
+     * @param xMax    the maximal id of the strands.
+     * @param nodes   the nodes to filter.
+     * @param genomes The phylo nodes selected.
+     * @param level   The zoomlevel.
      * @return A filtered list of nodes.
      */
-    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax, Set<DataNode> nodes, ArrayList<ArrayList<Genome>> genomes, int level) {
+    @SuppressWarnings("checkstyle:methodlength")
+    public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax,
+                                                    Set<DataNode> nodes,
+                                                    ArrayList<ArrayList<Genome>> genomes, int level) {
         ArrayList<Strand> result = new ArrayList<>();
         Strand leftAllGenomes = new Strand();
         Strand rightAllGenomes = new Strand();
@@ -104,8 +109,9 @@ public class DataTree extends TreeStructure<DataNode> {
                         rightAllGenomes = strand;
                     }
                     if (strand.getX() >= xMin && strand.getX() <= xMax) {
-                    result.add(strand);
-                    } else if (strand.getX() > leftAllGenomes.getX() && strand.getX() < rightAllGenomes.getX()
+                        result.add(strand);
+                    } else if (strand.getX() > leftAllGenomes.getX()
+                            && strand.getX() < rightAllGenomes.getX()
                             && strand.getSequence().length() > 200) {
                         result.add(strand);
 
@@ -115,10 +121,10 @@ public class DataTree extends TreeStructure<DataNode> {
 
         }
 
-        if(leftAllGenomes.getX()!=Integer.MIN_VALUE) {
+        if (leftAllGenomes.getX() != Integer.MIN_VALUE) {
             result.add(leftAllGenomes);
         }
-        if(rightAllGenomes.getX()!=Integer.MAX_VALUE) {
+        if (rightAllGenomes.getX() != Integer.MAX_VALUE) {
             result.add(rightAllGenomes);
         }
 
