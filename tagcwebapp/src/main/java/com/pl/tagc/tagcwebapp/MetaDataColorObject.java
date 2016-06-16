@@ -1,7 +1,10 @@
 package com.pl.tagc.tagcwebapp;
 
+import org.apache.commons.collections.map.HashedMap;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -34,12 +37,20 @@ public class MetaDataColorObject {
 	}
 
 	/**
-	 * Gets the c list.
+	 * Gets the c list, with color converted to a String.
 	 *
 	 * @return the c list
 	 */
-	public Map<String, Color> getlist() {
-		return list;
+	public Map<String, String> getlist() {
+		Map<String, String> out = new HashMap<>();
+		for(String id : list.keySet()) {
+			String hex = Integer.toHexString(list.get(id).getRGB() & 0xffffff);
+			while (hex.length() < 6) {
+				hex = "0" + hex;
+			}
+			out.put(id, hex);
+		}
+		return out;
 	}
 
 	/**

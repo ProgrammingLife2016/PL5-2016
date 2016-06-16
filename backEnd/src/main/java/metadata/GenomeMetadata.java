@@ -281,12 +281,11 @@ public class GenomeMetadata {
      * @return the value of the wanted field
      */
     public String returnField(String field) {
-
         try {
             Field f = this.getClass().getDeclaredField(field);
             return (String) f.get(this);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("field " + field + " does not exist");
             return "";
         }
     }
