@@ -35,13 +35,7 @@ $("document").ready(function() {
             $('#phyloBackButton').show();
             drawPhyloTree(id);
         } else {
-            $(this).toggleClass('selected');
-            var index = $.inArray(phyloTree[id].name, selectedGenomes);
-            if (index > -1) {
-                selectedGenomes.splice(index, 1);
-            } else {
-                selectedGenomes.push(phyloTree[id].name);
-            }
+            selectGenome(phyloTree[id].name);
         }
     });
 
@@ -59,7 +53,6 @@ $("document").ready(function() {
             type : 'POST',
             data : { 'names': names }
         }).done(function(respData) {
-            console.log("test");
             initializeMinimap();
         });
     });
@@ -92,18 +85,41 @@ $("document").ready(function() {
 
     $('body').on('click', 'svg circle', function() {
         var nodeId = $(this).attr('nodeid');
-        $(this).toggleClass('selected');
-        var index = $.inArray(nodeId, selectedMiddleNodes);
-        if (index > -1) {
-            selectedMiddleNodes.splice(index, 1);
+        selectMiddleNode(nodeId);
+    });
+
+    $('body').on('click', '#selectedGenomeList li:not(".firstLi")', function() {
+        if ($(this).hasClass('genome')) {
+            selectGenome($(this).data('name'));
         } else {
-            selectedMiddleNodes.push(nodeId);
+            selectMiddleNode($(this).data('id'));
         }
     });
 });
 
-function addMiddleNode(coords) {
+function selectGenome(genome) {
+    $('svg tspan:contains("'+ genome +'")').parents('a').toggleClass('selected');
+    var index = $.inArray(genome, selectedGenomes);
+    if (index > -1) {
+        selectedGenomes.splice(index, 1);
+        $('#selectedGenomeList').find('.genome.'+ genome).remove();
+    } else {
+        selectedGenomes.push(genome);
+        $('#selectedGenomeList').append('<li class="genome '+ genome +'" data-name="'+ genome +'">'+ genome +'</li>');
+    }
+}
 
+function selectMiddleNode(nodeId) {
+    nodeId = parseInt(nodeId);
+    $('svg circle[nodeid="'+ nodeId +'"]').toggleClass('selected');
+    var index = $.inArray(nodeId, selectedMiddleNodes);
+    if (index > -1) {
+        selectedMiddleNodes.splice(index, 1);
+        $('#selectedGenomeList').find('.middleNode.'+ nodeId).remove();
+    } else {
+        selectedMiddleNodes.push(nodeId);
+        $('#selectedGenomeList').append('<li class="middleNode '+ nodeId +'" data-id="'+ nodeId +'">MiddleNode '+ nodeId +'</li>');
+    }
 }
 
 /**
@@ -141,7 +157,8 @@ function parsePhyloTree(data) {
  * @param root The root node from which it is drawn
  */
 function drawPhyloTree(root) {
-    $("#svgCanvas").find('svg').remove();
+    var svgCanvas = $('#svgCanvas');
+    svgCanvas.find('svg').remove();
     phyloRoot = root;
     initSmits();
     var data = '<phyloxml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.phyloxml.org http://www.phyloxml.org/1.10/phyloxml.xsd" xmlns="http://www.phyloxml.org"><phylogeny rooted="false">';
@@ -154,12 +171,10 @@ function drawPhyloTree(root) {
         fileSource: false
     };
 
-    var container = $('#phylogenyContainer');
-
     new Smits.PhyloCanvas(
         dataObject,
         "svgCanvas",
-        container.width() - 60, container.height() - 60,
+        svgCanvas.width() - 60, svgCanvas.height() - 60,
         "circular"
     );
 

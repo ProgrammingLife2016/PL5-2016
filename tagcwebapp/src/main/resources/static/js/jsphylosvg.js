@@ -1745,7 +1745,6 @@ function initSmits() {
                     circle = new Smits.PhyloCanvas.Render.Circle(coords[0], coords[1], 5);
                     circle.type = 'node';
                     circle.nodeId = node.name;
-                    console.log(node);
                     svg.draw(circle);
                 }
 
