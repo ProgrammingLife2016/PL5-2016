@@ -2,6 +2,9 @@ package genome;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import mutation.AbstractMutation;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -102,5 +105,16 @@ public class StrandTest {
         StrandEdge edge = new StrandEdge(strand, new Strand(2));
         strand.addEdge(edge);
         assertEquals(strand.getOutgoingEdges().get(0), edge);
+    }
+    
+    /**
+     * Test getting the mutations on this strand.
+     */
+    @Test
+    public void testMutation() {
+    	AbstractMutation mutation = Mockito.mock(AbstractMutation.class);
+    	strand.addMutation(mutation);
+    	assertEquals(strand.getMutations().size(), 1);
+    	assertEquals(strand.getMutations().get(0), mutation);
     }
 }

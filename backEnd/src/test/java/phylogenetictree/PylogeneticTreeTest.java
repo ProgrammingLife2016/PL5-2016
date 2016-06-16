@@ -28,7 +28,7 @@ public class PylogeneticTreeTest {
         tree = new PhylogeneticTree();
         ArrayList<String> genomes = new ArrayList<>(
         		Arrays.asList("A", "C", "D"));
-        tree.parseTree("testFile", genomes);
+        tree.parseTree("data/testFile", genomes);
     }
 
     /**
