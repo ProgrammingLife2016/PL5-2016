@@ -35,14 +35,6 @@ public class StrandEdge {
 
     }
 
-//    public StrandEdge(Object o) {
-//        super(0, 0);
-//        Relationship rela = (Relationship) o;
-//        setStartId(java.lang.Math.toIntExact((long) rela.getStartNode().getProperty("id")));
-//        setEndId(java.lang.Math.toIntExact((long) rela.getEndNode().getProperty("id")));
-//    }
-
-
     /**
      * Gets the start.
      *
