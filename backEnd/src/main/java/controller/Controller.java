@@ -56,7 +56,7 @@ public class Controller {
      * Constructor.
      */
     public Controller() {
-        String gfaFile = "data/TB328.gfa";
+        String gfaFile = "data/TB10.gfa";
         genomeGraph = Parser.parse(gfaFile);
         genomeGraph.annotate("MT_H37RV_BRD_V5.ref",
                 Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
@@ -128,7 +128,7 @@ public class Controller {
      * @param activeGenomes The genomeIDS.
      * @return the list   	The list of unrecognized genomes.
      */
-    public List<String> setActiveGenomes(ArrayList<String> activeGenomes) {
+    public List<String> setActiveGenomes(List<String> activeGenomes) {
         System.out.println("Set active genomes");
         ArrayList<ArrayList<String>> temp = new ArrayList<>();
         for (String s : activeGenomes) {

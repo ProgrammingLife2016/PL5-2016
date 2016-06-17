@@ -18,7 +18,6 @@ public class RestServerTest {
     public void testRestServer() {
         Exception ex = null;
         try {
-            @SuppressWarnings("unused")
             RestServer server = new RestServer();
             server.startServer();
         } catch (Exception e) {
