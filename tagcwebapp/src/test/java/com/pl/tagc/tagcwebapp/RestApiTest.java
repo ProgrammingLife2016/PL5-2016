@@ -89,8 +89,10 @@ public class RestApiTest extends JerseyTest {
 		enable(TestProperties.LOG_TRAFFIC);
 		ResourceConfig rc = new ResourceConfig(RestApi.class);
 		rc.register(DebugExceptionMapper.class);
+		forceSet(TestProperties.CONTAINER_PORT, "0");
 		return rc;
 	}
+	
 
 	/**
 	 * Tests that the getphylogenetictree REST endpoint returns the marshalled
@@ -139,8 +141,7 @@ public class RestApiTest extends JerseyTest {
 	}
 
 	/**
-	 * Tests that the setactivegenomes REST endpoint returns the marshalled
-	 * empty list.
+	 * Tests that the search REST endpoint returns the marshalled search result object.
 	 *
 	 * @throws Exception
 	 *             the exception
