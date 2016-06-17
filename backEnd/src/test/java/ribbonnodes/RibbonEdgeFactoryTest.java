@@ -1,7 +1,6 @@
 package ribbonnodes;
 
 import genome.Genome;
-import metadata.GenomeMetadata;
 import org.junit.Test;
 
 import java.awt.Color;
