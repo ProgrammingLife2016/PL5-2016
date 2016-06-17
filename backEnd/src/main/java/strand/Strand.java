@@ -1,4 +1,4 @@
-package genome;
+package strand;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -9,6 +9,8 @@ import mutation.AbstractMutation;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import genomefeature.GenomicFeature;
 
 /**
  * Class that contains the graph nodes.

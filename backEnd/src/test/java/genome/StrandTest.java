@@ -1,6 +1,9 @@
 package genome;
 
 import mutation.AbstractMutation;
+import strand.Strand;
+import strand.StrandEdge;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

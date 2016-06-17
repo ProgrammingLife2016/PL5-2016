@@ -2,7 +2,7 @@ package datatree;
 
 import abstractdatastructure.TreeStructure;
 import genome.Genome;
-import genome.Strand;
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.HashSet;

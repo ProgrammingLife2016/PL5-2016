@@ -1,10 +1,10 @@
 package datatree;
 
-import genome.Strand;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import org.junit.Before;
 import org.junit.Test;
 import phylogenetictree.PhylogeneticNode;
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.Arrays;

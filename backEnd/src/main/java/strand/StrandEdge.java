@@ -1,4 +1,4 @@
-package genome;
+package strand;
 
 /**
  * The Class StrandEdge.

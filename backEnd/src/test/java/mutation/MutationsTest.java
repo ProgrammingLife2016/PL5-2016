@@ -1,6 +1,5 @@
 package mutation;
 
-import genome.Strand;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -8,6 +7,7 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.Arrays;

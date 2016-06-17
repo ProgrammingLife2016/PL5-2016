@@ -1,8 +1,8 @@
 package parser;
 
 import genome.GenomeGraph;
-import genome.GenomicFeature;
-import genome.Strand;
+import genomefeature.GenomicFeature;
+import strand.Strand;
 
 import org.junit.Test;
 import org.mockito.Matchers;

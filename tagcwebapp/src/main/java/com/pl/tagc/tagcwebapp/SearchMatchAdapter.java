@@ -1,8 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
-import genome.GenomeFeatureSearchMatch;
-
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+
+import genomefeature.GenomeFeatureSearchMatch;
 
 /**
  * The Class RibbonNodeAdapter.

@@ -1,10 +1,12 @@
-package genome;
+package strand;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import genomefeature.GenomicFeature;
 
 /**
  * The Class StrandAnnotator. A utility class which annotates strands.

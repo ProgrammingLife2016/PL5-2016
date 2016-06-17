@@ -10,12 +10,13 @@
 })
 package com.pl.tagc.tagcwebapp;
 
-import genome.GenomeFeatureSearchMatch;
-import genome.Strand;
 import phylogenetictree.PhylogeneticNode;
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
+import strand.Strand;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapters;
+
+import genomefeature.GenomeFeatureSearchMatch;
  

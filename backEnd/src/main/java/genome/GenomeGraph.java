@@ -1,11 +1,17 @@
 package genome;
 
-import genome.GraphSearcher.SearchType;
 import metadata.GenomeMetadata;
+import strand.Strand;
+import strand.StrandAnnotator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import genomefeature.GenomeSearchResult;
+import genomefeature.GenomicFeature;
+import genomefeature.GraphSearcher;
+import genomefeature.GraphSearcher.SearchType;
 
 /**
  * The Class GenomeGraph.

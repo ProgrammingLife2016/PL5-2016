@@ -3,6 +3,9 @@ package genome;
 import org.junit.Before;
 import org.junit.Test;
 
+import strand.Strand;
+import strand.StrandEdge;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

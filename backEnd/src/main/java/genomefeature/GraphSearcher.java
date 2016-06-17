@@ -1,6 +1,9 @@
-package genome;
+package genomefeature;
 
 import java.util.ArrayList;
+
+import genome.GenomeGraph;
+import strand.Strand;
 
 /**
  * The Class GraphSearcher. This class is a utility class that is responsible for searching the

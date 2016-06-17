@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import strand.Strand;
+
 /**
  * The Class GenomeGenerator. A utility class that uses the topological ordering of the graph
  * parsed in from the .gfa file to generate the genomes.

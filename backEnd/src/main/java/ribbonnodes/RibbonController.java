@@ -3,8 +3,8 @@ package ribbonnodes;
 import datatree.DataTree;
 import genome.Genome;
 import genome.GenomeGraph;
-import genome.Strand;
 import mutation.Mutations;
+import strand.Strand;
 
 import java.util.ArrayList;
 

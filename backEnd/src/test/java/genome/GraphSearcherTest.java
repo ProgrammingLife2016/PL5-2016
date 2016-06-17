@@ -1,8 +1,14 @@
 package genome;
 
-import genome.GraphSearcher.SearchType;
+import strand.Strand;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import genomefeature.GenomeSearchResult;
+import genomefeature.GenomicFeature;
+import genomefeature.GraphSearcher;
+import genomefeature.GraphSearcher.SearchType;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -1,4 +1,4 @@
-package genome;
+package genomefeature;
 
 /**
  * The Class GenomicFeature. This class represents a genomic feature.

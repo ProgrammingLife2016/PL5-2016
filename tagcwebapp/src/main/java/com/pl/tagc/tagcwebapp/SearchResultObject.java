@@ -1,8 +1,9 @@
 package com.pl.tagc.tagcwebapp;
 
-import genome.GenomeFeatureSearchMatch;
-
 import javax.xml.bind.annotation.XmlRootElement;
+
+import genomefeature.GenomeFeatureSearchMatch;
+
 import java.util.ArrayList;
 
 /**

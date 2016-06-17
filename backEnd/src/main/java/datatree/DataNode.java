@@ -1,8 +1,8 @@
 package datatree;
 
 import abstractdatastructure.AbstractTreeNode;
-import genome.Strand;
 import phylogenetictree.PhylogeneticNode;
+import strand.Strand;
 
 import java.util.ArrayList;
 

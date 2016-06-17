@@ -1,7 +1,7 @@
 package ribbonnodes;
 
-import genome.Strand;
 import mutation.AbstractMutation;
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.HashSet;

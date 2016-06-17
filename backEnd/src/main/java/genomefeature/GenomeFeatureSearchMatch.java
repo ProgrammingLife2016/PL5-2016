@@ -1,6 +1,8 @@
-package genome;
+package genomefeature;
 
 import java.util.ArrayList;
+
+import strand.Strand;
 
 /**
  * The Class GFeatureSearchMatch. This class represents a genomic feature search match for a

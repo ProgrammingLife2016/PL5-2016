@@ -1,9 +1,11 @@
-package genome;
+package genomefeature;
 
-import genome.GraphSearcher.SearchType;
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import genomefeature.GraphSearcher.SearchType;
 
 /**
  * Contains the search result that contains the selected search feature.

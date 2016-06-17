@@ -1,6 +1,7 @@
 package genome;
 
 import metadata.GenomeMetadata;
+import strand.Strand;
 
 import java.awt.Color;
 import java.util.ArrayList;

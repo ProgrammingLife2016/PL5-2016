@@ -1,8 +1,9 @@
 package com.pl.tagc.tagcwebapp;
 
 import controller.Controller;
-import genome.GenomeSearchResult;
-import genome.GraphSearcher.SearchType;
+import genomefeature.GenomeSearchResult;
+import genomefeature.GraphSearcher.SearchType;
+
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashMap;

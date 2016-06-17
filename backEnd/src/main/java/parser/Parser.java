@@ -6,10 +6,10 @@ import datatree.DataNode;
 import datatree.DataTree;
 import genome.GenomeGenerator;
 import genome.GenomeGraph;
+import genomefeature.GenomicFeature;
 import metadata.GenomeMetadata;
-import genome.GenomicFeature;
-import genome.Strand;
-import genome.StrandEdge;
+import strand.Strand;
+import strand.StrandEdge;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
