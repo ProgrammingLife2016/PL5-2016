@@ -1,10 +1,11 @@
 package ribbonnodes;
 
-import genome.GenomicFeature;
-import genome.Strand;
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import genomefeature.GenomicFeature;
 
 /**
  * Factory for the making of ribbons derived from strands.
@@ -32,7 +33,6 @@ public abstract class RibbonNodeFactory {
         for (GenomicFeature feature : strand.getGenomicFeatures()) {
             ribbon.addAnnotation(feature.getDisplayName());
         }
-
         return ribbon;
     }
 
@@ -53,7 +53,6 @@ public abstract class RibbonNodeFactory {
                 RibbonNode node2 = nodesToCollapse.get(i);
                 startNode.addStrands(node2.getStrands());
                 startNode.addAnnotations(node2.getAnnotations());
-
             }
             newEnd.setX(oldEnd.getX());
             newEnd.setY(oldEnd.getY());
@@ -63,10 +62,7 @@ public abstract class RibbonNodeFactory {
             newEnd.setVisible(false);
             return newEnd;
         }
-
-
         return null;
     }
-
 
 }

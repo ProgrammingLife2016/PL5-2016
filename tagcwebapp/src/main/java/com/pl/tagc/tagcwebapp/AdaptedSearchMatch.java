@@ -1,9 +1,10 @@
 package com.pl.tagc.tagcwebapp;
 
-import genome.GenomicFeature;
-import genome.Strand;
+import strand.Strand;
 
 import java.util.ArrayList;
+
+import genomefeature.GenomicFeature;
 
 /**
  * The Class GFeatureSearchMatch.

@@ -1,10 +1,10 @@
 package datatree;
 
-import genome.Strand;
 import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 import org.junit.Before;
 import org.junit.Test;
 import phylogenetictree.PhylogeneticNode;
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +18,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class DataNodeTest {
 
-    private DataNode node; //the testnode.
-    private DataNode child; //test child.
+	/**
+	 * The tested node.
+	 */
+    private DataNode node;
+    
+    /**
+     * The tested children.
+     */
+    private DataNode child;
 
     /**
      * Setting up the test class.

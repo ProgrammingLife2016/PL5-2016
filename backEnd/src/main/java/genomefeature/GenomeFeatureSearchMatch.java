@@ -1,6 +1,8 @@
-package genome;
+package genomefeature;
 
 import java.util.ArrayList;
+
+import strand.Strand;
 
 /**
  * The Class GFeatureSearchMatch. This class represents a genomic feature search match for a
@@ -8,27 +10,27 @@ import java.util.ArrayList;
  * the genomic feature which has a name that contains the substring and the strand that
  * contains the feature.
  */
-public class GFeatureSearchMatch {
+public class GenomeFeatureSearchMatch {
+	
 	/**
 	 * The feature.
 	 */
 	private GenomicFeature feature;
 
-	/** The strand. */
+	/** 
+	 * The strand. 
+	 */
 	private ArrayList<Strand> strands;
+	
 	/**
 	 * The sub string.
 	 */
 	private String subString;
 
-
-
-
-
 	/**
 	 * Instantiates a new g feature search match.
 	 */
-	public GFeatureSearchMatch() { }
+	public GenomeFeatureSearchMatch() { }
 	
 	/**
 	 * Instantiates a new g feature search match.
@@ -37,7 +39,7 @@ public class GFeatureSearchMatch {
 	 * @param feature the feature
 	 * @param subString the sub string
 	 */
-	public GFeatureSearchMatch(ArrayList<Strand> strands,
+	public GenomeFeatureSearchMatch(ArrayList<Strand> strands,
 							   GenomicFeature feature,
 							   String subString) {
 		this.setFeature(feature);

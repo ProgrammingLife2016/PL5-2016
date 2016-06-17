@@ -13,12 +13,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
 /**
  * Created by Matthijs on 4-5-2016.
  */
 public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
-
 
     /**
      * Initialize an empty tree.
@@ -27,7 +25,7 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
     }
 
     /**
-     * Initialize a tree.
+     * Initialize a tree, with a node as root.
      *
      * @param root The root of the tree.
      */
@@ -55,7 +53,6 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
         removeRedundantNodes(genomes);
         generateId(getRoot());
         updateGenomesPassingThrough(getRoot());
-
     }
 
     /**
@@ -95,10 +92,6 @@ public class PhylogeneticTree extends TreeStructure<PhylogeneticNode> {
             for (PhylogeneticNode child : node.getChildren()) {
                 result = getLeaves(child, result);
             }
-//			result = getLeaves(node.getChildren().get(0), result);
-//			if (node.getChildren().size() > 1) {
-//				result = getLeaves(node.getChildren().get(1), result);
-//			}
         }
         return result;
     }

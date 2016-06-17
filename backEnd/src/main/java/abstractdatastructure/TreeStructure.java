@@ -3,7 +3,7 @@ package abstractdatastructure;
 
 /**
  * Created by Matthijs on 4-5-2016.
- *
+ * Class that creates a tree starting with the root node.
  * @param <T> The treeNode subclass contained in the tree.
  */
 public class TreeStructure<T extends AbstractTreeNode> {
@@ -14,11 +14,10 @@ public class TreeStructure<T extends AbstractTreeNode> {
     private T root;
 
     /**
-     * Default contstructor.
+     * Default contstructor, to create an empty tree.
      */
     public TreeStructure() {
     }
-
 
     /**
      * Initialize a tree.

@@ -1,4 +1,4 @@
-package genome;
+package genomefeature;
 
 /**
  * The Class GenomicFeature. This class represents a genomic feature.
@@ -21,10 +21,9 @@ public class GenomicFeature {
     private String displayName;
 
     /**
-     * Instantiates a new genomic feature.
+     * Instantiates a new g feature match.
      */
-    public GenomicFeature() {
-    }
+    public GenomicFeature() { }
 
     /**
      * Instantiates a new genomic feature.
@@ -114,7 +113,6 @@ public class GenomicFeature {
      * @return true, if successful
      */
     public boolean overlaps(int start, int end) {
-
         return !(this.end < start || this.start > end);
     }
 

@@ -3,16 +3,18 @@ package metadata;
 import java.lang.reflect.Field;
 
 /**
- * The Class GenomeMetadata.
+ * Class that contains all the meta Data.
  */
 public class GenomeMetadata {
-
 
 	/** 
 	 * The genome id. 
 	 */
     private String genomeId;
 
+    /**
+     * These variables represent all the meta data.
+     */
     private String age;
     private String sex;
     private String hivStatus;
@@ -37,12 +39,11 @@ public class GenomeMetadata {
     private String genoDSTPattern;
     private String xdrType;
 
-
     /**
-     * Instantiates a new genome metadata.
+     * Instantiates a new genome meta data.
      *
      * @param genomeId the genome id
-     * @param lineage the lineage
+     * @param lineage the lineage.
      */
     public GenomeMetadata(String genomeId, String lineage) {
         this.genomeId = genomeId;
@@ -50,7 +51,7 @@ public class GenomeMetadata {
     }
 
 	/**
-	 * Instantiates a new genome metadata.
+	 * Instantiates a new genome meta data.
      *
      *@param features parsed String array with features.
      */

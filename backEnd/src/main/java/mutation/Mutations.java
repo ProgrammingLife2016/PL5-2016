@@ -12,6 +12,7 @@ import java.util.HashSet;
  *
  * @author Jeffrey Helgers.
  *         This class computes all the mutations in the given dataset.
+ *         It uses ribbon nodes as comparisons.
  */
 public class Mutations {
 
@@ -21,7 +22,7 @@ public class Mutations {
     private ArrayList<RibbonNode> nodes;
 
     /**
-     * Constructor to create.
+     * Constructor to set up the ribbons on which they are computed.
      *
      * @param nodes The nodes in the graph.
      */

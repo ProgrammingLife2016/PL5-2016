@@ -1,8 +1,16 @@
-package genome;
+package genomefeature;
 
-import genome.GraphSearcher.SearchType;
+import strand.Strand;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import genome.Genome;
+import genome.GenomeGraph;
+import genomefeature.GenomeSearchResult;
+import genomefeature.GenomicFeature;
+import genomefeature.GraphSearcher;
+import genomefeature.GraphSearcher.SearchType;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -19,10 +27,14 @@ import static org.junit.Assert.assertTrue;
  */
 public class GraphSearcherTest {
 
-	/** The strands. */
+	/** 
+	 * The strands. 
+	 */
 	private HashMap<Integer, Strand> strands = new HashMap<Integer, Strand>();
 	
-	/** The genome graph. */
+	/** 
+	 * The genome graph. 
+	 */
 	private GenomeGraph genomeGraph = new GenomeGraph();
 
 	/**
@@ -57,7 +69,7 @@ public class GraphSearcherTest {
 		
 		strands.get(14).getGenomicFeatures().get(0).setDisplayName("hidden egg");
 		
-		GSearchResult searchResult = GraphSearcher.search("egg",
+		GenomeSearchResult searchResult = GraphSearcher.search("egg",
 				SearchType.GenomicFeatureSearch, genomeGraph);
 		
 		Strand strand = searchResult.getgFeatureSearchMatches().get(0).getStrands().get(0);

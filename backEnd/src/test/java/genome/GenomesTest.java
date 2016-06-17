@@ -3,6 +3,8 @@ package genome;
 import org.junit.Before;
 import org.junit.Test;
 
+import strand.Strand;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;

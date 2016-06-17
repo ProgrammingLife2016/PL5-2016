@@ -9,17 +9,23 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import strand.Strand;
+
 /**
  * The Class GenomeGenerator. A utility class that uses the topological ordering of the graph
  * parsed in from the .gfa file to generate the genomes.
  */
 public final class GenomeGenerator {
-
+	
+	/**
+	 * Constructor to create an empty GenomeGenerator.
+	 * This should not be possible thats why this constructor is private.
+	 */
     private GenomeGenerator() {
     }
 
     /**
-     * Generate genomes.
+     * Generate genomes, using all the strands that are read from the gfa file.
      *
      * @param genomeIds   the genome ids for which to generate genomes
      * @param genomeGraph the genome graph containing the data from which to generate the genomes
@@ -42,7 +48,6 @@ public final class GenomeGenerator {
                 } else {
                     assert genomes.containsKey(genomeId);
                 }
-
             }
         }
         return genomes;
@@ -96,7 +101,6 @@ public final class GenomeGenerator {
      * @return the strand with lowest id
      */
     private static Strand getStrandWithLowestId(List<Strand> strands) {
-
         return strands.stream().min(Comparator.comparing(Strand::getId)).orElse(null);
     }
 

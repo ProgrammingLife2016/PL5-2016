@@ -1,8 +1,7 @@
 package com.pl.tagc.tagcwebapp;
 
 import static org.junit.Assert.assertEquals;
-import genome.GSearchResult;
-import genome.GraphSearcher.SearchType;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.ws.rs.client.Entity;
@@ -21,6 +20,8 @@ import phylogenetictree.PhylogeneticNode;
 import phylogenetictree.PhylogeneticTree;
 import ribbonnodes.RibbonNode;
 import controller.Controller;
+import genomefeature.GenomeSearchResult;
+import genomefeature.GraphSearcher.SearchType;
 
 
 /**
@@ -54,7 +55,7 @@ public class RestApiTest extends JerseyTest {
 	private RibbonNode rNode = Mockito.mock(RibbonNode.class);
 
 	/** The node. */
-	private GSearchResult searchResult = Mockito.mock(GSearchResult.class);
+	private GenomeSearchResult searchResult = Mockito.mock(GenomeSearchResult.class);
 
 	/**
 	 * Sets the up.

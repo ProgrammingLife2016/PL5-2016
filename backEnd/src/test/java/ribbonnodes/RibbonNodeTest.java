@@ -15,10 +15,29 @@ import static org.junit.Assert.assertTrue;
  */
 public class RibbonNodeTest {
 
+	/**
+	 * Ribbon node to test.
+	 */
     private RibbonNode node1;
+    
+    /**
+     * Ribbon node to test.
+     */
     private RibbonNode node2;
+    
+    /**
+     * A node to test that something is wrong.
+     */
     private RibbonNode brokenNode;
+    
+    /**
+     * RibbonEdge to test.
+     */
     private RibbonEdge edge;
+    
+    /**
+     * RibbonEdge to test.
+     */
     private RibbonEdge edge2;
 
 

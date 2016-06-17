@@ -1,8 +1,12 @@
-package genome;
+package strand;
 
 
 import org.junit.Before;
 import org.junit.Test;
+
+import genomefeature.GenomicFeature;
+import strand.Strand;
+import strand.StrandAnnotator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

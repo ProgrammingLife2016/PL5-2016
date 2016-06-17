@@ -1,7 +1,8 @@
 package ribbonnodes;
 
-import genome.Strand;
 import org.junit.Test;
+
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.Arrays;

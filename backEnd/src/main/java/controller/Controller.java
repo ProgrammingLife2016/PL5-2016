@@ -3,11 +3,10 @@ package controller;
 import com.google.inject.internal.util.Lists;
 import datatree.DataNode;
 import datatree.DataTree;
-import datatree.TempReadDataTree;
-import genome.GSearchResult;
 import genome.Genome;
 import genome.GenomeGraph;
-import genome.GraphSearcher.SearchType;
+import genomefeature.GenomeSearchResult;
+import genomefeature.GraphSearcher.SearchType;
 import metadata.MetaDataController;
 import parser.Parser;
 import phylogenetictree.PhylogeneticNode;
@@ -38,11 +37,6 @@ public class Controller {
     private PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
 
     /**
-     * The data tree.
-     */
-    private DataTree dataTree;
-
-    /**
      * The ribbon controller.
      */
     private RibbonController ribbonController;
@@ -63,17 +57,16 @@ public class Controller {
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
-        dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
+        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
 
         if (gfaFile.equals("data/TB328.gfa")) {
-            TempReadDataTree.readFile(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
+            Parser.readDataTree(dataTree, genomeGraph.getStrands(), "data/tempTree.txt");
         } else {
             dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
 
         }
         ribbonController = new RibbonController(genomeGraph, dataTree);
-
 
         List<Genome> genomes = Lists.newArrayList(genomeGraph.getGenomes().values());
         metaDataController = new MetaDataController(genomes);
@@ -100,7 +93,7 @@ public class Controller {
      * @param searchType   the search type
      * @return the g search result
      */
-    public GSearchResult search(String searchString, SearchType searchType) {
+    public GenomeSearchResult search(String searchString, SearchType searchType) {
         return genomeGraph.search(searchString, searchType);
     }
 
@@ -145,7 +138,6 @@ public class Controller {
                 }
                 temp.add(phylogeneticTree.getNodeWithId(x).getGenomes());
             }
-
         }
         return genomeGraph.setGenomesAsActive(temp);
     }

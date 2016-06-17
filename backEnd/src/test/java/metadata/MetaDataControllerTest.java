@@ -20,7 +20,14 @@ import java.util.List;
  */
 public class MetaDataControllerTest {
 
+	/**
+	 * Tested meta data.
+	 */
     private static MetaDataController mdc;
+    
+    /**
+     * The current genomes.
+     */
     private static List<Genome> currentGenomes;
 
     /**

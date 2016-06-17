@@ -12,11 +12,25 @@ import java.util.Random;
 
 /**
  * Created by user on 16/06/16.
+ * Used for analysing the meta data of the genomes
+ * (e.g. all available metadata types, their possible values
+ * and the colours each genome should get based on the metadata type)
  */
 public class MetaDataController {
 
+	/**
+	 * HashMap with all the meta data.
+	 */
     private Map<String, HashSet<String>> allValues = new HashMap<>();
+    
+    /**
+     * HashMap with the colors.
+     */
     private Map<String, Color> colorMap = new HashMap<>();
+    
+    /**
+     * All the genomes.
+     */
     private List<Genome> genomes;
 
     /**
@@ -60,6 +74,9 @@ public class MetaDataController {
         allValues.put("xdrType", new HashSet<>());
     }
 
+    /**
+     * Fill the HashMap.
+     */
     private void fillHashMap() {
         for (Genome g : genomes) {
             if (g.getMetadata() != null) {

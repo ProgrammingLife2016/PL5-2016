@@ -6,15 +6,12 @@ import net.sourceforge.olduvai.treejuxtaposer.drawer.TreeNode;
 
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
-
 /**
  * Created by Matthijs on 4-5-2016.
  * A node in the phylogenetic tree. Stores a name if the node is a leaf.
  */
 public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
-
-
+	
     /**
      * The Genomes contained in this nodes children.
      */
@@ -24,11 +21,11 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      * The name of this genome, "" if not a leaf.
      */
     private String nameLabel;
+    
     /**
      * The distance to its parent.
      */
     private double distance;
-
 
     /**
      * Instantiates a new phylogenetic node.
@@ -61,7 +58,6 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
 
         adaptChild(node);
         checkLeaf();
-
     }
 
     /**
@@ -70,10 +66,8 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      * @param node Node.
      */
     public void adaptChild(TreeNode node) {
-
         for (int i = 0; i < node.numberChildren(); i++) {
             TreeNode child = node.getChild(i);
-
             addChild(new PhylogeneticNode(child, this, child.getWeight(), i));
         }
     }
@@ -87,7 +81,6 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
             if (this.getParent() != null) {
                 getParent().addGenome(nameLabel);
             }
-
         }
     }
 
@@ -98,7 +91,6 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
      * @return The node, null if it is not contained in this graph.
      */
     public PhylogeneticNode getNodeWithLabel(final String name) {
-
         if (this.getNameLabel().equals(name)) {
             return this;
         } else if (this.getChildren().size() != 0) {
@@ -112,7 +104,6 @@ public class PhylogeneticNode extends AbstractTreeNode<PhylogeneticNode> {
                 }
             }
         }
-
         return null;
     }
 

@@ -1,7 +1,8 @@
 package datatree;
 
 import genome.Genome;
-import genome.Strand;
+import strand.Strand;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,16 +20,45 @@ import static org.junit.Assert.assertTrue;
  */
 public class DataTreeTest {
 
-    private DataTree tree; //test tree.
-    private DataNode root; //root of the tree;
-    private DataNode child1; //child of the tree;
-    private DataNode child2; //child of the tree;
-    private ArrayList<ArrayList<Genome>> genomeIDs; //genomes contained in the tree;
+	/**
+	 * Tested tree.
+	 */
+    private DataTree tree;
 
+    /**
+     * The root of the tree.
+     */
+    private DataNode root;
 
-    private Strand strand1; //a strand to test data return.
-    private Strand strand2; //a strand to test data return.
-    private Strand strand12; //a strand to test data return.
+    /**
+     * Child of the root.
+     */
+    private DataNode child1;
+
+    /**
+     * Child of the root.
+     */
+    private DataNode child2;
+    
+    /**
+     * Genomes contained in the tree.
+     */
+    private ArrayList<ArrayList<Genome>> genomeIDs;
+
+    /**
+     * A strand to test data return.
+     */
+    private Strand strand1;
+    
+    /**
+     * A strand to test data return.
+     */
+    private Strand strand2;
+    
+    /**
+     * A strand to test data return.
+     */
+    private Strand strand12;
 
     /**
      * Set up the tests.
