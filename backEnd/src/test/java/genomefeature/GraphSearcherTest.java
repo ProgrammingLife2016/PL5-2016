@@ -1,10 +1,12 @@
-package genome;
+package genomefeature;
 
 import strand.Strand;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import genome.Genome;
+import genome.GenomeGraph;
 import genomefeature.GenomeSearchResult;
 import genomefeature.GenomicFeature;
 import genomefeature.GraphSearcher;

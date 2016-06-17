@@ -1,4 +1,4 @@
-package genome;
+package strand;
 
 import mutation.AbstractMutation;
 import strand.Strand;

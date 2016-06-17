@@ -1,4 +1,4 @@
-package genome;
+package strand;
 
 import org.junit.Before;
 import org.junit.Test;
