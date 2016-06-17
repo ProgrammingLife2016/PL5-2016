@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * The Class GSearchResult.
+ * Contains the search result that contains the selected search feature.
  */
-public class GSearchResult {
+public class GenomeSearchResult {
 
     /**
      * The search type.
@@ -18,21 +18,20 @@ public class GSearchResult {
     /**
      * The g feature search matches.
      */
-    private ArrayList<GFeatureSearchMatch> gFeatureSearchMatches =
-            new ArrayList<GFeatureSearchMatch>();
+    private ArrayList<GenomeFeatureSearchMatch> gFeatureSearchMatches =
+            new ArrayList<GenomeFeatureSearchMatch>();
 
 	/**
 	 * Adds the g feature search match.
 	 * @param strand The strand to add to the feature
 	 * @param feature The genomic feature to match.
 	 * @param subString The substring that was searched.
-	 *
 	 */
 	public void addGFeatureStrandSearchMatch(Strand strand,
 											 GenomicFeature feature,
 											 String subString) {
 		boolean contains = false;
-		for (GFeatureSearchMatch match : gFeatureSearchMatches) {
+		for (GenomeFeatureSearchMatch match : gFeatureSearchMatches) {
 			if (match.getFeature() == feature) {
 				match.addStrand(strand);
 				contains = true;
@@ -40,7 +39,7 @@ public class GSearchResult {
 			}
 		}
 		if (!contains) {
-			GFeatureSearchMatch searchMatch = new GFeatureSearchMatch(
+			GenomeFeatureSearchMatch searchMatch = new GenomeFeatureSearchMatch(
 					new ArrayList<>(Arrays.asList(strand)),
 					feature,
 					subString);
@@ -48,7 +47,6 @@ public class GSearchResult {
 		}
 
 	}
-
 
     /**
      * Gets the search type.
@@ -73,7 +71,7 @@ public class GSearchResult {
      *
      * @return the g feature search matches
      */
-    public ArrayList<GFeatureSearchMatch> getgFeatureSearchMatches() {
+    public ArrayList<GenomeFeatureSearchMatch> getgFeatureSearchMatches() {
         return gFeatureSearchMatches;
     }
 
@@ -82,7 +80,7 @@ public class GSearchResult {
      *
      * @param gFeatureSearchMatches the new g feature search matches
      */
-    public void setgFeatureSearchMatches(ArrayList<GFeatureSearchMatch> gFeatureSearchMatches) {
+    public void setgFeatureSearchMatches(ArrayList<GenomeFeatureSearchMatch> gFeatureSearchMatches) {
         this.gFeatureSearchMatches = gFeatureSearchMatches;
     }
 }

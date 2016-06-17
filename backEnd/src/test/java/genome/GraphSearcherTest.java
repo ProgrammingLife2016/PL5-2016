@@ -57,7 +57,7 @@ public class GraphSearcherTest {
 		
 		strands.get(14).getGenomicFeatures().get(0).setDisplayName("hidden egg");
 		
-		GSearchResult searchResult = GraphSearcher.search("egg",
+		GenomeSearchResult searchResult = GraphSearcher.search("egg",
 				SearchType.GenomicFeatureSearch, genomeGraph);
 		
 		Strand strand = searchResult.getgFeatureSearchMatches().get(0).getStrands().get(0);

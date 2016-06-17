@@ -14,7 +14,7 @@ public class GSearchResultTest {
     @Test
     public void test() {
         BeanTester beanTester = new BeanTester();
-        beanTester.testBean(GSearchResult.class);
+        beanTester.testBean(GenomeSearchResult.class);
     }
 
 }

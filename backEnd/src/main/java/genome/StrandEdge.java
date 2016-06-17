@@ -1,24 +1,23 @@
 package genome;
 
-// TODO: Auto-generated Javadoc
-
 /**
  * The Class StrandEdge.
  */
 public class StrandEdge {
 
     /**
-     * The start.
+     * The start strands.
      */
     private Strand start;
 
     /**
-     * The end.
+     * The end strand.
      */
     private Strand end;
 
     /**
      * The weight.
+     * The number of genomes going through the edge.
      */
     private int weight;
 
@@ -32,7 +31,6 @@ public class StrandEdge {
         this.start = startEdge;
         this.end = endEdge;
         this.weight = 1;
-
     }
 
     /**

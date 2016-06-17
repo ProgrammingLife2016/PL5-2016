@@ -22,9 +22,9 @@ public final class GraphSearcher {
 	 * @param genomeGraph  the genome graph
 	 * @return the search result which contains matches for the search string and search type
 	 */
-	public static GSearchResult search(String searchString, SearchType searchType,
+	public static GenomeSearchResult search(String searchString, SearchType searchType,
 									   GenomeGraph genomeGraph) {
-		GSearchResult searchResult = new GSearchResult();
+		GenomeSearchResult searchResult = new GenomeSearchResult();
 		searchResult.setSearchType(searchType);
 		switch (searchType) {
 			case FullSearch:
@@ -52,7 +52,7 @@ public final class GraphSearcher {
 	 * @param searchString the search string
 	 * @param graph the graph to search
 	 */
-	private static void searchGenomicFeatures(GSearchResult searchResult,
+	private static void searchGenomicFeatures(GenomeSearchResult searchResult,
 											  String searchString,
 											  GenomeGraph graph) {
 		for (Strand strand : graph.getStrands().values()) {

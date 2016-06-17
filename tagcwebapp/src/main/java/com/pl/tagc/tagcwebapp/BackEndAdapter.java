@@ -1,7 +1,7 @@
 package com.pl.tagc.tagcwebapp;
 
 import controller.Controller;
-import genome.GSearchResult;
+import genome.GenomeSearchResult;
 import genome.GraphSearcher.SearchType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ public final class BackEndAdapter implements BackEndInterface {
         if (searchType == null) {
             throw new IllegalArgumentException("Unknown search type");
         }
-        GSearchResult gSearchRresult = controller.search(searchString, searchType);
+        GenomeSearchResult gSearchRresult = controller.search(searchString, searchType);
         SearchResultObject resultObject = new SearchResultObject();
         resultObject.setgFeatureSearchMatches(gSearchRresult.getgFeatureSearchMatches());
         return resultObject;

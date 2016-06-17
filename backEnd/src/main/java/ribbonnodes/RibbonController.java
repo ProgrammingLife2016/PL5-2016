@@ -8,7 +8,6 @@ import mutation.Mutations;
 
 import java.util.ArrayList;
 
-
 /**
  * Class that calculates and returns the Ribbons and Edges to be drawn on the screen,
  * based on the data stored in genomeGraph and dataTree.
@@ -33,6 +32,7 @@ public class RibbonController {
 
     /**
      * Create ribbonController object.
+     * With this object the nodes are selected that will be shown on the screen.
      *
      * @param genomeGraph the graph that contains the geographic information of the stands.
      * @param dataTree    datatree that contains the phylogenetic information of the strands
@@ -41,7 +41,6 @@ public class RibbonController {
         this.genomeGraph = genomeGraph;
         this.dataTree = dataTree;
     }
-
 
     /**
      * Get the ribbon nodes with edges for a certain view in the GUI.
@@ -94,16 +93,13 @@ public class RibbonController {
                                                            ArrayList<String> actIds) {
         ArrayList<RibbonNode> result = new ArrayList<>();
 
-
         for (Strand strand : filteredNodes) {
             RibbonNode ribbon = RibbonNodeFactory.makeRibbonNodeFromStrand(
                     maxId++,
                     strand,
                     actIds);
             result.add(ribbon);
-
         }
-
         return result;
     }
 
@@ -139,10 +135,7 @@ public class RibbonController {
                     } else {
                         break;
                     }
-
-
                 }
-
                 RibbonNode newNode = RibbonNodeFactory.collapseNodes(nodesToCollapse);
 
                 if (newNode != null) {
@@ -153,10 +146,7 @@ public class RibbonController {
         }
         nodes.addAll(newNodes);
         System.out.println(nodes.size() + " After collapsing");
-
-
     }
-
 
     /**
      * Place all the nodes in common in the middle, and copy and distribute
@@ -167,8 +157,6 @@ public class RibbonController {
      */
     protected void spreadYCoordinates(ArrayList<RibbonNode> nodes,
                                       ArrayList<String> activeGenomes) {
-
-
         int level = 0;
         while (activeGenomes.size() != level) {
             for (RibbonNode node : nodes) {
@@ -179,13 +167,9 @@ public class RibbonController {
                     }
                     spreadYCoordinates(node, activeGenomes, level);
                 }
-
             }
-
             level++;
         }
-
-
     }
 
     /**
@@ -205,9 +189,7 @@ public class RibbonController {
                     && other.getGenomes().containsAll(node.getGenomes())) {
                 result = other;
             }
-
         }
-
         return result;
     }
 
@@ -222,7 +204,6 @@ public class RibbonController {
     protected void spreadYCoordinates(RibbonNode node,
                                       ArrayList<String> activeGenomes,
                                       int level) {
-
         ArrayList<RibbonNode> nextNodes = new ArrayList<>();
         if (level == 0) {
             node.setY(0);
@@ -236,7 +217,6 @@ public class RibbonController {
             RibbonNode endNode = edge.getEnd();
             if (endNode.getGenomes().size() <= node.getGenomes().size() && !endNode.isyFixed()) {
                 int exponent = i;
-
                 int newY = (int) ((node.getGenomes().size() - endNode.getGenomes().size())
                         * 5 * (activeGenomes.size() - level)
                         * Math.pow(-1, exponent));
@@ -244,20 +224,14 @@ public class RibbonController {
                 endNode.setY(node.getY() + newY);
                 nextNodes.add(endNode);
             }
-
-
         }
-
-
     }
-
 
     /**
      * Calculate and add edges to a ribbonGraph.
      *
      * @param nodes     the RibbinGraph to calculate edges for.
      */
-
     protected void addEdges(ArrayList<RibbonNode> nodes) {
         nodes.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
         for (ArrayList<Genome> genome : genomeGraph.getActiveGenomes()) {
@@ -265,10 +239,7 @@ public class RibbonController {
             while (currentNode != null) {
                 currentNode = addEdgeReturnEnd(nodes, currentNode, genome.get(0));
             }
-
         }
-
-
     }
 
     /**
@@ -314,15 +285,11 @@ public class RibbonController {
      */
     protected RibbonNode findNextNodeWithGenome(ArrayList<RibbonNode> nodes,
                                                 Genome genome, int currentIndex) {
-
         for (int i = currentIndex + 1; i < nodes.size(); i++) {
             if (nodes.get(i).getGenomes().contains(genome.getId())) {
                 return nodes.get(i);
             }
         }
         return null;
-
     }
-
-
 }

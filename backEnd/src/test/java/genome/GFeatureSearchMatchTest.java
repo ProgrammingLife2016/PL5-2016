@@ -14,7 +14,7 @@ public class GFeatureSearchMatchTest {
     @Test
     public void test() {
         BeanTester beanTester = new BeanTester();
-        beanTester.testBean(GFeatureSearchMatch.class);
+        beanTester.testBean(GenomeFeatureSearchMatch.class);
     }
 
 }

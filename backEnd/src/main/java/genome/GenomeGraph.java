@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * The Class GenomeGraph.
+ * This class holds all the information about the genomes and strands.
  */
 public class GenomeGraph {
 
@@ -31,7 +32,6 @@ public class GenomeGraph {
      * The ids of the activeGenomes.
      */
     private ArrayList<String> activeGenomeIds;
-
 
     /**
      * Instantiates a new genome graph.
@@ -59,7 +59,6 @@ public class GenomeGraph {
      */
     public void setStrands(HashMap<Integer, Strand> strands) {
         this.strands = strands;
-
     }
 
     /**
@@ -102,6 +101,7 @@ public class GenomeGraph {
 
     /**
      * Sets the genomes as active.
+     * And returns the genomes that are selected but not present in the data.
      *
      * @param ids the new genomes as active
      * @return the list of unrecognized genomes
@@ -145,11 +145,9 @@ public class GenomeGraph {
      * @param metadata the metadata
      */
     public void loadMetaData(HashMap<String, GenomeMetadata> metadata) {
-
         for (Genome g : genomes.values()) {
             g.setMetadata(metadata.get(g.getId()));
         }
-
     }
 
     /**
@@ -173,7 +171,7 @@ public class GenomeGraph {
     }
 
     /**
-     * Annotate.
+     * Annotate the selected genome.
      *
      * @param genomeId    the genome id
      * @param annotations the annotations
@@ -183,13 +181,13 @@ public class GenomeGraph {
     }
 
     /**
-     * Search.
+     * Search for a specific annotation.
      *
      * @param searchString the search string
      * @param searchType   the search type
      * @return the g search result
      */
-    public GSearchResult search(String searchString, SearchType searchType) {
+    public GenomeSearchResult search(String searchString, SearchType searchType) {
         return GraphSearcher.search(searchString, searchType, this);
     }
 

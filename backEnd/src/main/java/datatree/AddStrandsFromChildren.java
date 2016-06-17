@@ -8,8 +8,9 @@ import java.util.concurrent.RecursiveAction;
 
 /**
  * @author Jeffrey Helgers.
- *         This class computes the Strands that will be added to their parent.
- *         Makes use of a RecursiveAction to speed the process up.
+ * This class computes the Strands that will be added to their parent.
+ * They are added to their parent when both the children contain these strands.
+ * Makes use of a RecursiveAction to speed the process up.
  */
 public class AddStrandsFromChildren extends RecursiveAction {
 
@@ -26,7 +27,6 @@ public class AddStrandsFromChildren extends RecursiveAction {
     public AddStrandsFromChildren(DataNode dataNode) {
         currentNode = dataNode;
     }
-
 
     @Override
     protected void compute() {

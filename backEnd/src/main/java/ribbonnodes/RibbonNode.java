@@ -8,6 +8,7 @@ import java.util.HashSet;
 
 /**
  * Created by Matthijs on 12-5-2016.
+ * Class to create a ribbon node these nodes are displayed on the screen.
  */
 public class RibbonNode {
 
@@ -39,7 +40,6 @@ public class RibbonNode {
     /**
      * The genomes that go through this node.
      */
-
     private HashSet<String> genomes;
 
     /**
@@ -109,7 +109,6 @@ public class RibbonNode {
      */
     public void setLabel(String label) {
         this.label = label;
-
     }
 
     /**

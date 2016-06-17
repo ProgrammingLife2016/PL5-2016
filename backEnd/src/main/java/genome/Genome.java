@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * The Class Genome.
+ * Creates genomes that contain all the strands they pass through.
  *
  * @author Jeffrey Helgers
  */
@@ -23,7 +24,6 @@ public class Genome {
      */
     private String id;
 
-
     /**
      * The meta data of this genome.
      */
@@ -36,6 +36,7 @@ public class Genome {
 
     /**
      * Constructor to create a new genome.
+     * When a genome is created there are no strands in this genome.
      *
      * @param id The genome name.
      */
@@ -44,7 +45,6 @@ public class Genome {
         strands = new ArrayList<Strand>();
         color = Color.black;
     }
-
 
     /**
      * Add a strand to the genome.

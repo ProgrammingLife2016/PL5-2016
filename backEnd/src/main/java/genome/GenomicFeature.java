@@ -22,12 +22,6 @@ public class GenomicFeature {
 
     /**
      * Instantiates a new genomic feature.
-     */
-    public GenomicFeature() {
-    }
-
-    /**
-     * Instantiates a new genomic feature.
      *
      * @param start       the start coordinate
      * @param end         the end coordinate
@@ -114,7 +108,6 @@ public class GenomicFeature {
      * @return true, if successful
      */
     public boolean overlaps(int start, int end) {
-
         return !(this.end < start || this.start > end);
     }
 
