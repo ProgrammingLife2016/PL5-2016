@@ -69,7 +69,7 @@ public class RibbonController {
         maxId = 0;
         ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel);
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
-        addEdges(result, isMiniMap);
+        addEdges(result);
         collapseRibbons(result, minX, maxX);
         if(isMiniMap&&result.size()<100){
             return getRibbonNodes(minX,maxX,20,false);
@@ -80,8 +80,7 @@ public class RibbonController {
         }
         spreadYCoordinates(result, actIds);
 
-        result.sort((RibbonNode o1, RibbonNode o2) ->
-                new Integer(o1.getId()).compareTo(o2.getId()));
+       
         System.out.println(result.size() + " nodes returned");
         return result;
     }
@@ -259,15 +258,14 @@ public class RibbonController {
      * Calculate and add edges to a ribbonGraph.
      *
      * @param nodes     the RibbinGraph to calculate edges for.
-     * @param isMiniMap Boolean if this is the minimap.
      */
 
-    protected void addEdges(ArrayList<RibbonNode> nodes, boolean isMiniMap) {
+    protected void addEdges(ArrayList<RibbonNode> nodes) {
         nodes.sort((RibbonNode o1, RibbonNode o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
         for (ArrayList<Genome> genome : genomeGraph.getActiveGenomes()) {
             RibbonNode currentNode = findNextNodeWithGenome(nodes, genome.get(0), -1);
             while (currentNode != null) {
-                currentNode = addEdgeReturnEnd(nodes, currentNode, genome.get(0), isMiniMap);
+                currentNode = addEdgeReturnEnd(nodes, currentNode, genome.get(0));
             }
 
         }
@@ -282,13 +280,11 @@ public class RibbonController {
      * @param nodes       The RibbonGraph.
      * @param currentNode The start node of the edge.
      * @param genome      The genome to find an edge for.
-     * @param isMiniMap   Boolean if this is the minimap.
      * @return The end node of the edge.
      */
     protected RibbonNode addEdgeReturnEnd(ArrayList<RibbonNode> nodes,
                                           RibbonNode currentNode,
-                                          Genome genome,
-                                          boolean isMiniMap) {
+                                          Genome genome) {
         RibbonNode next = findNextNodeWithGenome(nodes, genome, nodes.indexOf(currentNode));
         if (next != null) {
             if (currentNode.getOutEdge(currentNode.getId(), next.getId()) == null) {

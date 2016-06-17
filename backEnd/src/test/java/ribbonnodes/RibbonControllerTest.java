@@ -93,7 +93,7 @@ public class RibbonControllerTest {
         Mockito.verify(testController, Mockito.times(1)).spreadYCoordinates(
                 new ArrayList<>(),
                 new ArrayList<>(Arrays.asList("1")));
-        Mockito.verify(testController, Mockito.times(1)).addEdges(new ArrayList<>(), false);
+        Mockito.verify(testController, Mockito.times(1)).addEdges(new ArrayList<>());
         Mockito.verify(testController,
                 Mockito.times(1)).collapseRibbons(new ArrayList<>(), 0, 1000);
 
@@ -172,7 +172,7 @@ public class RibbonControllerTest {
         nodes.add(node2);
         nodes.add(node3);
 
-        controller.addEdges(nodes, false);
+        controller.addEdges(nodes);
 
         assertNotNull(node1.getOutEdge(node1.getId(), node2.getId()));
         assertNotNull(node2.getInEdge(node1.getId(), node2.getId()));
@@ -195,9 +195,9 @@ public class RibbonControllerTest {
         nodes.add(node2);
 
         assertEquals(node1.getOutEdges().size(), 0);
-        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("1"), false), node2);
+        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("1")), node2);
         assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 1);
-        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("2"), false), node2);
+        assertEquals(controller.addEdgeReturnEnd(nodes, node1, new Genome("2")), node2);
         assertEquals(node1.getOutEdge(node1.getId(), node2.getId()).getWeight(), 2);
 
 
