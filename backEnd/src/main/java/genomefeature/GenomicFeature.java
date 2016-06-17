@@ -21,6 +21,11 @@ public class GenomicFeature {
     private String displayName;
 
     /**
+     * Instantiates a new g feature match.
+     */
+    public GenomicFeature() { }
+
+    /**
      * Instantiates a new genomic feature.
      *
      * @param start       the start coordinate
