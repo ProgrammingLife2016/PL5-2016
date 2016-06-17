@@ -18,8 +18,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class DataNodeTest {
 
-    private DataNode node; //the testnode.
-    private DataNode child; //test child.
+	/**
+	 * The tested node.
+	 */
+    private DataNode node;
+    
+    /**
+     * The tested children.
+     */
+    private DataNode child;
 
     /**
      * Setting up the test class.

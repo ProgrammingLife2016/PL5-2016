@@ -15,7 +15,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class RibbonEdgeTest {
 
-    private RibbonEdge edge; //the edge to test.
+	/**
+	 * The tested edge.
+	 */
+    private RibbonEdge edge;
 
     /**
      * Set up the tests.

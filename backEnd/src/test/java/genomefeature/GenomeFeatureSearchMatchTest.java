@@ -6,7 +6,7 @@ import org.meanbean.test.BeanTester;
 import genomefeature.GenomeFeatureSearchMatch;
 
 /**
- * The Class GFeatureSearchMatchTest.
+ * The Class that tests the GenomeFeatureSearchMatch.
  */
 public class GenomeFeatureSearchMatchTest {
 

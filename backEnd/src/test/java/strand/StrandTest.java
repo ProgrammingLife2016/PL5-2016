@@ -20,6 +20,9 @@ import static org.junit.Assert.assertTrue;
  */
 public class StrandTest {
 
+	/**
+	 * The tested strand.
+	 */
     private Strand strand;
 
     /**

@@ -17,11 +17,34 @@ import static org.junit.Assert.assertEquals;
  */
 public class MutationOtherTest {
 
+	/**
+	 * The tested mutation.
+	 */
     private MutationOther mutation;
+    
+    /**
+     * The mutation type.
+     */
     private MutationType type;
+    
+    /**
+     * The reference genomeIds.
+     */
     private HashSet<String> reference;
+    
+    /**
+     * The other genomeIds.
+     */
     private HashSet<String> other;
+    
+    /**
+     * The start node.
+     */
     private RibbonNode start;
+    
+    /**
+     * The mutated nodes.
+     */
     private ArrayList<RibbonNode> mutatedRibbonNodes;
 
     /**

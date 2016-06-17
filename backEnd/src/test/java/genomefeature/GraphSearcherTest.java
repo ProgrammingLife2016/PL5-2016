@@ -27,10 +27,14 @@ import static org.junit.Assert.assertTrue;
  */
 public class GraphSearcherTest {
 
-	/** The strands. */
+	/** 
+	 * The strands. 
+	 */
 	private HashMap<Integer, Strand> strands = new HashMap<Integer, Strand>();
 	
-	/** The genome graph. */
+	/** 
+	 * The genome graph. 
+	 */
 	private GenomeGraph genomeGraph = new GenomeGraph();
 
 	/**

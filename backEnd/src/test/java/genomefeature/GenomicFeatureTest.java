@@ -6,7 +6,7 @@ import org.meanbean.test.BeanTester;
 import genomefeature.GenomicFeature;
 
 /**
- * The Class GenomicFeatureTest.
+ * The Class that tests GenomicFeature.
  */
 public class GenomicFeatureTest {
 

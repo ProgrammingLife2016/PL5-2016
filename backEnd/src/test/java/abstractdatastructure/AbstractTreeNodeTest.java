@@ -13,6 +13,9 @@ import static org.junit.Assert.assertEquals;
  */
 public class AbstractTreeNodeTest {
 
+	/**
+	 * The tested node.
+	 */
     private AbstractTreeNode node;
 
     /**

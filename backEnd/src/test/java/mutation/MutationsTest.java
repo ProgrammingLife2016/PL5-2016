@@ -21,14 +21,49 @@ import static org.junit.Assert.assertEquals;
  */
 public class MutationsTest {
 
+	/**
+	 * The tested mutations object.
+	 */
     private Mutations mutations;
+    
+    /**
+     * The present ribbon nodes.
+     */
     private ArrayList<RibbonNode> nodes;
+    
+    /**
+     * Ribbon node.
+     */
     private RibbonNode node1;
+    
+    /**
+     * Ribbon node.
+     */
     private RibbonNode node2;
+    
+    /**
+     * Ribbon node.
+     */
     private RibbonNode node3;
+    
+    /**
+     * Ribbon node.
+     */
     private RibbonNode node4;
+    
+    /**
+     * A captor the get with what value a mocked method is called.
+     */
     private ArgumentCaptor<AbstractMutation> captor;
+    
+    /**
+     * Nodes that do have a SNP.
+     */
     private ArrayList<Strand> withSNP;
+    
+    /**
+     * Nodes that don't have a SNP.
+     */
     private ArrayList<Strand> withoutSNP;
 
     /**
