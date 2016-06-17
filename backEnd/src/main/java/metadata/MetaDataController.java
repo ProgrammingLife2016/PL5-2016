@@ -143,16 +143,14 @@ public class MetaDataController {
             case 1:
                 return Color.blue;
             case 2:
-                return Color.yellow;
-            case 3:
                 return Color.green;
-            case 4:
+            case 3:
                 return Color.orange;
-            case 5:
+            case 4:
                 return Color.magenta;
-            case 6:
+            case 5:
                 return Color.black;
-            case 7:
+            case 6:
                 return Color.cyan;
             default:
                 return new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
@@ -167,9 +165,13 @@ public class MetaDataController {
      */
     public Color getColor(Genome genome, String metaDataType) {
         if (!genome.hasMetadata()) {
+            genome.setColor(Color.gray);
             return Color.GRAY;
         }
-        return colorMap.get(metaDataType + ":" + genome.getMetadata().returnField(metaDataType));
+        Color color = colorMap.get(metaDataType + ":" 
+            + genome.getMetadata().returnField(metaDataType));
+        genome.setColor(color);
+        return color;
     }
 
     /**

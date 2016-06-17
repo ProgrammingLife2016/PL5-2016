@@ -2,6 +2,7 @@ package genome;
 
 import metadata.GenomeMetadata;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 
@@ -29,6 +30,11 @@ public class Genome {
     private GenomeMetadata metadata;
 
     /**
+     * The genome color for the current metadata.
+     */
+    private Color color;
+
+    /**
      * Constructor to create a new genome.
      *
      * @param id The genome name.
@@ -36,6 +42,7 @@ public class Genome {
     public Genome(String id) {
         this.id = id;
         strands = new ArrayList<Strand>();
+        color = Color.black;
     }
 
 
@@ -135,4 +142,21 @@ public class Genome {
         }
     }
 
+    /**
+     * Get the color for the current metadata.
+     *
+     * @return color.
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * Set the color for the current metadata.
+     *
+     * @param color the color.
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }

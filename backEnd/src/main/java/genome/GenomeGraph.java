@@ -108,7 +108,7 @@ public class GenomeGraph {
      */
 
     public List<String> setGenomesAsActive(ArrayList<ArrayList<String>> ids) {
-        List<String> unrecognizedGenomes = new ArrayList<String>();
+        List<String> unrecognizedGenomes = new ArrayList<>();
         this.activeGenomes = new ArrayList<>();
         this.activeGenomeIds = new ArrayList<>();
         if (ids != null) {
@@ -119,21 +119,22 @@ public class GenomeGraph {
                     if (genome != null) {
                         input.add(genome);
                         genome.resetStrandX();
-                        if (!activeGenomeIds.contains(genome.getId())) {
-                            activeGenomeIds.add(genome.getId());
-                        }
+
                     } else {
                         unrecognizedGenomes.add(genomeId);
                     }
                 }
                 if (input.size() > 0) {
                     activeGenomes.add(input);
+                    activeGenomeIds.add(input.get(0).getId());
                 }
             }
             for (ArrayList<Genome> genome : activeGenomes) {
                 genome.get(0).setStrandsX();
             }
         }
+        activeGenomes.sort((ArrayList<Genome> o1, ArrayList<Genome> o2) ->o1.get(0).getId().compareTo(o2.get(0).getId()));
+        activeGenomeIds.sort((String o1, String o2)->o1.compareTo(o2));
         System.out.println("New genomes to compare: " + activeGenomeIds.toString());
         return unrecognizedGenomes;
     }

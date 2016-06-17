@@ -16,7 +16,7 @@ var zoomNodeLocations = [];
 var currentHoverNode = null;
 var dragFrom = null;
 var dragStartTime = null;
-var mutations = ["SNP", "INDEL", "TANDEMDUPLICATION", "INTERSPERSEDDUPLICATION", "INVERSION", "TRANSLOCATION"];
+var mutations = ["SNP", "INDEL"];
 var mutColors = ["0000FF", "00FF00", "FF0000"];
 var minY = 0;
 var maxY = 0;
@@ -381,7 +381,7 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     var yTrans = 1;
     var yHeight = Math.max(Math.abs(minY), maxY);
     if (yHeight > $(c).height() / 2) {
-        yTrans = $(c).height() / 2 / yHeight;
+        yTrans = $(c).height() / 2.3 / yHeight;
     }
 
     $.each(points, function (id, point) {
