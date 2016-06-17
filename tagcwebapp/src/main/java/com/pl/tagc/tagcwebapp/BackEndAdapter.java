@@ -3,10 +3,8 @@ package com.pl.tagc.tagcwebapp;
 import controller.Controller;
 import genome.GSearchResult;
 import genome.GraphSearcher.SearchType;
-
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
