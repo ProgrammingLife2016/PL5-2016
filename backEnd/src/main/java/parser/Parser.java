@@ -27,7 +27,7 @@ import java.util.List;
  * Created by Jeffrey on 24-4-2016.
  * This class is used to read the all the data from given files.
  */
-public class Parser {
+public final class Parser {
 
 	/**
 	 * Constructor to create a parser.

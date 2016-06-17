@@ -71,8 +71,8 @@ public class RestApiTest extends JerseyTest {
 				controller.getRibbonNodes(Mockito.anyInt(), Mockito.anyInt(), Mockito.anyInt(),
 						Mockito.anyBoolean())).thenReturn(
 				new ArrayList<RibbonNode>(Arrays.asList(rNode)));
-		Mockito.when(controller.setActiveGenomes((Mockito.anyListOf(String.class)))).thenReturn(
-				new ArrayList<String>());
+		Mockito.when(controller.setActiveGenomes(Mockito.anyListOf(String.class))).thenReturn(
+				new ArrayList<>());
 		Mockito.when(controller.search(Mockito.anyString(), Mockito.any(SearchType.class)))
 				.thenReturn(searchResult);
 		BackEndAdapter.createInstance(controller);
