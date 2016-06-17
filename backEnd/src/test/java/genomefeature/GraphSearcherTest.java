@@ -7,9 +7,6 @@ import org.junit.Test;
 
 import genome.Genome;
 import genome.GenomeGraph;
-import genomefeature.GenomeSearchResult;
-import genomefeature.GenomicFeature;
-import genomefeature.GraphSearcher;
 import genomefeature.GraphSearcher.SearchType;
 
 import java.lang.reflect.Constructor;
