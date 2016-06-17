@@ -2,17 +2,11 @@ package ribbonnodes;
 
 import genome.Genome;
 
-import java.awt.Color;
-import java.util.HashMap;
-
 /**
  * A factory to create Ribbon Edges.
  * Created by Matthijs on 7-6-2016.
  */
 public abstract class RibbonEdgeFactory {
-
-
-
 
     /**
      * Create and return a Ribbonedge.

@@ -168,7 +168,8 @@ public class MetaDataController {
             genome.setColor(Color.gray);
             return Color.GRAY;
         }
-        Color color = colorMap.get(metaDataType + ":" + genome.getMetadata().returnField(metaDataType));
+        Color color = colorMap.get(metaDataType + ":" 
+            + genome.getMetadata().returnField(metaDataType));
         genome.setColor(color);
         return color;
     }
