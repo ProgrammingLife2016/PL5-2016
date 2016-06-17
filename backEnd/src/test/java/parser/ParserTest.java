@@ -11,14 +11,9 @@ import org.mockito.Mockito;
 import datatree.DataNode;
 import datatree.DataTree;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 
 /**
  * @author Jeffrey Helgers.

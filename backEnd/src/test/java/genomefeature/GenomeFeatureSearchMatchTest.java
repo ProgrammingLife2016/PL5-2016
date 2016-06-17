@@ -3,8 +3,6 @@ package genomefeature;
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
-import genomefeature.GenomeFeatureSearchMatch;
-
 /**
  * The Class that tests the GenomeFeatureSearchMatch.
  */

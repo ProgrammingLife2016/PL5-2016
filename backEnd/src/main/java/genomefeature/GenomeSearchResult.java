@@ -82,7 +82,8 @@ public class GenomeSearchResult {
      *
      * @param gFeatureSearchMatches the new g feature search matches
      */
-    public void setgFeatureSearchMatches(ArrayList<GenomeFeatureSearchMatch> gFeatureSearchMatches) {
+    public void setgFeatureSearchMatches(ArrayList<GenomeFeatureSearchMatch> 
+    										gFeatureSearchMatches) {
         this.gFeatureSearchMatches = gFeatureSearchMatches;
     }
 }
