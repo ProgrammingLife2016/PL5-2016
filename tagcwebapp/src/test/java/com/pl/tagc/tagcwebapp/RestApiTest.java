@@ -119,7 +119,8 @@ public class RestApiTest extends JerseyTest {
 	@Test
 	public void testGetNodes() throws Exception {
 		final String response = target().path("api/getnodes").request().get(String.class);
-		assertEquals("{\"cList\":[{\"annotations\":[],\"edges\":[],\"genomes\":[],\"id\":0,\""
+		assertEquals("{\"cList\":[{\"annotations\":[],\"convergenceMap\":{\"entry\":[]},"
+				+ "\"edges\":[],\"genomes\":[],\"id\":0,\""
 				+ "mutations\":[],\"visible\":false,\"x\":0,\"y\":0}]}", response);
 	}
 

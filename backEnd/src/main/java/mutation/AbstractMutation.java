@@ -4,6 +4,7 @@ import ribbonnodes.RibbonNode;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @author Jefrrey Helgers
@@ -40,6 +41,9 @@ public abstract class AbstractMutation {
      * The end strand if there is any.
      */
     private RibbonNode end;
+
+	/** The convergence map. */
+	private Map<String, Double> convergenceMap;
 
     /**
      * Create a mutation.
@@ -143,4 +147,24 @@ public abstract class AbstractMutation {
     public String toString() {
         return mutationType.toString();
     }
+
+
+	/**
+	 * Sets the convergence map.
+	 *
+	 * @param convergenceMap the convergence map
+	 */
+	public void setConvergenceMap(Map<String, Double> convergenceMap) {
+		this.convergenceMap = convergenceMap;
+	}
+
+
+	/**
+	 * Gets the convergence map.
+	 *
+	 * @return the convergence map
+	 */
+	public Map<String, Double> getConvergenceMap() {
+		return convergenceMap;
+	}
 }
