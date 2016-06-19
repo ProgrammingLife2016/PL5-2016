@@ -1,3 +1,4 @@
+var drawFeatureLabels = false;
 var currentHover = null;
 var zoomTimeout = null;
 var url = 'http://localhost:9998/';
@@ -423,6 +424,11 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
                 ctx.strokeStyle = '#000000';
             }
         });
+        
+        if(c.className == "zoomedCanvas") {
+        	drawFeatureLabel(ctx, xPos, yPos, 1, point);
+        }
+        
     });
 }
 
@@ -470,6 +476,28 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
     ctx.stroke();
     ctx.fillStyle = '#FFFFFF';
     ctx.strokeStyle = '#000000';
+}
+
+/**
+ * Draw a genome feature label in the canvas
+ * @param ctx The canvas object
+ * @param xPos The x to draw it
+ * @param yPos The y to draw it
+ * @param multiplier How big it should be drawn
+ * @param point The pointData
+ */
+function drawFeatureLabel(ctx, xPos, yPos, multiplier, point) {
+    
+    if(point.annotations) {
+    	ctx.beginPath();  
+    	ctx.font = "bold 13px arial, sans-serif";
+    	ctx.strokeStyle = "#0000FF";    	
+    	ctx.arc(xPos, yPos, 15 * multiplier, 0, 2 * Math.PI);
+    	ctx.closePath();
+        ctx.stroke();
+        ctx.strokeStyle = '#000000';
+    }
+    
 }
 
 /**
