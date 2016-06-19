@@ -4,8 +4,11 @@ import mutation.AbstractMutation;
 import ribbonnodes.RibbonEdge;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AdaptedRibbonNode.
  */
@@ -56,6 +59,9 @@ public class AdaptedRibbonNode {
      * The is visible.
      */
     private boolean isVisible;
+
+	/** The convergence map. */
+	private Map<String, Double> convergenceMap = new HashMap<String, Double>();
 
     /**
      * Gets the label.
@@ -217,10 +223,29 @@ public class AdaptedRibbonNode {
      *
      * @param mutations The list of mutations to be set.
      */
-    public void setMutations(ArrayList<AbstractMutation> mutations) {
-        this.mutations = new ArrayList<String>();
-        for (AbstractMutation m : mutations) {
-            this.mutations.add(m.toString());
-        }
-    }
+	public void setMutations(ArrayList<AbstractMutation> mutations) {
+		this.mutations = new ArrayList<String>();
+		for (AbstractMutation m : mutations) {
+			this.mutations.add(m.toString());
+			this.convergenceMap = m.getConvergenceMap();
+		}
+	}
+
+	/**
+	 * Gets the convergence map.
+	 *
+	 * @return the convergence map
+	 */
+	public Map<String, Double> getConvergenceMap() {
+		return convergenceMap;
+	}
+
+	/**
+	 * Sets the convergence map.
+	 *
+	 * @param convergenceMap the convergence map
+	 */
+	public void setConvergenceMap(Map<String, Double> convergenceMap) {
+		this.convergenceMap = convergenceMap;
+	}
 }

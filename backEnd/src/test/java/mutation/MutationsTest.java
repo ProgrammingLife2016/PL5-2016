@@ -79,7 +79,7 @@ public class MutationsTest {
         node4 = Mockito.mock(RibbonNode.class);
         nodes = new ArrayList<>(Arrays.asList(node1, node2, node3, node4));
         captor = new ArgumentCaptor<AbstractMutation>();
-        mutations = new Mutations(nodes);
+        mutations = new Mutations(nodes, null);
 
         Strand strandSNP = Mockito.mock(Strand.class);
         Mockito.when(strandSNP.getSequence()).thenReturn("A");

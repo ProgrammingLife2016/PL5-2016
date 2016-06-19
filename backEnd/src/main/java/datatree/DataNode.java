@@ -74,7 +74,22 @@ public class DataNode extends AbstractTreeNode<DataNode> {
      * @param genome The genome to find.
      * @return The child if a child contains this genome, otherwise null.
      */
-    public DataNode getChildWithGenome(ArrayList<String> genome) {
+    public DataNode getChildWithGenome(String genome) {
+        for (DataNode child : getChildren()) {
+            if (child.getGenomes().contains(genome)) {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the child of this node that contains genome.
+     *
+     * @param genome The genome to find.
+     * @return The child if a child contains this genome, otherwise null.
+     */
+    public DataNode getChildWithGenomes(ArrayList<String> genome) {
         for (DataNode child : getChildren()) {
             if (child.getGenomes().containsAll(genome)) {
                 return child;
@@ -82,7 +97,6 @@ public class DataNode extends AbstractTreeNode<DataNode> {
         }
         return null;
     }
-
 
     /**
      * Get genomeLeaf through depth first search.

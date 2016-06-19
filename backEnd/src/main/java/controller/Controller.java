@@ -21,6 +21,8 @@ import java.util.List;
  * Created by Matthijs on 24-4-2016.
  */
 
+import mutation.Mutations;
+
 /**
  * Controller. This class connects the classes together.
  */
@@ -46,7 +48,7 @@ public class Controller {
      */
     private MetaDataController metaDataController;
 
-    /**
+        /**
      * Constructor.
      */
     public Controller() {
@@ -82,8 +84,10 @@ public class Controller {
      * @return The list of ribbonNodes.
      */
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
-                                                int zoomLevel, boolean isMiniMap) {
-        return ribbonController.getRibbonNodes(minX, maxX, zoomLevel, isMiniMap);
+                                                int zoomLevel, boolean isMiniMap) {    	
+    	ArrayList<RibbonNode> result = ribbonController.getRibbonNodes(
+    			minX, maxX, zoomLevel, isMiniMap);        
+        return result;
     }
 
     /**
