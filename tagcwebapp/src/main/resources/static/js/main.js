@@ -451,17 +451,29 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
  * @param point The pointData
  */
 function drawPoint(ctx, xPos, yPos, multiplier, point) {
-    ctx.beginPath();
     ctx.fillStyle = '#FFFFFF';
     ctx.strokeStyle = '#000000';
     var pointMutations = point.mutations;
+    
     if (point.visible && ( !pointMutations || typeof pointMutations == "undefined" || pointMutations.length == 0)) {
-        ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
+    	ctx.beginPath();
+    	ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
     } else if (pointMutations) {
+    	
         var mutation = pointMutations[0].replace('"', '');
         var index = mutations.indexOf(mutation);
         var mutSize = mutColors.length;
         var color = mutColors[index % mutSize];
+        
+        if(point.convergenceMap) {
+        	ctx.beginPath();
+        	ctx.fillStyle = '#FFFF00';
+        	ctx.arc(xPos, yPos, 10 * multiplier, 0, 2 * Math.PI);
+        	ctx.fill();
+            ctx.stroke();
+        	ctx.closePath();
+        }
+        ctx.beginPath();
         ctx.fillStyle = '#' + color;
         switch (Math.floor(index / mutSize)) {
             case 0: //Square
@@ -482,6 +494,7 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
         }
         ctx.fill();
     }
+
     ctx.closePath();
     ctx.stroke();
     ctx.fillStyle = '#FFFFFF';
@@ -499,8 +512,7 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
 function drawFeatureLabel(ctx, xPos, yPos, multiplier, point) {
     
     if(point.annotations) {
-    	ctx.beginPath();  
-    	ctx.font = "bold 13px arial, sans-serif";
+    	ctx.beginPath();
     	ctx.strokeStyle = "#0000FF";    	
     	ctx.arc(xPos, yPos, 15 * multiplier, 0, 2 * Math.PI);
     	ctx.closePath();

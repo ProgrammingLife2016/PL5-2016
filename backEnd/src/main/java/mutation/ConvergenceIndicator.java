@@ -72,7 +72,7 @@ public final class ConvergenceIndicator {
 			String genomeId = genomeIDs.get(i);
 			double avgDistance = averageDistanceArray[i];
 			double outlierness = Math.abs(avgDistance - meanAvgDistance) / standardDeviation;
-			if (outlierness > 1.5) {
+			if (outlierness > 1.9) {
 				convergenceMap.put(genomeId, outlierness);
 			}
 		}
