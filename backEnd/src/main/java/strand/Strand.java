@@ -1,4 +1,4 @@
-package genome;
+package strand;
 
 /**
  * Created by Matthijs on 24-4-2016.
@@ -9,6 +9,8 @@ import mutation.AbstractMutation;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import genomefeature.GenomicFeature;
 
 /**
  * Class that contains the graph nodes.
@@ -76,13 +78,13 @@ public class Strand {
     private ArrayList<GenomicFeature> genomicFeatures = new ArrayList<GenomicFeature>();
 
     /**
-     * Instantiates a new strand.
+     * Instantiates an empty new strand.
      */
     public Strand() {
     }
 
     /**
-     * Constructor to create a node.
+     * Constructor to create a strand.
      *
      * @param id              The node id.
      * @param sequence        The sequence of the node.
@@ -103,18 +105,17 @@ public class Strand {
         this.incomingEdges = new ArrayList<>();
         this.x = 0;
         this.mutations = new ArrayList<>();
-
     }
 
     /**
-     * Instantiates a new strand.
+     * Instantiates a new strand, only with an id.
+     * This is used for testing.
      *
      * @param id the id
      */
     public Strand(int id) {
         this.id = id;
     }
-
 
     /**
      * Get the node id.
@@ -144,7 +145,7 @@ public class Strand {
     }
 
     /**
-     * Set the sequence.
+     * Set the dna sequence.
      *
      * @param sequence The sequence.
      */
@@ -169,7 +170,6 @@ public class Strand {
     public void setGenomes(HashSet<String> newGenomes) {
         genomes = new HashSet<String>(newGenomes);
         this.weight = genomes.size();
-
     }
 
     /**
@@ -221,7 +221,6 @@ public class Strand {
             incomingEdges.add(edge);
         }
     }
-
 
     /**
      * Getter for x.

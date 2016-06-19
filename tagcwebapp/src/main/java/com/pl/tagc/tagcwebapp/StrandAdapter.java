@@ -1,8 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
-import genome.Strand;
-
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+
+import strand.Strand;
 
 /**
  * The Class RibbonNodeAdapter.

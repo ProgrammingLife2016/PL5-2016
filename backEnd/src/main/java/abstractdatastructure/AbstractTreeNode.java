@@ -5,40 +5,38 @@ import java.util.ArrayList;
 
 /**
  * Created by Matthijs on 4-5-2016.
- * An abstract class for a node in a tree.
+ * An abstract class, that uses nodes to create a tree.
  *
  * @param <T> The instantiated subclass of this node.
  */
 public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
 
-
     /**
      * The child nodes of this node.
      */
+	
     private ArrayList<T> children;
+    
     /**
      * This nodes' parent.
      */
     private T parent;
+    
     /**
      * The Id of the node.
      */
     private int id;
 
-
     /**
      * Initialize this node from tree node, recursively.
      *
      * @param parent      The parent of this node, root having null.
-     * @param childNumber Childnumber.
+     * @param childNumber The numberth children.
      */
     public AbstractTreeNode(T parent, int childNumber) {
-
         children = new ArrayList<>();
         this.parent = parent;
         this.id = generateId(parent, childNumber);
-
-
     }
 
     /**
@@ -53,8 +51,6 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
             return 0;
         }
         return childNumber + parent.getId() * 2 + 1;
-
-
     }
 
     /**
@@ -64,7 +60,6 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
      * @return The node, null if it is not contained in this graph.
      */
     public T getNode(final int id) {
-
         if (this.getId() == id) {
             return (T) this;
         } else if (this.getChildren().size() != 0) {
@@ -81,7 +76,6 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
         }
         return null;
     }
-
 
     /**
      * Get the children of a node.
@@ -102,7 +96,7 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> {
     }
 
     /**
-     * Adds child node.
+     * Add a child to this node.
      *
      * @param node the node
      */

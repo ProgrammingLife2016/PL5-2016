@@ -1,8 +1,9 @@
 package com.pl.tagc.tagcwebapp;
 
-import genome.GFeatureSearchMatch;
-
 import javax.xml.bind.annotation.XmlRootElement;
+
+import genomefeature.GenomeFeatureSearchMatch;
+
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ public class SearchResultObject {
     /**
      * The g feature search matches.
      */
-    private ArrayList<GFeatureSearchMatch> gFeatureSearchMatches;
+    private ArrayList<GenomeFeatureSearchMatch> gFeatureSearchMatches;
 
     /**
      * Instantiates a new search result object.
@@ -29,7 +30,7 @@ public class SearchResultObject {
      *
      * @return the g feature search matches
      */
-    public ArrayList<GFeatureSearchMatch> getgFeatureSearchMatches() {
+    public ArrayList<GenomeFeatureSearchMatch> getgFeatureSearchMatches() {
         return gFeatureSearchMatches;
     }
 
@@ -38,7 +39,8 @@ public class SearchResultObject {
      *
      * @param gFeatureSearchMatches the new g feature search matches
      */
-    public void setgFeatureSearchMatches(ArrayList<GFeatureSearchMatch> gFeatureSearchMatches) {
+    public void setgFeatureSearchMatches(ArrayList<GenomeFeatureSearchMatch> 
+    										gFeatureSearchMatches) {
         this.gFeatureSearchMatches = gFeatureSearchMatches;
     }
 

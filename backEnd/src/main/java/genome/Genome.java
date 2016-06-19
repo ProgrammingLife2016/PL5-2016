@@ -1,11 +1,15 @@
 package genome;
 
+import metadata.GenomeMetadata;
+import strand.Strand;
+
+import java.awt.Color;
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
 
 /**
  * The Class Genome.
+ * Creates genomes that contain all the strands they pass through.
  *
  * @author Jeffrey Helgers
  */
@@ -21,22 +25,27 @@ public class Genome {
      */
     private String id;
 
-
     /**
      * The meta data of this genome.
      */
     private GenomeMetadata metadata;
 
     /**
+     * The genome color for the current metadata.
+     */
+    private Color color;
+
+    /**
      * Constructor to create a new genome.
+     * When a genome is created there are no strands in this genome.
      *
      * @param id The genome name.
      */
     public Genome(String id) {
         this.id = id;
         strands = new ArrayList<Strand>();
+        color = Color.black;
     }
-
 
     /**
      * Add a strand to the genome.
@@ -134,4 +143,21 @@ public class Genome {
         }
     }
 
+    /**
+     * Get the color for the current metadata.
+     *
+     * @return color.
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * Set the color for the current metadata.
+     *
+     * @param color the color.
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }

@@ -31,6 +31,7 @@ public class RibbonNodeAdapter extends XmlAdapter<AdaptedRibbonNode, RibbonNode>
         adaptedNode.setY(node.getY());
         adaptedNode.setMutations(node.getMutations());
         adaptedNode.setVisible(node.isVisible());
+        adaptedNode.setAnnotations(node.getAnnotations());
         return adaptedNode;
     }
 

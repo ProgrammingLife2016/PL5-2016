@@ -1,7 +1,6 @@
 package ribbonnodes;
 
 import genome.Genome;
-import genome.GenomeMetadata;
 import org.junit.Test;
 
 import java.awt.Color;
@@ -23,9 +22,8 @@ public class RibbonEdgeFactoryTest {
      */
     @Test
     public void testCreateRibbonEdgeWithMetaData() throws Exception {
-        GenomeMetadata metadata = new GenomeMetadata("1", "LIN 1");
         Genome genome = new Genome("1");
-        genome.setMetadata(metadata);
+        genome.setColor(Color.decode("0xed00c3"));
         HashSet<String> genomeID = new HashSet<>(Arrays.asList("1"));
         RibbonNode node1 = new RibbonNode(0, genomeID);
         RibbonNode node2 = new RibbonNode(1, genomeID);
@@ -53,7 +51,7 @@ public class RibbonEdgeFactoryTest {
 
         assertEquals(edge.getStart(), node1);
         assertEquals(edge.getEnd(), node2);
-        assertEquals(edge.getColor(), Color.decode("0xff0000"));
+        assertEquals(edge.getColor(), Color.black);
 
     }
 
@@ -72,7 +70,7 @@ public class RibbonEdgeFactoryTest {
 
         assertEquals(edge.getStart(), node1);
         assertEquals(edge.getEnd(), node2);
-        assertEquals(edge.getColor(), new Color(100, 100, 100));
+        assertEquals(edge.getColor(), Color.BLACK);
 
     }
 }

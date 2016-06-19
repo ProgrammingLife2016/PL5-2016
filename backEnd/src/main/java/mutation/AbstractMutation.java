@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * @author Jefrrey Helgers
- *         Abstract class for mutations, the frontend can use this interface.
+ * Abstract class for mutations, the frontend uses these mutations.
  */
 public abstract class AbstractMutation {
 

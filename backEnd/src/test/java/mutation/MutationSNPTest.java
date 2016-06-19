@@ -16,12 +16,39 @@ import static org.junit.Assert.assertEquals;
  */
 public class MutationSNPTest {
 
+	/**
+	 * The tested mutation.
+	 */
     private MutationSNP mutation;
+    
+    /**
+     * The reference genomeIds.
+     */
     private HashSet<String> reference;
+    
+    /**
+     * The other genomeIds.
+     */
     private HashSet<String> other;
+    
+    /**
+     * The start node.
+     */
     private RibbonNode start;
+    
+    /**
+     * The end node.
+     */
     private RibbonNode end;
+    
+    /**
+     * The mutated node from the reference ids.
+     */
     private RibbonNode mutateReference;
+    
+    /**
+     * The mutated node from the other ids.
+     */
     private RibbonNode mutateOther;
 
     /**

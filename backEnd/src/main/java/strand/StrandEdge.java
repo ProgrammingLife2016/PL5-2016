@@ -1,6 +1,4 @@
-package genome;
-
-// TODO: Auto-generated Javadoc
+package strand;
 
 /**
  * The Class StrandEdge.
@@ -8,17 +6,18 @@ package genome;
 public class StrandEdge {
 
     /**
-     * The start.
+     * The start strands.
      */
     private Strand start;
 
     /**
-     * The end.
+     * The end strand.
      */
     private Strand end;
 
     /**
      * The weight.
+     * The number of genomes going through the edge.
      */
     private int weight;
 
@@ -32,16 +31,7 @@ public class StrandEdge {
         this.start = startEdge;
         this.end = endEdge;
         this.weight = 1;
-
     }
-
-//    public StrandEdge(Object o) {
-//        super(0, 0);
-//        Relationship rela = (Relationship) o;
-//        setStartId(java.lang.Math.toIntExact((long) rela.getStartNode().getProperty("id")));
-//        setEndId(java.lang.Math.toIntExact((long) rela.getEndNode().getProperty("id")));
-//    }
-
 
     /**
      * Gets the start.

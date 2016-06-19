@@ -1,13 +1,14 @@
 package datatree;
 
 import abstractdatastructure.AbstractTreeNode;
-import genome.Strand;
 import phylogenetictree.PhylogeneticNode;
+import strand.Strand;
 
 import java.util.ArrayList;
 
 /**
  * A Node in the DataTree.
+ * This node will contain the strands that are present in both of its children.
  * Created by Matthijs on 12-5-2016.
  */
 public class DataNode extends AbstractTreeNode<DataNode> {
@@ -42,7 +43,6 @@ public class DataNode extends AbstractTreeNode<DataNode> {
         } else {
             level = parent.getLevel() + 1;
         }
-
     }
 
     /**
@@ -105,8 +105,6 @@ public class DataNode extends AbstractTreeNode<DataNode> {
      * @return The node, null if it is not contained in this graph.
      */
     public DataNode getGenomeLeaf(final String genomeName) {
-
-
         for (DataNode child : this.getChildren()) {
             if (child.getGenomes().size() == 1
                     && child.getGenomes().get(0).equals(genomeName)) {
@@ -118,7 +116,6 @@ public class DataNode extends AbstractTreeNode<DataNode> {
                 return node;
             }
         }
-
         return null;
     }
 

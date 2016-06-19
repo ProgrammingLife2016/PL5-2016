@@ -17,11 +17,34 @@ import static org.junit.Assert.assertEquals;
  */
 public class MutationIndelTest {
 
+	/**
+	 * The tested mutation.
+	 */
     private MutationIndel mutation;
+    
+    /**
+     * The reference genomeIds.
+     */
     private HashSet<String> reference;
+    
+    /**
+     * The other genomeIds.
+     */
     private HashSet<String> other;
+    
+    /**
+     * The strart node.
+     */
     private RibbonNode start;
+    
+    /**
+     * The end node.
+     */
     private RibbonNode end;
+    
+    /**
+     * The nodes that are mutated.
+     */
     private ArrayList<RibbonNode> mutatedRibbonNodes;
 
     /**

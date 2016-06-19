@@ -1,8 +1,8 @@
 package com.pl.tagc.tagcwebapp;
 
 import controller.Controller;
-import genome.GSearchResult;
-import genome.GraphSearcher.SearchType;
+import genomefeature.GenomeSearchResult;
+import genomefeature.GraphSearcher.SearchType;
 
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -83,10 +83,27 @@ public final class BackEndAdapter implements BackEndInterface {
         if (searchType == null) {
             throw new IllegalArgumentException("Unknown search type");
         }
-        GSearchResult gSearchRresult = controller.search(searchString, searchType);
+        GenomeSearchResult gSearchRresult = controller.search(searchString, searchType);
         SearchResultObject resultObject = new SearchResultObject();
         resultObject.setgFeatureSearchMatches(gSearchRresult.getgFeatureSearchMatches());
         return resultObject;
     }
 
+    /**
+     * Get the datamap and put it in a JAXB readable object.
+     * @return a JAXB readable MetaDataMap.
+     */
+	public MetaDataObject getMetaDataMap() {
+		return new MetaDataObject(controller.getMetaDataController().getMetaDataMap());
+	}
+
+    /**
+     * Get the colors for the given metadata and put it in a JAXB readable object.
+     * @param metaData Sting of metadata to get the color for.
+     * @return a JAXB readable ColorMap.
+     */
+	public MetaDataColorObject getAllGenomeColors(String metaData) {
+		return new MetaDataColorObject(controller.getMetaDataController().
+				getAllGenomeColors(metaData));
+	}
 }

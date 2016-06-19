@@ -25,7 +25,6 @@ public class RibbonEdge extends Edge {
      */
     private RibbonNode end;
 
-
     /**
      * Constructor to create an edge.
      *
@@ -48,10 +47,7 @@ public class RibbonEdge extends Edge {
         int newRed = (int) (this.color.getRed() + color.getRed()) / 2;
         int newGreen = (int) (this.color.getGreen() + color.getGreen()) / 2;
         int newBlue = (int) (this.color.getBlue() + color.getBlue()) / 2;
-
         this.color = new Color(newRed, newGreen, newBlue);
-
-
     }
 
     /**

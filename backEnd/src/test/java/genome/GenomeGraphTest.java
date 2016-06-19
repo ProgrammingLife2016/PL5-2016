@@ -3,6 +3,8 @@ package genome;
 import org.junit.Before;
 import org.junit.Test;
 
+import strand.Strand;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -80,5 +82,6 @@ public class GenomeGraphTest {
         assertEquals(data.getActiveGenomes().get(0).get(0).getId(), "ref1");
         assertEquals(notPresent.size(), 1);
         assertEquals(notPresent.get(0), "ref2");
+        data.setGenomesAsActive(null);
     }
 }

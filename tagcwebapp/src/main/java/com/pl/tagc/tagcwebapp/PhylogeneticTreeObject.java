@@ -21,7 +21,7 @@ public class PhylogeneticTreeObject {
     /**
      * The children.
      */
-    private ArrayList<PhylogeneticNode> children;
+    private ArrayList<PhylogeneticNode> children = new ArrayList<>();
 
     /**
      * Instantiates a new phylogenetic tree object.
@@ -74,5 +74,5 @@ public class PhylogeneticTreeObject {
         this.children = children;
     }
 
-    ;
+
 }

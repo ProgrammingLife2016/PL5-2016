@@ -1,13 +1,14 @@
 package ribbonnodes;
 
-import genome.Strand;
 import mutation.AbstractMutation;
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
  * Created by Matthijs on 12-5-2016.
+ * Class to create a ribbon node these nodes are displayed on the screen.
  */
 public class RibbonNode {
 
@@ -39,7 +40,6 @@ public class RibbonNode {
     /**
      * The genomes that go through this node.
      */
-
     private HashSet<String> genomes;
 
     /**
@@ -52,6 +52,10 @@ public class RibbonNode {
      */
     private String label;
 
+    /**
+     * The annotations contained in this node.
+     */
+    private ArrayList<String> annotations;
 
     /**
      * Draw the node or not.
@@ -86,6 +90,7 @@ public class RibbonNode {
         this.isVisible = true;
         mutations = new ArrayList<>();
         yFixed = false;
+        annotations = new ArrayList<>();
     }
 
     /**
@@ -104,7 +109,6 @@ public class RibbonNode {
      */
     public void setLabel(String label) {
         this.label = label;
-
     }
 
     /**
@@ -348,5 +352,36 @@ public class RibbonNode {
      */
     public void setyFixed(boolean yFixed) {
         this.yFixed = yFixed;
+    }
+
+    /**
+     * Get the annotations contained in this node.
+     *
+     * @return The annotations in this node.
+     */
+    public ArrayList<String> getAnnotations() {
+        return annotations;
+    }
+
+    /**
+     * Add a annotation to this node.
+     *
+     * @param annotation The annotation to add.
+     */
+    public void addAnnotation(String annotation) {
+        if (!annotations.contains(annotation)) {
+            this.annotations.add(annotation);
+        }
+    }
+
+    /**
+     * Add annotations to this node.
+     *
+     * @param annotations The annotations to add.
+     */
+    public void addAnnotations(ArrayList<String> annotations) {
+        for (String annotation : annotations) {
+            addAnnotation(annotation);
+        }
     }
 }

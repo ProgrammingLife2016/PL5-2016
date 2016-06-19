@@ -6,7 +6,7 @@ var screenWidth = $(window).width();
 var screenHeight = $(window).height();
 var screenResizeTimeout, treeRedrawTimeout;
 var zoomWidth = 100;
-var minimapNodes = {}, cachedZoomNodes, minimapCount;
+var minimapNodes = {}, cachedZoomNodes, maxMinimapSize;
 var currentMousePos = {x: -1, y: -1};
 var zoomLeft = 0;
 var zoomRight = 0;
@@ -16,8 +16,10 @@ var zoomNodeLocations = [];
 var currentHoverNode = null;
 var dragFrom = null;
 var dragStartTime = null;
-var mutations = ["SNP", "INDEL", "TANDEMDUPLICATION", "INTERSPERSEDDUPLICATION", "INVERSION", "TRANSLOCATION"];
+var mutations = ["SNP", "INDEL"];
 var mutColors = ["0000FF", "00FF00", "FF0000"];
+var minY = 0;
+var maxY = 0;
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -47,8 +49,8 @@ function screenResize() {
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#minimap').height($('#sub').height());
     if ($('#zoom').find('canvas').length) { //Update the canvas height and width in the zoom panel
-        $('#zoom').find('canvas')[0].height = $('#zoom').height();
-        $('#zoom').find('canvas')[0].width = $('#zoom').width();
+        $('#zoom').find('canvas')[0].height = $('#zoomWindow').height();
+        $('#zoom').find('canvas')[0].width = $('#zoomWindow').width();
         updatezoomWindow();
     }
 
@@ -158,6 +160,7 @@ $('document').ready(function () {
         var x = currentMousePos.x - $(this).position().left;
         var y = currentMousePos.y - $(this).position().top;
         var found = false;
+
         if (dragFrom != null) {
             var d = new Date();
             var time = d.getMilliseconds();
@@ -184,7 +187,13 @@ $('document').ready(function () {
                     if (node.id != currentHoverNode) {
                         currentHoverNode = node.id;
                         var dialog = $('#nodeDialog');
-                        dialog.show().find('.message').html(node.label);
+                        var annotations = "<ul>";
+                        $.each(node.annotations, function(key, value) {
+                            annotations += "<li>"+ value +"</li>";
+                        });
+                        annotations += "</ul>";
+                        dialog.find('.message').html(node.label);
+                        dialog.find('.annotation').html(annotations);
                     }
                     return false;
                 }
@@ -222,16 +231,46 @@ $('document').ready(function () {
     $('#coordinateSelector').keyup(function (e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
-            var left = Math.floor($(this).val() / minimapCount * $('#minimap').width());
-            var width = $('#minimap').width() / 100;
             e.preventDefault();
-            zoomWidth = 1;
-            $('#minimap .slider').animate({
-                'left': left,
-                'width': width
-            }, 1000, function () {
-                updatezoomWindow();
+            goToX($(this).val(), 100);
+        }
+    });
+
+    $("#searchMutation").autocomplete({
+        source: function( request, response ) {
+            $.ajax({
+                url: url + 'api/search',
+                dataType: "JSON",
+                type: 'GET',
+                data: {
+                    searchString: request.term,
+                    searchType: 'GenomicFeatureSearch'
+                },
+                success: function(result) {
+                    var data = [];
+                    $.each(result.gFeatureSearchMatches, function(key, value) {
+                        data.push({
+                            label: value.feature.displayName,
+                            value: value.strands[0].x +"-"+ value.strands[value.strands.length - 1].x
+                        });
+                    });
+                    response( data );
+                }
             });
+        },
+        minLength: 3,
+        select: function( event, ui ) {
+            var coords = ui.item.value.split('-');
+            var zoom = Math.min(1000, Math.ceil(maxMinimapSize / (parseInt(coords[1]) - parseInt(coords[0]))));
+            goToX(coords[0], zoom);
+            $("#coordinateSelector").val(coords[0]);
+            setTimeout(function() { $('#searchMutation').val(""); }, 500);
+        },
+        open: function() {
+            $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+            $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
         }
     });
 
@@ -258,7 +297,6 @@ function pxToInt(css) {
  * @param nodes
  */
 var drawZoom = function (nodes) {
-    $('#nodeDialog').hide();
     if (nodes == null) {
         nodes = cachedZoomNodes;
     } else {
@@ -305,9 +343,10 @@ var drawMinimap = function (nodes) {
     if (nodes == null) {
         nodes = minimapNodes;
     } else {
+        minimapNodes = {};
         minimapNodes = nodes;
-        minimapCount = Object.keys(nodes).length;
-        $('#maxCoordinateInput').html(minimapCount);
+        maxMinimapSize = nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
+        $('#maxCoordinateInput').html(maxMinimapSize);
         minimapHeight = calcHeight(nodes);
     }
     if (nodes == null || Object.keys(nodes).length < 1) {
@@ -339,16 +378,27 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
     if (saveRealCoordinates) {
         zoomNodeLocations = [];
     }
+    var yTrans = 1;
+    var yHeight = Math.max(Math.abs(minY), maxY);
+    if (yHeight > $(c).height() / 2) {
+        yTrans = $(c).height() / 2.3 / yHeight;
+    }
 
     $.each(points, function (id, point) {
 
         var xPos = xTranslate(point.x);
-        var yPos = nodeHeight + point.y;
+        var yPos = nodeHeight + point.y * yTrans;
 
         drawPoint(ctx, xPos, yPos, 1, point);
 
         if (saveRealCoordinates) {
-            zoomNodeLocations.push({x: xPos, y: yPos, label: point.label, id: point.id});
+            zoomNodeLocations.push({
+                x: xPos,
+                y: yPos,
+                label: point.label,
+                id: point.id,
+                annotations: point.annotations
+            });
         }
 
 
@@ -359,9 +409,14 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
             }
             if (target) {
                 ctx.beginPath();
-                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y);
-                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y);
-                ctx.lineWidth = edge.weight;
+                ctx.moveTo(xTranslate(point.x), nodeHeight + point.y * yTrans);
+                ctx.lineTo(xTranslate(target.x), nodeHeight + target.y * yTrans);
+                var selected = (selectedGenomes.length + selectedMiddleNodes.length);
+                if (selected > 8) {
+                    ctx.lineWidth = Math.max(1, Math.ceil(edge.weight / ((selectedGenomes.length + selectedMiddleNodes.length) / 3)));
+                } else {
+                    ctx.lineWidth = edge.weight;
+                }
                 ctx.strokeStyle = '#' + edge.color;
                 ctx.stroke();
                 ctx.lineWidth = 1;
@@ -473,9 +528,9 @@ function zoom(direction, zoomAmount, xMousePos) {
  */
 function updatezoomWindow() {
     if (minimapNodes) {
-       var zoom = updateZoomValues();
-       var boundingBox = {xleft: Math.floor(zoomLeft), xright: Math.ceil(zoomRight), zoom: Math.ceil(zoom), isMiniMap: false};
-       getNodes(boundingBox, drawZoom);
+        var zoom = updateZoomValues();
+        var boundingBox = {xleft: Math.floor(zoomLeft), xright: Math.ceil(zoomRight), zoom: Math.ceil(zoom), isMiniMap: false};
+        getNodes(boundingBox, drawZoom);
     }
 }
 
@@ -527,6 +582,8 @@ function parseNodeData(nodes) {
     }
 
     $.each(nodes, function (key, value) {
+        minY = Math.min(minY, value.y);
+        maxY = Math.max(maxY, value.y);
         result[value.id] = value;
     });
     return result;
@@ -614,5 +671,17 @@ function fullSizeMinimap() {
     }, 1000, function () {
         zoom(1, 0, 1);
         screenResize();
+    });
+}
+
+function goToX(x, zoom) {
+    var left = Math.floor(x / maxMinimapSize * $('#minimap').width());
+    var width = $('#minimap').width() / zoom;
+    zoomWidth = 1;
+    $('#minimap .slider').animate({
+        'left': left,
+        'width': width
+    }, 1000, function() {
+        updatezoomWindow();
     });
 }

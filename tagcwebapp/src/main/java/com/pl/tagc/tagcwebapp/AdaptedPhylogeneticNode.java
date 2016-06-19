@@ -5,14 +5,13 @@ import phylogenetictree.PhylogeneticNode;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
-import java.util.Locale;
 
 
 /**
  * The Class AdaptedPhylogeneticNode.
  */
 @XmlType(propOrder = {"nameLabel", "originalChildOrder",
-        "children", "distance", "annotation", "id"})
+        "children", "annotation", "id"})
 public class AdaptedPhylogeneticNode {
 
     /**
@@ -29,10 +28,7 @@ public class AdaptedPhylogeneticNode {
      */
     private int id;
 
-    /**
-     * The distance.
-     */
-    private double distance;
+
 
     /**
      * The annotation.
@@ -63,24 +59,7 @@ public class AdaptedPhylogeneticNode {
         this.nameLabel = nameLabel;
     }
 
-    /**
-     * Get the distance.
-     *
-     * @return The distance.
-     */
-    @XmlElement(name = "attribute")
-    private String getDistance() {
-        return String.format(Locale.US, "%1.11e", distance);
-    }
 
-    /**
-     * Sets the distance.
-     *
-     * @param distance the new distance
-     */
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
 
     /**
      * Gets the children.

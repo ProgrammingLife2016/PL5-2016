@@ -11,7 +11,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class EdgeTest {
 
-    private Edge edge; //testEdge
+	/**
+	 * The tested edge.
+	 */
+    private Edge edge;
 
     /**
      * Set up the Edge.

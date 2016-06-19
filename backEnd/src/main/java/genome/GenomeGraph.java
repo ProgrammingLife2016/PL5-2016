@@ -1,13 +1,21 @@
 package genome;
 
-import genome.GraphSearcher.SearchType;
+import metadata.GenomeMetadata;
+import strand.Strand;
+import strand.StrandAnnotator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import genomefeature.GenomeSearchResult;
+import genomefeature.GenomicFeature;
+import genomefeature.GraphSearcher;
+import genomefeature.GraphSearcher.SearchType;
+
 /**
  * The Class GenomeGraph.
+ * This class holds all the information about the genomes and strands.
  */
 public class GenomeGraph {
 
@@ -24,8 +32,12 @@ public class GenomeGraph {
     /**
      * The active genomes.
      */
-    private ArrayList<ArrayList<Genome>> activeGenomes; //The current genomes selected in the GUI.
+    private ArrayList<ArrayList<Genome>> activeGenomes;
 
+    /**
+     * The ids of the activeGenomes.
+     */
+    private ArrayList<String> activeGenomeIds;
 
     /**
      * Instantiates a new genome graph.
@@ -33,6 +45,7 @@ public class GenomeGraph {
     public GenomeGraph() {
         strands = new HashMap<>();
         activeGenomes = new ArrayList<>();
+        activeGenomeIds = new ArrayList<>();
         genomes = new HashMap<>();
     }
 
@@ -52,7 +65,6 @@ public class GenomeGraph {
      */
     public void setStrands(HashMap<Integer, Strand> strands) {
         this.strands = strands;
-
     }
 
     /**
@@ -95,33 +107,42 @@ public class GenomeGraph {
 
     /**
      * Sets the genomes as active.
+     * And returns the genomes that are selected but not present in the data.
      *
      * @param ids the new genomes as active
      * @return the list of unrecognized genomes
      */
+    @SuppressWarnings("checkstyle:methodlength")
     public List<String> setGenomesAsActive(ArrayList<ArrayList<String>> ids) {
-        List<String> unrecognizedGenomes = new ArrayList<String>();
+        List<String> unrecognizedGenomes = new ArrayList<>();
         this.activeGenomes = new ArrayList<>();
-
-        for (ArrayList<String> genomeIds : ids) {
-            ArrayList<Genome> input = new ArrayList<>();
-            for (String genomeId : genomeIds) {
-                Genome genome = genomes.get(genomeId);
-                if (genome != null) {
-                    input.add(genome);
-                } else {
-                    unrecognizedGenomes.add(genomeId);
+        this.activeGenomeIds = new ArrayList<>();
+        if (ids != null) {
+            for (ArrayList<String> genomeIds : ids) {
+                ArrayList<Genome> input = new ArrayList<>();
+                for (String genomeId : genomeIds) {
+                    Genome genome = genomes.get(genomeId);
+                    if (genome != null) {
+                        input.add(genome);
+                        genome.resetStrandX();
+                    } else {
+                        unrecognizedGenomes.add(genomeId);
+                    }
+                }
+                if (input.size() > 0) {
+                    activeGenomes.add(input);
+                    activeGenomeIds.add(input.get(0).getId());
                 }
             }
-            if (input.size() > 0) {
-                activeGenomes.add(input);
+            for (ArrayList<Genome> genome : activeGenomes) {
+                genome.get(0).setStrandsX();
             }
         }
-        for (ArrayList<Genome> genome : activeGenomes) {
-            genome.get(0).setStrandsX();
-        }
+        activeGenomes.sort((ArrayList<Genome> o1, 
+        		ArrayList<Genome> o2) -> o1.get(0).getId().compareTo(o2.get(0).getId()));
+        activeGenomeIds.sort((String o1, String o2)->o1.compareTo(o2));
+        System.out.println("New genomes to compare: " + activeGenomeIds.toString());
         return unrecognizedGenomes;
-
     }
 
     /**
@@ -130,11 +151,9 @@ public class GenomeGraph {
      * @param metadata the metadata
      */
     public void loadMetaData(HashMap<String, GenomeMetadata> metadata) {
-
         for (Genome g : genomes.values()) {
             g.setMetadata(metadata.get(g.getId()));
         }
-
     }
 
     /**
@@ -158,7 +177,7 @@ public class GenomeGraph {
     }
 
     /**
-     * Annotate.
+     * Annotate the selected genome.
      *
      * @param genomeId    the genome id
      * @param annotations the annotations
@@ -168,15 +187,22 @@ public class GenomeGraph {
     }
 
     /**
-     * Search.
+     * Search for a specific annotation.
      *
      * @param searchString the search string
      * @param searchType   the search type
      * @return the g search result
      */
-    public GSearchResult search(String searchString, SearchType searchType) {
+    public GenomeSearchResult search(String searchString, SearchType searchType) {
         return GraphSearcher.search(searchString, searchType, this);
     }
 
-
+    /**
+     * Get the ids of the active genomes.
+     *
+     * @return The arraylist of the active genome ids.
+     */
+    public ArrayList<String> getActiveGenomeIds() {
+        return activeGenomeIds;
+    }
 }

@@ -1,63 +1,3 @@
-/*div, body, html {*/
-/*padding: 0;*/
-/*margin: 0;*/
-/*}*/
-
-/*#splashscreen {*/
-/*position: absolute;*/
-/*width: 100%;*/
-/*height: 110px;*/
-/*left: 0;*/
-/*top: 15%;*/
-/*display: none;*/
-/*background: url('../img/logo.jpg') no-repeat;*/
-/*background-size: 100% auto*/
-/*}*/
-
-/*#container {*/
-/*display: none;*/
-/*padding: 30px;*/
-/*margin: 0;*/
-/*}*/
-
-/*#header {*/
-/*display: none;*/
-/*left: 0;*/
-/*width: 0;*/
-/*margin-left: 2px;*/
-/*height: 117px;*/
-/*background: url('../img/background-top.jpg') repeat-x;*/
-/*background-size: auto 100%;*/
-/*}*/
-
-/*#container .genome {*/
-/*width: 100%;*/
-/*height: 300px;*/
-/*border: 1px solid #454545;*/
-/*background-color: #EEE;*/
-/*margin-bottom: 30px;*/
-/*}*/
-
-/*#container .genome .slider {*/
-/*background-color: rgba(00, 127, 255, .2);*/
-/*border: 1px solid #007fff;*/
-/*left: 0;*/
-/*top: 0;*/
-/*width: 100%;*/
-/*height: 75px;*/
-/*box-sizing: border-box;*/
-/*cursor: pointer;*/
-/*}*/
-
-/*#container #zoomWindow, #container #zoomWindow canvas {*/
-/*width: 100%;*/
-/*height: 300px;*/
-/*}*/
-
-/*#minimap canvas {*/
-/*position: absolute;*/
-/*}*/
-
 body, html {
     overflow: hidden;
     height: 100%;
@@ -116,29 +56,85 @@ div#minimapContainer {
 }
 
 #zoomWindow {
-    height: 100%;
+    height: 70%;
 }
 
 #nodeDialog {
     position: absolute;
-    display: none;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 30%;
     border: 1px solid #747171;
-    border-radius: 3px;
     background: #f7f7f7;
     font-size: 16px;
 }
 
 #nodeDialog .message {
-    font-size: 10px;
-    overflow: hidden;
+    width: 50%;
+    font-size: 13px;
     position: relative;
+    border-right: 1px solid black;
     height: 100%;
     line-height: initial;
-    /* height: 100px; */
+    box-sizing: border-box;
+    display: inline-block;
+    overflow: auto;
+    word-wrap: break-word;
+}
+
+#nodeDialog .messageLabel {
+    width: 100px;
+    height: 17px;
+    left: 0px;
+    margin-top: -18px;
+    margin-left: 7px;
+    padding-left: 3px;
+    content: "Description";
+    z-index: 100000;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-radius: 3px 3px 0 0;
+}
+
+#nodeDialog .annotationLabel {
+    width: 100px;
+    position: absolute;
+    height: 17px;
+    padding-left: 3px;
+    content: "Description";
+    display: inline;
+    font-size: 14px;
+    top: -18px;
+    line-height: 14px;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-radius: 3px 3px 0 0;
+}
+
+#nodeDialog .annotation {
+    width: 49%;
+    font-size: 13px;
+    position: relative;
+    height: 100%;
+    display: inline-block;
+    line-height: initial;
+    overflow: auto;
+    margin-left: -4px;
+}
+
+#nodeDialog .annotation li {
+    width: 30%;
+    float: left;
+    font-size: 12px;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    padding: 3px;
 }
 
 body.showButtons .sButton {
@@ -186,6 +182,28 @@ input#coordinateSelector {
     z-index: 10000;
 }
 
+input#searchMutation {
+    height: 28px;
+    border-radius: 3px;
+    padding: 2px;
+    display: inline;
+    width: 204px;
+}
+
+.ui-autocomplete.ui-menu .ui-menu-item {
+    font-size: 13px;
+    height: 20px;
+    border-bottom: 1px solid black;
+    padding: 2px 0 0 5px;
+    line-height: initial;
+}
+
+.ui-autocomplete {
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 div#legendaCanvas {
     display: none;
     border: 6px solid #37c0fb;
@@ -221,4 +239,10 @@ input[type="number"] {
     padding: 0.75em;
     text-decoration: none;
     width: 100%;
+}
+
+.dropotron li {
+    padding: 5px;
+    border-bottom: 1px solid #cecece;
+    line-height: 20px;
 }

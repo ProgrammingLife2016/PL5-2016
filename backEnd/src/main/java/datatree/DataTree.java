@@ -2,7 +2,7 @@ package datatree;
 
 import abstractdatastructure.TreeStructure;
 import genome.Genome;
-import genome.Strand;
+import strand.Strand;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +13,6 @@ import java.util.concurrent.ForkJoinPool;
  */
 public class DataTree extends TreeStructure<DataNode> {
 
-
     /**
      * Default constructor.
      *
@@ -23,33 +22,28 @@ public class DataTree extends TreeStructure<DataNode> {
         super(root);
     }
 
-
     /**
      * Add the strands to their correct position in the tree, recursively.
      *
      * @param genomes The Genomes containing the strands.
      */
-
     public void addStrandsFromGenomes(ArrayList<Genome> genomes) {
-
-
-        //add all strands to the leafs.
+        // Add all strands to the leafs.
         for (Genome genome : genomes) {
             DataNode leaf = getRoot().getGenomeLeaf(genome.getId());
             if (leaf != null) {
                 leaf.setStrands(genome.getStrands());
             }
-
         }
 
+        // Compute the strands that are in both the children of a node.
         ForkJoinPool pool = new ForkJoinPool();
         pool.invoke(new AddStrandsFromChildren(getRoot()));
-        //TempReadWriteTree.writeTree((getRoot()));
-
     }
 
     /**
-     * Get the strands within the given parameters.
+     * Get the strands in the tree.
+     * These strands need to be between xMin and xMax.
      *
      * @param xMin    The minimal x value.
      * @param xMax    The maximal x value.
@@ -61,12 +55,11 @@ public class DataTree extends TreeStructure<DataNode> {
                                         ArrayList<ArrayList<Genome>> genomes, int level) {
         return filterStrandsFromNodes(xMin, xMax,
                 getDataNodesForGenomes(genomes, level), genomes, level);
-
-
     }
 
     /**
      * Remove unwanted strands from the nodes.
+     * They are removed when their x lays not between xMax and xMin.
      *
      * @param xMin    the minimal id of the strands.
      * @param xMax    the maximal id of the strands.
@@ -78,7 +71,8 @@ public class DataTree extends TreeStructure<DataNode> {
     @SuppressWarnings("checkstyle:methodlength")
     public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax,
                                                     Set<DataNode> nodes,
-                                                    ArrayList<ArrayList<Genome>> genomes, int level) {
+                                                    ArrayList<ArrayList<Genome>> genomes,
+                                                    int level) {
         ArrayList<Strand> result = new ArrayList<>();
         Strand leftAllGenomes = new Strand();
         Strand rightAllGenomes = new Strand();
@@ -113,11 +107,9 @@ public class DataTree extends TreeStructure<DataNode> {
                             && strand.getX() < rightAllGenomes.getX()
                             && strand.getSequence().length() > 200) {
                         result.add(strand);
-
                     }
                 }
             }
-
         }
 
         if (leftAllGenomes.getX() != Integer.MIN_VALUE) {
@@ -126,11 +118,7 @@ public class DataTree extends TreeStructure<DataNode> {
         if (rightAllGenomes.getX() != Integer.MAX_VALUE) {
             result.add(rightAllGenomes);
         }
-
-
         return result;
-
-
     }
 
     /**
@@ -147,7 +135,6 @@ public class DataTree extends TreeStructure<DataNode> {
             result.addAll(getDataNodesForGenome(genome, level));
         }
         return result;
-
     }
 
     /**
@@ -163,25 +150,18 @@ public class DataTree extends TreeStructure<DataNode> {
         for (Genome g : genome) {
             ids.add(g.getId());
         }
+
         Set<DataNode> result = new HashSet<>();
         DataNode currentNode = getRoot();
-        int totalStrands = 0;
         while (currentNode.getLevel() <= level) {
             result.add(currentNode);
-            totalStrands += currentNode.getStrands().size();
-
             currentNode = currentNode.getChildWithGenomes(ids);
             if (currentNode == null) {
                 break;
             }
         }
-
         return result;
-
-
     }
-
-
     
 	/**
 	 * Gets the patristic distance which is the sum of the length of the branches 

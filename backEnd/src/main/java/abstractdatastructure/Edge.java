@@ -4,8 +4,8 @@ package abstractdatastructure;
  * Created by Matthijs on 24-4-2016.
  */
 
-/***
- * data container class that stores the start and end of an edge, as well as its weight.
+/**
+ * Data container class that stores the start and end of an edge, as well as its weight.
  */
 public class Edge {
 

@@ -1,12 +1,12 @@
-package genome;
+package genomefeature;
 
 import org.junit.Test;
 import org.meanbean.test.BeanTester;
 
 /**
- * The Class GFeatureSearchMatchTest.
+ * The Class that tests the GenomeFeatureSearchMatch.
  */
-public class GFeatureSearchMatchTest {
+public class GenomeFeatureSearchMatchTest {
 
     /**
      * Tests the getters and setters.
@@ -14,7 +14,7 @@ public class GFeatureSearchMatchTest {
     @Test
     public void test() {
         BeanTester beanTester = new BeanTester();
-        beanTester.testBean(GFeatureSearchMatch.class);
+        beanTester.testBean(GenomeFeatureSearchMatch.class);
     }
 
 }

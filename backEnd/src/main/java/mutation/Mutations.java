@@ -14,6 +14,7 @@ import datatree.DataTree;
  *
  * @author Jeffrey Helgers.
  *         This class computes all the mutations in the given dataset.
+ *         It uses ribbon nodes as comparisons.
  */
 public class Mutations {
 
@@ -24,7 +25,7 @@ public class Mutations {
 	private DataTree dataTree;
 
     /**
-     * Constructor to create.
+     * Constructor to set up the ribbons on which they are computed.
      *
      * @param nodes The nodes in the graph.
      * @param dataTree 
