@@ -208,6 +208,16 @@ $('document').ready(function () {
     $('#toggleButtons').click(function () {
         $('body').toggleClass('showButtons');
     });
+    
+    $('#toggleGFLabels').click(function () {
+    	drawFeatureLabels = !drawFeatureLabels;
+    	if(!drawFeatureLabels) {
+    		$('#toggleGFLabels').html('Enable Feature Highlights')
+    	} else {
+    		$('#toggleGFLabels').html('Disable Feature Highlights')
+    	}    	
+    	drawZoom(null);
+    });    
 
     $('#zoomIn').click(function () {
         var slider = $('#minimap .slider');
@@ -425,7 +435,7 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
             }
         });
         
-        if(c.className == "zoomedCanvas") {
+        if(c.className == "zoomedCanvas" && drawFeatureLabels) {
         	drawFeatureLabel(ctx, xPos, yPos, 1, point);
         }
         
