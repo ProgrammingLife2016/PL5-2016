@@ -75,6 +75,7 @@ public class RibbonController {
         if (!isMiniMap) {
             Mutations mutations = new Mutations(result, dataTree);
             mutations.computeAllMutations();
+            mutations.detectConvergence();
         }
         spreadYCoordinates(result, actIds);
 
