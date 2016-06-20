@@ -8,6 +8,7 @@ var back = [];
 var selectedGenomes = [];
 var selectedMiddleNodes = [];
 var phyloColors = [];
+var genomes = [];
 
 $("document").ready(function() {
 
@@ -19,6 +20,7 @@ $("document").ready(function() {
     }).done(function (data) {
         data.id = -1;
         parsePhyloTree(data);
+        searchGenome();
     });
 
     //Add an onclick on the links in the phyloTree, zooming in or selecting the genomes
@@ -107,7 +109,7 @@ function selectGenome(genome) {
         $('#selectedGenomeList').find('.genome.'+ genome).remove();
     } else {
         selectedGenomes.push(genome);
-        $('#selectedGenomeList').append('<li class="genome '+ genome +'" data-name="'+ genome +'">'+ genome +'</li>');
+        $('#selectedGenomeList ul').append('<li class="genome '+ genome +'" data-name="'+ genome +'">'+ genome +'</li>');
     }
 }
 
@@ -139,6 +141,7 @@ function resizePhyloTree() {
 function parsePhyloTree(data) {
     var count = 0;
     var children = [];
+    var result = {};
     $.each(data.children, function (key, child) {
         result = parsePhyloTree(child);
         count += result.count;
@@ -150,6 +153,10 @@ function parsePhyloTree(data) {
         count: count,
         name: (count > 0) ? count + " Genomes" : data.name
     };
+
+    if (count == 0) {
+        genomes.push(data.name);
+    }
 
     return {id: data.id, count: Math.max(1, count)};
 }
@@ -253,4 +260,26 @@ function phyloToXml(nodeId, maxDepth, depth) {
         childrenXml += phyloToXml(value, maxDepth, depth + 1);
     });
     return "<clade><name>" + nodeId + "</name>" + childrenXml + "</clade>";
+}
+
+function searchGenome() {
+    $("#searchGenome").autocomplete({
+        source: genomes,
+        minLength: 3,
+        select: function( event, ui ) {
+            var list = $('#selectedGenomeList ul');
+            if (!$('.'+ ui.item.value, list).length) {
+                selectedGenomes.push(ui.item.value);
+                resizePhyloTree();
+                list.append('<li class="genome '+ ui.item.value +'" data-name="'+ ui.item.value +'">'+ ui.item.value +'</li>');
+            }
+            setTimeout(function() { $('#searchGenome').val(""); }, 500);
+        },
+        open: function() {
+            $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+            $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+        }
+    });
 }
