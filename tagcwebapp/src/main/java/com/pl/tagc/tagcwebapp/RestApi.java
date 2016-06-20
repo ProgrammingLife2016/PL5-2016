@@ -97,6 +97,17 @@ public class RestApi {
                 .allow("OPTIONS").build();
     }
 
+    @GET
+    @Path("/setcolorblindmode")
+    @Produces("application/json")
+    public Response setColorBlindMode(@QueryParam("mode") Boolean mode) {
+        BackEndAdapter.getInstance().setColorBlindMode(mode);
+        return Response.ok() //200
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+    }
+
     /**
      * Request phylogenetic tree.
      *

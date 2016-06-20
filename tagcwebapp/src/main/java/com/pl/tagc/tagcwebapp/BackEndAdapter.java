@@ -106,4 +106,12 @@ public final class BackEndAdapter implements BackEndInterface {
 		return new MetaDataColorObject(controller.getMetaDataController().
 				getAllGenomeColors(metaData));
 	}
+
+    /**
+     * Used for setting color blind mode in the metadata controller.
+     * @param colorBlindMode whether or not color blind mode is enabled.
+     */
+    public void setColorBlindMode(Boolean colorBlindMode) {
+        controller.getMetaDataController().setColorBlindEnabled(colorBlindMode);
+    }
 }
