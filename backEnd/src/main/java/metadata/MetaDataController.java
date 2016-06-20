@@ -4,6 +4,7 @@ import com.google.inject.internal.util.Lists;
 import genome.Genome;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +35,11 @@ public class MetaDataController {
     private List<Genome> genomes;
 
     /**
+     * The preferred colors for the metadata coloring.
+     */
+    private List<Color> preferredColors = new ArrayList<>();
+
+    /**
      * constructor.
      * @param inputGenomes list of the genomes for which the MetaData is relevant
      */
@@ -41,7 +47,7 @@ public class MetaDataController {
         genomes = inputGenomes;
         initializeHashMap();
         fillHashMap();
-        fillColormap();
+        setColorBlindEnabled(false);
     }
 
     /**
@@ -111,6 +117,7 @@ public class MetaDataController {
      * Fills the colormap, which maps metadata type + value to a color.
      */
     private void fillColormap() {
+        System.out.println(colorMap);
         for (String metaDataType : returnMetaDataTypes()) {
             int i = 0;
             for (String value : returnPossibleValues(metaDataType)) {
@@ -128,6 +135,8 @@ public class MetaDataController {
         colorMap.put("lineage:LIN animal", Color.decode("0x00ff9c"));
         colorMap.put("lineage:LIN B", Color.decode("0x00ff9c"));
         colorMap.put("lineage:LIN CANETTII", Color.decode("0x00ffff"));
+        System.out.println(colorMap);
+
     }
 
     /**
@@ -154,24 +163,37 @@ public class MetaDataController {
      */
     private Color getPreferredColors(int i) {
         Random r = new Random();
-        switch (i) {
-            case 0:
-                return Color.red;
-            case 1:
-                return Color.blue;
-            case 2:
-                return Color.green;
-            case 3:
-                return Color.orange;
-            case 4:
-                return Color.magenta;
-            case 5:
-                return Color.black;
-            case 6:
-                return Color.cyan;
-            default:
-                return new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
+        if (i < preferredColors.size()) {
+            return preferredColors.get(i);
+        } else {
+            return new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
         }
+    }
+
+    /**
+     * Allows setting preferred colors, while returning a random color if all options are exhausted.
+     * @param colorBlindEnabled whether or not color blindness mode is activated
+     */
+    public void setColorBlindEnabled(Boolean colorBlindEnabled) {
+        preferredColors.clear();
+        if (colorBlindEnabled) {
+            preferredColors.add(new Color(100, 75, 0));
+            preferredColors.add(new Color(30, 120, 240));
+            preferredColors.add(new Color(250, 200, 130));
+            preferredColors.add(new Color(240, 170, 50));
+            preferredColors.add(new Color(25, 34, 50));
+            preferredColors.add(new Color(195, 195, 250));
+            preferredColors.add(new Color(10, 60, 110));
+        } else {
+            preferredColors.add(Color.red);
+            preferredColors.add(Color.blue);
+            preferredColors.add(Color.green);
+            preferredColors.add(Color.orange);
+            preferredColors.add(Color.magenta);
+            preferredColors.add(Color.black);
+            preferredColors.add(Color.cyan);
+        }
+        fillColormap();
     }
 
     /**
