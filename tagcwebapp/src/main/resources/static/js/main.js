@@ -15,7 +15,6 @@ var minimapHeight = 0;
 var zoomNodeLocations = [];
 var currentHoverNode = null;
 var dragFrom = null;
-var dragStartTime = null;
 var mutations = ["SNP", "INDEL"];
 var mutColors = ["0000FF", "00FF00", "FF0000"];
 var minY = 0;
@@ -220,12 +219,9 @@ $('document').ready(function () {
 
     $('#zoom').mousedown(function() {
         dragFrom = currentMousePos.x;
-        var d = new Date();
-        dragStartTime = d.getMilliseconds();
     });
 
     $('body').mouseup(function() {
-        dragStartTime = null;
         dragFrom = null;
     });
 
