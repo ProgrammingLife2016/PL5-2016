@@ -401,7 +401,7 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
 
         drawPoint(ctx, xPos, yPos, 1, point);
 
-        if (saveRealCoordinates) {
+        if (saveRealCoordinates && point.visible) {
             zoomNodeLocations.push({
                 x: xPos,
                 y: yPos,
