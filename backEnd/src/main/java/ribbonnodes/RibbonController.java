@@ -72,12 +72,12 @@ public class RibbonController {
         if (isMiniMap && result.size() < 100) {
             return getRibbonNodes(minX, maxX, 20, false);
         }
+        
+        spreadYCoordinates(result, actIds);
         if (!isMiniMap) {
             Mutations mutations = new Mutations(result, dataTree);
             mutations.computeAllMutations();
         }
-        spreadYCoordinates(result, actIds);
-
        
         System.out.println(result.size() + " nodes returned");
         return result;

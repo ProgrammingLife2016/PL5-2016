@@ -21,7 +21,6 @@ import java.util.List;
  * Created by Matthijs on 24-4-2016.
  */
 
-import mutation.Mutations;
 
 /**
  * Controller. This class connects the classes together.
