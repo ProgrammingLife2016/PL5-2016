@@ -9,6 +9,7 @@ var selectedGenomes = [];
 var selectedMiddleNodes = [];
 var phyloColors = [];
 var genomes = [];
+var nodeClickTimer;
 
 $("document").ready(function() {
 
@@ -83,9 +84,17 @@ $("document").ready(function() {
         });
     });
 
-    $('body').on('click', 'svg circle', function () {
+    $('body').on('mousedown', 'svg circle', function (e) {
+        e.preventDefault();
         var nodeId = $(this).attr('nodeid');
+        nodeClickTimer = setTimeout(function() {
+            selectMultipleGenomes(nodeId);
+        }, 500);
         selectMiddleNode(nodeId);
+    });
+
+    $('body').mouseup(function() {
+        clearTimeout(nodeClickTimer);
     });
 
     $('body').on('click', '#selectedGenomeList li:not(".firstLi")', function() {
@@ -122,7 +131,7 @@ function selectMiddleNode(nodeId) {
         $('#selectedGenomeList').find('.middleNode.'+ nodeId).remove();
     } else {
         selectedMiddleNodes.push(nodeId);
-        $('#selectedGenomeList').append('<li class="middleNode '+ nodeId +'" data-id="'+ nodeId +'">MiddleNode '+ nodeId +'</li>');
+        $('#selectedGenomeList ul').append('<li class="middleNode '+ nodeId +'" data-id="'+ nodeId +'">MiddleNode '+ nodeId +'</li>');
     }
 }
 
@@ -282,4 +291,22 @@ function searchGenome() {
             $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
         }
     });
+}
+
+function selectMultipleGenomes(nodeId) {
+    selectMiddleNode(nodeId);
+    selectMultipleGenomesRecursive(nodeId);
+}
+
+
+function selectMultipleGenomesRecursive(nodeId) {
+    var data = phyloTree[nodeId];
+    debugger;
+    $.each(data.children, function (key, id) {
+        selectMultipleGenomesRecursive(id);
+    });
+
+    if (data.children.length == 0) {
+        selectGenome(data.name);
+    }
 }
