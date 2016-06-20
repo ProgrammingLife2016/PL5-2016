@@ -79,7 +79,7 @@ public class RibbonController {
 
         if(isMiniMap) {
             result.sort((RibbonNode o1, RibbonNode o2) ->
-                    new Integer(o2.getX()).compareTo(o1.getX()));
+                    new Integer(o1.getX()).compareTo(o2.getX()));
         }
         System.out.println(result.size() + " nodes returned");
         return result;
