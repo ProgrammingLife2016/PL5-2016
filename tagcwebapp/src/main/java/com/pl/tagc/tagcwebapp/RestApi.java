@@ -97,6 +97,11 @@ public class RestApi {
                 .allow("OPTIONS").build();
     }
 
+    /**
+     * Set whether color blind mode is enabled
+     * @param mode true if enabled
+     * @return a response
+     */
     @GET
     @Path("/setcolorblindmode")
     @Produces("application/json")
