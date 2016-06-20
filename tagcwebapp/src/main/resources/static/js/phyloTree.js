@@ -131,7 +131,7 @@ function selectMiddleNode(nodeId) {
         $('#selectedGenomeList').find('.middleNode.'+ nodeId).remove();
     } else {
         selectedMiddleNodes.push(nodeId);
-        $('#selectedGenomeList ul').append('<li class="middleNode '+ nodeId +'" data-id="'+ nodeId +'">MiddleNode '+ nodeId +'</li>');
+        $('#selectedGenomeList ul').append('<li class="middleNode '+ nodeId +'" data-id="'+ nodeId +'">GenomeFamily '+ nodeId +'</li>');
     }
 }
 
