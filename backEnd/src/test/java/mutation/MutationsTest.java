@@ -2,7 +2,6 @@ package mutation;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 import ribbonnodes.RibbonEdge;
@@ -52,11 +51,6 @@ public class MutationsTest {
     private RibbonNode node4;
     
     /**
-     * A captor the get with what value a mocked method is called.
-     */
-    private ArgumentCaptor<AbstractMutation> captor;
-    
-    /**
      * Nodes that do have a SNP.
      */
     private ArrayList<Strand> withSNP;
@@ -78,7 +72,6 @@ public class MutationsTest {
         node3 = Mockito.mock(RibbonNode.class);
         node4 = Mockito.mock(RibbonNode.class);
         nodes = new ArrayList<>(Arrays.asList(node1, node2, node3, node4));
-        captor = new ArgumentCaptor<AbstractMutation>();
         mutations = new Mutations(nodes, null);
 
         Strand strandSNP = Mockito.mock(Strand.class);
@@ -130,8 +123,8 @@ public class MutationsTest {
         Mockito.when(node2.getStrands()).thenReturn(withoutSNP);
 
         mutations.computeAllMutations();
-        Mockito.verify(node1).addMutation(captor.capture());
-        assertEquals(captor.getValue().getMutationType(), MutationType.INDEL);
+        
+        assertEquals(node1.getMutations().size(), 0);
     }
 
     /**
@@ -153,7 +146,7 @@ public class MutationsTest {
         Mockito.when(node3.getStrands()).thenReturn(withSNP);
 
         mutations.computeAllMutations();
-        Mockito.verify(node1).addMutation(captor.capture());
-        assertEquals(captor.getValue().getMutationType(), MutationType.SNP);
+
+        assertEquals(node1.getMutations().size(), 0);
     }
 }

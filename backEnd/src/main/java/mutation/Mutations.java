@@ -2,7 +2,6 @@ package mutation;
 
 import ribbonnodes.RibbonEdge;
 import ribbonnodes.RibbonNode;
-import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +52,7 @@ public class Mutations {
      * @param start   The start strand.
      * @param strands All the strands.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     private void findSNP(RibbonNode node, ArrayList<RibbonNode> nodes) {
         for (int i = 0; i < node.getOutEdges().size() - 1; i++) {
         	RibbonEdge firstEdge = node.getOutEdges().get(i);
@@ -102,6 +102,7 @@ public class Mutations {
      * @param start   The start strand.
      * @param strands All the strands.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     private void findIndel(RibbonNode node) {
         for (RibbonEdge edge1 : node.getOutEdges()) {
             for (RibbonEdge edge2 : node.getOutEdges()) {
