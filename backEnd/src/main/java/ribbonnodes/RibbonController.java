@@ -72,12 +72,15 @@ public class RibbonController {
 
         
         spreadYCoordinates(result, actIds);
-        if (!isMiniMap) {
-            Mutations mutations = new Mutations(result, dataTree);
-            mutations.computeAllMutations();
-            mutations.detectConvergence();
+        Mutations mutations = new Mutations(result, dataTree);
+        mutations.computeAllMutations();
+        mutations.detectConvergence();
+
+
+        if(isMiniMap) {
+            result.sort((RibbonNode o1, RibbonNode o2) ->
+                    new Integer(o2.getX()).compareTo(o1.getX()));
         }
-       
         System.out.println(result.size() + " nodes returned");
         return result;
     }
