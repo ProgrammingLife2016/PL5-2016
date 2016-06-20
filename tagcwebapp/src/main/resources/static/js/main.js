@@ -687,7 +687,7 @@ function initialize() {
  * Draw the canvas in which the different mutationDrawings are shown
  */
 function initLegendCanvas() {
-    var height = mutations.length * 26 + 20;
+    var height = mutations.length * 26 + 20 + 20;
     $('#legendaCanvas').html('<canvas width="280px" height="' + height + 'px"></canvas>')
     var canvas = $('#legendaCanvas').find('canvas');
     var ctx = canvas[0].getContext("2d");
@@ -696,6 +696,16 @@ function initLegendCanvas() {
         ctx.font = "15px Georgia";
         ctx.fillText(mutation, 35, 16 + key * 30);
     });
+    ctx.beginPath();
+    ctx.strokeStyle = '#000000';
+	ctx.fillStyle = '#FFFF00';
+	ctx.arc(15, 10 + mutations.length * 30, 10, 0, 2 * Math.PI);
+	ctx.fill();
+    ctx.stroke();
+	ctx.closePath();
+	ctx.fillStyle = '#FFFFFF';
+    ctx.font = "15px Georgia";
+    ctx.fillText("Possible Convergent Mutation", 35, 16 + mutations.length * 30);
 }
 
 /**
