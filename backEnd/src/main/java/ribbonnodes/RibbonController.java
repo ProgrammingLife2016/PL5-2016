@@ -77,6 +77,7 @@ public class RibbonController {
         if (!isMiniMap) {
             Mutations mutations = new Mutations(result, dataTree);
             mutations.computeAllMutations();
+            mutations.detectConvergence();
         }
        
         System.out.println(result.size() + " nodes returned");

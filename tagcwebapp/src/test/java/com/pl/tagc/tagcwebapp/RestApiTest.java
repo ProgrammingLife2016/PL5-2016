@@ -7,9 +7,6 @@ import java.util.Arrays;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -23,19 +20,6 @@ import controller.Controller;
 import genomefeature.GenomeSearchResult;
 import genomefeature.GraphSearcher.SearchType;
 
-
-/**
- * Allows to see exceptions in console.
- */
-@Provider
-class DebugExceptionMapper implements ExceptionMapper<Exception> {
-
-	@Override
-	public Response toResponse(Exception exception) {
-		exception.printStackTrace();
-		return Response.serverError().entity(exception.getMessage()).build();
-	}
-}
 
 /**
  * The Class RestApiTest.
