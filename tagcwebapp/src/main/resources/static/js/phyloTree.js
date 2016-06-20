@@ -271,6 +271,9 @@ function phyloToXml(nodeId, maxDepth, depth) {
     return "<clade><name>" + nodeId + "</name>" + childrenXml + "</clade>";
 }
 
+/**
+ * Add autocomplete to the search genome field, if you select one, it is selected in the tree
+ */
 function searchGenome() {
     $("#searchGenome").autocomplete({
         source: genomes,
@@ -293,12 +296,19 @@ function searchGenome() {
     });
 }
 
+/**
+ * Select all the genomes beneath a middleNode with given id
+ * @param nodeId
+ */
 function selectMultipleGenomes(nodeId) {
     selectMiddleNode(nodeId);
     selectMultipleGenomesRecursive(nodeId);
 }
 
-
+/**
+ * Select all the genomes below the givenMiddleNode recursively
+ * @param nodeId
+ */
 function selectMultipleGenomesRecursive(nodeId) {
     var data = phyloTree[nodeId];
     debugger;

@@ -687,6 +687,11 @@ function fullSizeMinimap() {
     });
 }
 
+/**
+ * Move the slider to a specific x position
+ * @param x
+ * @param zoom
+ */
 function goToX(x, zoom) {
     var left = Math.floor(x / maxMinimapSize * $('#minimap').width());
     var width = $('#minimap').width() / zoom;
@@ -699,6 +704,10 @@ function goToX(x, zoom) {
     });
 }
 
+/**
+ * Draw the scale in the zoomWindow.
+ * @param c
+ */
 function drawScale(c) {
     var ctx = c.getContext("2d");
     var points = 10;
