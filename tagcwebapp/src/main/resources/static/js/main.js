@@ -165,21 +165,19 @@ $('document').ready(function () {
         if (dragFrom != null) {
             var d = new Date();
             var time = d.getMilliseconds();
-            if (time - dragStartTime > 1) {
-                var diff = dragFrom - currentMousePos.x;
-                dragFrom = currentMousePos.x;
-                var ratio = $('#minimap .slider').width() / $('#zoom').width();
-                var left = diff * ratio;
-                var maxLeft = $('#minimap').width() - $('#minimap .slider').width();
-                var newLeft = Math.min(maxLeft, Math.max(0, pxToInt($('#minimap .slider').css('left')) + left));
-                $('#minimap .slider').css('left', newLeft +'px');
-                updateZoomValues();
-                drawZoom(null);
-                clearTimeout(zoomTimeout);
-                zoomTimeout = setTimeout(function () {
-                    updatezoomWindow();
-                }, 500);
-            }
+            var diff = dragFrom - currentMousePos.x;
+            dragFrom = currentMousePos.x;
+            var ratio = $('#minimap .slider').width() / $('#zoom').width();
+            var left = diff * ratio;
+            var maxLeft = $('#minimap').width() - $('#minimap .slider').width();
+            var newLeft = Math.min(maxLeft, Math.max(0, pxToInt($('#minimap .slider').css('left')) + left));
+            $('#minimap .slider').css('left', newLeft +'px');
+            updateZoomValues();
+            drawZoom(null);
+            clearTimeout(zoomTimeout);
+            zoomTimeout = setTimeout(function () {
+                updatezoomWindow();
+            }, 500);
         } else {
             $.each(zoomNodeLocations, function (key, node) {
                 if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
@@ -224,10 +222,13 @@ $('document').ready(function () {
         dragFrom = currentMousePos.x;
         var d = new Date();
         dragStartTime = d.getMilliseconds();
-    }).mouseup(function() {
+    });
+
+    $('body').mouseup(function() {
         dragStartTime = null;
         dragFrom = null;
     });
+
     $('#coordinateSelector').keyup(function (e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
