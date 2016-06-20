@@ -183,21 +183,39 @@ $('document').ready(function () {
             }
         } else {
             $.each(zoomNodeLocations, function (key, node) {
-                if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
-                    found = true;
-                    if (node.id != currentHoverNode) {
-                        currentHoverNode = node.id;
-                        var dialog = $('#nodeDialog');
-                        var annotations = "<ul>";
-                        $.each(node.annotations, function(key, value) {
-                            annotations += "<li>"+ value +"</li>";
-                        });
-                        annotations += "</ul>";
-                        dialog.find('.message').html(node.label);
-                        dialog.find('.annotation').html(annotations);
-                    }
-                    return false;
-                }
+            	if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
+            		found = true;
+            		if (node.id != currentHoverNode) {
+            			currentHoverNode = node.id;                        
+            			var dialog = $('#nodeDialog');
+            			var annotations = "";
+
+            			if(node.annotations || node.convergenceMap) {
+            				annotations = "<ul>";     
+
+            				if(node.annotations) {
+            					$.each(node.annotations, function(key, value) {
+            						annotations += "<li>"+ value +"</li>";
+            					});
+            				}
+
+            				if(node.convergenceMap) {
+            					annotations += "<li class = \"evo\">Possible evolutionary convergence canditates:<br>";
+            					$.each(node.convergenceMap.entry, function(key, value) {
+            						annotations += "Genome ID: " + value.key  
+            						+ "<br> Average patristic distance: " + value.value;
+            					});
+            					annotations += "</li>"; 
+            				}
+
+            				annotations +=  "</ul>";
+            			}
+
+            			dialog.find('.message').html(node.label);
+            			dialog.find('.annotation').html(annotations);
+            		}
+            		return false;
+            	}
             });
             if (!found) {
                 currentHoverNode = -1;
@@ -408,7 +426,8 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
                 y: yPos,
                 label: point.label,
                 id: point.id,
-                annotations: point.annotations
+                annotations: point.annotations,
+                convergenceMap: point.convergenceMap
             });
         }
 
