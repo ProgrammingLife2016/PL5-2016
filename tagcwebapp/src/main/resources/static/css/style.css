@@ -137,6 +137,10 @@ div#minimapContainer {
     padding: 3px;
 }
 
+#nodeDialog .annotation .evo {
+	background: yellow;
+}
+
 body.showButtons .sButton {
     display: initial;
 }

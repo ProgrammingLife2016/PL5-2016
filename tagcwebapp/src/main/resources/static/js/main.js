@@ -1,3 +1,4 @@
+var drawFeatureLabels = false;
 var currentHover = null;
 var zoomTimeout = null;
 var url = 'http://localhost:9998/';
@@ -19,6 +20,7 @@ var mutations = ["SNP", "INDEL"];
 var mutColors = ["0000FF", "00FF00", "FF0000"];
 var minY = 0;
 var maxY = 0;
+var colorBlindMode = false;
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -170,36 +172,56 @@ $('document').ready(function () {
         if (dragFrom != null) {
             var d = new Date();
             var time = d.getMilliseconds();
-            var diff = dragFrom - currentMousePos.x;
-            dragFrom = currentMousePos.x;
-            var ratio = $('#minimap .slider').width() / $('#zoom').width();
-            var left = diff * ratio;
-            var maxLeft = $('#minimap').width() - $('#minimap .slider').width();
-            var newLeft = Math.min(maxLeft, Math.max(0, pxToInt($('#minimap .slider').css('left')) + left));
-            $('#minimap .slider').css('left', newLeft +'px');
-            updateZoomValues();
-            drawZoom(null);
-            clearTimeout(zoomTimeout);
-            zoomTimeout = setTimeout(function () {
-                updatezoomWindow();
-            }, 500);
+
+            if (time - dragStartTime > 1) {
+                var diff = dragFrom - currentMousePos.x;
+                dragFrom = currentMousePos.x;
+                var ratio = $('#minimap .slider').width() / $('#zoom').width();
+                var left = diff * ratio;
+                var maxLeft = $('#minimap').width() - $('#minimap .slider').width();
+                var newLeft = Math.min(maxLeft, Math.max(0, pxToInt($('#minimap .slider').css('left')) + left));
+                $('#minimap .slider').css('left', newLeft +'px');
+                updateZoomValues();
+                drawZoom(null);
+                clearTimeout(zoomTimeout);
+                zoomTimeout = setTimeout(function () {
+                    updatezoomWindow();
+                }, 500);
+            }
         } else {
             $.each(zoomNodeLocations, function (key, node) {
-                if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
-                    found = true;
-                    if (node.id != currentHoverNode) {
-                        currentHoverNode = node.id;
-                        var dialog = $('#nodeDialog');
-                        var annotations = "<ul>";
-                        $.each(node.annotations, function(key, value) {
-                            annotations += "<li>"+ value +"</li>";
-                        });
-                        annotations += "</ul>";
-                        dialog.find('.message').html(node.label);
-                        dialog.find('.annotation').html(annotations);
-                    }
-                    return false;
-                }
+            	if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
+            		found = true;
+            		if (node.id != currentHoverNode) {
+            			currentHoverNode = node.id;                        
+            			var dialog = $('#nodeDialog');
+            			var annotations = "";
+
+            			if(node.annotations || node.convergenceMap) {
+            				annotations = "<ul>";     
+
+            				if(node.annotations) {
+            					$.each(node.annotations, function(key, value) {
+            						annotations += "<li>"+ value +"</li>";
+            					});
+            				}
+
+            				if(node.convergenceMap) {
+            					annotations += "<li class = \"evo\">Possible evolutionary convergence canditates:<br>";
+            					$.each(node.convergenceMap.entry, function(key, value) {
+            						annotations += "Genome ID: " + value.key  
+            						+ "<br> Average patristic distance: " + value.value;
+            					});
+            					annotations += "</li>"; 
+            				}
+
+            				annotations +=  "</ul>";
+            			}
+
+            			dialog.find('.message').html(node.label);
+            			dialog.find('.annotation').html(annotations);
+            		}
+            	}
             });
             if (!found) {
                 currentHoverNode = -1;
@@ -210,6 +232,16 @@ $('document').ready(function () {
     $('#toggleButtons').click(function () {
         $('body').toggleClass('showButtons');
     });
+    
+    $('#toggleGFLabels').click(function () {
+    	drawFeatureLabels = !drawFeatureLabels;
+    	if(!drawFeatureLabels) {
+    		$('#toggleGFLabels').html('Enable Feature Highlights')
+    	} else {
+    		$('#toggleGFLabels').html('Disable Feature Highlights')
+    	}    	
+    	drawZoom(null);
+    });    
 
     $('#zoomIn').click(function () {
         var slider = $('#minimap .slider');
@@ -281,6 +313,24 @@ $('document').ready(function () {
         $('#legendaCanvas').show();
     }, function () {
         $('#legendaCanvas').hide();
+    });
+    $('#toggleColorBlindMode').click(function () {
+        colorBlindMode = !colorBlindMode;
+        if(!colorBlindMode) {
+            $('#toggleColorBlindMode').html('Colorblindmode off')
+        } else {
+            $('#toggleColorBlindMode').html('Colorblindmode on')
+        }
+
+        $.ajax({
+            url: url + 'api/setcolorblindmode',
+            dataType: 'JSON',
+            type: 'GET',
+            data: { mode: colorBlindMode }
+        }).done(function (data) {
+            resizePhyloTree();
+            initializeMinimap();
+        });
     });
 
     initialize();
@@ -407,7 +457,8 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
                 y: yPos,
                 label: point.label,
                 id: point.id,
-                annotations: point.annotations
+                annotations: point.annotations,
+                convergenceMap: point.convergenceMap
             });
         }
 
@@ -433,6 +484,11 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
                 ctx.strokeStyle = '#000000';
             }
         });
+        
+        if(c.className == "zoomedCanvas" && drawFeatureLabels) {
+        	drawFeatureLabel(ctx, xPos, yPos, 1, point);
+        }
+        
     });
 }
 
@@ -445,17 +501,29 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
  * @param point The pointData
  */
 function drawPoint(ctx, xPos, yPos, multiplier, point) {
-    ctx.beginPath();
     ctx.fillStyle = '#FFFFFF';
     ctx.strokeStyle = '#000000';
     var pointMutations = point.mutations;
+    
     if (point.visible && ( !pointMutations || typeof pointMutations == "undefined" || pointMutations.length == 0)) {
-        ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
+    	ctx.beginPath();
+    	ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
     } else if (pointMutations) {
+    	
         var mutation = pointMutations[0].replace('"', '');
         var index = mutations.indexOf(mutation);
         var mutSize = mutColors.length;
         var color = mutColors[index % mutSize];
+        
+        if (point.convergenceMap) {
+        	ctx.beginPath();
+        	ctx.fillStyle = '#FFFF00';
+        	ctx.arc(xPos, yPos, 10 * multiplier, 0, 2 * Math.PI);
+        	ctx.fill();
+            ctx.stroke();
+        	ctx.closePath();
+        }
+        ctx.beginPath();
         ctx.fillStyle = '#' + color;
         switch (Math.floor(index / mutSize)) {
             case 0: //Square
@@ -466,7 +534,7 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
                 ctx.lineTo(xPos + 6 * multiplier, yPos + 6 * multiplier);
                 ctx.lineTo(xPos - 6 * multiplier, yPos + 6 * multiplier);
                 break;
-            case 2: //Square
+            case 2: //X
                 ctx.moveTo(xPos - 6 * multiplier, yPos - 6 * multiplier);
                 ctx.lineTo(xPos + 6 * multiplier, yPos + 6 * multiplier);
                 ctx.moveTo(xPos - 6 * multiplier, yPos + 6 * multiplier);
@@ -476,10 +544,32 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
         }
         ctx.fill();
     }
+
     ctx.closePath();
     ctx.stroke();
     ctx.fillStyle = '#FFFFFF';
     ctx.strokeStyle = '#000000';
+}
+
+/**
+ * Draw a genome feature label in the canvas
+ * @param ctx The canvas object
+ * @param xPos The x to draw it
+ * @param yPos The y to draw it
+ * @param multiplier How big it should be drawn
+ * @param point The pointData
+ */
+function drawFeatureLabel(ctx, xPos, yPos, multiplier, point) {
+    
+    if(point.annotations) {
+    	ctx.beginPath();
+    	ctx.strokeStyle = "#0000FF";    	
+    	ctx.arc(xPos, yPos, 15 * multiplier, 0, 2 * Math.PI);
+    	ctx.closePath();
+        ctx.stroke();
+        ctx.strokeStyle = '#000000';
+    }
+    
 }
 
 /**
@@ -631,7 +721,7 @@ function initialize() {
  * Draw the canvas in which the different mutationDrawings are shown
  */
 function initLegendCanvas() {
-    var height = mutations.length * 26 + 20;
+    var height = mutations.length * 26 + 20 + 20;
     $('#legendaCanvas').html('<canvas width="280px" height="' + height + 'px"></canvas>')
     var canvas = $('#legendaCanvas').find('canvas');
     var ctx = canvas[0].getContext("2d");
@@ -640,6 +730,16 @@ function initLegendCanvas() {
         ctx.font = "15px Georgia";
         ctx.fillText(mutation, 35, 16 + key * 30);
     });
+    ctx.beginPath();
+    ctx.strokeStyle = '#000000';
+	ctx.fillStyle = '#FFFF00';
+	ctx.arc(15, 10 + mutations.length * 30, 10, 0, 2 * Math.PI);
+	ctx.fill();
+    ctx.stroke();
+	ctx.closePath();
+	ctx.fillStyle = '#FFFFFF';
+    ctx.font = "15px Georgia";
+    ctx.fillText("Possible Convergent Mutation", 35, 16 + mutations.length * 30);
 }
 
 /**

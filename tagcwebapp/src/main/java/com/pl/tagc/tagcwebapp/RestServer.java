@@ -37,8 +37,12 @@ public class RestServer {
      * @return Jersey server-side application configuration.
      */
     public static ResourceConfig createResourceConfig() {
-        return new ResourceConfig().registerClasses(RestApi.class).
-                property(MarshallerProperties.JSON_MARSHAL_EMPTY_COLLECTIONS, false);
+    	ResourceConfig rc = new ResourceConfig();
+    	rc.registerClasses(RestApi.class).
+    	property(MarshallerProperties.JSON_MARSHAL_EMPTY_COLLECTIONS, false);
+		rc.register(DebugExceptionMapper.class);
+        return rc;
+               
     }
 
     /**

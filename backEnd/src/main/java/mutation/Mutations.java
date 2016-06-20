@@ -40,9 +40,9 @@ public class Mutations {
      * From all the start Strands.
      */
     public void computeAllMutations() {
-        for (RibbonNode node : nodes) {
-            findIndel(node);
-            findSNP(node);
+        for (int i = 0; i < nodes.size(); i++) {
+            findIndel(nodes.get(i));
+            findSNP(nodes.get(i), nodes);
         }
     }
 
@@ -52,24 +52,41 @@ public class Mutations {
      * @param start   The start strand.
      * @param strands All the strands.
      */
-    private void findSNP(RibbonNode node) {
+    @SuppressWarnings("checkstyle:methodlength")
+    private void findSNP(RibbonNode node, ArrayList<RibbonNode> nodes) {
         for (int i = 0; i < node.getOutEdges().size() - 1; i++) {
-            RibbonNode firstEdgeEnd = node.getOutEdges().get(i).getEnd();
+        	RibbonEdge firstEdge = node.getOutEdges().get(i);
+            RibbonNode firstEdgeEnd = firstEdge.getEnd();
             if (firstEdgeEnd.getStrands().get(0).getSequence().length() == 1) {
                 for (int j = i + 1; j < node.getOutEdges().size(); j++) {
-                    RibbonNode secondEdgeEnd = node.getOutEdges().get(j).getEnd();
+                	RibbonEdge secondEdge = node.getOutEdges().get(j);
+                    RibbonNode secondEdgeEnd = secondEdge.getEnd();
                     if (secondEdgeEnd.getStrands().get(0).getSequence().length() == 1) {
                         for (RibbonEdge edge1 : firstEdgeEnd.getOutEdges()) {
                             for (RibbonEdge edge2 : secondEdgeEnd.getOutEdges()) {
                                 if (edge1.getEnd().getId() == edge2.getEnd().getId()) {
-                                    node.addMutation(new MutationSNP(
+                                    MutationSNP snp = new MutationSNP(
                                             MutationType.SNP,
                                             firstEdgeEnd.getGenomes(),
                                             secondEdgeEnd.getGenomes(),
                                             node,
                                             edge1.getEnd(),
                                             firstEdgeEnd,
-                                            secondEdgeEnd));
+                                            secondEdgeEnd);
+                                    firstEdgeEnd.addMutation(snp);
+                                    secondEdgeEnd.addMutation(snp);
+                                    firstEdgeEnd.setY(node.getY());
+                                    firstEdgeEnd.setX((node.getX() + edge1.getEnd().getX()) / 2);
+                                    nodes.remove(secondEdgeEnd);
+                                    node.getOutEdges().remove(secondEdge);
+                                    StringBuilder label = new StringBuilder();
+                                    label.append(firstEdgeEnd.getStrands().get(0).getSequence());
+                                    label.append("<br>");
+                                    label.append(secondEdgeEnd.getGenomes().toString());
+                                    label.append(" ");
+                                    label.append(secondEdgeEnd.getStrands().get(0).getSequence());
+                                    firstEdgeEnd.setLabel(label.toString());
+                                    return;
                                 }
                             }
                         }
@@ -85,6 +102,7 @@ public class Mutations {
      * @param start   The start strand.
      * @param strands All the strands.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     private void findIndel(RibbonNode node) {
         for (RibbonEdge edge1 : node.getOutEdges()) {
             for (RibbonEdge edge2 : node.getOutEdges()) {
@@ -96,15 +114,22 @@ public class Mutations {
                     for (RibbonEdge edge3 : mutated.getOutEdges()) {
                         if (edge3.getEnd().equals(end)) {
                             HashSet<String> other = new HashSet<String>(mutated.getGenomes());
-                            other.removeAll(reference);
+                            other.retainAll(reference);
                             reference.removeAll(other);
-                            node.addMutation(new MutationIndel(
+                            mutated.addMutation(new MutationIndel(
                                     MutationType.INDEL,
                                     reference,
                                     other,
                                     node,
                                     end,
                                     new ArrayList<>(Arrays.asList(mutated))));
+                            mutated.setY(node.getY());
+                            mutated.setX((node.getX() + edge3.getEnd().getX()) / 2);
+                            StringBuilder label = new StringBuilder();
+                            label.append(mutated.getStrands().get(0).getSequence());
+                            label.append("<br>");
+                            label.append(reference.toString());
+                            mutated.setLabel(label.toString());
                         }
                     }
                 }
