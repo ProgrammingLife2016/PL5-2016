@@ -170,7 +170,6 @@ $('document').ready(function () {
                 dragFrom = currentMousePos.x;
                 var ratio = $('#minimap .slider').width() / $('#zoom').width();
                 var left = diff * ratio;
-                console.log(diff +'-'+ left);
                 var maxLeft = $('#minimap').width() - $('#minimap .slider').width();
                 var newLeft = Math.min(maxLeft, Math.max(0, pxToInt($('#minimap .slider').css('left')) + left));
                 $('#minimap .slider').css('left', newLeft +'px');
@@ -214,7 +213,6 @@ $('document').ready(function () {
             			dialog.find('.message').html(node.label);
             			dialog.find('.annotation').html(annotations);
             		}
-            		return false;
             	}
             });
             if (!found) {
@@ -484,7 +482,7 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
         var mutSize = mutColors.length;
         var color = mutColors[index % mutSize];
         
-        if(point.convergenceMap) {
+        if (point.convergenceMap) {
         	ctx.beginPath();
         	ctx.fillStyle = '#FFFF00';
         	ctx.arc(xPos, yPos, 10 * multiplier, 0, 2 * Math.PI);
@@ -503,7 +501,7 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
                 ctx.lineTo(xPos + 6 * multiplier, yPos + 6 * multiplier);
                 ctx.lineTo(xPos - 6 * multiplier, yPos + 6 * multiplier);
                 break;
-            case 2: //Square
+            case 2: //X
                 ctx.moveTo(xPos - 6 * multiplier, yPos - 6 * multiplier);
                 ctx.lineTo(xPos + 6 * multiplier, yPos + 6 * multiplier);
                 ctx.moveTo(xPos - 6 * multiplier, yPos + 6 * multiplier);
