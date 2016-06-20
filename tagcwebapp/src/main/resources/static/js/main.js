@@ -48,6 +48,7 @@ function screenResize() {
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#minimap').height($('#sub').height());
+    $('#minimap .slider').css('height', '100%');
     if ($('#zoom').find('canvas').length) { //Update the canvas height and width in the zoom panel
         $('#zoom').find('canvas')[0].height = $('#zoomWindow').height();
         $('#zoom').find('canvas')[0].width = $('#zoomWindow').width();
@@ -70,7 +71,6 @@ function screenResize() {
         treeRedrawTimeout = setTimeout(function () {
             resizePhyloTree();
         }, 500);
-
     }
 }
 
@@ -127,6 +127,7 @@ $('document').ready(function () {
     $(slider)
         .draggable({
             containment: "parent",
+            axis: 'x',
             stop: function () {
                 //Temp, to make it look smooth, can be done if lazy loading is implemented
                 //updatezoomWindow();
