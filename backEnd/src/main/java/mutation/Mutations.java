@@ -77,6 +77,9 @@ public class Mutations {
                                     secondEdgeEnd.addMutation(snp);
                                     firstEdgeEnd.setY(node.getY());
                                     firstEdgeEnd.setX((node.getX() + edge1.getEnd().getX()) / 2);
+                                    firstEdgeEnd.addAnnotations(secondEdgeEnd.getAnnotations());
+                                    firstEdge.setWeight(firstEdge.getWeight()+secondEdge.getWeight()-1);
+                                    firstEdge.addGenomeToEdge(secondEdge.getColor());
                                     nodes.remove(secondEdgeEnd);
                                     node.getOutEdges().remove(secondEdge);
                                     StringBuilder label = new StringBuilder();
@@ -104,6 +107,7 @@ public class Mutations {
      */
     @SuppressWarnings("checkstyle:methodlength")
     private void findIndel(RibbonNode node) {
+        ArrayList<RibbonEdge> edgesToRemove = new ArrayList<>();
         for (RibbonEdge edge1 : node.getOutEdges()) {
             for (RibbonEdge edge2 : node.getOutEdges()) {
                 if (!edge1.equals(edge2)) {
@@ -123,6 +127,12 @@ public class Mutations {
                                     node,
                                     end,
                                     new ArrayList<>(Arrays.asList(mutated))));
+                            edgesToRemove.add(edge1);
+                            end.getInEdges().remove(edge1);
+                            edge2.setWeight(edge2.getWeight()+edge1.getWeight()-1);
+                            edge2.addGenomeToEdge(edge1.getColor());
+                            edge3.setWeight(edge2.getWeight()-1);
+                            edge3.addGenomeToEdge(edge1.getColor());
                             mutated.setY(node.getY());
                             mutated.setX((node.getX() + edge3.getEnd().getX()) / 2);
                             StringBuilder label = new StringBuilder();
@@ -135,6 +145,7 @@ public class Mutations {
                 }
             }
         }
+        node.getOutEdges().removeAll(edgesToRemove);
     }
 
 	/**

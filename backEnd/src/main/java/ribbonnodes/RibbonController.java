@@ -56,7 +56,7 @@ public class RibbonController {
         ArrayList<ArrayList<Genome>> actGen = genomeGraph.getActiveGenomes();
 
         if (isMiniMap) {
-            zoomLevel = 3;
+            zoomLevel = 30;
         }
         ArrayList<String> actIds = new ArrayList<>();
         for (ArrayList<Genome> genome : actGen) {
@@ -69,9 +69,7 @@ public class RibbonController {
         addEdges(result);
         collapseRibbons(result, minX, maxX);
         
-        if (isMiniMap && result.size() < 100) {
-            return getRibbonNodes(minX, maxX, 20, false);
-        }
+
         
         spreadYCoordinates(result, actIds);
         if (!isMiniMap) {
