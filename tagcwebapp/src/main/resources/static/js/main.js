@@ -20,6 +20,7 @@ var mutations = ["SNP", "INDEL"];
 var mutColors = ["0000FF", "00FF00", "FF0000"];
 var minY = 0;
 var maxY = 0;
+var colorBlindMode = false;
 
 /**
  * When the screen resizes, or one of the panels resizes, the others need to be resized as well
@@ -278,6 +279,24 @@ $('document').ready(function () {
         $('#legendaCanvas').show();
     }, function () {
         $('#legendaCanvas').hide();
+    });
+    $('#toggleColorBlindMode').click(function () {
+        colorBlindMode = !colorBlindMode;
+        if(!colorBlindMode) {
+            $('#toggleColorBlindMode').html('Colorblindmode off')
+        } else {
+            $('#toggleColorBlindMode').html('Colorblindmode on')
+        }
+
+        $.ajax({
+            url: url + 'api/setcolorblindmode',
+            dataType: 'JSON',
+            type: 'GET',
+            data: { mode: colorBlindMode }
+        }).done(function (data) {
+            resizePhyloTree();
+            initializeMinimap();
+        });
     });
 
     initialize();
