@@ -71,6 +71,12 @@ function screenResize() {
             resizePhyloTree();
         }, 500);
     }
+
+    if ($('#phyloButtons').width() < 180) {
+        $('#compGenomesButton').hide();
+    } else {
+        $('#compGenomesButton').show();
+    }
 }
 
 $('document').ready(function () {
@@ -300,12 +306,16 @@ var drawZoom = function (nodes) {
         cachedZoomNodes = nodes;
         zoomHeight = calcHeight(nodes);
     }
+    if (typeof nodes == 'undefined') {
+        return;
+    }
     var ratio = $('#zoomWindow').width() / (zoomRight - zoomLeft);
     if (Object.keys(nodes).length > 0) {
         var canvas = $('#zoomWindow canvas')[0];
         draw(nodes, canvas, true, canvas.height / zoomHeight, function (x) {
             return (x - zoomLeft) * ratio;
         });
+        drawScale(canvas);
     } else {
         var c = $('#zoomWindow canvas')[0];
         var ctx = c.getContext("2d");
@@ -687,4 +697,24 @@ function goToX(x, zoom) {
     }, 1000, function() {
         updatezoomWindow();
     });
+}
+
+function drawScale(c) {
+    var ctx = c.getContext("2d");
+    var points = 10;
+    var total = zoomRight - zoomLeft;
+    ctx.font = "15px Georgia";
+
+    for (var x=1; x < points; x++) {
+        ctx.beginPath();
+        var xPos = x / points * c.width;
+        ctx.moveTo(xPos, c.height);
+        ctx.lineTo(xPos, c.height - 20);
+        ctx.stroke();
+
+        var text = ""+ Math.round(zoomLeft + x / points * total);
+        ctx.fillStyle = 'black';
+        ctx.fillText(""+ text, xPos - text.length * 4, c.height - 27);
+    }
+
 }
