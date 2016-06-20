@@ -58,7 +58,7 @@ function screenResize() {
     //If the width of a subpanel has changed or the screen, update both the upper canvas and the panels in the sub.
     //Both canvasses need to be updated as well.
     var borderWidth = parseInt($("#phylogenyContainer").css("border-right-width").replace('px', ''));
-    $('#minimapContainer').width($("#sub").width() - $("#phylogenyContainer").width() - borderWidth);
+    $('#minimapContainer').width($("#sub").width() - $("#phylogenyContainer").width() - borderWidth - 2);
     if ($('#minimapContainer').find('canvas').length) {
         $('#minimap').find('canvas')[0].width = $('#minimap').width();
         $('#minimap').find('canvas')[0].height = $('#minimap').height();
@@ -169,7 +169,6 @@ $('document').ready(function () {
                 dragFrom = currentMousePos.x;
                 var ratio = $('#minimap .slider').width() / $('#zoom').width();
                 var left = diff * ratio;
-                console.log(diff +'-'+ left);
                 var maxLeft = $('#minimap').width() - $('#minimap .slider').width();
                 var newLeft = Math.min(maxLeft, Math.max(0, pxToInt($('#minimap .slider').css('left')) + left));
                 $('#minimap .slider').css('left', newLeft +'px');
@@ -343,6 +342,9 @@ var drawMinimap = function (nodes) {
     if (nodes == null) {
         nodes = minimapNodes;
     } else {
+        if (Object.keys(nodes).length == 0) {
+            return;
+        }
         minimapNodes = {};
         minimapNodes = nodes;
         maxMinimapSize = nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
@@ -594,12 +596,15 @@ function parseNodeData(nodes) {
  * @param boundingBox
  * @param callback
  */
-function getNodes(boundingBox, callback) {
+function getNodes(box, callback) {
+    if (isNaN(box.xleft) || isNaN(box.xright) || isNaN(box.zoom)) {
+        return;
+    }
     $.ajax({
         url: url + 'api/getnodes',
         dataType: 'JSON',
         type: 'GET',
-        data: boundingBox
+        data: box
     }).done(function (data) {
         callback(parseNodeData(data.cList));
     });

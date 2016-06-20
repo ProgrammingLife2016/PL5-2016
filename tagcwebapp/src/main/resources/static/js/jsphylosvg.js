@@ -1245,6 +1245,9 @@ function initSmits() {
             divId = sDivId;
             this.canvasSize = [canvasWidth, canvasHeight];
 
+            if (this.canvasSize[0] < 0) {
+                this.canvasSize[0] *= -1;
+            }
             this.svg = Raphael(sDivId, this.canvasSize[0], this.canvasSize[1]);
 
         }
