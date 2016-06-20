@@ -8,6 +8,8 @@ var back = [];
 var selectedGenomes = [];
 var selectedMiddleNodes = [];
 var phyloColors = [];
+var genomes = [];
+var nodeClickTimer;
 
 $("document").ready(function() {
 
@@ -19,6 +21,7 @@ $("document").ready(function() {
     }).done(function (data) {
         data.id = -1;
         parsePhyloTree(data);
+        searchGenome();
     });
 
     //Add an onclick on the links in the phyloTree, zooming in or selecting the genomes
@@ -81,9 +84,17 @@ $("document").ready(function() {
         });
     });
 
-    $('body').on('click', 'svg circle', function () {
+    $('body').on('mousedown', 'svg circle', function (e) {
+        e.preventDefault();
         var nodeId = $(this).attr('nodeid');
+        nodeClickTimer = setTimeout(function() {
+            selectMultipleGenomes(nodeId);
+        }, 500);
         selectMiddleNode(nodeId);
+    });
+
+    $('body').mouseup(function() {
+        clearTimeout(nodeClickTimer);
     });
 
     $('body').on('click', '#selectedGenomeList li:not(".firstLi")', function() {
@@ -107,7 +118,7 @@ function selectGenome(genome) {
         $('#selectedGenomeList').find('.genome.'+ genome).remove();
     } else {
         selectedGenomes.push(genome);
-        $('#selectedGenomeList').append('<li class="genome '+ genome +'" data-name="'+ genome +'">'+ genome +'</li>');
+        $('#selectedGenomeList ul').append('<li class="genome '+ genome +'" data-name="'+ genome +'">'+ genome +'</li>');
     }
 }
 
@@ -120,7 +131,7 @@ function selectMiddleNode(nodeId) {
         $('#selectedGenomeList').find('.middleNode.'+ nodeId).remove();
     } else {
         selectedMiddleNodes.push(nodeId);
-        $('#selectedGenomeList').append('<li class="middleNode '+ nodeId +'" data-id="'+ nodeId +'">MiddleNode '+ nodeId +'</li>');
+        $('#selectedGenomeList ul').append('<li class="middleNode '+ nodeId +'" data-id="'+ nodeId +'">GenomeFamily '+ nodeId +'</li>');
     }
 }
 
@@ -139,6 +150,7 @@ function resizePhyloTree() {
 function parsePhyloTree(data) {
     var count = 0;
     var children = [];
+    var result = {};
     $.each(data.children, function (key, child) {
         result = parsePhyloTree(child);
         count += result.count;
@@ -150,6 +162,10 @@ function parsePhyloTree(data) {
         count: count,
         name: (count > 0) ? count + " Genomes" : data.name
     };
+
+    if (count == 0) {
+        genomes.push(data.name);
+    }
 
     return {id: data.id, count: Math.max(1, count)};
 }
@@ -253,4 +269,54 @@ function phyloToXml(nodeId, maxDepth, depth) {
         childrenXml += phyloToXml(value, maxDepth, depth + 1);
     });
     return "<clade><name>" + nodeId + "</name>" + childrenXml + "</clade>";
+}
+
+/**
+ * Add autocomplete to the search genome field, if you select one, it is selected in the tree
+ */
+function searchGenome() {
+    $("#searchGenome").autocomplete({
+        source: genomes,
+        minLength: 3,
+        select: function( event, ui ) {
+            var list = $('#selectedGenomeList ul');
+            if (!$('.'+ ui.item.value, list).length) {
+                selectedGenomes.push(ui.item.value);
+                resizePhyloTree();
+                list.append('<li class="genome '+ ui.item.value +'" data-name="'+ ui.item.value +'">'+ ui.item.value +'</li>');
+            }
+            setTimeout(function() { $('#searchGenome').val(""); }, 500);
+        },
+        open: function() {
+            $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+            $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+        }
+    });
+}
+
+/**
+ * Select all the genomes beneath a middleNode with given id
+ * @param nodeId
+ */
+function selectMultipleGenomes(nodeId) {
+    selectMiddleNode(nodeId);
+    selectMultipleGenomesRecursive(nodeId);
+}
+
+/**
+ * Select all the genomes below the givenMiddleNode recursively
+ * @param nodeId
+ */
+function selectMultipleGenomesRecursive(nodeId) {
+    var data = phyloTree[nodeId];
+    debugger;
+    $.each(data.children, function (key, id) {
+        selectMultipleGenomesRecursive(id);
+    });
+
+    if (data.children.length == 0) {
+        selectGenome(data.name);
+    }
 }

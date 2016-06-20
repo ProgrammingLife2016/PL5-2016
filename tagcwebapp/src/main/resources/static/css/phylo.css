@@ -12,6 +12,7 @@
     top: 0;
     cursor: pointer;
     width: 100%;
+    z-index: 1000000;
 }
 
 #svgcanvas {
@@ -62,14 +63,6 @@ ul#phyloColorLegenda {
     line-height: 18px;
 }
 
-circle.selected {
-    fill: green;
-}
-
-svg circle {
-    cursor: pointer;
-}
-
 #selectedGenomeList li {
     border-bottom: 1px solid #bbb;
     cursor: pointer;
@@ -93,4 +86,21 @@ input#phyloZoomLevel {
     margin: 3px;
     width: 50px;
     display: inline;
+}
+
+circle.selected {
+    fill: green;
+}
+
+svg circle {
+    cursor: pointer;
+}
+
+input#searchGenome {
+    height: 28px;
+    border-radius: 3px;
+    padding: 2px;
+    display: inline;
+    padding-bottom: 9px;
+    margin-bottom: 7px;
 }

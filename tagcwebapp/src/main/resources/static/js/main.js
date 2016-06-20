@@ -16,7 +16,6 @@ var minimapHeight = 0;
 var zoomNodeLocations = [];
 var currentHoverNode = null;
 var dragFrom = null;
-var dragStartTime = null;
 var mutations = ["SNP", "INDEL"];
 var mutColors = ["0000FF", "00FF00", "FF0000"];
 var minY = 0;
@@ -50,6 +49,7 @@ function screenResize() {
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#sub').height($(window).height() - $("#zoom").height() - $("#header").height() - borderHeight);
     $('#minimap').height($('#sub').height());
+    $('#minimap .slider').css('height', '100%');
     if ($('#zoom').find('canvas').length) { //Update the canvas height and width in the zoom panel
         $('#zoom').find('canvas')[0].height = $('#zoomWindow').height();
         $('#zoom').find('canvas')[0].width = $('#zoomWindow').width();
@@ -60,7 +60,7 @@ function screenResize() {
     //If the width of a subpanel has changed or the screen, update both the upper canvas and the panels in the sub.
     //Both canvasses need to be updated as well.
     var borderWidth = parseInt($("#phylogenyContainer").css("border-right-width").replace('px', ''));
-    $('#minimapContainer').width($("#sub").width() - $("#phylogenyContainer").width() - borderWidth);
+    $('#minimapContainer').width($("#sub").width() - $("#phylogenyContainer").width() - borderWidth - 2);
     if ($('#minimapContainer').find('canvas').length) {
         $('#minimap').find('canvas')[0].width = $('#minimap').width();
         $('#minimap').find('canvas')[0].height = $('#minimap').height();
@@ -72,7 +72,12 @@ function screenResize() {
         treeRedrawTimeout = setTimeout(function () {
             resizePhyloTree();
         }, 500);
+    }
 
+    if ($('#phyloButtons').width() < 180) {
+        $('#compGenomesButton').hide();
+    } else {
+        $('#compGenomesButton').show();
     }
 }
 
@@ -129,6 +134,7 @@ $('document').ready(function () {
     $(slider)
         .draggable({
             containment: "parent",
+            axis: 'x',
             stop: function () {
                 //Temp, to make it look smooth, can be done if lazy loading is implemented
                 //updatezoomWindow();
@@ -166,6 +172,7 @@ $('document').ready(function () {
         if (dragFrom != null) {
             var d = new Date();
             var time = d.getMilliseconds();
+
             if (time - dragStartTime > 1) {
                 var diff = dragFrom - currentMousePos.x;
                 dragFrom = currentMousePos.x;
@@ -250,12 +257,12 @@ $('document').ready(function () {
 
     $('#zoom').mousedown(function() {
         dragFrom = currentMousePos.x;
-        var d = new Date();
-        dragStartTime = d.getMilliseconds();
-    }).mouseup(function() {
-        dragStartTime = null;
+    });
+
+    $('body').mouseup(function() {
         dragFrom = null;
     });
+
     $('#coordinateSelector').keyup(function (e) {
         var code = e.keyCode || e.which;
         if (code == 13) {
@@ -349,12 +356,16 @@ var drawZoom = function (nodes) {
         cachedZoomNodes = nodes;
         zoomHeight = calcHeight(nodes);
     }
+    if (typeof nodes == 'undefined') {
+        return;
+    }
     var ratio = $('#zoomWindow').width() / (zoomRight - zoomLeft);
     if (Object.keys(nodes).length > 0) {
         var canvas = $('#zoomWindow canvas')[0];
         draw(nodes, canvas, true, canvas.height / zoomHeight, function (x) {
             return (x - zoomLeft) * ratio;
         });
+        drawScale(canvas);
     } else {
         var c = $('#zoomWindow canvas')[0];
         var ctx = c.getContext("2d");
@@ -389,6 +400,9 @@ var drawMinimap = function (nodes) {
     if (nodes == null) {
         nodes = minimapNodes;
     } else {
+        if (Object.keys(nodes).length == 0) {
+            return;
+        }
         minimapNodes = {};
         minimapNodes = nodes;
         maxMinimapSize = nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
@@ -437,7 +451,7 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
 
         drawPoint(ctx, xPos, yPos, 1, point);
 
-        if (saveRealCoordinates) {
+        if (saveRealCoordinates && point.visible) {
             zoomNodeLocations.push({
                 x: xPos,
                 y: yPos,
@@ -680,12 +694,15 @@ function parseNodeData(nodes) {
  * @param boundingBox
  * @param callback
  */
-function getNodes(boundingBox, callback) {
+function getNodes(box, callback) {
+    if (isNaN(box.xleft) || isNaN(box.xright) || isNaN(box.zoom)) {
+        return;
+    }
     $.ajax({
         url: url + 'api/getnodes',
         dataType: 'JSON',
         type: 'GET',
-        data: boundingBox
+        data: box
     }).done(function (data) {
         callback(parseNodeData(data.cList));
     });
@@ -770,6 +787,11 @@ function fullSizeMinimap() {
     });
 }
 
+/**
+ * Move the slider to a specific x position
+ * @param x
+ * @param zoom
+ */
 function goToX(x, zoom) {
     var left = Math.floor(x / maxMinimapSize * $('#minimap').width());
     var width = $('#minimap').width() / zoom;
@@ -780,4 +802,28 @@ function goToX(x, zoom) {
     }, 1000, function() {
         updatezoomWindow();
     });
+}
+
+/**
+ * Draw the scale in the zoomWindow.
+ * @param c
+ */
+function drawScale(c) {
+    var ctx = c.getContext("2d");
+    var points = 10;
+    var total = zoomRight - zoomLeft;
+    ctx.font = "15px Georgia";
+
+    for (var x=1; x < points; x++) {
+        ctx.beginPath();
+        var xPos = x / points * c.width;
+        ctx.moveTo(xPos, c.height);
+        ctx.lineTo(xPos, c.height - 20);
+        ctx.stroke();
+
+        var text = ""+ Math.round(zoomLeft + x / points * total);
+        ctx.fillStyle = 'black';
+        ctx.fillText(""+ text, xPos - text.length * 4, c.height - 27);
+    }
+
 }

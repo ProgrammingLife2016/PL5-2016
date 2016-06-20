@@ -84,7 +84,7 @@ public class RestServer {
 
         }
 
-        System.out.println(String.format("Application started.%n" + "Access it at %s%n"
+        System.out.println(String.format("Application started.%n" + "Access it at %s"+"index.htm%n"
                 + "Stop the application using CTRL+C", getAppUri()));
 
         return server;
