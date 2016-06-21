@@ -1,14 +1,11 @@
 package ribbonnodes;
 
-import datatree.DataNode;
 import datatree.DataTree;
 import genome.Genome;
 import genome.GenomeGraph;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import parser.Parser;
-import phylogenetictree.PhylogeneticTree;
 import strand.Strand;
 
 import java.util.ArrayList;
@@ -53,39 +50,6 @@ public class RibbonControllerTest {
         tree = Mockito.mock(DataTree.class);
         controller = new RibbonController(graph, tree);
 
-    }
-
-    /**
-     * Test the usabillity.
-     * @throws Exception if fail.
-     */
-    @Test
-    public void testUsability() throws Exception {
-        String gfaFile = "data/TB10.gfa";
-        GenomeGraph genomeGraph = Parser.parse(gfaFile);
-        genomeGraph.annotate("MT_H37RV_BRD_V5.ref",
-                Parser.parseAnnotations("data/decorationV5_20130412(1).gff"));
-        genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
-
-        PhylogeneticTree phylogeneticTree = new PhylogeneticTree();
-        phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
-                new ArrayList<>(genomeGraph.getGenomes().keySet()));
-        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
-                null, 0));
-
-        if (gfaFile.equals("data/TB328.gfa")) {
-            Parser.readDataTree(dataTree,
-                    genomeGraph.getStrands(), "data/tempTree.txt");
-        } else {
-            dataTree.addStrandsFromGenomes(new ArrayList<>(genomeGraph.getGenomes().values()));
-
-        }
-        RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
-        ArrayList<ArrayList<String>> actGen = new ArrayList<>(Arrays.asList(
-        		new ArrayList<>(Arrays.asList("TKK_02_0002")), new ArrayList<String>(
-        				Arrays.asList("TKK_02_0008"))));
-        genomeGraph.setGenomesAsActive(actGen);
-        ribbonController.getRibbonNodes(0, 10000000, 30, false);
     }
 
     /**

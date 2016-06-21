@@ -52,7 +52,6 @@ public class Mutations {
      * @param start   The start strand.
      * @param strands All the strands.
      */
-    @SuppressWarnings("checkstyle:methodlength")
     private void findSNP(RibbonNode node, ArrayList<RibbonNode> nodes) {
         for (int i = 0; i < node.getOutEdges().size() - 1; i++) {
         	RibbonEdge firstEdge = node.getOutEdges().get(i);
@@ -65,34 +64,18 @@ public class Mutations {
                         for (RibbonEdge edge1 : firstEdgeEnd.getOutEdges()) {
                             for (RibbonEdge edge2 : secondEdgeEnd.getOutEdges()) {
                                 if (edge1.getEnd().getId() == edge2.getEnd().getId()) {
-                                    MutationSNP snp = new MutationSNP(
-                                            MutationType.SNP,
-                                            firstEdgeEnd.getGenomes(),
-                                            secondEdgeEnd.getGenomes(),
-                                            node,
-                                            edge1.getEnd(),
-                                            firstEdgeEnd,
-                                            secondEdgeEnd);
-                                    firstEdgeEnd.addMutation(snp);
-                                    secondEdgeEnd.addMutation(snp);
-                                    firstEdgeEnd.setY(node.getY());
-                                    firstEdgeEnd.setX((node.getX() + edge1.getEnd().getX()) / 2);
-                                    firstEdgeEnd.addAnnotations(secondEdgeEnd.getAnnotations());
-                                    firstEdge.setWeight(firstEdge.getWeight() + secondEdge.getWeight() - 1);
+                                    createSNP(node, firstEdgeEnd, 
+                                    		secondEdgeEnd, edge1);                                	
+                                    
+                                    firstEdge.setWeight(firstEdge.getWeight() 
+                                    		+ secondEdge.getWeight() - 1);
                                     firstEdge.addGenomeToEdge(secondEdge.getColor());
-                                    firstEdgeEnd.getOutEdges().get(0).setColor(firstEdge.getColor());
-                                    firstEdgeEnd.getOutEdges().get(0).setWeight(firstEdge.getWeight());
-
+                                    firstEdgeEnd.getOutEdges().get(0).setColor(
+                                    		firstEdge.getColor());
+                                    firstEdgeEnd.getOutEdges().get(0).setWeight(
+                                    		firstEdge.getWeight());
                                     nodes.remove(secondEdgeEnd);
                                     node.getOutEdges().remove(secondEdge);
-                                    StringBuilder label = new StringBuilder();
-                                    label.append(firstEdgeEnd.getStrands().get(0).getSequence());
-                                    label.append("<br>");
-                                    label.append(secondEdgeEnd.getGenomes().toString());
-                                    label.append(" ");
-                                    label.append(secondEdgeEnd.getStrands().get(0).getSequence());
-                                    firstEdgeEnd.setLabel(label.toString());
-                                    return;
                                 }
                             }
                         }
@@ -101,6 +84,36 @@ public class Mutations {
             }
         }
     }
+    
+    /**
+     * Create the snp mutation and set its label.
+     * @param node The stard strand.
+     * @param firstEdgeEnd The first mutated strand.
+     * @param secondEdgeEnd The second mutated strand.
+     * @param edge
+     */
+    private void createSNP(RibbonNode node, RibbonNode firstEdgeEnd, 
+    		RibbonNode secondEdgeEnd, RibbonEdge edge) {
+    			MutationSNP snp = new MutationSNP(
+                MutationType.SNP,
+                firstEdgeEnd.getGenomes(),
+                secondEdgeEnd.getGenomes(),
+                node,
+                edge.getEnd(),
+                firstEdgeEnd,
+                secondEdgeEnd);
+    	firstEdgeEnd.addMutation(snp);
+        firstEdgeEnd.setY(node.getY());
+        firstEdgeEnd.setX((node.getX() + edge.getEnd().getX()) / 2);
+        firstEdgeEnd.addAnnotations(secondEdgeEnd.getAnnotations());
+        StringBuilder label = new StringBuilder();
+        label.append(firstEdgeEnd.getStrands().get(0).getSequence());
+        label.append("<br>");
+        label.append(secondEdgeEnd.getGenomes().toString());
+        label.append(" ");
+        label.append(secondEdgeEnd.getStrands().get(0).getSequence());
+        firstEdgeEnd.setLabel(label.toString());
+    }
 
     /**
      * Check if there is an indel mutation starting from the start strand.
@@ -108,7 +121,6 @@ public class Mutations {
      * @param start   The start strand.
      * @param strands All the strands.
      */
-    @SuppressWarnings("checkstyle:methodlength")
     private void findIndel(RibbonNode node) {
         ArrayList<RibbonEdge> edgesToRemove = new ArrayList<>();
         for (RibbonEdge edge1 : node.getOutEdges()) {
@@ -116,20 +128,9 @@ public class Mutations {
                 if (!edge1.equals(edge2)) {
                     RibbonNode end = edge1.getEnd();
                     RibbonNode mutated = edge2.getEnd();
-                    HashSet<String> reference = new HashSet<String>(node.getGenomes());
-                    reference.retainAll(end.getGenomes());
                     for (RibbonEdge edge3 : mutated.getOutEdges()) {
                         if (edge3.getEnd().equals(end)) {
-                            HashSet<String> other = new HashSet<String>(mutated.getGenomes());
-                            other.retainAll(reference);
-                            reference.removeAll(other);
-                            mutated.addMutation(new MutationIndel(
-                                    MutationType.INDEL,
-                                    reference,
-                                    other,
-                                    node,
-                                    end,
-                                    new ArrayList<>(Arrays.asList(mutated))));
+                        	createIndel(node, mutated, end);
                             edgesToRemove.add(edge1);
                             end.getInEdges().remove(edge1);
                             edge2.setWeight(edge2.getWeight() + edge1.getWeight() - 1);
@@ -138,19 +139,35 @@ public class Mutations {
                             edge3.setWeight(edge2.getWeight() - 1);
                             edge3.addGenomeToEdge(edge1.getColor());
                             edge3.setSuggested(false);
-                            mutated.setY(node.getY());
-                            mutated.setX((node.getX() + edge3.getEnd().getX()) / 2);
-                            StringBuilder label = new StringBuilder();
-                            label.append(mutated.getStrands().get(0).getSequence());
-                            label.append("<br>");
-                            label.append(reference.toString());
-                            mutated.setLabel(label.toString());
+                            
                         }
                     }
                 }
             }
         }
         node.getOutEdges().removeAll(edgesToRemove);
+    }
+    
+    private void createIndel(RibbonNode start, RibbonNode mutated, RibbonNode end) {
+    	HashSet<String> reference = new HashSet<String>(start.getGenomes());
+        reference.retainAll(end.getGenomes());
+        HashSet<String> other = new HashSet<String>(mutated.getGenomes());
+        other.retainAll(reference);
+        reference.removeAll(other);
+        mutated.addMutation(new MutationIndel(
+                MutationType.INDEL,
+                reference,
+                other,
+                start,
+                end,
+                new ArrayList<>(Arrays.asList(mutated))));
+        mutated.setY(start.getY());
+        mutated.setX((start.getX() + end.getX()) / 2);
+        StringBuilder label = new StringBuilder();
+        label.append(mutated.getStrands().get(0).getSequence());
+        label.append("<br>");
+        label.append(reference.toString());
+        mutated.setLabel(label.toString());
     }
 
 	/**
