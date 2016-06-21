@@ -94,7 +94,7 @@ public class DataTree extends TreeStructure<DataNode> {
         leftAllGenomes.setX(Integer.MIN_VALUE);
         rightAllGenomes.setX(Integer.MAX_VALUE);
 
-        int minSize = 400 - level * 40;
+        int minSize = 400 - level * 20;
 
         if (isMiniMap) {
             minSize = 400;
