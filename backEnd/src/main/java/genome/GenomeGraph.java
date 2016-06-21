@@ -1,5 +1,9 @@
 package genome;
 
+import genomefeature.GenomeSearchResult;
+import genomefeature.GenomicFeature;
+import genomefeature.GraphSearcher;
+import genomefeature.GraphSearcher.SearchType;
 import metadata.GenomeMetadata;
 import strand.Strand;
 import strand.StrandAnnotator;
@@ -7,11 +11,6 @@ import strand.StrandAnnotator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import genomefeature.GenomeSearchResult;
-import genomefeature.GenomicFeature;
-import genomefeature.GraphSearcher;
-import genomefeature.GraphSearcher.SearchType;
 
 /**
  * The Class GenomeGraph.
@@ -134,13 +133,21 @@ public class GenomeGraph {
                     activeGenomeIds.add(input.get(0).getId());
                 }
             }
-            for (ArrayList<Genome> genome : activeGenomes) {
-                genome.get(0).setStrandsX();
+            boolean changed = true;
+            while (changed) {
+                changed = false;
+                for (ArrayList<Genome> genome : activeGenomes) {
+                    changed = changed || genome.get(0).setStrandsX();
+                }
             }
         }
         activeGenomes.sort((ArrayList<Genome> o1, 
         		ArrayList<Genome> o2) -> o1.get(0).getId().compareTo(o2.get(0).getId()));
         activeGenomeIds.sort((String o1, String o2)->o1.compareTo(o2));
+        for (ArrayList<Genome> genome : activeGenomes) {
+            genome.get(0).getStrands().sort((Strand o1,
+                                             Strand o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
+        }
         System.out.println("New genomes to compare: " + activeGenomeIds.toString());
         return unrecognizedGenomes;
     }

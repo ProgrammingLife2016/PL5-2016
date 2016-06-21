@@ -73,7 +73,7 @@ public class DataTree extends TreeStructure<DataNode> {
                                                     Set<DataNode> nodes,
                                                     ArrayList<ArrayList<Genome>> genomes,
                                                     int level) {
-        ArrayList<Strand> result = new ArrayList<>();
+        HashSet<Strand> result = new HashSet<>();
         Strand leftAllGenomes = new Strand();
         Strand rightAllGenomes = new Strand();
         leftAllGenomes.setX(Integer.MIN_VALUE);
@@ -118,7 +118,7 @@ public class DataTree extends TreeStructure<DataNode> {
         if (rightAllGenomes.getX() != Integer.MAX_VALUE) {
             result.add(rightAllGenomes);
         }
-        return result;
+        return new ArrayList<>(result);
     }
 
     /**

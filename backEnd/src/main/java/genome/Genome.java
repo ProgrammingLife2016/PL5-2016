@@ -132,15 +132,19 @@ public class Genome {
     /**
      * Caculate and set the x's of all strands in this genome.
      */
-    public void setStrandsX() {
+    public boolean setStrandsX() {
+        boolean changed = false;
         for (int i = 1; i < strands.size(); i++) {
             Strand prevStrand = strands.get(i - 1);
             int newX = prevStrand.getX() + prevStrand.getSequence().length();
             if (newX > strands.get(i).getX()) {
                 strands.get(i).setX(newX);
+                changed = true;
+
             }
 
         }
+        return changed;
     }
 
     /**

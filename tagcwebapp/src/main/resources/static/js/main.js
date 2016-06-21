@@ -327,6 +327,7 @@ $('document').ready(function () {
             data: { mode: colorBlindMode }
         }).done(function (data) {
             resizePhyloTree();
+            updatezoomWindow();
             initializeMinimap();
         });
     });
@@ -403,14 +404,20 @@ var drawMinimap = function (nodes) {
         }
         minimapNodes = {};
         minimapNodes = nodes;
-        maxMinimapSize = nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
+        maxMinimapSize = 0;
+        $.each(nodes, function (key, node) {
+            if(node.x>maxMinimapSize) {
+                maxMinimapSize = node.x;
+            }
+
+        });
         $('#maxCoordinateInput').html(maxMinimapSize);
         minimapHeight = calcHeight(nodes);
     }
     if (nodes == null || Object.keys(nodes).length < 1) {
         return;
     }
-    var ratio = $('#minimap').width() / nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
+    var ratio = $('#minimap').width() /maxMinimapSize;
 
     var canvas = $('#minimap canvas')[0];
     draw(nodes, canvas, false, canvas.height / minimapHeight, function (x) {
@@ -652,7 +659,7 @@ function updateZoomValues() {
     var slider = $('#minimap .slider');
     var totalWidth = $('#minimap').width();
     var sliderLeft = pxToInt(slider.css('left'));
-    var xWidth = minimapNodes[Object.keys(minimapNodes)[Object.keys(minimapNodes).length - 1]].x;
+    var xWidth = maxMinimapSize;
     zoomLeft = (sliderLeft / totalWidth * xWidth);
     zoomRight = ((sliderLeft + slider.width()) / totalWidth * xWidth);
     return (totalWidth / slider.width());

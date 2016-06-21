@@ -80,6 +80,9 @@ public class Mutations {
                                     firstEdgeEnd.addAnnotations(secondEdgeEnd.getAnnotations());
                                     firstEdge.setWeight(firstEdge.getWeight()+secondEdge.getWeight()-1);
                                     firstEdge.addGenomeToEdge(secondEdge.getColor());
+                                    firstEdgeEnd.getOutEdges().get(0).setColor(firstEdge.getColor());
+                                    firstEdgeEnd.getOutEdges().get(0).setWeight(firstEdge.getWeight());
+
                                     nodes.remove(secondEdgeEnd);
                                     node.getOutEdges().remove(secondEdge);
                                     StringBuilder label = new StringBuilder();
@@ -131,8 +134,10 @@ public class Mutations {
                             end.getInEdges().remove(edge1);
                             edge2.setWeight(edge2.getWeight()+edge1.getWeight()-1);
                             edge2.addGenomeToEdge(edge1.getColor());
+                            edge2.setSuggested(false);
                             edge3.setWeight(edge2.getWeight()-1);
                             edge3.addGenomeToEdge(edge1.getColor());
+                            edge3.setSuggested(false);
                             mutated.setY(node.getY());
                             mutated.setX((node.getX() + edge3.getEnd().getX()) / 2);
                             StringBuilder label = new StringBuilder();

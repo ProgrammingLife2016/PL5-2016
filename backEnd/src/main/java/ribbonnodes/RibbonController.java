@@ -77,10 +77,6 @@ public class RibbonController {
         mutations.detectConvergence();
 
 
-        if(isMiniMap) {
-            result.sort((RibbonNode o1, RibbonNode o2) ->
-                    new Integer(o1.getId()).compareTo(o2.getId()));
-        }
 
         System.out.println(result.get(result.size() - 1).getX());
 
