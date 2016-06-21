@@ -170,11 +170,9 @@ $('document').ready(function () {
         var found = false;
 
         if (dragFrom != null) {
-            var d = new Date();
-            var time = d.getMilliseconds();
 
-            if (time - dragStartTime > 1) {
-                var diff = dragFrom - currentMousePos.x;
+
+            var diff = dragFrom - currentMousePos.x;
                 dragFrom = currentMousePos.x;
                 var ratio = $('#minimap .slider').width() / $('#zoom').width();
                 var left = diff * ratio;
@@ -188,7 +186,7 @@ $('document').ready(function () {
                     updatezoomWindow();
                 }, 500);
             }
-        } else {
+        else {
             $.each(zoomNodeLocations, function (key, node) {
             	if (node.x + 5 > x && node.x - 5 < x && node.y + 5 > y && node.y - 5 < y) {
             		found = true;
@@ -329,6 +327,7 @@ $('document').ready(function () {
             data: { mode: colorBlindMode }
         }).done(function (data) {
             resizePhyloTree();
+            updatezoomWindow();
             initializeMinimap();
         });
     });
@@ -405,14 +404,20 @@ var drawMinimap = function (nodes) {
         }
         minimapNodes = {};
         minimapNodes = nodes;
-        maxMinimapSize = nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
+        maxMinimapSize = 0;
+        $.each(nodes, function (key, node) {
+            if(node.x>maxMinimapSize) {
+                maxMinimapSize = node.x;
+            }
+
+        });
         $('#maxCoordinateInput').html(maxMinimapSize);
         minimapHeight = calcHeight(nodes);
     }
     if (nodes == null || Object.keys(nodes).length < 1) {
         return;
     }
-    var ratio = $('#minimap').width() / nodes[Object.keys(nodes)[Object.keys(nodes).length - 1]].x;
+    var ratio = $('#minimap').width() /maxMinimapSize;
 
     var canvas = $('#minimap canvas')[0];
     draw(nodes, canvas, false, canvas.height / minimapHeight, function (x) {
@@ -479,10 +484,14 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
                     ctx.lineWidth = edge.weight;
                 }
                 ctx.strokeStyle = '#' + edge.color;
+                if(edge.suggested){
+                    ctx.setLineDash([5]);
+                }
                 ctx.stroke();
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = '#000000';
+                ctx.setLineDash([0]);
+
             }
+
         });
         
         if(c.className == "zoomedCanvas" && drawFeatureLabels) {
@@ -508,6 +517,10 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
     if (point.visible && ( !pointMutations || typeof pointMutations == "undefined" || pointMutations.length == 0)) {
     	ctx.beginPath();
     	ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle = '#000000';
     } else if (pointMutations) {
     	
         var mutation = pointMutations[0].replace('"', '');
@@ -543,12 +556,13 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
                 break;
         }
         ctx.fill();
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle = '#000000';
     }
 
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fillStyle = '#FFFFFF';
-    ctx.strokeStyle = '#000000';
+
 }
 
 /**
@@ -561,7 +575,7 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
  */
 function drawFeatureLabel(ctx, xPos, yPos, multiplier, point) {
     
-    if(point.annotations) {
+    if(point.annotations&&point.visible) {
     	ctx.beginPath();
     	ctx.strokeStyle = "#0000FF";    	
     	ctx.arc(xPos, yPos, 15 * multiplier, 0, 2 * Math.PI);
@@ -645,7 +659,7 @@ function updateZoomValues() {
     var slider = $('#minimap .slider');
     var totalWidth = $('#minimap').width();
     var sliderLeft = pxToInt(slider.css('left'));
-    var xWidth = minimapNodes[Object.keys(minimapNodes)[Object.keys(minimapNodes).length - 1]].x;
+    var xWidth = maxMinimapSize;
     zoomLeft = (sliderLeft / totalWidth * xWidth);
     zoomRight = ((sliderLeft + slider.width()) / totalWidth * xWidth);
     return (totalWidth / slider.width());
@@ -751,6 +765,7 @@ function initializeMinimap() {
     minimap.height($('#minimapContainer').height());
 
     var slider = minimap.find('.slider');
+    slider.width($('#minimapContainer').width());
 
     minimap.find('.canvasContainer').html(
         $('<canvas/>', {'class': 'genomeCanvas', Width: minimap.width(), Height: minimap.height()})

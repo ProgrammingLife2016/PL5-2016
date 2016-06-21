@@ -131,16 +131,21 @@ public class Genome {
 
     /**
      * Caculate and set the x's of all strands in this genome.
+     * @return Boolean if there is something changed.
      */
-    public void setStrandsX() {
+    public boolean setStrandsX() {
+        boolean changed = false;
         for (int i = 1; i < strands.size(); i++) {
             Strand prevStrand = strands.get(i - 1);
             int newX = prevStrand.getX() + prevStrand.getSequence().length();
             if (newX > strands.get(i).getX()) {
                 strands.get(i).setX(newX);
+                changed = true;
+
             }
 
         }
+        return changed;
     }
 
     /**
@@ -159,5 +164,24 @@ public class Genome {
      */
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    /**
+     * Check if this is the next strand.
+     * @param first The starting strand.
+     * @param next The possible next strand.
+     * @return Boolean.
+     */
+    public boolean isNextStrand(Strand first, Strand next) {
+        if (strands.size() > 1) {
+            if (first != strands.get(strands.size() - 1)) {
+                if (strands.get(strands.indexOf(first) + 1) == next) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+
     }
 }

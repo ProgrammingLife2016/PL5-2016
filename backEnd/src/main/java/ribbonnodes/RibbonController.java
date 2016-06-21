@@ -54,33 +54,33 @@ public class RibbonController {
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
                                                 int zoomLevel, boolean isMiniMap) {
         ArrayList<ArrayList<Genome>> actGen = genomeGraph.getActiveGenomes();
-
         if (isMiniMap) {
+            zoomLevel = 30;
+        }
+        if (zoomLevel < 3) {
             zoomLevel = 3;
         }
         ArrayList<String> actIds = new ArrayList<>();
         for (ArrayList<Genome> genome : actGen) {
             actIds.add(genome.get(0).getId());
         }
-
         maxId = 0;
-        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel);
+        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, 
+        		actGen, zoomLevel, isMiniMap);
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result);
         collapseRibbons(result, minX, maxX);
-        
-        if (isMiniMap && result.size() < 100) {
-            return getRibbonNodes(minX, maxX, 20, false);
-        }
-        
         spreadYCoordinates(result, actIds);
-        if (!isMiniMap) {
-            Mutations mutations = new Mutations(result, dataTree);
-            mutations.computeAllMutations();
-            mutations.detectConvergence();
+        Mutations mutations = new Mutations(result, dataTree);
+        mutations.computeAllMutations();
+        mutations.detectConvergence();
+        if (isMiniMap) {
+            for (RibbonNode node:result) {
+                for (RibbonEdge edge:node.getOutEdges()) {
+                    edge.setSuggested(false);
+                }
+            }
         }
-       
-        System.out.println(result.size() + " nodes returned");
         return result;
     }
 
@@ -116,11 +116,9 @@ public class RibbonController {
     protected void collapseRibbons(ArrayList<RibbonNode> nodes, int minX, int maxX) {
         System.out.println(nodes.size() + " Before collapsing");
 
-        ArrayList<RibbonNode> newNodes = new ArrayList<>();
-
+        ArrayList<RibbonNode> endNodes = new ArrayList<>();
         for (int i = 0; i < nodes.size(); i++) {
             RibbonNode node = nodes.get(i);
-
             if (node != null && node.getX() > minX && node.getX() < maxX) {
                 ArrayList<RibbonNode> nodesToCollapse = new ArrayList<>();
                 nodesToCollapse.add(node);
@@ -138,15 +136,14 @@ public class RibbonController {
                         break;
                     }
                 }
-                RibbonNode newNode = RibbonNodeFactory.collapseNodes(nodesToCollapse);
-
-                if (newNode != null) {
-                    newNodes.add(newNode);
-
+                RibbonNode endNode = RibbonNodeFactory.collapseNodes(nodesToCollapse);
+                if (endNode != null) {
+                    endNodes.add(endNode);
                 }
+
             }
         }
-        nodes.addAll(newNodes);
+        nodes.addAll(endNodes);
         System.out.println(nodes.size() + " After collapsing");
     }
 
@@ -220,7 +217,7 @@ public class RibbonController {
             if (endNode.getGenomes().size() <= node.getGenomes().size() && !endNode.isyFixed()) {
                 int exponent = i;
                 int newY = (int) ((node.getGenomes().size() - endNode.getGenomes().size())
-                        * 5 * (activeGenomes.size() - level)
+                        * 5 * (5 - activeGenomes.size() + i) * (activeGenomes.size() - level)
                         * Math.pow(-1, exponent));
                 endNode.setyFixed(true);
                 endNode.setY(node.getY() + newY);

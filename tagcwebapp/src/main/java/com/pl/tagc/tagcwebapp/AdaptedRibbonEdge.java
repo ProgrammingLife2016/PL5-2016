@@ -23,6 +23,8 @@ public class AdaptedRibbonEdge {
 
     private String color;
 
+    private boolean suggested;
+
     /**
      * Increment the weight.
      */
@@ -100,5 +102,13 @@ public class AdaptedRibbonEdge {
      */
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public boolean isSuggested() {
+        return suggested;
+    }
+
+    public void setSuggested(boolean suggested) {
+        this.suggested = suggested;
     }
 }
