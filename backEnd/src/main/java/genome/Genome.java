@@ -166,9 +166,11 @@ public class Genome {
     }
 
     public boolean isNextStrand(Strand first, Strand next) {
-        if (first != strands.get(strands.size() - 1)) {
-            if (strands.get(strands.indexOf(first) + 1) == next) {
-                return true;
+        if(strands.size()>1) {
+            if (first != strands.get(strands.size() - 1)) {
+                if (strands.get(strands.indexOf(first) + 1) == next) {
+                    return true;
+                }
             }
         }
         return false;

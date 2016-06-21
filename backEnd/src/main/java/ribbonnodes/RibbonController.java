@@ -88,7 +88,6 @@ public class RibbonController {
             }
         }
 
-        System.out.println(result.get(result.size() - 1).getX());
 
 
         return result;
@@ -134,7 +133,7 @@ public class RibbonController {
                 nodesToCollapse.add(node);
                 while (node.getOutEdges().size() == 1) {
                     RibbonNode other = node.getOutEdges().get(0).getEnd();
-                    if (other != null && other.getX() > minX && other.getX() < maxX) {
+                    if (other != null && other.getX() > minX && other.getX() < maxX ) {
                         if (other.getInEdges().size() == 1) {
                             nodesToCollapse.add(other);
                             node = other;

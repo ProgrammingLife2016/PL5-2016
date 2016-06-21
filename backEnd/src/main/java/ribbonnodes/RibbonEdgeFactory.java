@@ -19,7 +19,9 @@ public abstract class RibbonEdgeFactory {
     public static RibbonEdge createRibbonEdge(RibbonNode start, RibbonNode end, Genome genome) {
         RibbonEdge edge = new RibbonEdge(start, end);
         edge.setColor(genome.getColor());
-        if (!genome.isNextStrand(start.getStrands().get(0), end.getStrands().get(0))) {
+
+        if (!start.getStrands().isEmpty()
+                &&!genome.isNextStrand(start.getStrands().get(0), end.getStrands().get(0))) {
             edge.setSuggested(true);
         }
         return edge;

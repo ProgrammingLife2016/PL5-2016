@@ -80,11 +80,11 @@ public class DataTree extends TreeStructure<DataNode> {
         leftAllGenomes.setX(Integer.MIN_VALUE);
         rightAllGenomes.setX(Integer.MAX_VALUE);
         int minSize = 0;
-        if (level < 10) {
-            minSize = 200 - level * 20;
+        if (level < 20) {
+            minSize = 400 - level * 20;
         }
         if(isMiniMap){
-            minSize=200;
+            minSize=400;
         }
 
         HashSet<String> genomeIDs = new HashSet<>();

@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import parser.Parser;
 import phylogenetictree.PhylogeneticTree;
+import strand.Strand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -169,10 +170,15 @@ public class RibbonControllerTest {
     public void testAddEdges() throws Exception {
         HashSet<String> genomes = new HashSet<String>();
         genomes.add("1");
+        Strand strand= new Strand();
         ArrayList<RibbonNode> nodes = new ArrayList<>();
         RibbonNode node1 = new RibbonNode(0, genomes);
         RibbonNode node2 = new RibbonNode(1, genomes);
         RibbonNode node3 = new RibbonNode(2, genomes);
+        node1.addStrand(strand);
+        node2.addStrand(strand);
+        node3.addStrand(strand);
+
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
