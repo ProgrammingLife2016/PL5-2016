@@ -146,7 +146,7 @@ public class GenomeGraph {
         activeGenomeIds.sort((String o1, String o2)->o1.compareTo(o2));
         for (ArrayList<Genome> genome : activeGenomes) {
             genome.get(0).getStrands().sort((Strand o1,
-                                             Strand o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
+                   Strand o2) -> new Integer(o1.getX()).compareTo(o2.getX()));
         }
         System.out.println("New genomes to compare: " + activeGenomeIds.toString());
         return unrecognizedGenomes;

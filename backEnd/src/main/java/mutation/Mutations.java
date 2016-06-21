@@ -78,7 +78,7 @@ public class Mutations {
                                     firstEdgeEnd.setY(node.getY());
                                     firstEdgeEnd.setX((node.getX() + edge1.getEnd().getX()) / 2);
                                     firstEdgeEnd.addAnnotations(secondEdgeEnd.getAnnotations());
-                                    firstEdge.setWeight(firstEdge.getWeight()+secondEdge.getWeight()-1);
+                                    firstEdge.setWeight(firstEdge.getWeight() + secondEdge.getWeight() - 1);
                                     firstEdge.addGenomeToEdge(secondEdge.getColor());
                                     firstEdgeEnd.getOutEdges().get(0).setColor(firstEdge.getColor());
                                     firstEdgeEnd.getOutEdges().get(0).setWeight(firstEdge.getWeight());
@@ -132,10 +132,10 @@ public class Mutations {
                                     new ArrayList<>(Arrays.asList(mutated))));
                             edgesToRemove.add(edge1);
                             end.getInEdges().remove(edge1);
-                            edge2.setWeight(edge2.getWeight()+edge1.getWeight()-1);
+                            edge2.setWeight(edge2.getWeight() + edge1.getWeight() - 1);
                             edge2.addGenomeToEdge(edge1.getColor());
                             edge2.setSuggested(false);
-                            edge3.setWeight(edge2.getWeight()-1);
+                            edge3.setWeight(edge2.getWeight() - 1);
                             edge3.addGenomeToEdge(edge1.getColor());
                             edge3.setSuggested(false);
                             mutated.setY(node.getY());

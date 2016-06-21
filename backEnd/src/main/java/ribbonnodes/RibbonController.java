@@ -54,7 +54,6 @@ public class RibbonController {
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
                                                 int zoomLevel, boolean isMiniMap) {
         ArrayList<ArrayList<Genome>> actGen = genomeGraph.getActiveGenomes();
-
         if (isMiniMap) {
             zoomLevel = 30;
         }
@@ -65,31 +64,23 @@ public class RibbonController {
         for (ArrayList<Genome> genome : actGen) {
             actIds.add(genome.get(0).getId());
         }
-
         maxId = 0;
-        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel, isMiniMap);
+        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, 
+        		actGen, zoomLevel, isMiniMap);
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result);
         collapseRibbons(result, minX, maxX);
-
-
         spreadYCoordinates(result, actIds);
-
         Mutations mutations = new Mutations(result, dataTree);
         mutations.computeAllMutations();
         mutations.detectConvergence();
-
-
-        if(isMiniMap){
-            for(RibbonNode node:result){
-                for(RibbonEdge edge:node.getOutEdges()){
+        if (isMiniMap) {
+            for (RibbonNode node:result) {
+                for (RibbonEdge edge:node.getOutEdges()) {
                     edge.setSuggested(false);
                 }
             }
         }
-
-
-
         return result;
     }
 
@@ -133,7 +124,7 @@ public class RibbonController {
                 nodesToCollapse.add(node);
                 while (node.getOutEdges().size() == 1) {
                     RibbonNode other = node.getOutEdges().get(0).getEnd();
-                    if (other != null && other.getX() > minX && other.getX() < maxX ) {
+                    if (other != null && other.getX() > minX && other.getX() < maxX) {
                         if (other.getInEdges().size() == 1) {
                             nodesToCollapse.add(other);
                             node = other;
@@ -146,7 +137,7 @@ public class RibbonController {
                     }
                 }
                 RibbonNode endNode = RibbonNodeFactory.collapseNodes(nodesToCollapse);
-                if(endNode!=null){
+                if (endNode != null) {
                     endNodes.add(endNode);
                 }
 
@@ -226,7 +217,7 @@ public class RibbonController {
             if (endNode.getGenomes().size() <= node.getGenomes().size() && !endNode.isyFixed()) {
                 int exponent = i;
                 int newY = (int) ((node.getGenomes().size() - endNode.getGenomes().size())
-                        * 5 * (5-activeGenomes.size()+i)* (activeGenomes.size() - level)
+                        * 5 * (5 - activeGenomes.size() + i) * (activeGenomes.size() - level)
                         * Math.pow(-1, exponent));
                 endNode.setyFixed(true);
                 endNode.setY(node.getY() + newY);

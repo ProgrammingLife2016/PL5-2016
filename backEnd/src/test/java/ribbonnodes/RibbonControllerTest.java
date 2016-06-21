@@ -55,7 +55,10 @@ public class RibbonControllerTest {
 
     }
 
-
+    /**
+     * Test the usabillity.
+     * @throws Exception if fail.
+     */
     @Test
     public void testUsability() throws Exception {
         String gfaFile = "data/TB10.gfa";
@@ -78,7 +81,9 @@ public class RibbonControllerTest {
 
         }
         RibbonController ribbonController = new RibbonController(genomeGraph, dataTree);
-        ArrayList<ArrayList<String>> actGen = new ArrayList<>(Arrays.asList(new ArrayList<>(Arrays.asList("TKK_02_0002")), new ArrayList<String>(Arrays.asList("TKK_02_0008"))));
+        ArrayList<ArrayList<String>> actGen = new ArrayList<>(Arrays.asList(
+        		new ArrayList<>(Arrays.asList("TKK_02_0002")), new ArrayList<String>(
+        				Arrays.asList("TKK_02_0008"))));
         genomeGraph.setGenomesAsActive(actGen);
         ribbonController.getRibbonNodes(0, 10000000, 30, false);
     }
@@ -170,7 +175,7 @@ public class RibbonControllerTest {
     public void testAddEdges() throws Exception {
         HashSet<String> genomes = new HashSet<String>();
         genomes.add("1");
-        Strand strand= new Strand();
+        Strand strand = new Strand();
         ArrayList<RibbonNode> nodes = new ArrayList<>();
         RibbonNode node1 = new RibbonNode(0, genomes);
         RibbonNode node2 = new RibbonNode(1, genomes);

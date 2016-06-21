@@ -131,6 +131,7 @@ public class Genome {
 
     /**
      * Caculate and set the x's of all strands in this genome.
+     * @return Boolean if there is something changed.
      */
     public boolean setStrandsX() {
         boolean changed = false;
@@ -165,8 +166,14 @@ public class Genome {
         this.color = color;
     }
 
+    /**
+     * Check if this is the next strand.
+     * @param first The starting strand.
+     * @param next The possible next strand.
+     * @return Boolean.
+     */
     public boolean isNextStrand(Strand first, Strand next) {
-        if(strands.size()>1) {
+        if (strands.size() > 1) {
             if (first != strands.get(strands.size() - 1)) {
                 if (strands.get(strands.indexOf(first) + 1) == next) {
                     return true;

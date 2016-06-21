@@ -21,7 +21,7 @@ public abstract class RibbonEdgeFactory {
         edge.setColor(genome.getColor());
 
         if (!start.getStrands().isEmpty()
-                &&!genome.isNextStrand(start.getStrands().get(0), end.getStrands().get(0))) {
+                && !genome.isNextStrand(start.getStrands().get(0), end.getStrands().get(0))) {
             edge.setSuggested(true);
         }
         return edge;

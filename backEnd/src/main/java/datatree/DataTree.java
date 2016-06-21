@@ -49,10 +49,12 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param xMax    The maximal x value.
      * @param genomes The genomes to filter for.
      * @param level   The maximum tree level to zoom to.
+     * @param isMiniMap Boolean if this is the minimap.
      * @return A list of datanodes that pertain to the parameters.
      */
     public ArrayList<Strand> getStrands(int xMin, int xMax,
-                                        ArrayList<ArrayList<Genome>> genomes, int level, boolean isMiniMap) {
+                                        ArrayList<ArrayList<Genome>> genomes, int level, 
+                                        boolean isMiniMap) {
         return filterStrandsFromNodes(xMin, xMax,
                 getDataNodesForGenomes(genomes, level), genomes, level, isMiniMap);
     }
@@ -66,6 +68,7 @@ public class DataTree extends TreeStructure<DataNode> {
      * @param nodes   the nodes to filter.
      * @param genomes The phylo nodes selected.
      * @param level   The zoomlevel.
+     * @param isMiniMap Boolean if this is the minimap.
      * @return A filtered list of nodes.
      */
     @SuppressWarnings("checkstyle:methodlength")
@@ -83,8 +86,8 @@ public class DataTree extends TreeStructure<DataNode> {
         if (level < 20) {
             minSize = 400 - level * 20;
         }
-        if(isMiniMap){
-            minSize=400;
+        if (isMiniMap) {
+            minSize = 400;
         }
 
         HashSet<String> genomeIDs = new HashSet<>();

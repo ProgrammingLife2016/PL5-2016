@@ -80,8 +80,8 @@ public class RibbonNodeFactoryTest {
         RibbonNodeFactory.collapseNodes(
                 new ArrayList<>(Arrays.asList(node1, node2, node3)));
         assertNotNull(node3.getInEdge(0, 2));
-        assertEquals(node3.getInEdges().size(),1);
-        assertEquals(node1.getOutEdges().size(),1);
+        assertEquals(node3.getInEdges().size(), 1);
+        assertEquals(node1.getOutEdges().size(), 1);
         assertEquals(node1.getStrands().get(0), strand);
         assertEquals(node3.getX(), (int) (node3.getX()));
 
