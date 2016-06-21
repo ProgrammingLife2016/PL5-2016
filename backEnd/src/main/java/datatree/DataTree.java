@@ -61,7 +61,7 @@ public class DataTree extends TreeStructure<DataNode> {
     public ArrayList<Strand> getStrands(int xMin, int xMax,
                                         ArrayList<ArrayList<Genome>> genomes, int level, 
                                         boolean isMiniMap) {
-        if (!isMiniMap && level < minLevel) {
+        if (!isMiniMap && level < minLevel &&minLevel!=Integer.MAX_VALUE) {
             level = minLevel;
         }
 

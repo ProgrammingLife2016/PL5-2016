@@ -149,7 +149,7 @@ public class DataTreeTest {
     @Test
     public void testGetDataNodes() throws Exception {
 
-        assertEquals(tree.getStrands(-1, 10, genomeIDs, 20, false).size(), 3);
+        assertEquals(tree.getStrands(-1, 10, genomeIDs, 21, false).size(), 3);
         assertEquals(tree.getStrands(4, 4, genomeIDs, 0, false).size(), 0);
         assertEquals(tree.getStrands(5, 10, genomeIDs, 0, false).size(), 0);
         assertEquals(tree.getStrands(5, 10, genomeIDs, 20, false).size(), 1);
