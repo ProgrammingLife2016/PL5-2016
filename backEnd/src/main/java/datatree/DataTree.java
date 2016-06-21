@@ -3,6 +3,7 @@ package datatree;
 import abstractdatastructure.TreeStructure;
 import genome.Genome;
 import strand.Strand;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +13,11 @@ import java.util.concurrent.ForkJoinPool;
  * Tree containing all strands and genomes of the data.
  */
 public class DataTree extends TreeStructure<DataNode> {
+
+    /**
+     * The minimal zoomlevel that shows deviation between the genomes compared.
+     */
+    int minLevel = Integer.MAX_VALUE;
 
     /**
      * Default constructor.
@@ -55,6 +61,11 @@ public class DataTree extends TreeStructure<DataNode> {
     public ArrayList<Strand> getStrands(int xMin, int xMax,
                                         ArrayList<ArrayList<Genome>> genomes, int level, 
                                         boolean isMiniMap) {
+        if (!isMiniMap && level < minLevel &&minLevel!=Integer.MAX_VALUE) {
+            level = minLevel;
+        }
+
+
         return filterStrandsFromNodes(xMin, xMax,
                 getDataNodesForGenomes(genomes, level), genomes, level, isMiniMap);
     }
@@ -82,10 +93,9 @@ public class DataTree extends TreeStructure<DataNode> {
         Strand rightAllGenomes = new Strand();
         leftAllGenomes.setX(Integer.MIN_VALUE);
         rightAllGenomes.setX(Integer.MAX_VALUE);
-        int minSize = 0;
-        if (level < 20) {
-            minSize = 400 - level * 20;
-        }
+
+        int minSize = 400 - level * 20;
+
         if (isMiniMap) {
             minSize = 400;
         }
@@ -138,8 +148,19 @@ public class DataTree extends TreeStructure<DataNode> {
 
     public Set<DataNode> getDataNodesForGenomes(ArrayList<ArrayList<Genome>> genomes, int level) {
         Set<DataNode> result = new HashSet<>();
+        HashSet<String> ids = new HashSet<>();
+
         for (ArrayList<Genome> genome : genomes) {
             result.addAll(getDataNodesForGenome(genome, level));
+            for (Genome g : genome) {
+                ids.add(g.getId());
+            }
+        }
+        for (DataNode node : result) {
+            if (!node.getGenomes().containsAll(ids) && node.getLevel() < minLevel) {
+                minLevel = node.getLevel();
+            }
+
         }
         return result;
     }
@@ -198,4 +219,11 @@ public class DataTree extends TreeStructure<DataNode> {
 		}
 		return patristicDistance;
 	}
+
+    /**
+     * Reset the minimal level after selecting new genomes to compare.
+     */
+    public void resetMinLevel() {
+        minLevel = Integer.MAX_VALUE;
+    }
 }
