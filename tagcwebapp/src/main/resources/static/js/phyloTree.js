@@ -43,7 +43,7 @@ $("document").ready(function() {
     $('#compGenomesButton').on("click", function (e) {
         e.preventDefault();
 
-        fullSizeMinimap();
+        //fullSizeMinimap();
 
         var names = selectedGenomes.concat(selectedMiddleNodes);
 

@@ -70,8 +70,8 @@ public class RibbonController {
         collapseRibbons(result, minX, maxX);
 
 
-        
         spreadYCoordinates(result, actIds);
+
         Mutations mutations = new Mutations(result, dataTree);
         mutations.computeAllMutations();
         mutations.detectConvergence();
@@ -216,7 +216,7 @@ public class RibbonController {
             if (endNode.getGenomes().size() <= node.getGenomes().size() && !endNode.isyFixed()) {
                 int exponent = i;
                 int newY = (int) ((node.getGenomes().size() - endNode.getGenomes().size())
-                        * 5 * (activeGenomes.size() - level)
+                        * 5 * (5-activeGenomes.size()+i)* (activeGenomes.size() - level)
                         * Math.pow(-1, exponent));
                 endNode.setyFixed(true);
                 endNode.setY(node.getY() + newY);
