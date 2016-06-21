@@ -47,15 +47,19 @@ $("document").ready(function() {
 
         var names = selectedGenomes.concat(selectedMiddleNodes);
 
-        $.ajax({
+        if (names.length > 8) {
+            if (confirm("You selected more than 8 genomes, we highly recommend to select families instead of single genomes.")) {
+                $.ajax({
 
-            url : url + 'api/setactivegenomes',
-            dataType : 'JSON',
-            type : 'POST',
-            data : { 'names': names }
-        }).done(function(respData) {
-            initializeMinimap();
-        });
+                    url: url + 'api/setactivegenomes',
+                    dataType: 'JSON',
+                    type: 'POST',
+                    data: {'names': names}
+                }).done(function (respData) {
+                    initializeMinimap();
+                });
+            }
+        }
     });
 
     //Move back up in the phyloTree

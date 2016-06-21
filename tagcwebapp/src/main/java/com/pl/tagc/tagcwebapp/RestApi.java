@@ -114,6 +114,21 @@ public class RestApi {
     }
 
     /**
+     * Get whether color blind mode is enabled
+     * @return a response
+     */
+    @GET
+    @Path("/getcolorblindmode")
+    @Produces("application/json")
+    public Response getColorBlindMode() {
+        return Response.ok() //200
+                .entity(BackEndAdapter.getInstance().getColorBlindMode())
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
+    }
+
+    /**
      * Request phylogenetic tree.
      *
      * @param treeId the tree id

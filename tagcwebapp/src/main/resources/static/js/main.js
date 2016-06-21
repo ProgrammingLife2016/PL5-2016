@@ -17,7 +17,7 @@ var zoomNodeLocations = [];
 var currentHoverNode = null;
 var dragFrom = null;
 var mutations = ["SNP", "INDEL"];
-var mutColors = ["0000FF", "00FF00", "FF0000"];
+var mutColors = ["0000FF", "FF00FF", "FF0000"];
 var minY = 0;
 var maxY = 0;
 var colorBlindMode = false;
@@ -234,9 +234,9 @@ $('document').ready(function () {
     $('#toggleGFLabels').click(function () {
     	drawFeatureLabels = !drawFeatureLabels;
     	if(!drawFeatureLabels) {
-    		$('#toggleGFLabels').html('Enable Feature Highlights')
+    		$('#toggleGFLabels').html('Enable Annotation Highlights')
     	} else {
-    		$('#toggleGFLabels').html('Disable Feature Highlights')
+    		$('#toggleGFLabels').html('Disable Annotation Highlights')
     	}    	
     	drawZoom(null);
     });    
@@ -315,17 +315,17 @@ $('document').ready(function () {
     $('#toggleColorBlindMode').click(function () {
         colorBlindMode = !colorBlindMode;
         if(!colorBlindMode) {
-            $('#toggleColorBlindMode').html('Colorblindmode off')
+            $('#toggleColorBlindMode').html('Enable Colorblindmode')
         } else {
-            $('#toggleColorBlindMode').html('Colorblindmode on')
+            $('#toggleColorBlindMode').html('Disable Colorblindmode')
         }
 
         $.ajax({
             url: url + 'api/setcolorblindmode',
-            dataType: 'JSON',
             type: 'GET',
             data: { mode: colorBlindMode }
         }).done(function (data) {
+            loadMetaData();
             resizePhyloTree();
             updatezoomWindow();
             initializeMinimap();
@@ -457,10 +457,11 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
         drawPoint(ctx, xPos, yPos, 1, point);
 
         if (saveRealCoordinates && point.visible) {
+            var label = (point.label.length > 5000)?point.label.substr(0, 5000) +'...':point.label;
             zoomNodeLocations.push({
                 x: xPos,
                 y: yPos,
-                label: point.label,
+                label: label,
                 id: point.id,
                 annotations: point.annotations,
                 convergenceMap: point.convergenceMap
@@ -729,6 +730,20 @@ function initialize() {
     initializeMinimap();
     initializeZoomWindow();
     initLegendCanvas();
+    getColorBlindMode();
+}
+
+function getColorBlindMode() {
+    $.ajax({
+        url: url + 'api/getcolorblindmode',
+        dataType: 'JSON',
+        type: 'GET'
+    }).done(function (data) {
+        if (data.bool == true) {
+            colorBlindMode = true;
+            $('#toggleColorBlindMode').html('Disable Colorblindmode');
+        }
+    });
 }
 
 /**

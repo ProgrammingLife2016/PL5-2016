@@ -114,4 +114,12 @@ public final class BackEndAdapter implements BackEndInterface {
     public void setColorBlindMode(Boolean colorBlindMode) {
         controller.getMetaDataController().setColorBlindEnabled(colorBlindMode);
     }
+
+    /**
+     * Used for getting the current colorBlindMode in case of a page refresh.
+     * @return colorBlindMode whether or not color blind mode is enabled.
+     */
+    public BooleanObject getColorBlindMode() {
+        return new BooleanObject(controller.getMetaDataController().getColorBlindMode());
+    }
 }
