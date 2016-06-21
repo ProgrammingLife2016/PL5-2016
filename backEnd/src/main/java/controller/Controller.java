@@ -47,6 +47,11 @@ public class Controller {
      */
     private MetaDataController metaDataController;
 
+    /**
+     * The dataTree containing the strands.
+     */
+    private DataTree dataTree;
+
         /**
      * Constructor.
      */
@@ -58,7 +63,7 @@ public class Controller {
         genomeGraph.loadMetaData(Parser.parseGenomeMetadata("data/metadata.csv"));
         phylogeneticTree.parseTree("data/340tree.rooted.TKK.nwk",
                 new ArrayList<>(genomeGraph.getGenomes().keySet()));
-        DataTree dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
+        dataTree = new DataTree(new DataNode(phylogeneticTree.getRoot(),
                 null, 0));
 
         if (gfaFile.equals("data/TB328.gfa")) {
@@ -142,6 +147,7 @@ public class Controller {
                 temp.add(phylogeneticTree.getNodeWithId(x).getGenomes());
             }
         }
+        dataTree.resetMinLevel();
         return genomeGraph.setGenomesAsActive(temp);
     }
 
