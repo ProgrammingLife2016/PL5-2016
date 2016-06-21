@@ -47,18 +47,16 @@ $("document").ready(function() {
 
         var names = selectedGenomes.concat(selectedMiddleNodes);
 
-        if (names.length > 8) {
-            if (confirm("You selected more than 8 genomes, we highly recommend to select families instead of single genomes.")) {
-                $.ajax({
+        if (names.length <= 8 || confirm("Are you sure that you want to compare that many individual genomes? Phylogenetic filtering is more suitable for comparing entire families. This will decrease loading times.")) {
+            $.ajax({
 
-                    url: url + 'api/setactivegenomes',
-                    dataType: 'JSON',
-                    type: 'POST',
-                    data: {'names': names}
-                }).done(function (respData) {
-                    initializeMinimap();
-                });
-            }
+                url: url + 'api/setactivegenomes',
+                dataType: 'JSON',
+                type: 'POST',
+                data: {'names': names}
+            }).done(function (respData) {
+                initializeMinimap();
+            });
         }
     });
 
