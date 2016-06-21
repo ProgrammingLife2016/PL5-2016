@@ -489,8 +489,8 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
                     ctx.setLineDash([5]);
                 }
                 ctx.stroke();
+                
                 ctx.setLineDash([0]);
-
                 ctx.lineWidth = 1;
                 ctx.strokeStyle = '#000';
             }
