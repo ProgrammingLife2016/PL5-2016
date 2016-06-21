@@ -58,13 +58,16 @@ public class RibbonController {
         if (isMiniMap) {
             zoomLevel = 30;
         }
+        if (zoomLevel < 3) {
+            zoomLevel = 3;
+        }
         ArrayList<String> actIds = new ArrayList<>();
         for (ArrayList<Genome> genome : actGen) {
             actIds.add(genome.get(0).getId());
         }
 
         maxId = 0;
-        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel);
+        ArrayList<Strand> filteredNodes = dataTree.getStrands(minX, maxX, actGen, zoomLevel, isMiniMap);
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result);
         collapseRibbons(result, minX, maxX);
@@ -77,8 +80,16 @@ public class RibbonController {
         mutations.detectConvergence();
 
 
+        if(isMiniMap){
+            for(RibbonNode node:result){
+                for(RibbonEdge edge:node.getOutEdges()){
+                    edge.setSuggested(false);
+                }
+            }
+        }
 
         System.out.println(result.get(result.size() - 1).getX());
+
 
         return result;
     }

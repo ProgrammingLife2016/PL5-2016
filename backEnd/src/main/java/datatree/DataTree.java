@@ -52,9 +52,9 @@ public class DataTree extends TreeStructure<DataNode> {
      * @return A list of datanodes that pertain to the parameters.
      */
     public ArrayList<Strand> getStrands(int xMin, int xMax,
-                                        ArrayList<ArrayList<Genome>> genomes, int level) {
+                                        ArrayList<ArrayList<Genome>> genomes, int level, boolean isMiniMap) {
         return filterStrandsFromNodes(xMin, xMax,
-                getDataNodesForGenomes(genomes, level), genomes, level);
+                getDataNodesForGenomes(genomes, level), genomes, level, isMiniMap);
     }
 
     /**
@@ -72,7 +72,8 @@ public class DataTree extends TreeStructure<DataNode> {
     public ArrayList<Strand> filterStrandsFromNodes(int xMin, int xMax,
                                                     Set<DataNode> nodes,
                                                     ArrayList<ArrayList<Genome>> genomes,
-                                                    int level) {
+                                                    int level,
+                                                    boolean isMiniMap) {
         HashSet<Strand> result = new HashSet<>();
         Strand leftAllGenomes = new Strand();
         Strand rightAllGenomes = new Strand();
@@ -81,6 +82,9 @@ public class DataTree extends TreeStructure<DataNode> {
         int minSize = 0;
         if (level < 10) {
             minSize = 200 - level * 20;
+        }
+        if(isMiniMap){
+            minSize=200;
         }
 
         HashSet<String> genomeIDs = new HashSet<>();
