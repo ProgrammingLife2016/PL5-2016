@@ -477,10 +477,14 @@ function draw(points, c, saveRealCoordinates, yTranslate, xTranslate) {
                     ctx.lineWidth = edge.weight;
                 }
                 ctx.strokeStyle = '#' + edge.color;
+                if(edge.suggested){
+                    ctx.setLineDash([5]);
+                }
                 ctx.stroke();
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = '#000000';
+                ctx.setLineDash([0]);
+
             }
+
         });
         
         if(c.className == "zoomedCanvas" && drawFeatureLabels) {
@@ -506,6 +510,10 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
     if (point.visible && ( !pointMutations || typeof pointMutations == "undefined" || pointMutations.length == 0)) {
     	ctx.beginPath();
     	ctx.arc(xPos, yPos, 5 * multiplier, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle = '#000000';
     } else if (pointMutations) {
     	
         var mutation = pointMutations[0].replace('"', '');
@@ -541,12 +549,13 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
                 break;
         }
         ctx.fill();
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle = '#000000';
     }
 
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fillStyle = '#FFFFFF';
-    ctx.strokeStyle = '#000000';
+
 }
 
 /**
@@ -559,7 +568,7 @@ function drawPoint(ctx, xPos, yPos, multiplier, point) {
  */
 function drawFeatureLabel(ctx, xPos, yPos, multiplier, point) {
     
-    if(point.annotations) {
+    if(point.annotations&&point.visible) {
     	ctx.beginPath();
     	ctx.strokeStyle = "#0000FF";    	
     	ctx.arc(xPos, yPos, 15 * multiplier, 0, 2 * Math.PI);

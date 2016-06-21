@@ -46,21 +46,18 @@ public abstract class RibbonNodeFactory {
     public static RibbonNode collapseNodes(ArrayList<RibbonNode> nodesToCollapse) {
         RibbonNode startNode = nodesToCollapse.get(0);
         RibbonNode oldEnd = nodesToCollapse.get(nodesToCollapse.size() - 1);
-        RibbonNode newEnd = new RibbonNode(oldEnd.getId(),
-                oldEnd.getGenomes());
+
         if (nodesToCollapse.size() > 1) {
             for (int i = 1; i < nodesToCollapse.size(); i++) {
                 RibbonNode node2 = nodesToCollapse.get(i);
                 startNode.addStrands(node2.getStrands());
                 startNode.addAnnotations(node2.getAnnotations());
             }
-            newEnd.setX(oldEnd.getX());
-            newEnd.setY(oldEnd.getY());
-            newEnd.setOutEdges(nodesToCollapse.get(nodesToCollapse.size() - 1).getOutEdges());
-            startNode.getOutEdges().get(0).setEnd(newEnd);
-            newEnd.addEdge(startNode.getOutEdges().get(0));
-            newEnd.setVisible(false);
-            return newEnd;
+
+            startNode.getOutEdges().get(0).setEnd(oldEnd);
+            oldEnd.setInEdges(startNode.getOutEdges());
+            oldEnd.setVisible(false);
+            return oldEnd;
         }
         return null;
     }

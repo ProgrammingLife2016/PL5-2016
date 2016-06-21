@@ -25,6 +25,8 @@ public class RibbonEdge extends Edge {
      */
     private RibbonNode end;
 
+    private boolean suggested;
+
     /**
      * Constructor to create an edge.
      *
@@ -36,6 +38,7 @@ public class RibbonEdge extends Edge {
         this.start = start;
         this.end = end;
         color = Color.black;
+        suggested=false;
     }
 
     /**
@@ -124,5 +127,11 @@ public class RibbonEdge extends Edge {
 
     }
 
+    public boolean isSuggested() {
+        return suggested;
+    }
 
+    public void setSuggested(boolean suggested) {
+        this.suggested = suggested;
+    }
 }

@@ -22,6 +22,7 @@ public class RibbonEdgeAdapter extends XmlAdapter<AdaptedRibbonEdge, RibbonEdge>
         adaptedEdge.setEndId(edge.getEndId());
         adaptedEdge.setWeight(edge.getWeight());
         adaptedEdge.setColor(parseColor(edge.getColor()));
+        adaptedEdge.setSuggested(edge.isSuggested());
         return adaptedEdge;
     }
 

@@ -68,7 +68,7 @@ public class RibbonController {
         ArrayList<RibbonNode> result = createNodesFromStrands(filteredNodes, actIds);
         addEdges(result);
         collapseRibbons(result, minX, maxX);
-        
+
 
         
         spreadYCoordinates(result, actIds);
@@ -79,9 +79,11 @@ public class RibbonController {
 
         if(isMiniMap) {
             result.sort((RibbonNode o1, RibbonNode o2) ->
-                    new Integer(o1.getX()).compareTo(o2.getX()));
+                    new Integer(o1.getId()).compareTo(o2.getId()));
         }
-        System.out.println(result.size() + " nodes returned");
+
+        System.out.println(result.get(result.size() - 1).getX());
+
         return result;
     }
 
@@ -117,11 +119,9 @@ public class RibbonController {
     protected void collapseRibbons(ArrayList<RibbonNode> nodes, int minX, int maxX) {
         System.out.println(nodes.size() + " Before collapsing");
 
-        ArrayList<RibbonNode> newNodes = new ArrayList<>();
-
+        ArrayList<RibbonNode> endNodes = new ArrayList<>();
         for (int i = 0; i < nodes.size(); i++) {
             RibbonNode node = nodes.get(i);
-
             if (node != null && node.getX() > minX && node.getX() < maxX) {
                 ArrayList<RibbonNode> nodesToCollapse = new ArrayList<>();
                 nodesToCollapse.add(node);
@@ -139,15 +139,14 @@ public class RibbonController {
                         break;
                     }
                 }
-                RibbonNode newNode = RibbonNodeFactory.collapseNodes(nodesToCollapse);
-
-                if (newNode != null) {
-                    newNodes.add(newNode);
-
+                RibbonNode endNode = RibbonNodeFactory.collapseNodes(nodesToCollapse);
+                if(endNode!=null){
+                    endNodes.add(endNode);
                 }
+
             }
         }
-        nodes.addAll(newNodes);
+        nodes.addAll(endNodes);
         System.out.println(nodes.size() + " After collapsing");
     }
 
