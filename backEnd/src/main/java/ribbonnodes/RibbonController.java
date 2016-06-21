@@ -51,6 +51,7 @@ public class RibbonController {
      * @param isMiniMap Boolean if this is the minimap.
      * @return The list of ribbonNodes.
      */
+    @SuppressWarnings("checkstyle:methodlength")
     public ArrayList<RibbonNode> getRibbonNodes(int minX, int maxX,
                                                 int zoomLevel, boolean isMiniMap) {
         ArrayList<ArrayList<Genome>> actGen = genomeGraph.getActiveGenomes();

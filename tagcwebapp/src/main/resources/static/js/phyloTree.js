@@ -47,15 +47,17 @@ $("document").ready(function() {
 
         var names = selectedGenomes.concat(selectedMiddleNodes);
 
-        $.ajax({
+        if (names.length <= 8 || confirm("Are you sure that you want to compare that many individual genomes? Phylogenetic filtering is more suitable for comparing entire families. This will decrease loading times.")) {
+            $.ajax({
 
-            url : url + 'api/setactivegenomes',
-            dataType : 'JSON',
-            type : 'POST',
-            data : { 'names': names }
-        }).done(function(respData) {
-            initializeMinimap();
-        });
+                url: url + 'api/setactivegenomes',
+                dataType: 'JSON',
+                type: 'POST',
+                data: {'names': names}
+            }).done(function (respData) {
+                initializeMinimap();
+            });
+        }
     });
 
     //Move back up in the phyloTree

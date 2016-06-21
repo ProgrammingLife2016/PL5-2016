@@ -2,6 +2,7 @@ package mutation;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 import ribbonnodes.RibbonEdge;
@@ -59,6 +60,11 @@ public class MutationsTest {
      * Nodes that don't have a SNP.
      */
     private ArrayList<Strand> withoutSNP;
+    
+    /**
+     * ArgumentCaptor.
+     */
+    private ArgumentCaptor<AbstractMutation> captor;
 
     /**
      * Set up the mutation object.
@@ -73,6 +79,7 @@ public class MutationsTest {
         node4 = Mockito.mock(RibbonNode.class);
         nodes = new ArrayList<>(Arrays.asList(node1, node2, node3, node4));
         mutations = new Mutations(nodes, null);
+        captor = new ArgumentCaptor<>();
 
         Strand strandSNP = Mockito.mock(Strand.class);
         Mockito.when(strandSNP.getSequence()).thenReturn("A");
@@ -124,7 +131,8 @@ public class MutationsTest {
 
         mutations.computeAllMutations();
         
-        assertEquals(node1.getMutations().size(), 0);
+        Mockito.verify(node2).addMutation(captor.capture());
+        assertEquals(captor.getValue().getMutationType(), MutationType.INDEL);
     }
 
     /**
@@ -147,6 +155,7 @@ public class MutationsTest {
 
         mutations.computeAllMutations();
 
-        assertEquals(node1.getMutations().size(), 0);
+        Mockito.verify(node2).addMutation(captor.capture());
+        assertEquals(captor.getValue().getMutationType(), MutationType.SNP);
     }
 }
