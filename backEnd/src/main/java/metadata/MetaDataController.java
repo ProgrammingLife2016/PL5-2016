@@ -40,6 +40,11 @@ public class MetaDataController {
     private List<Color> preferredColors = new ArrayList<>();
 
     /**
+     * Whether the color is colorBlindMode active
+     */
+    private Boolean colorBlindMode = false;
+
+    /**
      * constructor.
      * @param inputGenomes list of the genomes for which the MetaData is relevant
      */
@@ -174,6 +179,7 @@ public class MetaDataController {
      */
     public void setColorBlindEnabled(Boolean colorBlindEnabled) {
         preferredColors.clear();
+        colorBlindMode = colorBlindEnabled;
         if (colorBlindEnabled) {
             preferredColors.add(new Color(100, 75, 0));
             preferredColors.add(new Color(30, 120, 240));
@@ -192,6 +198,14 @@ public class MetaDataController {
             preferredColors.add(Color.cyan);
         }
         fillColormap();
+    }
+
+    /**
+     * Return the colorBlindMode
+     * @return A boolean containing whether the system is on colorBlindMode
+     */
+    public Boolean getColorBlindMode() {
+        return colorBlindMode;
     }
 
     /**

@@ -4,7 +4,7 @@
 
 var phyloColorList = [];
 var metaData = {};
-var activeMeta = "";
+var activeMeta = "lineage";
 
 $('document').ready(function() {
     loadMetaData();
@@ -36,7 +36,7 @@ function loadMetaData() {
             alignment: 'center'
         });
         metaData = result;
-        setPhyloColors("lineage");
+        setPhyloColors(activeMeta);
     });
 
 }
