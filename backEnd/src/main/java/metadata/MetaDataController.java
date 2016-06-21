@@ -117,7 +117,6 @@ public class MetaDataController {
      * Fills the colormap, which maps metadata type + value to a color.
      */
     private void fillColormap() {
-        System.out.println(colorMap);
         for (String metaDataType : returnMetaDataTypes()) {
             int i = 0;
             for (String value : returnPossibleValues(metaDataType)) {
@@ -135,7 +134,6 @@ public class MetaDataController {
         colorMap.put("lineage:LIN animal", Color.decode("0x00ff9c"));
         colorMap.put("lineage:LIN B", Color.decode("0x00ff9c"));
         colorMap.put("lineage:LIN CANETTII", Color.decode("0x00ffff"));
-        System.out.println(colorMap);
 
     }
 
